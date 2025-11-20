@@ -1,0 +1,146 @@
+import { motion } from 'motion/react';
+import { FileText } from 'lucide-react';
+
+export function TermsPage() {
+  const fadeInUp = {
+    initial: { opacity: 0, y: 20 },
+    whileInView: { opacity: 1, y: 0 },
+    viewport: { once: true },
+    transition: { duration: 0.6 }
+  };
+
+  return (
+    <div className="min-h-screen bg-[#F8F9FA]">
+      {/* Premium Hero Header */}
+      <section className="relative w-full h-[360px] md:h-[420px] lg:h-[500px] overflow-hidden">
+        {/* Background Image with Brightness & Contrast Enhancement */}
+        <div 
+          className="absolute inset-0 bg-cover bg-center"
+          style={{
+            backgroundImage: `url('https://images.unsplash.com/photo-1645536107287-59088714a788?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtb2Rlcm4lMjBjb250cmFjdCUyMHNpZ25pbmclMjBkb2N1bWVudHxlbnwxfHx8fDE3NjMwNTc1OTJ8MA&ixlib=rb-4.1.0&q=80&w=1080')`,
+            filter: 'brightness(1.15) contrast(1.1)'
+          }}
+        />
+        
+        {/* Top-Right Gold Tint Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-bl from-[#D4AF37]/20 via-transparent to-transparent" />
+        
+        {/* Main Gradient Overlay (top → bottom, 0% → 65%) */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/0 via-black/40 to-black/65" />
+        
+        {/* Content */}
+        <div className="relative h-full container mx-auto px-4 lg:px-8 flex items-center">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="max-w-4xl text-center lg:text-left w-full"
+          >
+            <div className="w-16 h-16 bg-[#D4AF37] rounded-2xl flex items-center justify-center mx-auto lg:mx-0 mb-6 shadow-lg">
+              <FileText className="w-8 h-8 text-white" />
+            </div>
+            
+            <div className="mb-4">
+              <h1 
+                className="text-white text-[32px] md:text-[40px] lg:text-[48px] font-extrabold mb-3 leading-tight"
+                style={{ textShadow: '0 2px 12px rgba(0,0,0,0.5)' }}
+              >
+                Terms & Conditions
+              </h1>
+              {/* Gold Accent Line */}
+              <div className="w-[40px] h-1 bg-[#D4AF37] rounded-full mx-auto lg:mx-0" />
+            </div>
+            
+            <p 
+              className="text-gray-200 text-lg mt-4"
+              style={{ textShadow: '0 1px 8px rgba(0,0,0,0.4)' }}
+            >
+              Last updated: January 2025
+            </p>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Content */}
+      <section className="py-12 md:py-16 lg:py-20">
+        <div className="container mx-auto px-4 lg:px-8">
+          <motion.div {...fadeInUp} className="max-w-4xl mx-auto bg-white rounded-2xl p-8 md:p-12 shadow-sm">
+            <div className="prose prose-gray max-w-none">
+              <h2 className="text-2xl font-semibold text-[#2B2B2B] mb-4">1. Acceptance of Terms</h2>
+              <p className="text-gray-700 leading-relaxed mb-6">
+                By accessing and using the BOB Rentalz website and services, you accept and agree to be bound by these Terms and Conditions. If you do not agree with any part of these terms, please do not use our services.
+              </p>
+
+              <h2 className="text-2xl font-semibold text-[#2B2B2B] mb-4">2. Use of Services</h2>
+              <p className="text-gray-700 leading-relaxed mb-4">
+                BOB Rentalz provides a platform for property listings, browsing, and connecting property owners, tenants, and agents. Our services include:
+              </p>
+              <ul className="list-disc pl-6 text-gray-700 leading-relaxed mb-6 space-y-2">
+                <li>Long-term property rental listings across Egypt</li>
+                <li>Verified property information and photography</li>
+                <li>Connection with professional real estate agents</li>
+                <li>Property search and filtering tools</li>
+              </ul>
+
+              <h2 className="text-2xl font-semibold text-[#2B2B2B] mb-4">3. User Responsibilities</h2>
+              <p className="text-gray-700 leading-relaxed mb-4">
+                As a user of BOB Rentalz, you agree to:
+              </p>
+              <ul className="list-disc pl-6 text-gray-700 leading-relaxed mb-6 space-y-2">
+                <li>Provide accurate and truthful information when using our platform</li>
+                <li>Not misuse or attempt to circumvent our services</li>
+                <li>Respect the intellectual property rights of BOB Rentalz and third parties</li>
+                <li>Comply with all applicable laws and regulations</li>
+              </ul>
+
+              <h2 className="text-2xl font-semibold text-[#2B2B2B] mb-4">4. Property Listings</h2>
+              <p className="text-gray-700 leading-relaxed mb-6">
+                All property listings on BOB Rentalz are subject to verification. While we strive to ensure accuracy, we do not guarantee the availability or condition of any listed property. Users should conduct their own due diligence before entering into any rental agreement.
+              </p>
+
+              <h2 className="text-2xl font-semibold text-[#2B2B2B] mb-4">5. Rental Agreements</h2>
+              <p className="text-gray-700 leading-relaxed mb-6">
+                BOB Rentalz acts as an intermediary platform. All rental agreements, payments, and legal obligations are between the property owner and tenant. BOB Rentalz is not a party to these agreements and assumes no liability for disputes arising from rental transactions.
+              </p>
+
+              <h2 className="text-2xl font-semibold text-[#2B2B2B] mb-4">6. Fees and Payments</h2>
+              <p className="text-gray-700 leading-relaxed mb-6">
+                Property owners and agents may be subject to listing fees or commission structures as outlined in separate agreements. All fees are clearly communicated before any service commitment.
+              </p>
+
+              <h2 className="text-2xl font-semibold text-[#2B2B2B] mb-4">7. Limitation of Liability</h2>
+              <p className="text-gray-700 leading-relaxed mb-6">
+                BOB Rentalz provides services "as is" without warranties of any kind. We are not liable for any direct, indirect, incidental, or consequential damages arising from the use of our platform or services.
+              </p>
+
+              <h2 className="text-2xl font-semibold text-[#2B2B2B] mb-4">8. Intellectual Property</h2>
+              <p className="text-gray-700 leading-relaxed mb-6">
+                All content, trademarks, logos, and intellectual property on the BOB Rentalz platform are owned by Best of Bedz and are protected by applicable copyright and trademark laws.
+              </p>
+
+              <h2 className="text-2xl font-semibold text-[#2B2B2B] mb-4">9. Modifications to Terms</h2>
+              <p className="text-gray-700 leading-relaxed mb-6">
+                BOB Rentalz reserves the right to modify these Terms and Conditions at any time. Changes will be effective immediately upon posting to our website. Continued use of our services constitutes acceptance of updated terms.
+              </p>
+
+              <h2 className="text-2xl font-semibold text-[#2B2B2B] mb-4">10. Governing Law</h2>
+              <p className="text-gray-700 leading-relaxed mb-6">
+                These Terms and Conditions are governed by the laws of the Arab Republic of Egypt. Any disputes shall be resolved in the courts of Cairo, Egypt.
+              </p>
+
+              <h2 className="text-2xl font-semibold text-[#2B2B2B] mb-4">11. Contact Information</h2>
+              <p className="text-gray-700 leading-relaxed mb-2">
+                For questions about these Terms and Conditions, please contact us:
+              </p>
+              <ul className="list-none text-gray-700 leading-relaxed space-y-2">
+                <li>Email: info@bobrentalz.com</li>
+                <li>Phone: +20 100 123 4567</li>
+                <li>Address: New Cairo, Egypt</li>
+              </ul>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+    </div>
+  );
+}
