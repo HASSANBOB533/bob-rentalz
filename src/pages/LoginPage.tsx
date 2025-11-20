@@ -1,4 +1,4 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
 import { motion } from 'motion/react';
@@ -6,266 +6,130 @@ import { Mail, Lock } from 'lucide-react';
 import bobLogo from 'figma:asset/c3cbe0198340d6bed05c69174ee79f3b6a4d8624.png';
 import { useState } from 'react';
 import { toast } from 'sonner@2.0.3';
+import { useAuth } from '../contexts/AuthContext';
 
 export function LoginPage() {
   const navigate = useNavigate();
+  const { signIn } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
 
-  // Fake credentials for demo
-  const DEMO_CREDENTIALS = {
-    tenant: {
-      email: 'tenant@bob.com',
-      password: 'tenant123'
-    },
-    renter: {
-      email: 'rented@bob.com',
-      password: 'rented123'
-    },
-    owner: {
-      email: 'owner@bob.com',
-      password: 'owner123'
-    },
-    agent: {
-      email: 'yasmin.elsayed@bob.com',
-      password: 'agent123'
-    },
-    admin: {
-      email: 'admin@bob.com',
-      password: 'admin123'
-    }
-  };
-
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    
-    // Check admin credentials
-    if (email === DEMO_CREDENTIALS.admin.email && password === DEMO_CREDENTIALS.admin.password) {
-      toast.success('Login successful! Redirecting to admin dashboard...');
+    setLoading(true);
+
+    try {
+      const { error } = await signIn(email, password);
+
+      if (error) {
+        toast.error(error.message || 'Invalid email or password');
+        setLoading(false);
+        return;
+      }
+
+      // Get user profile to determine role
+      const { user, profile } = useAuth();
+      
+      toast.success('Login successful!');
+      
+      // Redirect based on role
       setTimeout(() => {
-        navigate('/admin/dashboard');
-      }, 1000);
-    }
-    // Check tenant credentials
-    else if (email === DEMO_CREDENTIALS.tenant.email && password === DEMO_CREDENTIALS.tenant.password) {
-      toast.success('Login successful! Redirecting to tenant dashboard...');
-      setTimeout(() => {
-        navigate('/dashboard');
-      }, 1000);
-    }
-    // Check renter credentials
-    else if (email === DEMO_CREDENTIALS.renter.email && password === DEMO_CREDENTIALS.renter.password) {
-      toast.success('Login successful! Redirecting to rented dashboard...');
-      setTimeout(() => {
-        navigate('/tenant/rented/dashboard');
-      }, 1000);
-    } 
-    // Check owner credentials
-    else if (email === DEMO_CREDENTIALS.owner.email && password === DEMO_CREDENTIALS.owner.password) {
-      toast.success('Login successful! Redirecting to owner dashboard...');
-      setTimeout(() => {
-        navigate('/owner/dashboard');
-      }, 1000);
-    }
-    // Check agent credentials
-    else if (email === DEMO_CREDENTIALS.agent.email && password === DEMO_CREDENTIALS.agent.password) {
-      toast.success('Login successful! Redirecting to agent dashboard...');
-      setTimeout(() => {
-        navigate('/agent/dashboard');
-      }, 1000);
-    }
-    else {
-      toast.error('Invalid credentials. Please check the demo credentials below.');
+        if (profile?.role === 'admin') {
+          navigate('/admin/dashboard');
+        } else if (profile?.role === 'owner') {
+          navigate('/owner/dashboard');
+        } else if (profile?.role === 'agent') {
+          navigate('/agent/dashboard');
+        } else {
+          navigate('/dashboard');
+        }
+      }, 500);
+    } catch (error: any) {
+      toast.error('An error occurred during login');
+      setLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gradient-to-br from-[#F5F1E8] to-[#E8DCC8] flex items-center justify-center p-4">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-        className="w-full max-w-md"
+        className="bg-white rounded-2xl shadow-2xl w-full max-w-md overflow-hidden"
       >
-        {/* Logo */}
-        <div className="text-center mb-8">
-          <Link to="/" className="inline-block">
-            <img 
-              src={bobLogo} 
-              alt="Best of Bedz Rentalz" 
-              className="h-16 md:h-20 w-auto mx-auto object-contain"
-            />
-          </Link>
+        {/* Header */}
+        <div className="bg-gradient-to-r from-[#2B5273] to-[#3A6B8F] p-8 text-center">
+          <img src={bobLogo} alt="BOB Rentalz" className="h-16 mx-auto mb-4" />
+          <h1 className="text-2xl font-bold text-white">Welcome Back</h1>
+          <p className="text-[#F5F1E8]/80 mt-2">Sign in to your account</p>
         </div>
 
-        {/* Login Card */}
-        <div className="bg-white rounded-xl shadow-lg p-6 sm:p-8 md:p-10">
-          {/* Demo Credentials Info */}
-          <div className="mb-6 p-4 bg-[#E9C500]/10 border border-[#E9C500]/30 rounded-lg">
-            <p className="text-sm font-medium text-[#0E56A4] mb-2">🔐 Demo Credentials:</p>
-            <div className="space-y-2 text-sm text-gray-700">
-              <div>
-                <p className="font-medium">Admin:</p>
-                <p><strong>Email:</strong> admin@bob.com</p>
-                <p><strong>Password:</strong> admin123</p>
-              </div>
-              <div className="pt-2 border-t border-[#E9C500]/20">
-                <p className="font-medium">Tenant (Prospect):</p>
-                <p><strong>Email:</strong> tenant@bob.com</p>
-                <p><strong>Password:</strong> tenant123</p>
-              </div>
-              <div className="pt-2 border-t border-[#E9C500]/20">
-                <p className="font-medium">Tenant (Renter):</p>
-                <p><strong>Email:</strong> rented@bob.com</p>
-                <p><strong>Password:</strong> rented123</p>
-              </div>
-              <div className="pt-2 border-t border-[#E9C500]/20">
-                <p className="font-medium">Owner:</p>
-                <p><strong>Email:</strong> owner@bob.com</p>
-                <p><strong>Password:</strong> owner123</p>
-              </div>
-              <div className="pt-2 border-t border-[#E9C500]/20">
-                <p className="font-medium">Agent:</p>
-                <p><strong>Email:</strong> yasmin.elsayed@bob.com</p>
-                <p><strong>Password:</strong> agent123</p>
-              </div>
+        {/* Form */}
+        <form onSubmit={handleSubmit} className="p-8 space-y-6">
+          <div className="space-y-2">
+            <label className="text-sm font-medium text-[#2B5273]">Email</label>
+            <div className="relative">
+              <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
+              <Input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="you@example.com"
+                className="pl-10"
+                required
+                disabled={loading}
+              />
             </div>
           </div>
 
-          {/* Title & Subtitle */}
-          <div className="text-center mb-8">
-            <h1 className="text-2xl sm:text-3xl font-semibold text-[#0E56A4] mb-2">
-              Sign In
-            </h1>
-            <p className="text-gray-600 text-[15px] sm:text-[16px]">
-              Access your account
-            </p>
-          </div>
-
-          {/* Login Form */}
-          <form onSubmit={handleSubmit} className="space-y-6">
-            {/* Email Input */}
-            <div>
-              <label htmlFor="email" className="block text-[14px] sm:text-[15px] font-medium text-gray-700 mb-1.5">
-                Email
-              </label>
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
-                  <Mail className="h-5 w-5 text-gray-400" />
-                </div>
-                <Input
-                  id="email"
-                  type="email"
-                  placeholder="email@example.com"
-                  className="pl-11 border-gray-300 rounded-lg py-3 px-4 focus:ring-2 focus:ring-[#0E56A4] focus:border-[#0E56A4] transition-all duration-200 w-full"
-                  required
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                />
-              </div>
-            </div>
-
-            {/* Password Input */}
-            <div>
-              <label htmlFor="password" className="block text-[14px] sm:text-[15px] font-medium text-gray-700 mb-1.5">
-                Password
-              </label>
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
-                  <Lock className="h-5 w-5 text-gray-400" />
-                </div>
-                <Input
-                  id="password"
-                  type="password"
-                  placeholder="••••••••"
-                  className="pl-11 border-gray-300 rounded-lg py-3 px-4 focus:ring-2 focus:ring-[#0E56A4] focus:border-[#0E56A4] transition-all duration-200 w-full"
-                  required
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                />
-              </div>
-            </div>
-
-            {/* Forgot Password Link */}
-            <div className="text-right">
-              <Link 
-                to="/forgot-password" 
-                className="text-sm text-[#0E56A4] hover:text-[#0A3F79] transition-colors duration-200 font-medium"
-              >
-                Forgot password?
-              </Link>
-            </div>
-
-            {/* Login Button */}
-            <Button
-              type="submit"
-              className="w-full bg-[#0E56A4] text-white py-3 rounded-xl font-medium hover:bg-[#0A3F79] transition-all duration-200 shadow-sm hover:shadow-lg"
-            >
-              Sign In
-            </Button>
-          </form>
-
-          {/* Divider */}
-          <div className="relative my-8">
-            <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-gray-200"></div>
-            </div>
-            <div className="relative flex justify-center text-sm">
-              <span className="px-4 bg-white text-gray-500">OR</span>
+          <div className="space-y-2">
+            <label className="text-sm font-medium text-[#2B5273]">Password</label>
+            <div className="relative">
+              <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
+              <Input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="••••••••"
+                className="pl-10"
+                required
+                disabled={loading}
+              />
             </div>
           </div>
 
-          {/* Social Login Options (Optional) */}
-          <div className="space-y-3">
-            <Button
-              type="button"
-              variant="outline"
-              className="w-full border-gray-300 text-gray-700 hover:bg-gray-50 transition-all duration-200 py-3 rounded-lg"
-            >
-              <svg className="w-5 h-5 mr-2" viewBox="0 0 24 24">
-                <path
-                  fill="currentColor"
-                  d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
-                />
-                <path
-                  fill="currentColor"
-                  d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
-                />
-                <path
-                  fill="currentColor"
-                  d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"
-                />
-                <path
-                  fill="currentColor"
-                  d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
-                />
-              </svg>
-              Continue with Google
-            </Button>
+          <div className="flex items-center justify-between">
+            <label className="flex items-center space-x-2">
+              <input type="checkbox" className="rounded border-gray-300" />
+              <span className="text-sm text-gray-600">Remember me</span>
+            </label>
+            <a href="#" className="text-sm text-[#2B5273] hover:underline">
+              Forgot password?
+            </a>
           </div>
-        </div>
 
-        {/* Signup Link */}
-        <div className="text-center mt-6">
-          <p className="text-gray-600 text-[14px] sm:text-[15px]">
-            Don't have an account?{' '}
-            <Link 
-              to="/signup" 
-              className="text-[#0E56A4] font-medium hover:text-[#0A3F79] transition-colors duration-200"
-            >
-              Sign up
-            </Link>
-          </p>
-        </div>
-
-        {/* Back to Home */}
-        <div className="text-center mt-4">
-          <Link 
-            to="/" 
-            className="text-gray-500 text-sm hover:text-gray-700 transition-colors duration-200"
+          <Button
+            type="submit"
+            className="w-full bg-[#2B5273] hover:bg-[#1F3D54] text-white"
+            disabled={loading}
           >
-            ← Back to Home
-          </Link>
+            {loading ? 'Signing in...' : 'Sign In'}
+          </Button>
+
+          <div className="text-center text-sm text-gray-600">
+            Don't have an account?{' '}
+            <a href="/signup" className="text-[#2B5273] font-medium hover:underline">
+              Sign up
+            </a>
+          </div>
+        </form>
+
+        {/* Demo Info */}
+        <div className="bg-[#F5F1E8] p-4 border-t">
+          <p className="text-xs text-center text-gray-600">
+            <strong>Demo:</strong> Create an account or use test credentials
+          </p>
         </div>
       </motion.div>
     </div>

@@ -85,9 +85,11 @@ import AdminAgentLeadsPage from './pages/AdminAgentLeadsPage';
 import AdminProfilePage from './pages/AdminProfilePage';
 import AdminSettingsPage from './pages/AdminSettingsPage';
 import { Toaster } from './components/ui/sonner';
+import { AuthProvider } from './contexts/AuthContext';
 
 export default function App() {
   return (
+    <AuthProvider>
     <Router>
       <div className="flex flex-col min-h-screen">
         <Routes>
@@ -433,5 +435,6 @@ export default function App() {
         <Toaster position="top-center" />
       </div>
     </Router>
+    </AuthProvider>
   );
 }
