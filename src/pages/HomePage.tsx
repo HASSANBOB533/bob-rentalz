@@ -9,7 +9,8 @@ import { Carousel } from '../components/Carousel';
 import { CompareBar } from '../components/CompareBar';
 import { ComparisonModal } from '../components/ComparisonModal';
 import { HeroSlider } from '../components/HeroSlider';
-import { properties, testimonials } from '../data/mockData';
+import { testimonials } from '../data/mockData';
+import { useFeaturedProperties } from '../hooks/useProperties';
 import { ArrowRight, Shield, Clock, CheckCircle, MapPin } from 'lucide-react';
 import { ImageWithFallback } from '../components/figma/ImageWithFallback';
 import { motion } from 'motion/react';
@@ -20,7 +21,7 @@ import newCairoImage from 'figma:asset/f93381c4c8e0792be4c66a1bf1b34a9e33977584.
 
 export function HomePage() {
   const navigate = useNavigate();
-  const featuredProperties = properties.filter(p => p.featured).slice(0, 6);
+  const { properties: featuredProperties, loading: loadingProperties } = useFeaturedProperties();
 
   const handleSearch = (filters: SearchFilters) => {
     const params = new URLSearchParams();
