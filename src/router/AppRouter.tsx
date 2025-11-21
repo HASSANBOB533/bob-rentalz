@@ -17,19 +17,19 @@ import OwnerDashboard from "../pages/dashboard/OwnerDashboard";
 import AgentDashboard from "../pages/dashboard/AgentDashboard";
 import TenantDashboard from "../pages/dashboard/TenantDashboard";
 
-// Protected wrapper
+// Protected routes
 import ProtectedRoute from "./ProtectedRoute";
 import AuthRedirect from "./AuthRedirect";
 
-// 404 page (simple)
+// 404 fallback
 const NotFound = () => <div>404 — Page Not Found</div>;
 
 export default function AppRouter() {
   return (
     <Routes>
       {/* ============================
-         PUBLIC ROUTES
-      ============================== */}
+          PUBLIC ROUTES
+      ============================ */}
       <Route path="/" element={<HomePage />} />
       <Route path="/properties" element={<PropertiesPage />} />
       <Route path="/property/:id" element={<PropertyDetailPage />} />
@@ -38,27 +38,32 @@ export default function AppRouter() {
       <Route path="/blog/:slug" element={<BlogPostPage />} />
       <Route path="/contact" element={<ContactPage />} />
 
-      {/* AUTH */}
+      {/* ============================
+          AUTH ROUTES (with redirect)
+      ============================ */}
       <Route
         path="/login"
         element={
-          <AuthRedirect>
+          <>
+            <AuthRedirect />
             <LoginPage />
-          </AuthRedirect>
+          </>
         }
       />
+
       <Route
         path="/signup"
         element={
-          <AuthRedirect>
+          <>
+            <AuthRedirect />
             <SignupPage />
-          </AuthRedirect>
+          </>
         }
       />
-      {/* ============================
-         DASHBOARDS (PROTECTED)
-      ============================== */}
 
+      {/* ============================
+          DASHBOARD ROUTES (protected)
+      ============================ */}
       <Route
         path="/dashboard/admin"
         element={
@@ -96,8 +101,8 @@ export default function AppRouter() {
       />
 
       {/* ============================
-         FALLBACK
-      ============================== */}
+          404 fallback
+      ============================ */}
       <Route path="*" element={<NotFound />} />
     </Routes>
   );
