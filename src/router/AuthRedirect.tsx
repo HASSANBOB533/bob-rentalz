@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
-import { supabase, getUserRole } from "../lib/supabase/api";
+import { supabase, getCurrentRole } from "../lib/supabase/api";
 
 interface AuthRedirectProps {
   children: React.ReactNode;
@@ -26,7 +26,7 @@ export default function AuthRedirect({ children }: AuthRedirectProps) {
       
       if (session?.user) {
         // User is logged in, determine redirect path based on role
-        const role = await getUserRole();
+        const role = await getCurrentRole();
         const dashboardPath = role ? `/dashboard/${role}` : "/";
         setRedirectPath(dashboardPath);
         setIsAuthenticated(true);
