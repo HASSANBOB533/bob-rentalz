@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
 import { Play, X, Youtube } from 'lucide-react';
 import { Property } from '../data/mockData';

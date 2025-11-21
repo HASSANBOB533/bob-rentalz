@@ -15,6 +15,7 @@ import { ArrowRight, Shield, Clock, CheckCircle, MapPin } from 'lucide-react';
 import { ImageWithFallback } from '../components/figma/ImageWithFallback';
 import { motion } from 'motion/react';
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { getComparisonList, removeFromComparison, clearComparison } from '../utils/comparison';
 import newAlameinImage from 'figma:asset/e620e41fa31e2b3697673ee49e7a7dcd6e65cb3e.png';
 import newCairoImage from 'figma:asset/f93381c4c8e0792be4c66a1bf1b34a9e33977584.png';
