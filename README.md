@@ -28,29 +28,93 @@ A comprehensive property rental platform built with React, Vite, and Supabase.
 
 ### Prerequisites
 
-- Node.js 18+ 
+- Node.js 18+
 - npm or pnpm
+- A Supabase account
 
 ### Installation
 
-```bash
-# Install dependencies
-npm install
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/HASSANBOB533/bob-rentalz.git
+   cd bob-rentalz
+   ```
 
-# Set up environment variables
-# Create a .env file with:
-# VITE_SUPABASE_URL=your_supabase_url
-# VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
+2. **Install dependencies:**
+   ```bash
+   npm install
+   ```
 
-# Start development server
-npm run dev
-```
+3. **Set up environment variables:**
+   - Create a `.env` file in the root directory.
+   - Copy the contents of `.env.example` into `.env`.
+   - Get your Supabase project URL and anon key from your Supabase project settings and update the `.env` file:
+     ```
+     VITE_SUPABASE_URL=https://your-project-id.supabase.co
+     VITE_SUPABASE_ANON_KEY=your-anon-key-here
+     ```
+
+4. **Set up the database:**
+   - Go to your Supabase project's SQL Editor.
+   - Copy and run the entire script from `supabase-complete-setup.sql` to create all tables, policies, and sample data.
+
+5. **Start the development server:**
+   ```bash
+   npm run dev
+   ```
 
 ### Build for Production
 
 ```bash
 npm run build
 ```
+
+## Database Schema
+
+The database schema is defined in `supabase-complete-setup.sql` and includes the following tables:
+
+- `profiles`: Stores user profile information (linked to `auth.users`).
+- `properties`: Contains all property listings and details.
+- `inquiries`: Manages inquiries from potential tenants.
+- `service_requests`: Tracks maintenance and service requests.
+
+### `profiles` Table
+
+| Column | Type | Description |
+|---|---|---|
+| `id` | `UUID` | Primary key, references `auth.users` |
+| `email` | `TEXT` | User's email (unique) |
+| `full_name` | `TEXT` | User's full name |
+| `phone` | `TEXT` | User's phone number |
+| `role` | `TEXT` | User role (`admin`, `owner`, `agent`, `tenant`) |
+| `avatar_url` | `TEXT` | URL for user's avatar image |
+| `created_at` | `TIMESTAMPTZ` | Timestamp of creation |
+| `updated_at` | `TIMESTAMPTZ` | Timestamp of last update |
+
+### `properties` Table
+
+| Column | Type | Description |
+|---|---|---|
+| `id` | `UUID` | Primary key |
+| `owner_id` | `UUID` | Foreign key to `profiles.id` |
+| `title` | `TEXT` | Property title |
+| `description` | `TEXT` | Property description |
+| `property_type` | `TEXT` | Type of property (e.g., 'Apartment', 'Villa') |
+| `location` | `TEXT` | General location (e.g., 'New Cairo') |
+| `address` | `TEXT` | Full address |
+| `price` | `DECIMAL` | Rental price |
+| `bedrooms` | `INTEGER` | Number of bedrooms |
+| `bathrooms` | `INTEGER` | Number of bathrooms |
+| `area` | `DECIMAL` | Area in square meters |
+| `furnishing` | `TEXT` | Furnishing status ('Furnished', 'Semi-Furnished', 'Unfurnished') |
+| `status` | `TEXT` | Property status ('available', 'rented', 'maintenance') |
+| `reference_code` | `TEXT` | Unique reference code for the property |
+| `images` | `TEXT[]` | Array of image URLs |
+| `amenities` | `TEXT[]` | Array of amenities |
+| `verified` | `BOOLEAN` | Whether the property is verified |
+| `featured` | `BOOLEAN` | Whether the property is featured |
+| `created_at` | `TIMESTAMPTZ` | Timestamp of creation |
+| `updated_at` | `TIMESTAMPTZ` | Timestamp of last update |
 
 ## Environment Variables
 
@@ -61,7 +125,7 @@ Required environment variables:
 
 ## Deployment
 
-This project is configured for automatic deployment on Vercel. Every push to the `master` branch triggers a new deployment.
+This project is configured for automatic deployment on Vercel. Every push to the `main` branch triggers a new deployment.
 
 ## Original Design
 
