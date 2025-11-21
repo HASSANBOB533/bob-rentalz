@@ -3,16 +3,41 @@
 // ALL-IN-ONE FILE (supabaseClient + Types + API functions)
 // =======================================================
 
-import { createClient } from '@supabase/supabase-js';
+import { createClient, SupabaseClient } from '@supabase/supabase-js';
 
 // =======================================================
-// 1. SUPABASE CLIENT
+// 1. SUPABASE CLIENT (LAZY INITIALIZATION)
 // =======================================================
 
-export const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-);
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+
+let supabaseInstance: SupabaseClient | null = null;
+
+function getSupabaseClient(): SupabaseClient {
+  if (!supabaseInstance) {
+    if (!supabaseUrl || !supabaseAnonKey) {
+      console.error('Supabase environment variables are missing in api.ts!');
+      console.error('VITE_SUPABASE_URL:', supabaseUrl);
+      console.error('VITE_SUPABASE_ANON_KEY:', supabaseAnonKey ? 'SET' : 'MISSING');
+      throw new Error('Supabase environment variables are not configured');
+    }
+    
+    supabaseInstance = createClient(supabaseUrl, supabaseAnonKey);
+    console.log('Supabase client initialized successfully in api.ts');
+  }
+  
+  return supabaseInstance;
+}
+
+// Export a Proxy that lazily initializes the client
+export const supabase = new Proxy({} as SupabaseClient, {
+  get(target, prop) {
+    const client = getSupabaseClient();
+    const value = client[prop as keyof SupabaseClient];
+    return typeof value === 'function' ? value.bind(client) : value;
+  }
+});
 
 // =======================================================
 // 2. DATABASE TYPES (matches FILE 1 schema)
