@@ -68,7 +68,7 @@ export function Navbar() {
                 Sign In
               </Button>
             </Link>
-            <Link to="/role-selection">
+            <Link to="/signup">
               <Button className="bg-[#E9C500] text-[#0E56A4] hover:bg-[#E3B600] font-semibold rounded-xl shadow-md hover:shadow-lg transition-all duration-200 px-5">
                 Sign Up
               </Button>
@@ -124,7 +124,7 @@ export function Navbar() {
                     Sign In
                   </Button>
                 </Link>
-                <Link to="/role-selection" onClick={() => setMobileMenuOpen(false)} className="flex-1">
+                <Link to="/signup" onClick={() => setMobileMenuOpen(false)} className="flex-1">
                   <Button className="w-full bg-[#E9C500] text-[#0E56A4] hover:bg-[#E3B600] font-semibold transition-all duration-200">
                     Sign Up
                   </Button>

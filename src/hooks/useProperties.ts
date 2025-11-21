@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabase';
+import { properties as mockProperties } from '../data/mockData';
 
 export interface Property {
   id: string;
@@ -42,10 +43,19 @@ export function useProperties() {
 
       if (error) throw error;
 
-      setProperties(data || []);
+      // Use mock data as fallback if Supabase returns empty
+      if (!data || data.length === 0) {
+        console.log('Using mock properties data');
+        setProperties(mockProperties as any);
+      } else {
+        setProperties(data || []);
+      }
     } catch (err: any) {
       console.error('Error fetching properties:', err);
+      console.log('Falling back to mock properties data');
       setError(err.message);
+      // Fallback to mock data on error
+      setProperties(mockProperties as any);
     } finally {
       setLoading(false);
     }
@@ -75,9 +85,20 @@ export function useFeaturedProperties() {
 
       if (error) throw error;
 
-      setProperties(data || []);
+      // Use mock data as fallback if Supabase returns empty
+      if (!data || data.length === 0) {
+        console.log('Using mock featured properties data');
+        const featuredMockProperties = mockProperties.filter(p => p.featured).slice(0, 6);
+        setProperties(featuredMockProperties as any);
+      } else {
+        setProperties(data || []);
+      }
     } catch (err) {
       console.error('Error fetching featured properties:', err);
+      console.log('Falling back to mock featured properties data');
+      // Fallback to mock data on error
+      const featuredMockProperties = mockProperties.filter(p => p.featured).slice(0, 6);
+      setProperties(featuredMockProperties as any);
     } finally {
       setLoading(false);
     }
