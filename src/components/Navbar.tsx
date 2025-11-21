@@ -33,8 +33,8 @@ export function Navbar() {
             />
           </Link>
 
-          {/* Desktop Navigation - Hidden on Mobile & Tablet */}
-          <div className="hidden lg:flex items-center gap-8">
+          {/* Desktop Navigation - Hidden on Mobile */}
+          <div className="hidden md:flex items-center gap-8">
             {navLinks.map((link) => (
               <Link
                 key={link.path}
@@ -50,8 +50,8 @@ export function Navbar() {
             ))}
           </div>
 
-          {/* Desktop Actions - Hidden on Mobile & Tablet */}
-          <div className="hidden lg:flex items-center gap-4">
+          {/* Desktop Actions - Hidden on Mobile */}
+          <div className="hidden md:flex items-center gap-4">
             <LanguageToggle />
             <Link to="/properties">
               <Button variant="ghost" size="icon" className="text-white hover:text-[#E9C500] hover:bg-[#0A3F79] transition-all duration-200">
@@ -80,9 +80,9 @@ export function Navbar() {
             </Link>
           </div>
 
-          {/* Mobile & Tablet Menu Button - Hidden on Desktop */}
+          {/* Mobile Menu Button - Hidden on Tablet & Desktop */}
           <button
-            className="flex md:flex lg:hidden p-2 text-white hover:text-[#E9C500] transition-all duration-200"
+            className="flex md:hidden p-2 text-white hover:text-[#E9C500] transition-all duration-200"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           >
             {mobileMenuOpen ? (
@@ -93,9 +93,9 @@ export function Navbar() {
           </button>
         </div>
 
-        {/* Mobile & Tablet Menu - Hidden on Desktop */}
+        {/* Mobile Menu - Hidden on Tablet & Desktop */}
         {mobileMenuOpen && (
-          <div className="lg:hidden py-4 border-t border-[#0A3F79]">
+          <div className="md:hidden py-4 border-t border-[#0A3F79]">
             <div className="flex flex-col gap-4">
               {navLinks.map((link) => (
                 <Link
