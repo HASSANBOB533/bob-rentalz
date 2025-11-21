@@ -79,9 +79,7 @@ export default function AppRouter() {
         path="/login"
         element={
           <MainLayout>
-            <AuthRedirect>
-              <LoginPage />
-            </AuthRedirect>
+            <LoginPage />
           </MainLayout>
         }
       />
@@ -89,9 +87,7 @@ export default function AppRouter() {
         path="/signup"
         element={
           <MainLayout>
-            <AuthRedirect>
-              <SignupPage />
-            </AuthRedirect>
+            <SignupPage />
           </MainLayout>
         }
       />
