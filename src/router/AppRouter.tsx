@@ -19,6 +19,7 @@ import TenantDashboard from "../pages/dashboard/TenantDashboard";
 
 // Protected wrapper
 import ProtectedRoute from "./ProtectedRoute";
+import AuthRedirect from "./AuthRedirect";
 
 // 404 page (simple)
 const NotFound = () => <div>404 — Page Not Found</div>;
@@ -38,9 +39,22 @@ export default function AppRouter() {
       <Route path="/contact" element={<ContactPage />} />
 
       {/* AUTH */}
-      <Route path="/login" element={<LoginPage />} />
-      <Route path="/signup" element={<SignupPage />} />
-
+      <Route
+        path="/login"
+        element={
+          <AuthRedirect>
+            <LoginPage />
+          </AuthRedirect>
+        }
+      />
+      <Route
+        path="/signup"
+        element={
+          <AuthRedirect>
+            <SignupPage />
+          </AuthRedirect>
+        }
+      />
       {/* ============================
          DASHBOARDS (PROTECTED)
       ============================== */}
