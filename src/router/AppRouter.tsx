@@ -12,11 +12,10 @@ import { BlogPostPage } from "../pages/BlogPostPage";
 import { ContactPage } from "../pages/ContactPage";
 
 // Dashboards (role-based)
-import { AdminDashboard } from "../pages/dashboard/AdminDashboard";
-import { OwnerDashboard } from "../pages/dashboard/OwnerDashboard";
-import { AgentDashboard } from "../pages/dashboard/AgentDashboard";
-import { TenantDashboard } from "../pages/dashboard/TenantDashboard";
-
+import AdminDashboard from "../pages/dashboard/AdminDashboard";
+import OwnerDashboard from "../pages/dashboard/OwnerDashboard";
+import AgentDashboard from "../pages/dashboard/AgentDashboard";
+import TenantDashboard from "../pages/dashboard/TenantDashboard";
 // Protected routes
 import ProtectedRoute from "./ProtectedRoute";
 import AuthRedirect from "./AuthRedirect";
