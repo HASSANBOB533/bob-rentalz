@@ -1,25 +1,16 @@
 import { createClient } from '@supabase/supabase-js'
 
-console.log('RAW ENV:', import.meta.env)
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || ''
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || ''
-console.log('Supabase URL:', supabaseUrl)
-console.log('Supabase Key:', supabaseAnonKey ? 'SET' : 'MISSING')
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL
+const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY
 
-// Log environment variables for debugging (only in development)
-if (import.meta.env.DEV) {
-  console.log('Supabase Environment Variables:', {
-    VITE_SUPABASE_URL: supabaseUrl ? 'SET' : 'MISSING',
-    VITE_SUPABASE_ANON_KEY: supabaseAnonKey ? 'SET' : 'MISSING'
-  })
+if (!supabaseUrl || !supabaseAnonKey) {
+  console.error('Missing Supabase environment variables!')
+  console.error('VITE_SUPABASE_URL:', supabaseUrl ? 'SET' : 'MISSING')
+  console.error('VITE_SUPABASE_ANON_KEY:', supabaseAnonKey ? 'SET' : 'MISSING')
+  throw new Error('Missing required Supabase environment variables')
 }
 
-// Create Supabase client with fallback values to prevent app crash
-// If env vars are missing, the client will be created but API calls will fail gracefully
-export const supabase = createClient(
-  supabaseUrl || 'https://placeholder.supabase.co',
-  supabaseAnonKey || 'placeholder-anon-key'
-)
+export const supabase = createClient(supabaseUrl, supabaseAnonKey)
 
 // Type definitions for your database
 export type Profile = {
