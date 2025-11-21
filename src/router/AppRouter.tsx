@@ -1,21 +1,21 @@
 import { Routes, Route } from "react-router-dom";
 
 // Public pages
-import HomePage from "../pages/HomePage";
-import LoginPage from "../pages/LoginPage";
-import SignupPage from "../pages/SignupPage";
-import PropertiesPage from "../pages/PropertiesPage";
-import PropertyDetailPage from "../pages/PropertyDetailPage";
-import FAQPage from "../pages/FAQPage";
-import BlogPage from "../pages/BlogPage";
-import BlogPostPage from "../pages/BlogPostPage";
-import ContactPage from "../pages/ContactPage";
+import { HomePage } from "../pages/HomePage";
+import { LoginPage } from "../pages/LoginPage";
+import { SignupPage } from "../pages/SignupPage";
+import { PropertiesPage } from "../pages/PropertiesPage";
+import { PropertyDetailPage } from "../pages/PropertyDetailPage";
+import { FAQPage } from "../pages/FAQPage";
+import { BlogPage } from "../pages/BlogPage";
+import { BlogPostPage } from "../pages/BlogPostPage";
+import { ContactPage } from "../pages/ContactPage";
 
 // Dashboards (role-based)
-import AdminDashboard from "../pages/dashboard/AdminDashboard";
-import OwnerDashboard from "../pages/dashboard/OwnerDashboard";
-import AgentDashboard from "../pages/dashboard/AgentDashboard";
-import TenantDashboard from "../pages/dashboard/TenantDashboard";
+import { AdminDashboard } from "../pages/dashboard/AdminDashboard";
+import { OwnerDashboard } from "../pages/dashboard/OwnerDashboard";
+import { AgentDashboard } from "../pages/dashboard/AgentDashboard";
+import { TenantDashboard } from "../pages/dashboard/TenantDashboard";
 
 // Protected routes
 import ProtectedRoute from "./ProtectedRoute";
@@ -27,9 +27,9 @@ const NotFound = () => <div>404 — Page Not Found</div>;
 export default function AppRouter() {
   return (
     <Routes>
-      {/* ============================
+      {/* =============================
           PUBLIC ROUTES
-      ============================ */}
+      ============================= */}
       <Route path="/" element={<HomePage />} />
       <Route path="/properties" element={<PropertiesPage />} />
       <Route path="/property/:id" element={<PropertyDetailPage />} />
@@ -38,9 +38,9 @@ export default function AppRouter() {
       <Route path="/blog/:slug" element={<BlogPostPage />} />
       <Route path="/contact" element={<ContactPage />} />
 
-      {/* ============================
+      {/* =============================
           AUTH ROUTES (with redirect)
-      ============================ */}
+      ============================= */}
       <Route
         path="/login"
         element={
@@ -50,7 +50,6 @@ export default function AppRouter() {
           </>
         }
       />
-
       <Route
         path="/signup"
         element={
@@ -61,9 +60,9 @@ export default function AppRouter() {
         }
       />
 
-      {/* ============================
+      {/* =============================
           DASHBOARD ROUTES (protected)
-      ============================ */}
+      ============================= */}
       <Route
         path="/dashboard/admin"
         element={
@@ -100,9 +99,9 @@ export default function AppRouter() {
         }
       />
 
-      {/* ============================
+      {/* =============================
           404 fallback
-      ============================ */}
+      ============================= */}
       <Route path="*" element={<NotFound />} />
     </Routes>
   );
