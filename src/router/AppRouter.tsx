@@ -17,8 +17,8 @@ import OwnerDashboard from "../pages/dashboard/OwnerDashboard";
 import AgentDashboard from "../pages/dashboard/AgentDashboard";
 import TenantDashboard from "../pages/dashboard/TenantDashboard";
 // Protected routes
-import ProtectedRoute from ../components/auth/ProtectedRoute;
-import AuthRedirect from ../compone../components/auth/AuthRedirectnts/auth/ProtectedRoute;
+import ProtectedRoute from "../components/auth/ProtectedRoute";
+  import AuthRedirect from "../components/auth/AuthRedirect";
 
 // 404 fallback
 const NotFound = () => <div>404 — Page Not Found</div>;
