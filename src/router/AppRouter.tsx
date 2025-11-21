@@ -33,7 +33,7 @@ import TenantDashboard from "../pages/dashboard/TenantDashboard";
 // Protected routes
 import ProtectedRoute from "../components/auth/ProtectedRoute";
 import AuthRedirect from "../components/auth/AuthRedirect";
-import { UnauthorizedPage } from "../pages/UnauthorizedPage";
+import UnauthorizedPage from "../pages/UnauthorizedPage";
 
 // 404 fallback
 const NotFound = () => (
