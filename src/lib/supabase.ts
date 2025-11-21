@@ -1,7 +1,10 @@
 import { createClient } from '@supabase/supabase-js'
 
+console.log('RAW ENV:', import.meta.env)
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || ''
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || ''
+console.log('Supabase URL:', supabaseUrl)
+console.log('Supabase Key:', supabaseAnonKey ? 'SET' : 'MISSING')
 
 // Log environment variables for debugging (only in development)
 if (import.meta.env.DEV) {
