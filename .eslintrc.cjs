@@ -66,7 +66,8 @@ module.exports = {
         },
       },
     ],
-    'import/no-unresolved': 'error',
+    'import/no-unresolved': ['error', { ignore: ['^figma:'] }],
+    'import/default': 'off', // Disabled due to false positives with React imports
     'import/no-named-as-default': 'off',
 
     // General rules
