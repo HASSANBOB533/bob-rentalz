@@ -1,6 +1,6 @@
-import { useState } from 'react';
 import { X, Calendar } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
+import { useState } from 'react';
 import { Button } from './ui/button';
 
 interface FilterModalProps {
@@ -38,9 +38,7 @@ export function FilterModal({ isOpen, onClose, filters, onApply }: FilterModalPr
 
   const handleAmenityToggle = (amenityId: string) => {
     setLocalAmenities((prev) =>
-      prev.includes(amenityId)
-        ? prev.filter((id) => id !== amenityId)
-        : [...prev, amenityId]
+      prev.includes(amenityId) ? prev.filter((id) => id !== amenityId) : [...prev, amenityId],
     );
   };
 
@@ -110,9 +108,7 @@ export function FilterModal({ isOpen, onClose, filters, onApply }: FilterModalPr
                         onChange={() => handleAmenityToggle(amenity.id)}
                         className="w-3.5 h-3.5 rounded border-gray-300 text-[#E9C500] focus:ring-[#E9C500]"
                       />
-                      <span className="text-xs text-gray-700">
-                        {amenity.label}
-                      </span>
+                      <span className="text-xs text-gray-700">{amenity.label}</span>
                     </label>
                   ))}
                 </div>

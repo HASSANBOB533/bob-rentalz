@@ -1,16 +1,29 @@
-import { DashboardLayout } from '../components/DashboardLayout';
-import { ArrowLeft, MapPin, Calendar, Phone, Mail, QrCode, DollarSign, FileText, Home, Bed, Bath, Maximize } from 'lucide-react';
-import { ImageWithFallback } from '../components/figma/ImageWithFallback';
-import { useNavigate, useParams } from 'react-router-dom';
-import { Button } from '../components/ui/button';
+import {
+  ArrowLeft,
+  MapPin,
+  Calendar,
+  Phone,
+  Mail,
+  QrCode,
+  DollarSign,
+  FileText,
+  Home,
+  Bed,
+  Bath,
+  Maximize,
+} from 'lucide-react';
 import QRCode from 'react-qr-code';
+import { useNavigate, useParams } from 'react-router-dom';
 import { ArchivedChat, ChatMessage } from '../components/ArchivedChat';
 import { ArchivedRentalSummary } from '../components/ArchivedRentalSummary';
+import { DashboardLayout } from '../components/DashboardLayout';
+import { ImageWithFallback } from '../components/figma/ImageWithFallback';
+import { Button } from '../components/ui/button';
 
 export default function TenantRentedRentalDetailsPage() {
   const navigate = useNavigate();
   const { id } = useParams();
-  
+
   const isPast = id === 'past';
 
   const activeRental = {
@@ -41,9 +54,9 @@ export default function TenantRentedRentalDetailsPage() {
     images: [
       'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&h=600&fit=crop',
       'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800&h=600&fit=crop',
-      'https://images.unsplash.com/photo-1502672260066-6bc35f0a1702?w=800&h=600&fit=crop'
+      'https://images.unsplash.com/photo-1502672260066-6bc35f0a1702?w=800&h=600&fit=crop',
     ],
-    status: 'Active'
+    status: 'Active',
   };
 
   const pastRental = {
@@ -52,17 +65,37 @@ export default function TenantRentedRentalDetailsPage() {
     title: 'Luxury Villa (Past)',
     leaseStart: 'January 1, 2023',
     leaseEnd: 'December 31, 2023',
-    status: 'Past'
+    status: 'Past',
   };
 
   const rental = isPast ? pastRental : activeRental;
 
   const archivedMessages: ChatMessage[] = [
-    { id: 1, text: "Hi, I wanted to confirm the move-out inspection time.", sender: "tenant", timestamp: "Dec 28, 2023, 10:00 AM" },
-    { id: 2, text: "Hello, yes, we are set for Dec 31st at 2 PM.", sender: "owner", timestamp: "Dec 28, 2023, 10:15 AM" },
-    { id: 3, text: "Great, thank you!", sender: "tenant", timestamp: "Dec 28, 2023, 10:16 AM" },
-    { id: 4, text: "All keys were returned on 31 Dec 2023.", sender: "owner", timestamp: "Dec 31, 2023 4:00 PM" },
-    { id: 5, text: "Thank you for the stay, we appreciate your tenancy.", sender: "owner", timestamp: "Dec 31, 2023 4:05 PM" }
+    {
+      id: 1,
+      text: 'Hi, I wanted to confirm the move-out inspection time.',
+      sender: 'tenant',
+      timestamp: 'Dec 28, 2023, 10:00 AM',
+    },
+    {
+      id: 2,
+      text: 'Hello, yes, we are set for Dec 31st at 2 PM.',
+      sender: 'owner',
+      timestamp: 'Dec 28, 2023, 10:15 AM',
+    },
+    { id: 3, text: 'Great, thank you!', sender: 'tenant', timestamp: 'Dec 28, 2023, 10:16 AM' },
+    {
+      id: 4,
+      text: 'All keys were returned on 31 Dec 2023.',
+      sender: 'owner',
+      timestamp: 'Dec 31, 2023 4:00 PM',
+    },
+    {
+      id: 5,
+      text: 'Thank you for the stay, we appreciate your tenancy.',
+      sender: 'owner',
+      timestamp: 'Dec 31, 2023 4:05 PM',
+    },
   ];
 
   return (
@@ -88,15 +121,19 @@ export default function TenantRentedRentalDetailsPage() {
               </div>
               <div className="inline-flex items-center gap-2 bg-gray-100 px-4 py-2 rounded-lg">
                 <span className="text-sm text-gray-600">Reference:</span>
-                <span className="font-mono font-semibold text-[#0E56A4]">{rental.referenceCode}</span>
+                <span className="font-mono font-semibold text-[#0E56A4]">
+                  {rental.referenceCode}
+                </span>
               </div>
             </div>
             <div className="text-right">
               <p className="text-3xl font-bold text-[#0E56A4]">{rental.monthlyRent}</p>
               <p className="text-sm text-gray-500">per month</p>
-              <div className={`mt-2 inline-block px-3 py-1 rounded-full text-xs font-medium ${
-                isPast ? 'bg-gray-100 text-gray-600' : 'bg-green-100 text-green-700'
-              }`}>
+              <div
+                className={`mt-2 inline-block px-3 py-1 rounded-full text-xs font-medium ${
+                  isPast ? 'bg-gray-100 text-gray-600' : 'bg-green-100 text-green-700'
+                }`}
+              >
                 {isPast ? 'Past Lease' : 'Active Lease'}
               </div>
             </div>
@@ -194,7 +231,10 @@ export default function TenantRentedRentalDetailsPage() {
                 <p className="text-sm text-gray-600 mb-2">Amenities</p>
                 <div className="flex flex-wrap gap-2">
                   {rental.amenities.map((amenity, index) => (
-                    <span key={index} className="px-3 py-1 bg-[#0E56A4]/10 text-[#0E56A4] rounded-full text-sm">
+                    <span
+                      key={index}
+                      className="px-3 py-1 bg-[#0E56A4]/10 text-[#0E56A4] rounded-full text-sm"
+                    >
                       {amenity}
                     </span>
                   ))}
@@ -251,8 +291,8 @@ export default function TenantRentedRentalDetailsPage() {
                   tenantName="Mohamed Ibrahim"
                   ownerName={rental.landlordName}
                 />
-                <ArchivedChat 
-                  messages={archivedMessages} 
+                <ArchivedChat
+                  messages={archivedMessages}
                   endDate={rental.leaseEnd}
                   viewingAs="tenant"
                 />

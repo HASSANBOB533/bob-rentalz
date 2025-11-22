@@ -1,36 +1,36 @@
-import { useState } from 'react';
-import { useParams, useNavigate, Link } from 'react-router-dom';
-import { AdminDashboardLayout } from '../components/AdminDashboardLayout';
-import { Badge } from '../components/ui/badge';
-import { Button } from '../components/ui/button';
-import { Textarea } from '../components/ui/textarea';
-import { Input } from '../components/ui/input';
-import { 
-  ArrowLeft, 
-  Building, 
-  User, 
-  Mail, 
-  Phone, 
-  Calendar, 
-  MessageSquare, 
-  Edit, 
-  Eye, 
-  Tag, 
+import {
+  ArrowLeft,
+  Building,
+  User,
+  Mail,
+  Phone,
+  Calendar,
+  MessageSquare,
+  Edit,
+  Eye,
+  Tag,
   Hash,
   UserCog,
   CheckCircle,
   XCircle,
   Send,
-  Paperclip
+  Paperclip,
 } from 'lucide-react';
+import { useState } from 'react';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import { toast } from 'sonner@2.0.3';
+import { AdminDashboardLayout } from '../components/AdminDashboardLayout';
+import { Badge } from '../components/ui/badge';
+import { Button } from '../components/ui/button';
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogDescription,
-} from "../components/ui/dialog";
+} from '../components/ui/dialog';
+import { Input } from '../components/ui/input';
+import { Textarea } from '../components/ui/textarea';
 
 // Define types for our mock data
 type OwnerData = {
@@ -81,7 +81,7 @@ type OwnerData = {
 
 // Mock Data Store
 const mockOwnersData: Record<string, OwnerData> = {
-  'ahmedId': {
+  ahmedId: {
     id: 'ahmedId',
     name: 'Ahmed Hassan',
     email: 'ahmed.hassan@email.com',
@@ -99,7 +99,7 @@ const mockOwnersData: Record<string, OwnerData> = {
         price: 'EGP 45,000/mo',
         views: 120,
         leads: 5,
-        city: 'New Cairo'
+        city: 'New Cairo',
       },
       {
         id: '105',
@@ -109,7 +109,7 @@ const mockOwnersData: Record<string, OwnerData> = {
         price: 'EGP 38,000/mo',
         views: 198,
         leads: 22,
-        city: 'New Cairo'
+        city: 'New Cairo',
       },
       {
         id: '205',
@@ -119,8 +119,8 @@ const mockOwnersData: Record<string, OwnerData> = {
         price: 'EGP 25,000/mo',
         views: 0,
         leads: 0,
-        city: 'Sheikh Zayed'
-      }
+        city: 'Sheikh Zayed',
+      },
     ],
     leads: [
       {
@@ -128,15 +128,15 @@ const mockOwnersData: Record<string, OwnerData> = {
         tenantName: 'Mohamed Hassan',
         propertyName: 'Luxury 4BR Villa with Pool',
         status: 'New',
-        date: '2 hours ago'
+        date: '2 hours ago',
       },
       {
         id: 'L2',
         tenantName: 'Sara Ibrahim',
         propertyName: 'Luxury Villa',
         status: 'Contacted',
-        date: '1 day ago'
-      }
+        date: '1 day ago',
+      },
     ],
     tenants: [
       {
@@ -145,31 +145,31 @@ const mockOwnersData: Record<string, OwnerData> = {
         propertyName: 'Luxury Villa',
         leaseStart: 'Nov 1, 2025',
         leaseEnd: 'Nov 1, 2026',
-        status: 'Active'
-      }
+        status: 'Active',
+      },
     ],
     messages: [
       {
         id: 1,
         sender: 'owner',
         text: 'Hello Admin, I need help updating my property listing.',
-        timestamp: '2 days ago'
+        timestamp: '2 days ago',
       },
       {
         id: 2,
         sender: 'admin',
         text: 'Hi Ahmed, sure thing. Which property are you referring to?',
-        timestamp: '2 days ago'
+        timestamp: '2 days ago',
       },
       {
         id: 3,
         sender: 'owner',
         text: 'The Luxury Villa in New Cairo (ID: 105).',
-        timestamp: '1 day ago'
-      }
-    ]
+        timestamp: '1 day ago',
+      },
+    ],
   },
-  'saraId': {
+  saraId: {
     id: 'saraId',
     name: 'Sara Mohamed',
     email: 'sara.mohamed@email.com',
@@ -187,7 +187,7 @@ const mockOwnersData: Record<string, OwnerData> = {
         price: 'EGP 15,000/mo',
         views: 85,
         leads: 12,
-        city: 'Cairo'
+        city: 'Cairo',
       },
       {
         id: '302',
@@ -201,8 +201,8 @@ const mockOwnersData: Record<string, OwnerData> = {
         tenantName: 'Omar Youssef',
         tenantId: '102',
         leaseStart: 'Jan 1, 2025',
-        leaseEnd: 'Jan 1, 2026'
-      }
+        leaseEnd: 'Jan 1, 2026',
+      },
     ],
     leads: [
       {
@@ -210,8 +210,8 @@ const mockOwnersData: Record<string, OwnerData> = {
         tenantName: 'Karim Nabil',
         propertyName: 'Downtown Studio',
         status: 'New',
-        date: '5 hours ago'
-      }
+        date: '5 hours ago',
+      },
     ],
     tenants: [
       {
@@ -220,19 +220,19 @@ const mockOwnersData: Record<string, OwnerData> = {
         propertyName: 'Zamalek Apartment',
         leaseStart: 'Jan 1, 2025',
         leaseEnd: 'Jan 1, 2026',
-        status: 'Active'
-      }
+        status: 'Active',
+      },
     ],
     messages: [
       {
         id: 1,
         sender: 'owner',
         text: 'Hi, when will I receive the rent payment for this month?',
-        timestamp: '1 day ago'
-      }
-    ]
+        timestamp: '1 day ago',
+      },
+    ],
   },
-  'mohamedId': {
+  mohamedId: {
     id: 'mohamedId',
     name: 'Mohamed Ali',
     email: 'mohamed.ali@email.com',
@@ -250,13 +250,13 @@ const mockOwnersData: Record<string, OwnerData> = {
         price: 'EGP 12,000/night',
         views: 340,
         leads: 45,
-        city: 'North Coast'
-      }
+        city: 'North Coast',
+      },
     ],
     leads: [],
     tenants: [],
-    messages: []
-  }
+    messages: [],
+  },
 };
 
 export default function AdminOwnerDetailPage() {
@@ -267,34 +267,35 @@ export default function AdminOwnerDetailPage() {
   const [messageText, setMessageText] = useState('');
 
   // Get owner data based on ID, fallback to Ahmed if not found (or could show 404)
-  const ownerData = ownerId && mockOwnersData[ownerId] ? mockOwnersData[ownerId] : mockOwnersData['ahmedId'];
-  
+  const ownerData =
+    ownerId && mockOwnersData[ownerId] ? mockOwnersData[ownerId] : mockOwnersData['ahmedId'];
+
   // Local state for messages so we can add to them in the UI
   const [messages, setMessages] = useState(ownerData.messages);
 
   // Reset messages when owner changes (if we were to navigate between owners directly)
   if (messages !== ownerData.messages && messages.length === 0 && ownerData.messages.length > 0) {
-     setMessages(ownerData.messages);
+    setMessages(ownerData.messages);
   }
 
   const getStatusBadge = (status: string) => {
     const styles: Record<string, string> = {
-      'Active': 'bg-green-100 text-green-700',
-      'Pending': 'bg-yellow-100 text-yellow-700',
-      'Rented': 'bg-blue-100 text-blue-700',
-      'Draft': 'bg-gray-100 text-gray-700',
-      'Suspended': 'bg-red-100 text-red-700',
-      'Assigned': 'bg-purple-100 text-purple-700'
+      Active: 'bg-green-100 text-green-700',
+      Pending: 'bg-yellow-100 text-yellow-700',
+      Rented: 'bg-blue-100 text-blue-700',
+      Draft: 'bg-gray-100 text-gray-700',
+      Suspended: 'bg-red-100 text-red-700',
+      Assigned: 'bg-purple-100 text-purple-700',
     };
     return <Badge className={styles[status] || 'bg-gray-100 text-gray-700'}>{status}</Badge>;
   };
 
   const getLeadStatusBadge = (status: string) => {
     const styles: Record<string, string> = {
-      'New': 'bg-blue-100 text-blue-700',
-      'Contacted': 'bg-yellow-100 text-yellow-700',
+      New: 'bg-blue-100 text-blue-700',
+      Contacted: 'bg-yellow-100 text-yellow-700',
       'Follow-up': 'bg-purple-100 text-purple-700',
-      'Closed': 'bg-gray-100 text-gray-700'
+      Closed: 'bg-gray-100 text-gray-700',
     };
     return <Badge className={styles[status] || 'bg-gray-100 text-gray-700'}>{status}</Badge>;
   };
@@ -314,7 +315,7 @@ export default function AdminOwnerDetailPage() {
       id: messages.length + 1,
       sender: 'admin',
       text: messageText,
-      timestamp: 'Just now'
+      timestamp: 'Just now',
     };
 
     setMessages([...messages, newMessage]);
@@ -353,11 +354,15 @@ export default function AdminOwnerDetailPage() {
             <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
               <div className="flex items-center gap-4 mb-6">
                 <div className="w-16 h-16 bg-[#E9C500] rounded-full flex items-center justify-center overflow-hidden">
-                   {ownerData.avatar ? (
-                    <img src={ownerData.avatar} alt={ownerData.name} className="w-full h-full object-cover" />
-                   ) : (
+                  {ownerData.avatar ? (
+                    <img
+                      src={ownerData.avatar}
+                      alt={ownerData.name}
+                      className="w-full h-full object-cover"
+                    />
+                  ) : (
                     <UserCog className="w-8 h-8 text-[#0E56A4]" />
-                   )}
+                  )}
                 </div>
                 <div>
                   <h2 className="text-xl font-bold text-gray-900">{ownerData.name}</h2>
@@ -387,14 +392,14 @@ export default function AdminOwnerDetailPage() {
 
             {/* Communication Section */}
             <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-               <h3 className="font-semibold text-gray-900 mb-4">Communication</h3>
-               <Button 
-                 onClick={handleMessageOwner} 
-                 className="w-full bg-[#0E56A4] text-white hover:bg-[#0A3F79] flex items-center justify-center"
-               >
-                 <MessageSquare className="w-4 h-4 mr-2" />
-                 Message Owner
-               </Button>
+              <h3 className="font-semibold text-gray-900 mb-4">Communication</h3>
+              <Button
+                onClick={handleMessageOwner}
+                className="w-full bg-[#0E56A4] text-white hover:bg-[#0A3F79] flex items-center justify-center"
+              >
+                <MessageSquare className="w-4 h-4 mr-2" />
+                Message Owner
+              </Button>
             </div>
 
             {/* Admin Notes */}
@@ -406,7 +411,11 @@ export default function AdminOwnerDetailPage() {
                 onChange={(e) => setAdminNotes(e.target.value)}
                 className="min-h-[120px] mb-3"
               />
-              <Button onClick={handleSaveNotes} variant="outline" className="w-full border-[#0E56A4] text-[#0E56A4]">
+              <Button
+                onClick={handleSaveNotes}
+                variant="outline"
+                className="w-full border-[#0E56A4] text-[#0E56A4]"
+              >
                 Save Notes
               </Button>
             </div>
@@ -428,7 +437,7 @@ export default function AdminOwnerDetailPage() {
                           <h4 className="font-semibold text-gray-900">{property.name}</h4>
                           {getStatusBadge(property.status)}
                         </div>
-                        
+
                         <div className="flex flex-wrap items-center gap-4 mb-3 text-xs text-gray-500">
                           <span className="flex items-center gap-1">
                             <Tag className="w-3 h-3" />
@@ -454,37 +463,52 @@ export default function AdminOwnerDetailPage() {
 
                         {/* Current Tenant Section */}
                         <div className="mt-4 pt-3 border-t border-gray-100">
-                           <p className="text-xs font-semibold text-gray-500 uppercase mb-2">Current Tenant</p>
-                           {property.status === 'Rented' && property.tenantId ? (
-                              <div className="bg-gray-50 p-3 rounded-lg flex items-center justify-between gap-4">
-                                 <div>
-                                    <div className="font-medium text-gray-900 text-sm">{property.tenantName}</div>
-                                    <div className="text-xs text-gray-500">ID: {property.tenantId}</div>
-                                    <div className="text-xs text-gray-500 mt-0.5">
-                                       {property.leaseStart} - {property.leaseEnd}
-                                    </div>
-                                 </div>
-                                 <Link to={`/admin/tenants/${property.tenantId}`}>
-                                    <Button size="sm" className="bg-[#0E56A4] text-white hover:bg-[#0A3F79]">
-                                       View Tenant
-                                    </Button>
-                                 </Link>
+                          <p className="text-xs font-semibold text-gray-500 uppercase mb-2">
+                            Current Tenant
+                          </p>
+                          {property.status === 'Rented' && property.tenantId ? (
+                            <div className="bg-gray-50 p-3 rounded-lg flex items-center justify-between gap-4">
+                              <div>
+                                <div className="font-medium text-gray-900 text-sm">
+                                  {property.tenantName}
+                                </div>
+                                <div className="text-xs text-gray-500">ID: {property.tenantId}</div>
+                                <div className="text-xs text-gray-500 mt-0.5">
+                                  {property.leaseStart} - {property.leaseEnd}
+                                </div>
                               </div>
-                           ) : (
-                              <p className="text-sm text-gray-500 italic">No active tenant.</p>
-                           )}
+                              <Link to={`/admin/tenants/${property.tenantId}`}>
+                                <Button
+                                  size="sm"
+                                  className="bg-[#0E56A4] text-white hover:bg-[#0A3F79]"
+                                >
+                                  View Tenant
+                                </Button>
+                              </Link>
+                            </div>
+                          ) : (
+                            <p className="text-sm text-gray-500 italic">No active tenant.</p>
+                          )}
                         </div>
                       </div>
-                      
+
                       <div className="flex items-center gap-2">
                         <Link to={`/admin/properties/${property.id}`}>
-                          <Button size="sm" variant="outline" className="border-[#0E56A4] text-[#0E56A4]">
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            className="border-[#0E56A4] text-[#0E56A4]"
+                          >
                             <Eye className="w-4 h-4 mr-2" />
                             View
                           </Button>
                         </Link>
                         <Link to={`/admin/properties/${property.id}/edit`}>
-                          <Button size="sm" variant="outline" className="border-gray-300 text-gray-700">
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            className="border-gray-300 text-gray-700"
+                          >
                             <Edit className="w-4 h-4" />
                           </Button>
                         </Link>
@@ -526,9 +550,7 @@ export default function AdminOwnerDetailPage() {
                   </div>
                 ))}
                 {ownerData.leads.length === 0 && (
-                  <div className="p-8 text-center text-gray-500">
-                    No active leads found.
-                  </div>
+                  <div className="p-8 text-center text-gray-500">No active leads found.</div>
                 )}
               </div>
             </div>
@@ -555,7 +577,11 @@ export default function AdminOwnerDetailPage() {
                         </p>
                       </div>
                       <Link to={`/admin/tenants/${tenant.tenantId}`}>
-                        <Button size="sm" variant="outline" className="border-[#0E56A4] text-[#0E56A4]">
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          className="border-[#0E56A4] text-[#0E56A4]"
+                        >
                           View Tenant
                         </Button>
                       </Link>
@@ -579,8 +605,8 @@ export default function AdminOwnerDetailPage() {
           {/* Header */}
           <DialogHeader className="px-6 py-4 border-b border-gray-100 bg-white">
             <div className="flex items-center gap-3">
-              <img 
-                src={ownerData.avatar} 
+              <img
+                src={ownerData.avatar}
                 alt={ownerData.name}
                 className="w-10 h-10 rounded-full bg-gray-100 object-cover border"
               />
@@ -608,21 +634,23 @@ export default function AdminOwnerDetailPage() {
               </div>
             ) : (
               messages.map((msg) => (
-                <div 
-                  key={msg.id} 
+                <div
+                  key={msg.id}
                   className={`flex ${msg.sender === 'admin' ? 'justify-end' : 'justify-start'}`}
                 >
-                  <div 
+                  <div
                     className={`max-w-[80%] rounded-2xl px-4 py-2.5 text-sm ${
-                      msg.sender === 'admin' 
-                        ? 'bg-[#0E56A4] text-white rounded-br-none' 
+                      msg.sender === 'admin'
+                        ? 'bg-[#0E56A4] text-white rounded-br-none'
                         : 'bg-white border border-gray-200 text-gray-800 rounded-bl-none shadow-sm'
                     }`}
                   >
                     <p>{msg.text}</p>
-                    <p className={`text-[10px] mt-1 ${
-                      msg.sender === 'admin' ? 'text-blue-200' : 'text-gray-400'
-                    }`}>
+                    <p
+                      className={`text-[10px] mt-1 ${
+                        msg.sender === 'admin' ? 'text-blue-200' : 'text-gray-400'
+                      }`}
+                    >
                       {msg.timestamp}
                     </p>
                   </div>
@@ -634,20 +662,20 @@ export default function AdminOwnerDetailPage() {
           {/* Input Area */}
           <div className="p-4 bg-white border-t border-gray-100">
             <form onSubmit={handleSendMessage} className="flex items-center gap-2">
-              <button 
+              <button
                 type="button"
                 className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-full transition-colors"
               >
                 <Paperclip className="w-5 h-5" />
               </button>
-              <Input 
+              <Input
                 value={messageText}
                 onChange={(e) => setMessageText(e.target.value)}
                 placeholder="Type a message..."
                 className="flex-1 border-gray-200 focus-visible:ring-[#0E56A4]"
               />
-              <Button 
-                type="submit" 
+              <Button
+                type="submit"
                 size="icon"
                 disabled={!messageText.trim()}
                 className="bg-[#0E56A4] text-white hover:bg-[#0A3F79] rounded-full w-10 h-10 flex-shrink-0 shadow-sm"

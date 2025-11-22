@@ -28,7 +28,7 @@ export const createPaymentRequest = async (
   paymentFor: string,
   dueDate: string,
   paymentLink?: string,
-  notes?: string
+  notes?: string,
 ): Promise<string> => {
   const { data, error } = await supabase.rpc('create_manual_payment_request', {
     p_property_id: propertyId,
@@ -164,7 +164,7 @@ export const getOverduePayments = async (ownerId: string): Promise<Payment[]> =>
  */
 export const updatePaymentStatus = async (
   paymentId: string,
-  status: Payment['status']
+  status: Payment['status'],
 ): Promise<void> => {
   const updateData: any = { status };
 
@@ -173,10 +173,7 @@ export const updatePaymentStatus = async (
     updateData.paid_at = new Date().toISOString();
   }
 
-  const { error } = await supabase
-    .from('payments')
-    .update(updateData)
-    .eq('id', paymentId);
+  const { error } = await supabase.from('payments').update(updateData).eq('id', paymentId);
 
   if (error) {
     console.error('Error updating payment status:', error);
@@ -188,10 +185,7 @@ export const updatePaymentStatus = async (
  * Delete a payment
  */
 export const deletePayment = async (paymentId: string): Promise<void> => {
-  const { error } = await supabase
-    .from('payments')
-    .delete()
-    .eq('id', paymentId);
+  const { error } = await supabase.from('payments').delete().eq('id', paymentId);
 
   if (error) {
     console.error('Error deleting payment:', error);

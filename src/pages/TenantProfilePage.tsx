@@ -1,9 +1,9 @@
-import { DashboardLayout } from '../components/DashboardLayout';
-import { useNavigate } from 'react-router-dom';
 import { ChevronLeft, User, Mail, Phone, Globe, Camera } from 'lucide-react';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { DashboardLayout } from '../components/DashboardLayout';
 import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
-import { useState } from 'react';
 
 export default function TenantProfilePage() {
   const navigate = useNavigate();
@@ -13,13 +13,13 @@ export default function TenantProfilePage() {
     fullName: 'Mohamed Ibrahim',
     email: 'mohamed.ibrahim@email.com',
     phone: '+20 123 456 7890',
-    language: 'English'
+    language: 'English',
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
 
@@ -42,9 +42,7 @@ export default function TenantProfilePage() {
 
         {/* Header */}
         <div className="mb-6">
-          <h2 className="text-2xl font-bold text-[#0E56A4] mb-2">
-            Your Profile
-          </h2>
+          <h2 className="text-2xl font-bold text-[#0E56A4] mb-2">Your Profile</h2>
           <p className="text-sm text-gray-600">Manage your personal information</p>
         </div>
 
@@ -53,7 +51,7 @@ export default function TenantProfilePage() {
           <div className="lg:col-span-1">
             <div className="bg-white rounded-xl shadow border border-gray-100 p-6">
               <h3 className="font-semibold text-gray-900 mb-4">Profile Picture</h3>
-              
+
               {/* Avatar */}
               <div className="flex flex-col items-center">
                 <div className="relative">
@@ -98,7 +96,10 @@ export default function TenantProfilePage() {
               <form onSubmit={handleSubmit} className="space-y-6">
                 {/* Full Name */}
                 <div>
-                  <label htmlFor="fullName" className="block text-sm font-medium text-gray-700 mb-2">
+                  <label
+                    htmlFor="fullName"
+                    className="block text-sm font-medium text-gray-700 mb-2"
+                  >
                     Full Name
                   </label>
                   <div className="relative">
@@ -161,7 +162,10 @@ export default function TenantProfilePage() {
 
                 {/* Preferred Language */}
                 <div>
-                  <label htmlFor="language" className="block text-sm font-medium text-gray-700 mb-2">
+                  <label
+                    htmlFor="language"
+                    className="block text-sm font-medium text-gray-700 mb-2"
+                  >
                     Preferred Language
                   </label>
                   <div className="relative">
@@ -185,32 +189,38 @@ export default function TenantProfilePage() {
                 {/* Divider */}
                 <div className="border-t border-gray-200 pt-6">
                   <h4 className="font-medium text-gray-900 mb-4">Notification Preferences</h4>
-                  
+
                   <div className="space-y-3">
                     <label className="flex items-center gap-3 cursor-pointer">
-                      <input 
-                        type="checkbox" 
-                        defaultChecked 
+                      <input
+                        type="checkbox"
+                        defaultChecked
                         className="w-4 h-4 text-[#0E56A4] border-gray-300 rounded focus:ring-[#0E56A4]"
                       />
-                      <span className="text-sm text-gray-700">Email notifications for new properties</span>
+                      <span className="text-sm text-gray-700">
+                        Email notifications for new properties
+                      </span>
                     </label>
-                    
+
                     <label className="flex items-center gap-3 cursor-pointer">
-                      <input 
-                        type="checkbox" 
-                        defaultChecked 
+                      <input
+                        type="checkbox"
+                        defaultChecked
                         className="w-4 h-4 text-[#0E56A4] border-gray-300 rounded focus:ring-[#0E56A4]"
                       />
-                      <span className="text-sm text-gray-700">SMS alerts for inquiry responses</span>
+                      <span className="text-sm text-gray-700">
+                        SMS alerts for inquiry responses
+                      </span>
                     </label>
-                    
+
                     <label className="flex items-center gap-3 cursor-pointer">
-                      <input 
-                        type="checkbox" 
+                      <input
+                        type="checkbox"
                         className="w-4 h-4 text-[#0E56A4] border-gray-300 rounded focus:ring-[#0E56A4]"
                       />
-                      <span className="text-sm text-gray-700">Marketing and promotional emails</span>
+                      <span className="text-sm text-gray-700">
+                        Marketing and promotional emails
+                      </span>
                     </label>
                   </div>
                 </div>

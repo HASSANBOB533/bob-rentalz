@@ -1,8 +1,8 @@
+import { User, Search, Filter } from 'lucide-react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { DashboardLayout } from '../components/DashboardLayout';
 import { Badge } from '../components/ui/badge';
-import { User, Search, Filter } from 'lucide-react';
 import { Input } from '../components/ui/input';
 
 // Mock data for active tenant conversations (only properties with active leases)
@@ -18,7 +18,7 @@ const MOCK_TENANT_CONVERSATIONS = [
     lastMessage: 'Perfect! 10 AM works great. Thank you for the quick response.',
     timestamp: '2 days ago',
     unread: false,
-    leaseEndDate: '2024-12-31'
+    leaseEndDate: '2024-12-31',
   },
   {
     id: '3',
@@ -31,7 +31,7 @@ const MOCK_TENANT_CONVERSATIONS = [
     lastMessage: 'Thank you for letting me know, Mohamed. Have a safe trip!',
     timestamp: '1 week ago',
     unread: false,
-    leaseEndDate: '2025-03-14'
+    leaseEndDate: '2025-03-14',
   },
   {
     id: '6',
@@ -41,10 +41,10 @@ const MOCK_TENANT_CONVERSATIONS = [
     propertyName: 'Sea View Apartment',
     propertyLocation: 'Alexandria, Miami',
     leaseStatus: 'ending-soon',
-    lastMessage: 'Of course! Take your time. Just let me know when you\'ve decided.',
+    lastMessage: "Of course! Take your time. Just let me know when you've decided.",
     timestamp: '3 days ago',
     unread: true,
-    leaseEndDate: '2025-01-31'
+    leaseEndDate: '2025-01-31',
   },
   {
     id: '7',
@@ -57,7 +57,7 @@ const MOCK_TENANT_CONVERSATIONS = [
     lastMessage: 'The air conditioning has been fixed. Thank you!',
     timestamp: '4 days ago',
     unread: false,
-    leaseEndDate: '2026-02-28'
+    leaseEndDate: '2026-02-28',
   },
 ];
 
@@ -69,7 +69,7 @@ export default function OwnerMessagesPage() {
   const [searchQuery, setSearchQuery] = useState('');
 
   // Filter conversations based on selected filter and search query
-  const filteredConversations = MOCK_TENANT_CONVERSATIONS.filter(convo => {
+  const filteredConversations = MOCK_TENANT_CONVERSATIONS.filter((convo) => {
     // Filter by status
     let statusMatch = true;
     if (activeFilter === 'unread') {
@@ -81,7 +81,8 @@ export default function OwnerMessagesPage() {
     }
 
     // Filter by search query
-    const searchMatch = searchQuery === '' || 
+    const searchMatch =
+      searchQuery === '' ||
       convo.tenantName.toLowerCase().includes(searchQuery.toLowerCase()) ||
       convo.propertyName.toLowerCase().includes(searchQuery.toLowerCase());
 
@@ -95,16 +96,10 @@ export default function OwnerMessagesPage() {
   const getLeaseStatusBadge = (status: string) => {
     if (status === 'ending-soon') {
       return (
-        <Badge className="bg-[#E9C500] text-[#0E56A4] hover:bg-[#E9C500]/90">
-          Ending Soon
-        </Badge>
+        <Badge className="bg-[#E9C500] text-[#0E56A4] hover:bg-[#E9C500]/90">Ending Soon</Badge>
       );
     }
-    return (
-      <Badge className="bg-green-100 text-green-700 hover:bg-green-100">
-        Active Tenant
-      </Badge>
-    );
+    return <Badge className="bg-green-100 text-green-700 hover:bg-green-100">Active Tenant</Badge>;
   };
 
   return (
@@ -214,7 +209,7 @@ export default function OwnerMessagesPage() {
                           {conversation.propertyLocation}
                         </p>
                       </div>
-                      
+
                       <div className="flex items-center gap-2 flex-shrink-0">
                         {getLeaseStatusBadge(conversation.leaseStatus)}
                         {conversation.unread && (
@@ -224,9 +219,11 @@ export default function OwnerMessagesPage() {
                     </div>
 
                     {/* Last Message */}
-                    <p className={`text-sm text-gray-600 line-clamp-2 mb-2 ${
-                      conversation.unread ? 'font-medium text-gray-900' : ''
-                    }`}>
+                    <p
+                      className={`text-sm text-gray-600 line-clamp-2 mb-2 ${
+                        conversation.unread ? 'font-medium text-gray-900' : ''
+                      }`}
+                    >
                       {conversation.lastMessage}
                     </p>
 
@@ -243,18 +240,18 @@ export default function OwnerMessagesPage() {
                 <User className="w-8 h-8 text-gray-400" />
               </div>
               <h3 className="text-lg font-semibold text-gray-700 mb-2">
-                {activeFilter === 'archived' 
-                  ? 'No archived conversations' 
-                  : searchQuery 
-                  ? 'No conversations found' 
-                  : 'No tenant conversations yet'}
+                {activeFilter === 'archived'
+                  ? 'No archived conversations'
+                  : searchQuery
+                    ? 'No conversations found'
+                    : 'No tenant conversations yet'}
               </h3>
               <p className="text-gray-600 max-w-md mx-auto">
                 {activeFilter === 'archived'
                   ? 'Archived conversations will appear here.'
                   : searchQuery
-                  ? 'Try adjusting your search terms.'
-                  : 'Once a tenant rents your property, their chat will appear here.'}
+                    ? 'Try adjusting your search terms.'
+                    : 'Once a tenant rents your property, their chat will appear here.'}
               </p>
             </div>
           )}
@@ -272,13 +269,13 @@ export default function OwnerMessagesPage() {
             <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
               <p className="text-sm text-gray-600 mb-1">Unread Messages</p>
               <p className="text-2xl font-semibold text-[#0E56A4]">
-                {MOCK_TENANT_CONVERSATIONS.filter(c => c.unread).length}
+                {MOCK_TENANT_CONVERSATIONS.filter((c) => c.unread).length}
               </p>
             </div>
             <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
               <p className="text-sm text-gray-600 mb-1">Active Tenants</p>
               <p className="text-2xl font-semibold text-[#0E56A4]">
-                {MOCK_TENANT_CONVERSATIONS.filter(c => c.leaseStatus === 'active').length}
+                {MOCK_TENANT_CONVERSATIONS.filter((c) => c.leaseStatus === 'active').length}
               </p>
             </div>
           </div>

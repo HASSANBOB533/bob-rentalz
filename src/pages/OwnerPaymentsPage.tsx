@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { MainLayout } from '../components/MainLayout';
 import { useAuth } from '../contexts/AuthContext';
 import {
   getOwnerPayments,
@@ -6,7 +7,6 @@ import {
   markPaymentAsPaid,
   Payment,
 } from '../lib/supabase/paymentsApi';
-import { MainLayout } from '../components/MainLayout';
 
 export const OwnerPaymentsPage: React.FC = () => {
   const { user } = useAuth();
@@ -59,8 +59,8 @@ export const OwnerPaymentsPage: React.FC = () => {
     );
   };
 
-  const pendingPayments = payments.filter(p => p.status === 'pending');
-  const paidPayments = payments.filter(p => p.status === 'paid');
+  const pendingPayments = payments.filter((p) => p.status === 'pending');
+  const paidPayments = payments.filter((p) => p.status === 'paid');
   const totalPending = pendingPayments.reduce((sum, p) => sum + p.amount, 0);
   const totalPaid = paidPayments.reduce((sum, p) => sum + p.amount, 0);
 
@@ -85,13 +85,17 @@ export const OwnerPaymentsPage: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
           <div className="bg-white rounded-lg shadow p-6">
             <div className="text-sm text-gray-600 mb-1">Total Pending</div>
-            <div className="text-3xl font-bold text-yellow-600">{totalPending.toLocaleString()} EGP</div>
+            <div className="text-3xl font-bold text-yellow-600">
+              {totalPending.toLocaleString()} EGP
+            </div>
             <div className="text-sm text-gray-500 mt-1">{pendingPayments.length} payments</div>
           </div>
 
           <div className="bg-white rounded-lg shadow p-6">
             <div className="text-sm text-gray-600 mb-1">Total Paid</div>
-            <div className="text-3xl font-bold text-green-600">{totalPaid.toLocaleString()} EGP</div>
+            <div className="text-3xl font-bold text-green-600">
+              {totalPaid.toLocaleString()} EGP
+            </div>
             <div className="text-sm text-gray-500 mt-1">{paidPayments.length} payments</div>
           </div>
 
@@ -146,7 +150,9 @@ export const OwnerPaymentsPage: React.FC = () => {
                   {payments.map((payment) => (
                     <tr key={payment.id} className="hover:bg-gray-50">
                       <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="text-sm font-medium text-gray-900">{payment.payment_for}</div>
+                        <div className="text-sm font-medium text-gray-900">
+                          {payment.payment_for}
+                        </div>
                         {payment.notes && (
                           <div className="text-xs text-gray-500">{payment.notes}</div>
                         )}

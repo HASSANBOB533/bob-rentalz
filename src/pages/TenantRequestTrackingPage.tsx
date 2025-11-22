@@ -1,6 +1,15 @@
-import { DashboardLayout } from '../components/DashboardLayout';
+import {
+  ChevronLeft,
+  Clock,
+  CheckCircle,
+  AlertCircle,
+  Home,
+  Wrench,
+  FileText,
+  MessageCircle,
+} from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { ChevronLeft, Clock, CheckCircle, AlertCircle, Home, Wrench, FileText, MessageCircle } from 'lucide-react';
+import { DashboardLayout } from '../components/DashboardLayout';
 
 export default function TenantRequestTrackingPage() {
   const navigate = useNavigate();
@@ -18,11 +27,15 @@ export default function TenantRequestTrackingPage() {
       notes: 'Technician scheduled for tomorrow at 2 PM',
       timeline: [
         { date: 'Nov 13, 2024 - 10:30 AM', event: 'Request submitted', completed: true },
-        { date: 'Nov 13, 2024 - 2:15 PM', event: 'Request acknowledged by landlord', completed: true },
+        {
+          date: 'Nov 13, 2024 - 2:15 PM',
+          event: 'Request acknowledged by landlord',
+          completed: true,
+        },
         { date: 'Nov 14, 2024 - 11:00 AM', event: 'Technician assigned', completed: true },
         { date: 'Nov 15, 2024 - 2:00 PM', event: 'Scheduled repair visit', completed: false },
-        { date: 'Pending', event: 'Issue resolved', completed: false }
-      ]
+        { date: 'Pending', event: 'Issue resolved', completed: false },
+      ],
     },
     {
       id: 2,
@@ -37,8 +50,8 @@ export default function TenantRequestTrackingPage() {
         { date: 'Nov 10, 2024 - 9:00 AM', event: 'Request submitted', completed: true },
         { date: 'Nov 10, 2024 - 3:30 PM', event: 'Service scheduled', completed: true },
         { date: 'Nov 12, 2024 - 10:00 AM', event: 'Cleaning team arrived', completed: true },
-        { date: 'Nov 12, 2024 - 2:00 PM', event: 'Service completed', completed: true }
-      ]
+        { date: 'Nov 12, 2024 - 2:00 PM', event: 'Service completed', completed: true },
+      ],
     },
     {
       id: 3,
@@ -53,8 +66,8 @@ export default function TenantRequestTrackingPage() {
         { date: 'Nov 12, 2024 - 1:45 PM', event: 'Request submitted', completed: true },
         { date: 'Nov 12, 2024 - 4:20 PM', event: 'Request acknowledged', completed: true },
         { date: 'Pending', event: 'Document prepared', completed: false },
-        { date: 'Pending', event: 'Document sent', completed: false }
-      ]
+        { date: 'Pending', event: 'Document sent', completed: false },
+      ],
     },
     {
       id: 4,
@@ -67,9 +80,9 @@ export default function TenantRequestTrackingPage() {
       notes: 'Parking space B-24 has been assigned to your unit.',
       timeline: [
         { date: 'Nov 8, 2024 - 11:20 AM', event: 'Inquiry submitted', completed: true },
-        { date: 'Nov 8, 2024 - 5:40 PM', event: 'Response received', completed: true }
-      ]
-    }
+        { date: 'Nov 8, 2024 - 5:40 PM', event: 'Response received', completed: true },
+      ],
+    },
   ];
 
   const getStatusColor = (status: string) => {
@@ -112,9 +125,7 @@ export default function TenantRequestTrackingPage() {
 
         {/* Header */}
         <div className="mb-6">
-          <h2 className="text-2xl font-bold text-[#0E56A4] mb-2">
-            Request Tracking
-          </h2>
+          <h2 className="text-2xl font-bold text-[#0E56A4] mb-2">Request Tracking</h2>
           <p className="text-sm text-gray-600">Monitor the status of your service requests</p>
         </div>
 
@@ -122,9 +133,9 @@ export default function TenantRequestTrackingPage() {
         <div className="space-y-6">
           {requests.map((request) => {
             const IconComponent = request.icon;
-            
+
             return (
-              <div 
+              <div
                 key={request.id}
                 className="bg-white rounded-xl shadow hover:shadow-lg transition-all duration-300 border border-gray-100 overflow-hidden"
               >
@@ -135,23 +146,27 @@ export default function TenantRequestTrackingPage() {
                       <div className="w-10 h-10 rounded-full bg-[#0E56A4]/10 flex items-center justify-center flex-shrink-0">
                         <IconComponent className="w-5 h-5 text-[#0E56A4]" />
                       </div>
-                      
+
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-3 mb-1">
                           <h3 className="font-semibold text-gray-900">{request.type}</h3>
-                          <span className={`px-2 py-1 rounded-md text-xs font-medium ${getStatusColor(request.status)}`}>
+                          <span
+                            className={`px-2 py-1 rounded-md text-xs font-medium ${getStatusColor(request.status)}`}
+                          >
                             {request.status}
                           </span>
                         </div>
-                        <p className="text-sm text-gray-600 mb-1 line-clamp-1">{request.property}</p>
+                        <p className="text-sm text-gray-600 mb-1 line-clamp-1">
+                          {request.property}
+                        </p>
                         <p className="text-sm text-gray-700 mb-2">{request.description}</p>
-                        <p className="text-xs text-gray-500">Submitted on {request.submittedDate}</p>
+                        <p className="text-xs text-gray-500">
+                          Submitted on {request.submittedDate}
+                        </p>
                       </div>
                     </div>
-                    
-                    <div className="flex-shrink-0">
-                      {getStatusIcon(request.status)}
-                    </div>
+
+                    <div className="flex-shrink-0">{getStatusIcon(request.status)}</div>
                   </div>
 
                   {/* Notes */}
@@ -168,31 +183,33 @@ export default function TenantRequestTrackingPage() {
                 {/* Timeline */}
                 <div className="p-5">
                   <h4 className="font-medium text-gray-900 mb-4">Progress Timeline</h4>
-                  
+
                   <div className="relative">
                     {/* Vertical Line */}
                     <div className="absolute left-[11px] top-2 bottom-2 w-0.5 bg-gray-200"></div>
-                    
+
                     {/* Timeline Items */}
                     <div className="space-y-4">
                       {request.timeline.map((item, index) => (
                         <div key={index} className="relative flex gap-4">
                           {/* Circle Indicator */}
-                          <div className={`relative z-10 w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 ${
-                            item.completed 
-                              ? 'bg-[#0E56A4]' 
-                              : 'bg-white border-2 border-gray-300'
-                          }`}>
+                          <div
+                            className={`relative z-10 w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 ${
+                              item.completed ? 'bg-[#0E56A4]' : 'bg-white border-2 border-gray-300'
+                            }`}
+                          >
                             {item.completed && (
                               <CheckCircle className="w-4 h-4 text-white" fill="white" />
                             )}
                           </div>
-                          
+
                           {/* Timeline Content */}
                           <div className="flex-1 pb-2">
-                            <p className={`text-sm font-medium ${
-                              item.completed ? 'text-gray-900' : 'text-gray-500'
-                            }`}>
+                            <p
+                              className={`text-sm font-medium ${
+                                item.completed ? 'text-gray-900' : 'text-gray-500'
+                              }`}
+                            >
                               {item.event}
                             </p>
                             <p className="text-xs text-gray-500 mt-1">{item.date}</p>

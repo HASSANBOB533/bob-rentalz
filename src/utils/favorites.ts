@@ -14,7 +14,7 @@ export const addToFavorites = (propertyId: string): void => {
 
 export const removeFromFavorites = (propertyId: string): void => {
   const favorites = getFavorites();
-  const updated = favorites.filter(id => id !== propertyId);
+  const updated = favorites.filter((id) => id !== propertyId);
   localStorage.setItem('bob-favorites', JSON.stringify(updated));
 };
 

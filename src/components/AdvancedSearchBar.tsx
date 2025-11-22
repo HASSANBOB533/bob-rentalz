@@ -1,10 +1,10 @@
-import { useState, useEffect, useRef } from 'react';
 import { Search, SlidersHorizontal, Bookmark, X } from 'lucide-react';
-import { Button } from './ui/button';
 import { motion, AnimatePresence } from 'motion/react';
-import { FilterModal } from './FilterModal';
+import { useState, useEffect, useRef } from 'react';
 import { toast } from 'sonner@2.0.3';
 import { topLevelRegions } from '../data/locationData';
+import { FilterModal } from './FilterModal';
+import { Button } from './ui/button';
 
 export interface SearchFilters {
   location: string;
@@ -22,7 +22,21 @@ interface AdvancedSearchBarProps {
   initialFilters?: Partial<SearchFilters>;
 }
 
-const PROPERTY_TYPES = ['All Types', 'Apartment', 'Cabin', 'Chalet', 'Duplex', 'Loft', 'Penthouse', 'Serviced Apartment', 'Serviced Studio', 'Studio', 'Townhouse', 'Twinhouse', 'Villa'];
+const PROPERTY_TYPES = [
+  'All Types',
+  'Apartment',
+  'Cabin',
+  'Chalet',
+  'Duplex',
+  'Loft',
+  'Penthouse',
+  'Serviced Apartment',
+  'Serviced Studio',
+  'Studio',
+  'Townhouse',
+  'Twinhouse',
+  'Villa',
+];
 const FURNISHING_OPTIONS = ['Any', 'Furnished', 'Semi-Furnished', 'Unfurnished'];
 const BEDROOM_OPTIONS = ['Any', '1', '2', '3', '4', '5+'];
 
@@ -156,7 +170,9 @@ export function AdvancedSearchBar({ onSearch, initialFilters }: AdvancedSearchBa
 
             {/* Price Range */}
             <div className="col-span-4">
-              <label className="block text-xs font-medium text-gray-700 mb-1">Price Range (EGP)</label>
+              <label className="block text-xs font-medium text-gray-700 mb-1">
+                Price Range (EGP)
+              </label>
               <div className="flex gap-1.5">
                 <input
                   type="number"
@@ -212,7 +228,9 @@ export function AdvancedSearchBar({ onSearch, initialFilters }: AdvancedSearchBa
 
             {/* More Filters Button */}
             <div className="col-span-2">
-              <label className="block text-xs font-medium text-gray-700 mb-1 opacity-0">Filters</label>
+              <label className="block text-xs font-medium text-gray-700 mb-1 opacity-0">
+                Filters
+              </label>
               <Button
                 variant="outline"
                 onClick={() => setShowFilterModal(true)}
@@ -241,7 +259,9 @@ export function AdvancedSearchBar({ onSearch, initialFilters }: AdvancedSearchBa
 
             {/* Search Button */}
             <div className="col-span-2">
-              <label className="block text-xs font-medium text-gray-700 mb-1 opacity-0">Search</label>
+              <label className="block text-xs font-medium text-gray-700 mb-1 opacity-0">
+                Search
+              </label>
               <Button
                 onClick={handleSearch}
                 className="w-full bg-[#E9C500] hover:bg-[#E3B600] text-[#0E56A4] py-1.5 h-auto text-xs font-medium"
@@ -281,10 +301,7 @@ export function AdvancedSearchBar({ onSearch, initialFilters }: AdvancedSearchBa
                 </span>
               )}
             </div>
-            <motion.div
-              animate={{ rotate: isExpanded ? 180 : 0 }}
-              transition={{ duration: 0.3 }}
-            >
+            <motion.div animate={{ rotate: isExpanded ? 180 : 0 }} transition={{ duration: 0.3 }}>
               <SlidersHorizontal className="w-4 h-4 text-gray-600" />
             </motion.div>
           </button>
@@ -354,7 +371,9 @@ export function AdvancedSearchBar({ onSearch, initialFilters }: AdvancedSearchBa
                     >
                       {BEDROOM_OPTIONS.map((option) => (
                         <option key={option} value={option}>
-                          {option === 'Any' ? 'Beds - Any' : `${option} Bed${option !== '1' ? 's' : ''}`}
+                          {option === 'Any'
+                            ? 'Beds - Any'
+                            : `${option} Bed${option !== '1' ? 's' : ''}`}
                         </option>
                       ))}
                     </select>

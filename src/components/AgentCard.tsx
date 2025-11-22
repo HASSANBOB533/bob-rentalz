@@ -1,9 +1,9 @@
+import { Mail, Phone, MessageCircle, ArrowRight, Briefcase, Clock } from 'lucide-react';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Mail, Phone, MessageCircle, ArrowRight, Briefcase, Clock } from 'lucide-react';
 import { Agent } from '../data/mockData';
-import { Button } from './ui/button';
 import { ImageWithFallback } from './figma/ImageWithFallback';
+import { Button } from './ui/button';
 
 interface AgentCardProps {
   agent: Agent;
@@ -55,7 +55,10 @@ export function AgentCard({ agent }: AgentCardProps) {
             WebkitBackfaceVisibility: 'hidden',
           }}
         >
-          <Link to={`/agent/${agent.id}`} className="group block lg:pointer-events-auto pointer-events-none">
+          <Link
+            to={`/agent/${agent.id}`}
+            className="group block lg:pointer-events-auto pointer-events-none"
+          >
             {/* Photo */}
             <div className="flex flex-col items-center mb-4">
               <div className="relative mb-4">
@@ -71,11 +74,9 @@ export function AgentCard({ agent }: AgentCardProps) {
               <h3 className="font-bold text-xl text-[#2B2B2B] mb-1 group-hover:text-[#E9C500] transition-colors">
                 {agent.name}
               </h3>
-              
+
               {/* Listings Count */}
-              <p className="text-sm text-gray-600 mb-4">
-                {agent.listingsCount} Active Listings
-              </p>
+              <p className="text-sm text-gray-600 mb-4">{agent.listingsCount} Active Listings</p>
             </div>
 
             {/* Contact Icons */}
@@ -92,9 +93,7 @@ export function AgentCard({ agent }: AgentCardProps) {
             </div>
 
             {/* Mobile Flip Indicator */}
-            <div className="lg:hidden text-center text-xs text-gray-400 mt-4">
-              Tap to see more
-            </div>
+            <div className="lg:hidden text-center text-xs text-gray-400 mt-4">Tap to see more</div>
           </Link>
         </div>
 
@@ -110,15 +109,11 @@ export function AgentCard({ agent }: AgentCardProps) {
           {/* Back Content */}
           <div>
             {/* Name */}
-            <h3 className="font-bold text-xl text-[#2B2B2B] mb-4 text-center">
-              {agent.name}
-            </h3>
+            <h3 className="font-bold text-xl text-[#2B2B2B] mb-4 text-center">{agent.name}</h3>
 
             {/* Bio */}
             {agent.bio && (
-              <p className="text-sm text-gray-700 leading-relaxed mb-4 line-clamp-3">
-                {agent.bio}
-              </p>
+              <p className="text-sm text-gray-700 leading-relaxed mb-4 line-clamp-3">{agent.bio}</p>
             )}
 
             {/* Specialization & Experience */}
@@ -130,7 +125,9 @@ export function AgentCard({ agent }: AgentCardProps) {
                   </div>
                   <div>
                     <div className="text-xs text-gray-500 mb-0.5">Specialization</div>
-                    <div className="text-sm font-semibold text-[#2B2B2B]">{agent.specialization}</div>
+                    <div className="text-sm font-semibold text-[#2B2B2B]">
+                      {agent.specialization}
+                    </div>
                   </div>
                 </div>
               )}
@@ -151,18 +148,14 @@ export function AgentCard({ agent }: AgentCardProps) {
 
           {/* CTA Button */}
           <Link to={`/agent/${agent.id}`} className="pointer-events-auto">
-            <Button
-              className="w-full bg-gradient-to-r from-[#E0C46E] to-[#C59A2A] hover:shadow-lg text-white h-11 gap-2 transition-all font-semibold text-sm"
-            >
+            <Button className="w-full bg-gradient-to-r from-[#E0C46E] to-[#C59A2A] hover:shadow-lg text-white h-11 gap-2 transition-all font-semibold text-sm">
               View Profile
               <ArrowRight className="w-4 h-4" />
             </Button>
           </Link>
 
           {/* Back Flip Indicator */}
-          <div className="text-center text-xs text-gray-400 mt-3">
-            Tap to flip back
-          </div>
+          <div className="text-center text-xs text-gray-400 mt-3">Tap to flip back</div>
         </div>
       </div>
     </div>

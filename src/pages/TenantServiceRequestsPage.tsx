@@ -1,5 +1,5 @@
-import { useNavigate } from 'react-router-dom';
 import { ChevronLeft, Home, Wrench, FileText, MessageCircle, Clock } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 export default function TenantServiceRequestsPage() {
   const navigate = useNavigate();
@@ -11,29 +11,29 @@ export default function TenantServiceRequestsPage() {
       icon: Home,
       label: 'Housekeeping',
       description: 'Request cleaning and housekeeping services',
-      color: '#0E56A4'
+      color: '#0E56A4',
     },
     {
       id: 2,
       icon: Wrench,
       label: 'Maintenance',
       description: 'Report repair or maintenance issues',
-      color: '#E9C500'
+      color: '#E9C500',
     },
     {
       id: 3,
       icon: FileText,
       label: 'Document Request',
       description: 'Request rental documents or certificates',
-      color: '#0E56A4'
+      color: '#0E56A4',
     },
     {
       id: 4,
       icon: MessageCircle,
       label: 'General Inquiry',
       description: 'Ask questions or send general messages',
-      color: '#E9C500'
-    }
+      color: '#E9C500',
+    },
   ];
 
   // Recent requests
@@ -44,7 +44,7 @@ export default function TenantServiceRequestsPage() {
       property: 'Modern 2BR Apartment in New Cairo',
       status: 'In Progress',
       timestamp: '2 days ago',
-      description: 'Air conditioning not working properly'
+      description: 'Air conditioning not working properly',
     },
     {
       id: 2,
@@ -52,7 +52,7 @@ export default function TenantServiceRequestsPage() {
       property: 'Modern 2BR Apartment in New Cairo',
       status: 'Completed',
       timestamp: '1 week ago',
-      description: 'Deep cleaning service requested'
+      description: 'Deep cleaning service requested',
     },
     {
       id: 3,
@@ -60,8 +60,8 @@ export default function TenantServiceRequestsPage() {
       property: 'Spacious 3BR Penthouse',
       status: 'Pending',
       timestamp: '3 days ago',
-      description: 'Rental certificate for visa application'
-    }
+      description: 'Rental certificate for visa application',
+    },
   ];
 
   const getStatusColor = (status: string) => {
@@ -94,9 +94,7 @@ export default function TenantServiceRequestsPage() {
 
       {/* Header */}
       <div className="mb-6">
-        <h2 className="text-2xl font-bold text-[#0E56A4] mb-2">
-          Service Requests
-        </h2>
+        <h2 className="text-2xl font-bold text-[#0E56A4] mb-2">Service Requests</h2>
         <p className="text-sm text-gray-600">Choose the service you need</p>
       </div>
 
@@ -110,7 +108,7 @@ export default function TenantServiceRequestsPage() {
               onClick={() => handleServiceClick(service.label)}
               className="p-5 bg-white rounded-xl shadow-sm border border-gray-100 hover:shadow-md hover:border-[#0E56A4] transition-all duration-300 cursor-pointer flex items-center gap-4 text-left"
             >
-              <div 
+              <div
                 className="w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0"
                 style={{ backgroundColor: `${service.color}20` }}
               >
@@ -129,12 +127,10 @@ export default function TenantServiceRequestsPage() {
       <div className="mb-6">
         <div className="flex items-center justify-between mb-4">
           <div>
-            <h3 className="text-xl font-semibold text-[#0E56A4] mb-1">
-              Recent Requests
-            </h3>
+            <h3 className="text-xl font-semibold text-[#0E56A4] mb-1">Recent Requests</h3>
             <p className="text-sm text-gray-600">Track your submitted service requests</p>
           </div>
-          <button 
+          <button
             onClick={() => navigate('/tenant/request-tracking')}
             className="px-4 py-2 bg-[#0E56A4] text-white rounded-lg text-sm font-medium hover:bg-[#0A3F79] transition-colors"
           >
@@ -144,7 +140,7 @@ export default function TenantServiceRequestsPage() {
 
         <div className="space-y-4">
           {recentRequests.map((request) => (
-            <div 
+            <div
               key={request.id}
               className="bg-white rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-all duration-300 p-5"
             >
@@ -152,7 +148,9 @@ export default function TenantServiceRequestsPage() {
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-3 mb-2">
                     <h4 className="font-semibold text-gray-900">{request.type}</h4>
-                    <span className={`px-2 py-1 rounded-md text-xs font-medium ${getStatusColor(request.status)}`}>
+                    <span
+                      className={`px-2 py-1 rounded-md text-xs font-medium ${getStatusColor(request.status)}`}
+                    >
                       {request.status}
                     </span>
                   </div>

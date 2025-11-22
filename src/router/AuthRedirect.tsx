@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
-import { Navigate } from "react-router-dom";
-import { supabase, getCurrentRole } from "../lib/supabase/api";
+import { useEffect, useState } from 'react';
+import { Navigate } from 'react-router-dom';
+import { supabase, getCurrentRole } from '../lib/supabase/api';
 
 interface AuthRedirectProps {
   children: React.ReactNode;
@@ -22,12 +22,14 @@ export default function AuthRedirect({ children }: AuthRedirectProps) {
 
   const checkAuth = async () => {
     try {
-      const { data: { session } } = await supabase.auth.getSession();
-      
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
+
       if (session?.user) {
         // User is logged in, determine redirect path based on role
         const role = await getCurrentRole();
-        const dashboardPath = role ? `/dashboard/${role}` : "/";
+        const dashboardPath = role ? `/dashboard/${role}` : '/';
         setRedirectPath(dashboardPath);
         setIsAuthenticated(true);
       } else {
@@ -35,7 +37,7 @@ export default function AuthRedirect({ children }: AuthRedirectProps) {
         setIsAuthenticated(false);
       }
     } catch (error) {
-      console.error("Auth check error:", error);
+      console.error('Auth check error:', error);
       setIsAuthenticated(false);
     } finally {
       setLoading(false);

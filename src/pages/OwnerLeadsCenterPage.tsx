@@ -1,9 +1,9 @@
-import { DashboardLayout } from '../components/DashboardLayout';
-import { Button } from '../components/ui/button';
-import { Badge } from '../components/ui/badge';
 import { ArrowLeft, MessageSquare, Clock } from 'lucide-react';
-import { Link } from 'react-router-dom';
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { DashboardLayout } from '../components/DashboardLayout';
+import { Badge } from '../components/ui/badge';
+import { Button } from '../components/ui/button';
 
 const MOCK_LEADS = [
   {
@@ -11,7 +11,7 @@ const MOCK_LEADS = [
     tenantName: 'Sarah Ahmed',
     tenantAvatar: 'https://i.pravatar.cc/150?img=1',
     propertyName: 'Luxury 3BR Apartment',
-    message: 'Hi, I\'m interested in viewing this property. Is it still available?',
+    message: "Hi, I'm interested in viewing this property. Is it still available?",
     timestamp: '2 hours ago',
     status: 'New',
   },
@@ -20,7 +20,8 @@ const MOCK_LEADS = [
     tenantName: 'Mohamed Hassan',
     tenantAvatar: 'https://i.pravatar.cc/150?img=12',
     propertyName: 'Modern Villa with Pool',
-    message: 'Hello, I would like to schedule a viewing for this weekend. Please let me know your availability.',
+    message:
+      'Hello, I would like to schedule a viewing for this weekend. Please let me know your availability.',
     timestamp: '5 hours ago',
     status: 'Contacted',
   },
@@ -38,7 +39,7 @@ const MOCK_LEADS = [
     tenantName: 'Omar Youssef',
     tenantAvatar: 'https://i.pravatar.cc/150?img=13',
     propertyName: 'Sea View Apartment',
-    message: 'I saw your listing and I\'m very interested. Can we discuss the lease terms?',
+    message: "I saw your listing and I'm very interested. Can we discuss the lease terms?",
     timestamp: '1 day ago',
     status: 'Contacted',
   },
@@ -115,7 +116,9 @@ export default function OwnerLeadsCenterPage() {
         {/* Page Header */}
         <div className="mb-8">
           <h1 className="text-[#0E56A4] mb-2">Leads Center</h1>
-          <p className="text-gray-600">Track tenant inquiries and see how your agents are responding</p>
+          <p className="text-gray-600">
+            Track tenant inquiries and see how your agents are responding
+          </p>
         </div>
 
         {/* Filter Bar */}
@@ -163,9 +166,7 @@ export default function OwnerLeadsCenterPage() {
                       <h3 className="text-[#0E56A4]">{lead.tenantName}</h3>
                       <p className="text-gray-600 text-sm">{lead.propertyName}</p>
                     </div>
-                    <Badge className={getStatusColor(lead.status)}>
-                      {lead.status}
-                    </Badge>
+                    <Badge className={getStatusColor(lead.status)}>{lead.status}</Badge>
                   </div>
 
                   {/* Message Preview */}
@@ -183,10 +184,7 @@ export default function OwnerLeadsCenterPage() {
                       <span>{lead.timestamp}</span>
                     </div>
                     <Link to={`/owner/lead-details/${lead.id}`}>
-                      <Button
-                        size="sm"
-                        className="bg-[#0E56A4] text-white hover:bg-[#0A3F79]"
-                      >
+                      <Button size="sm" className="bg-[#0E56A4] text-white hover:bg-[#0A3F79]">
                         View Lead Details
                       </Button>
                     </Link>

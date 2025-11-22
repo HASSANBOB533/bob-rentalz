@@ -1,14 +1,20 @@
-import { useState } from 'react';
-import { Button } from '../components/ui/button';
-import { Input } from '../components/ui/input';
-import { Textarea } from '../components/ui/textarea';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../components/ui/select';
 import { Check, Loader2 } from 'lucide-react';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner@2.0.3';
 import { AmenitiesSelector } from '../components/property/AmenitiesSelector';
 import { ImageUploader } from '../components/property/ImageUploader';
+import { Button } from '../components/ui/button';
+import { Input } from '../components/ui/input';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '../components/ui/select';
+import { Textarea } from '../components/ui/textarea';
 import { createProperty, uploadPropertyImage } from '../lib/supabase/propertiesApi';
-import { useNavigate } from 'react-router-dom';
 
 export function ListPropertyPage() {
   const navigate = useNavigate();
@@ -35,16 +41,16 @@ export function ListPropertyPage() {
   const [imageUrls, setImageUrls] = useState<string[]>([]);
 
   const handleInputChange = (field: string, value: string) => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [field]: value
+      [field]: value,
     }));
   };
 
   const handleImageUpload = async (files: File[]): Promise<string[]> => {
     setIsUploadingImages(true);
     try {
-      const uploadPromises = files.map(file => uploadPropertyImage(file));
+      const uploadPromises = files.map((file) => uploadPropertyImage(file));
       const urls = await Promise.all(uploadPromises);
       return urls;
     } catch (error) {
@@ -69,7 +75,7 @@ export function ListPropertyPage() {
         return;
       }
     }
-    
+
     if (step < 4) setStep(step + 1);
   };
 
@@ -81,8 +87,14 @@ export function ListPropertyPage() {
     e.preventDefault();
 
     // Final validation
-    if (!formData.title || !formData.description || !formData.propertyType || 
-        !formData.bedrooms || !formData.price || !formData.location) {
+    if (
+      !formData.title ||
+      !formData.description ||
+      !formData.propertyType ||
+      !formData.bedrooms ||
+      !formData.price ||
+      !formData.location
+    ) {
       toast.error('Please fill in all required fields');
       return;
     }
@@ -125,7 +137,8 @@ export function ListPropertyPage() {
           </div>
           <h2 className="text-2xl font-bold mb-4">Property Submitted Successfully!</h2>
           <p className="text-gray-600 mb-8">
-            Thank you for listing your property with BOB Rentalz. Our team will review your submission and contact you within 24-48 hours.
+            Thank you for listing your property with BOB Rentalz. Our team will review your
+            submission and contact you within 24-48 hours.
           </p>
           <div className="flex gap-4 justify-center">
             <Button
@@ -182,9 +195,7 @@ export function ListPropertyPage() {
                 <div key={s} className="flex items-center flex-1">
                   <div
                     className={`w-10 h-10 rounded-full flex items-center justify-center transition-colors ${
-                      s <= step
-                        ? 'bg-[#D4AF37] text-white'
-                        : 'bg-gray-200 text-gray-500'
+                      s <= step ? 'bg-[#D4AF37] text-white' : 'bg-gray-200 text-gray-500'
                     }`}
                   >
                     {s}
@@ -214,7 +225,7 @@ export function ListPropertyPage() {
               {step === 1 && (
                 <div className="space-y-6">
                   <h3 className="text-xl font-semibold mb-6">Basic Information</h3>
-                  
+
                   <div>
                     <label className="block font-medium mb-2">Property Title *</label>
                     <Input
@@ -238,7 +249,7 @@ export function ListPropertyPage() {
 
                     <div>
                       <label className="block font-medium mb-2">Property Type *</label>
-                      <Select 
+                      <Select
                         required
                         value={formData.propertyType}
                         onValueChange={(value) => handleInputChange('propertyType', value)}
@@ -288,7 +299,7 @@ export function ListPropertyPage() {
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                     <div>
                       <label className="block font-medium mb-2">Bedrooms *</label>
-                      <Select 
+                      <Select
                         required
                         value={formData.bedrooms}
                         onValueChange={(value) => handleInputChange('bedrooms', value)}
@@ -309,7 +320,7 @@ export function ListPropertyPage() {
 
                     <div>
                       <label className="block font-medium mb-2">Bathrooms *</label>
-                      <Select 
+                      <Select
                         required
                         value={formData.bathrooms}
                         onValueChange={(value) => handleInputChange('bathrooms', value)}
@@ -340,7 +351,7 @@ export function ListPropertyPage() {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                       <label className="block font-medium mb-2">Furnishing</label>
-                      <Select 
+                      <Select
                         value={formData.furnishing}
                         onValueChange={(value) => handleInputChange('furnishing', value)}
                       >
@@ -396,15 +407,11 @@ export function ListPropertyPage() {
               {/* Navigation Buttons */}
               <div className="flex justify-between mt-8 pt-6 border-t">
                 {step > 1 && (
-                  <Button
-                    type="button"
-                    variant="outline"
-                    onClick={handlePrevious}
-                  >
+                  <Button type="button" variant="outline" onClick={handlePrevious}>
                     Previous
                   </Button>
                 )}
-                
+
                 {step < 4 ? (
                   <Button
                     type="button"

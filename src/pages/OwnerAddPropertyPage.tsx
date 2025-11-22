@@ -1,14 +1,20 @@
-import { Button } from '../components/ui/button';
-import { Input } from '../components/ui/input';
-import { Label } from '../components/ui/label';
-import { Textarea } from '../components/ui/textarea';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../components/ui/select';
 import { ArrowLeft, Loader2 } from 'lucide-react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'sonner@2.0.3';
 import { AmenitiesSelector } from '../components/property/AmenitiesSelector';
 import { ImageUploader } from '../components/property/ImageUploader';
+import { Button } from '../components/ui/button';
+import { Input } from '../components/ui/input';
+import { Label } from '../components/ui/label';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '../components/ui/select';
+import { Textarea } from '../components/ui/textarea';
 import { createProperty, uploadPropertyImage } from '../lib/supabase/propertiesApi';
 
 export default function OwnerAddPropertyPage() {
@@ -16,10 +22,10 @@ export default function OwnerAddPropertyPage() {
   const navigate = useNavigate();
   const isAgentPath = location.pathname.startsWith('/agent');
   const dashboardPath = isAgentPath ? '/agent/dashboard' : '/owner/dashboard';
-  
+
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isUploadingImages, setIsUploadingImages] = useState(false);
-  
+
   // Form state
   const [formData, setFormData] = useState({
     title: '',
@@ -39,16 +45,16 @@ export default function OwnerAddPropertyPage() {
   const [imageUrls, setImageUrls] = useState<string[]>([]);
 
   const handleInputChange = (field: string, value: string) => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [field]: value
+      [field]: value,
     }));
   };
 
   const handleImageUpload = async (files: File[]): Promise<string[]> => {
     setIsUploadingImages(true);
     try {
-      const uploadPromises = files.map(file => uploadPropertyImage(file));
+      const uploadPromises = files.map((file) => uploadPropertyImage(file));
       const urls = await Promise.all(uploadPromises);
       return urls;
     } catch (error) {
@@ -70,8 +76,14 @@ export default function OwnerAddPropertyPage() {
 
   const handleSubmit = async (status: 'draft' | 'active') => {
     // Validate required fields
-    if (!formData.title || !formData.description || !formData.propertyType || 
-        !formData.bedrooms || !formData.price || !formData.city) {
+    if (
+      !formData.title ||
+      !formData.description ||
+      !formData.propertyType ||
+      !formData.bedrooms ||
+      !formData.price ||
+      !formData.city
+    ) {
       toast.error('Please fill in all required fields');
       return;
     }
@@ -96,9 +108,7 @@ export default function OwnerAddPropertyPage() {
       const { id } = await createProperty(propertyData, selectedAmenityIds, imageUrls);
 
       toast.success(
-        status === 'draft' 
-          ? 'Property saved as draft!' 
-          : 'Property submitted for approval!'
+        status === 'draft' ? 'Property saved as draft!' : 'Property submitted for approval!',
       );
 
       setTimeout(() => {
@@ -170,8 +180,8 @@ export default function OwnerAddPropertyPage() {
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
               <div>
                 <Label htmlFor="property-type">Property Type *</Label>
-                <Select 
-                  value={formData.propertyType} 
+                <Select
+                  value={formData.propertyType}
                   onValueChange={(value) => handleInputChange('propertyType', value)}
                 >
                   <SelectTrigger id="property-type" className="mt-1.5">
@@ -190,8 +200,8 @@ export default function OwnerAddPropertyPage() {
 
               <div>
                 <Label htmlFor="bedrooms">Bedrooms *</Label>
-                <Select 
-                  value={formData.bedrooms} 
+                <Select
+                  value={formData.bedrooms}
                   onValueChange={(value) => handleInputChange('bedrooms', value)}
                 >
                   <SelectTrigger id="bedrooms" className="mt-1.5">
@@ -210,8 +220,8 @@ export default function OwnerAddPropertyPage() {
 
               <div>
                 <Label htmlFor="bathrooms">Bathrooms *</Label>
-                <Select 
-                  value={formData.bathrooms} 
+                <Select
+                  value={formData.bathrooms}
                   onValueChange={(value) => handleInputChange('bathrooms', value)}
                 >
                   <SelectTrigger id="bathrooms" className="mt-1.5">
@@ -243,8 +253,8 @@ export default function OwnerAddPropertyPage() {
 
               <div>
                 <Label htmlFor="furnishing">Furnishing</Label>
-                <Select 
-                  value={formData.furnishing} 
+                <Select
+                  value={formData.furnishing}
                   onValueChange={(value) => handleInputChange('furnishing', value)}
                 >
                   <SelectTrigger id="furnishing" className="mt-1.5">

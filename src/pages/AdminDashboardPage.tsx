@@ -1,65 +1,65 @@
-import { AdminDashboardLayout } from '../components/AdminDashboardLayout';
-import { 
-  Building, 
-  Clock, 
-  Users, 
-  UserCheck, 
-  Wrench, 
+import {
+  Building,
+  Clock,
+  Users,
+  UserCheck,
+  Wrench,
   DollarSign,
   Eye,
   CheckCircle,
   AlertCircle,
-  ArrowRight
+  ArrowRight,
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { AdminDashboardLayout } from '../components/AdminDashboardLayout';
+import { AdminGlobalSearch } from '../components/AdminGlobalSearch';
 import { Badge } from '../components/ui/badge';
 import { Button } from '../components/ui/button';
-import { AdminGlobalSearch } from '../components/AdminGlobalSearch';
 
 export default function AdminDashboardPage() {
   // Mock KPI data
   const kpiData = [
-    { 
-      label: 'Total Properties', 
-      value: '127', 
-      icon: <Building className="w-6 h-6" />, 
+    {
+      label: 'Total Properties',
+      value: '127',
+      icon: <Building className="w-6 h-6" />,
       color: 'bg-blue-50 text-blue-600',
-      change: '+12 this month'
+      change: '+12 this month',
     },
-    { 
-      label: 'Pending Approvals', 
-      value: '8', 
-      icon: <Clock className="w-6 h-6" />, 
+    {
+      label: 'Pending Approvals',
+      value: '8',
+      icon: <Clock className="w-6 h-6" />,
       color: 'bg-yellow-50 text-yellow-600',
-      change: 'Need review'
+      change: 'Need review',
     },
-    { 
-      label: 'Active Agents', 
-      value: '24', 
-      icon: <Users className="w-6 h-6" />, 
+    {
+      label: 'Active Agents',
+      value: '24',
+      icon: <Users className="w-6 h-6" />,
       color: 'bg-green-50 text-green-600',
-      change: '3 new this week'
+      change: '3 new this week',
     },
-    { 
-      label: 'Active Tenants', 
-      value: '89', 
-      icon: <UserCheck className="w-6 h-6" />, 
+    {
+      label: 'Active Tenants',
+      value: '89',
+      icon: <UserCheck className="w-6 h-6" />,
       color: 'bg-purple-50 text-purple-600',
-      change: '+5 this week'
+      change: '+5 this week',
     },
-    { 
-      label: 'Open Service Requests', 
-      value: '15', 
-      icon: <Wrench className="w-6 h-6" />, 
+    {
+      label: 'Open Service Requests',
+      value: '15',
+      icon: <Wrench className="w-6 h-6" />,
       color: 'bg-orange-50 text-orange-600',
-      change: '3 high priority'
+      change: '3 high priority',
     },
-    { 
-      label: 'Monthly Revenue', 
-      value: 'EGP 2.4M', 
-      icon: <DollarSign className="w-6 h-6" />, 
+    {
+      label: 'Monthly Revenue',
+      value: 'EGP 2.4M',
+      icon: <DollarSign className="w-6 h-6" />,
       color: 'bg-[#E9C500]/10 text-[#0E56A4]',
-      change: '+18% vs last month'
+      change: '+18% vs last month',
     },
   ];
 
@@ -71,7 +71,7 @@ export default function AdminDashboardPage() {
       owner: 'Ahmed Hassan',
       city: 'New Cairo',
       submittedDate: '2 hours ago',
-      status: 'Pending'
+      status: 'Pending',
     },
     {
       id: '102',
@@ -79,7 +79,7 @@ export default function AdminDashboardPage() {
       owner: 'Sara Mohamed',
       city: 'Sheikh Zayed',
       submittedDate: '5 hours ago',
-      status: 'Pending'
+      status: 'Pending',
     },
     {
       id: '103',
@@ -87,7 +87,7 @@ export default function AdminDashboardPage() {
       owner: 'Mohamed Ali',
       city: 'Zamalek',
       submittedDate: '1 day ago',
-      status: 'Pending'
+      status: 'Pending',
     },
   ];
 
@@ -98,14 +98,14 @@ export default function AdminDashboardPage() {
       property: '3BR Apartment in Maadi',
       owner: 'Fatima Ahmed',
       city: 'Maadi',
-      recommendedAgent: 'Sarah Anderson'
+      recommendedAgent: 'Sarah Anderson',
     },
     {
       id: '202',
       property: 'Studio in Downtown',
       owner: 'Omar Ibrahim',
       city: 'Downtown Cairo',
-      recommendedAgent: 'Michael Brown'
+      recommendedAgent: 'Michael Brown',
     },
   ];
 
@@ -116,21 +116,21 @@ export default function AdminDashboardPage() {
       tenantName: 'Layla Hassan',
       property: 'Modern 2BR Apartment',
       startDate: 'Nov 15, 2025',
-      agent: 'Sarah Anderson'
+      agent: 'Sarah Anderson',
     },
     {
       id: '2',
       tenantName: 'Ahmed Mahmoud',
       property: 'Luxury Villa',
       startDate: 'Nov 12, 2025',
-      agent: 'Michael Brown'
+      agent: 'Michael Brown',
     },
     {
       id: '3',
       tenantName: 'Nour Ibrahim',
       property: 'Penthouse Suite',
       startDate: 'Nov 10, 2025',
-      agent: 'Sarah Anderson'
+      agent: 'Sarah Anderson',
     },
   ];
 
@@ -142,7 +142,7 @@ export default function AdminDashboardPage() {
       property: 'Apartment 3B',
       tenant: 'Mohamed Ali',
       priority: 'High',
-      status: 'Open'
+      status: 'Open',
     },
     {
       id: '2',
@@ -150,7 +150,7 @@ export default function AdminDashboardPage() {
       property: 'Villa 12',
       tenant: 'Sara Ahmed',
       priority: 'Medium',
-      status: 'In Progress'
+      status: 'In Progress',
     },
     {
       id: '3',
@@ -158,7 +158,7 @@ export default function AdminDashboardPage() {
       property: 'Studio 5A',
       tenant: 'Ahmed Hassan',
       priority: 'High',
-      status: 'Open'
+      status: 'Open',
     },
   ];
 
@@ -168,8 +168,10 @@ export default function AdminDashboardPage() {
         {/* Header */}
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-[#0E56A4] mb-2">Admin Dashboard</h1>
-          <p className="text-gray-600 mb-6">Platform overview and operations control for BOB Rentalz</p>
-          
+          <p className="text-gray-600 mb-6">
+            Platform overview and operations control for BOB Rentalz
+          </p>
+
           {/* Global Search */}
           <AdminGlobalSearch />
         </div>
@@ -179,9 +181,7 @@ export default function AdminDashboardPage() {
           {kpiData.map((kpi, index) => (
             <div key={index} className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
               <div className="flex items-start justify-between mb-4">
-                <div className={`p-3 rounded-lg ${kpi.color}`}>
-                  {kpi.icon}
-                </div>
+                <div className={`p-3 rounded-lg ${kpi.color}`}>{kpi.icon}</div>
               </div>
               <h3 className="text-3xl font-bold text-gray-900 mb-1">{kpi.value}</h3>
               <p className="text-sm text-gray-600 mb-2">{kpi.label}</p>
@@ -226,8 +226,8 @@ export default function AdminDashboardPage() {
               ))}
             </div>
             <div className="p-4 border-t border-gray-200">
-              <Link 
-                to="/admin/properties" 
+              <Link
+                to="/admin/properties"
                 className="flex items-center justify-center gap-2 text-[#0E56A4] hover:text-[#0A3F79] font-medium text-sm"
               >
                 View All Properties
@@ -262,7 +262,11 @@ export default function AdminDashboardPage() {
                       </p>
                     </div>
                     <Link to={`/admin/assignments`}>
-                      <Button size="sm" variant="outline" className="border-[#0E56A4] text-[#0E56A4]">
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        className="border-[#0E56A4] text-[#0E56A4]"
+                      >
                         Assign
                       </Button>
                     </Link>
@@ -271,8 +275,8 @@ export default function AdminDashboardPage() {
               ))}
             </div>
             <div className="p-4 border-t border-gray-200">
-              <Link 
-                to="/admin/assignments" 
+              <Link
+                to="/admin/assignments"
                 className="flex items-center justify-center gap-2 text-[#0E56A4] hover:text-[#0A3F79] font-medium text-sm"
               >
                 View All Assignments
@@ -287,7 +291,9 @@ export default function AdminDashboardPage() {
           {/* Recent Tenants Marked as Rented */}
           <div className="bg-white rounded-xl shadow-sm border border-gray-200">
             <div className="p-6 border-b border-gray-200">
-              <h2 className="text-lg font-semibold text-gray-900">Recent Tenants Marked as Rented</h2>
+              <h2 className="text-lg font-semibold text-gray-900">
+                Recent Tenants Marked as Rented
+              </h2>
             </div>
             <div className="divide-y divide-gray-200">
               {recentTenants.map((tenant) => (
@@ -309,8 +315,8 @@ export default function AdminDashboardPage() {
               ))}
             </div>
             <div className="p-4 border-t border-gray-200">
-              <Link 
-                to="/admin/tenants" 
+              <Link
+                to="/admin/tenants"
                 className="flex items-center justify-center gap-2 text-[#0E56A4] hover:text-[#0A3F79] font-medium text-sm"
               >
                 View All Tenants
@@ -336,15 +342,19 @@ export default function AdminDashboardPage() {
                     <div className="flex-1">
                       <div className="flex items-center gap-2 mb-2">
                         <h3 className="font-medium text-gray-900">{request.type}</h3>
-                        <Badge className={
-                          request.priority === 'High' 
-                            ? 'bg-red-100 text-red-700' 
-                            : 'bg-yellow-100 text-yellow-700'
-                        }>
+                        <Badge
+                          className={
+                            request.priority === 'High'
+                              ? 'bg-red-100 text-red-700'
+                              : 'bg-yellow-100 text-yellow-700'
+                          }
+                        >
                           {request.priority}
                         </Badge>
                       </div>
-                      <p className="text-sm text-gray-600">{request.property} - {request.tenant}</p>
+                      <p className="text-sm text-gray-600">
+                        {request.property} - {request.tenant}
+                      </p>
                       <p className="text-xs text-gray-500 mt-1">Status: {request.status}</p>
                     </div>
                     {request.priority === 'High' && (
@@ -355,8 +365,8 @@ export default function AdminDashboardPage() {
               ))}
             </div>
             <div className="p-4 border-t border-gray-200">
-              <Link 
-                to="/admin/service-requests" 
+              <Link
+                to="/admin/service-requests"
                 className="flex items-center justify-center gap-2 text-[#0E56A4] hover:text-[#0A3F79] font-medium text-sm"
               >
                 View All Requests

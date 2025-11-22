@@ -1,34 +1,34 @@
-import { useState, useEffect, useCallback } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
-
-// Import the 4 luxury property images
+import hero4 from 'figma:asset/3e3f91dd04615d3d1779a4384ef4cae9744a5511.png';
 import hero1 from 'figma:asset/b938b48e05634e352155aca01f7c09c4e37ca73e.png';
 import hero2 from 'figma:asset/e620e41fa31e2b3697673ee49e7a7dcd6e65cb3e.png';
 import hero3 from 'figma:asset/f93381c4c8e0792be4c66a1bf1b34a9e33977584.png';
-import hero4 from 'figma:asset/3e3f91dd04615d3d1779a4384ef4cae9744a5511.png';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { motion, AnimatePresence } from 'motion/react';
+import { useState, useEffect, useCallback } from 'react';
+
+// Import the 4 luxury property images
 
 const slides = [
   {
     id: 1,
     image: hero1,
-    alt: 'Luxury interior living room with pool view'
+    alt: 'Luxury interior living room with pool view',
   },
   {
     id: 2,
     image: hero2,
-    alt: 'Premium beachfront towers New Alamein'
+    alt: 'Premium beachfront towers New Alamein',
   },
   {
     id: 3,
     image: hero3,
-    alt: 'Modern New Cairo residential skyline'
+    alt: 'Modern New Cairo residential skyline',
   },
   {
     id: 4,
     image: hero4,
-    alt: 'Elegant bedroom with balcony view'
-  }
+    alt: 'Elegant bedroom with balcony view',
+  },
 ];
 
 interface HeroSliderProps {
@@ -42,7 +42,7 @@ export function HeroSlider({ children }: HeroSliderProps) {
   // Auto-slide functionality (every 4.5 seconds)
   useEffect(() => {
     if (!isAutoPlaying) return;
-    
+
     const interval = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % slides.length);
     }, 4500);
@@ -86,7 +86,7 @@ export function HeroSlider({ children }: HeroSliderProps) {
 
   const onTouchEnd = () => {
     if (!touchStart || !touchEnd) return;
-    
+
     const distance = touchStart - touchEnd;
     const isLeftSwipe = distance > minSwipeDistance;
     const isRightSwipe = distance < -minSwipeDistance;
@@ -99,7 +99,7 @@ export function HeroSlider({ children }: HeroSliderProps) {
   };
 
   return (
-    <section 
+    <section
       className="relative overflow-hidden h-[500px] md:h-[560px] lg:h-[620px] xl:h-[680px]"
       onTouchStart={onTouchStart}
       onTouchMove={onTouchMove}
@@ -126,17 +126,15 @@ export function HeroSlider({ children }: HeroSliderProps) {
       </div>
 
       {/* Enhanced Dark Gradient Overlay for Better Text Readability */}
-      <div 
+      <div
         className="absolute inset-0 z-[1]"
         style={{
-          background: 'linear-gradient(180deg, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.55) 100%)'
+          background: 'linear-gradient(180deg, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.55) 100%)',
         }}
       />
 
       {/* Content Layer */}
-      <div className="relative z-10 h-full flex flex-col justify-center">
-        {children}
-      </div>
+      <div className="relative z-10 h-full flex flex-col justify-center">{children}</div>
 
       {/* Arrow Controls - Hidden on Mobile */}
       <button
@@ -162,9 +160,7 @@ export function HeroSlider({ children }: HeroSliderProps) {
             key={slide.id}
             onClick={() => goToSlide(index)}
             className={`transition-all ${
-              index === currentSlide
-                ? 'w-8 h-2 bg-white'
-                : 'w-2 h-2 bg-white/50 hover:bg-white/70'
+              index === currentSlide ? 'w-8 h-2 bg-white' : 'w-2 h-2 bg-white/50 hover:bg-white/70'
             } rounded-full`}
             aria-label={`Go to slide ${index + 1}`}
           />

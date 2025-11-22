@@ -1,11 +1,10 @@
-import { useState, useEffect } from 'react';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { 
-  LayoutDashboard, 
-  Heart, 
-  MessageSquare, 
-  User, 
-  Settings, 
+import bobLogo from 'figma:asset/c3cbe0198340d6bed05c69174ee79f3b6a4d8624.png';
+import {
+  LayoutDashboard,
+  Heart,
+  MessageSquare,
+  User,
+  Settings,
   LogOut,
   Menu,
   X,
@@ -16,10 +15,10 @@ import {
   Users,
   FileText,
   Calendar,
-  Clock
+  Clock,
 } from 'lucide-react';
-import bobLogo from 'figma:asset/c3cbe0198340d6bed05c69174ee79f3b6a4d8624.png';
-
+import { useState, useEffect } from 'react';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { NotificationDropdown } from './NotificationDropdown';
 
 interface MenuItem {
@@ -36,11 +35,11 @@ interface DashboardLayoutProps {
   userRole?: string;
 }
 
-export function DashboardLayout({ 
-  children, 
+export function DashboardLayout({
+  children,
   pageTitle = 'Dashboard',
   userName = 'John Doe',
-  userRole = 'tenant'
+  userRole = 'tenant',
 }: DashboardLayoutProps) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
@@ -50,20 +49,20 @@ export function DashboardLayout({
   // Dynamic role-based user data
   const userInfo = {
     owner: {
-      name: "Ahmed Hassan",
-      role: "Owner",
-      avatar: "/images/owner.png"
+      name: 'Ahmed Hassan',
+      role: 'Owner',
+      avatar: '/images/owner.png',
     },
     agent: {
-      name: "Sarah Anderson",
-      role: "Agent",
-      avatar: "/images/agent.png"
+      name: 'Sarah Anderson',
+      role: 'Agent',
+      avatar: '/images/agent.png',
     },
     tenant: {
-      name: "Mohamed Ibrahim",
-      role: "Tenant",
-      avatar: "/images/tenant.png"
-    }
+      name: 'Mohamed Ibrahim',
+      role: 'Tenant',
+      avatar: '/images/tenant.png',
+    },
   };
 
   // Get current user info based on role
@@ -73,58 +72,179 @@ export function DashboardLayout({
   // Allow userName prop to override if it's not the default 'John Doe'
   const currentUser = {
     ...roleUser,
-    name: (userName && userName !== 'John Doe') ? userName : roleUser.name
+    name: userName && userName !== 'John Doe' ? userName : roleUser.name,
   };
 
   // Define menu items based on user role
   const getTenantMenuItems = (): MenuItem[] => [
-    { id: 'dashboard', label: 'Dashboard', icon: <LayoutDashboard className="w-5 h-5" />, path: '/dashboard' },
-    { id: 'saved', label: 'Saved Properties', icon: <Heart className="w-5 h-5" />, path: '/tenant/saved' },
-    { id: 'messages', label: 'Messages', icon: <MessageSquare className="w-5 h-5" />, path: '/tenant/inquiries' },
-    { id: 'account', label: 'Account', icon: <User className="w-5 h-5" />, path: '/tenant/profile' },
-    { id: 'settings', label: 'Settings', icon: <Settings className="w-5 h-5" />, path: '/tenant/settings' },
+    {
+      id: 'dashboard',
+      label: 'Dashboard',
+      icon: <LayoutDashboard className="w-5 h-5" />,
+      path: '/dashboard',
+    },
+    {
+      id: 'saved',
+      label: 'Saved Properties',
+      icon: <Heart className="w-5 h-5" />,
+      path: '/tenant/saved',
+    },
+    {
+      id: 'messages',
+      label: 'Messages',
+      icon: <MessageSquare className="w-5 h-5" />,
+      path: '/tenant/inquiries',
+    },
+    {
+      id: 'account',
+      label: 'Account',
+      icon: <User className="w-5 h-5" />,
+      path: '/tenant/profile',
+    },
+    {
+      id: 'settings',
+      label: 'Settings',
+      icon: <Settings className="w-5 h-5" />,
+      path: '/tenant/settings',
+    },
   ];
 
   const getOwnerMenuItems = (): MenuItem[] => [
-    { id: 'dashboard', label: 'Dashboard', icon: <LayoutDashboard className="w-5 h-5" />, path: '/owner/dashboard' },
-    { id: 'properties', label: 'My Properties', icon: <Building className="w-5 h-5" />, path: '/owner/properties' },
-    { id: 'add-property', label: 'Add Property', icon: <Plus className="w-5 h-5" />, path: '/owner/add-property' },
+    {
+      id: 'dashboard',
+      label: 'Dashboard',
+      icon: <LayoutDashboard className="w-5 h-5" />,
+      path: '/owner/dashboard',
+    },
+    {
+      id: 'properties',
+      label: 'My Properties',
+      icon: <Building className="w-5 h-5" />,
+      path: '/owner/properties',
+    },
+    {
+      id: 'add-property',
+      label: 'Add Property',
+      icon: <Plus className="w-5 h-5" />,
+      path: '/owner/add-property',
+    },
     { id: 'leads', label: 'Leads', icon: <Users className="w-5 h-5" />, path: '/owner/leads' },
-    { id: 'past-tenants', label: 'Past Tenants', icon: <Clock className="w-5 h-5" />, path: '/owner/past-tenants' },
-    { id: 'reports', label: 'Financial Reports', icon: <FileText className="w-5 h-5" />, path: '/owner/reports' },
-    { id: 'messages', label: 'Messages', icon: <MessageSquare className="w-5 h-5" />, path: '/owner/messages' },
+    {
+      id: 'past-tenants',
+      label: 'Past Tenants',
+      icon: <Clock className="w-5 h-5" />,
+      path: '/owner/past-tenants',
+    },
+    {
+      id: 'reports',
+      label: 'Financial Reports',
+      icon: <FileText className="w-5 h-5" />,
+      path: '/owner/reports',
+    },
+    {
+      id: 'messages',
+      label: 'Messages',
+      icon: <MessageSquare className="w-5 h-5" />,
+      path: '/owner/messages',
+    },
     { id: 'profile', label: 'Profile', icon: <User className="w-5 h-5" />, path: '/owner/profile' },
-    { id: 'settings', label: 'Settings', icon: <Settings className="w-5 h-5" />, path: '/owner/settings' },
+    {
+      id: 'settings',
+      label: 'Settings',
+      icon: <Settings className="w-5 h-5" />,
+      path: '/owner/settings',
+    },
   ];
 
   const getAgentMenuItems = (): MenuItem[] => [
-    { id: 'dashboard', label: 'Dashboard', icon: <LayoutDashboard className="w-5 h-5" />, path: '/agent/dashboard' },
-    { id: 'properties', label: 'Properties', icon: <Building className="w-5 h-5" />, path: '/agent/properties' },
+    {
+      id: 'dashboard',
+      label: 'Dashboard',
+      icon: <LayoutDashboard className="w-5 h-5" />,
+      path: '/agent/dashboard',
+    },
+    {
+      id: 'properties',
+      label: 'Properties',
+      icon: <Building className="w-5 h-5" />,
+      path: '/agent/properties',
+    },
     { id: 'leads', label: 'Leads', icon: <Users className="w-5 h-5" />, path: '/agent/leads' },
-    { id: 'viewings', label: 'Viewings', icon: <Calendar className="w-5 h-5" />, path: '/agent/viewings' },
-    { id: 'messages', label: 'Messages', icon: <MessageSquare className="w-5 h-5" />, path: '/agent/messages' },
+    {
+      id: 'viewings',
+      label: 'Viewings',
+      icon: <Calendar className="w-5 h-5" />,
+      path: '/agent/viewings',
+    },
+    {
+      id: 'messages',
+      label: 'Messages',
+      icon: <MessageSquare className="w-5 h-5" />,
+      path: '/agent/messages',
+    },
     { id: 'profile', label: 'Profile', icon: <User className="w-5 h-5" />, path: '/agent/profile' },
-    { id: 'settings', label: 'Settings', icon: <Settings className="w-5 h-5" />, path: '/agent/settings' },
+    {
+      id: 'settings',
+      label: 'Settings',
+      icon: <Settings className="w-5 h-5" />,
+      path: '/agent/settings',
+    },
   ];
 
   const getRenterMenuItems = (): MenuItem[] => [
-    { id: 'dashboard', label: 'Dashboard', icon: <LayoutDashboard className="w-5 h-5" />, path: '/tenant/rented/dashboard' },
-    { id: 'rentals', label: 'My Rentals', icon: <Building className="w-5 h-5" />, path: '/tenant/rented/my-rentals' },
-    { id: 'service-requests', label: 'Service Requests', icon: <FileText className="w-5 h-5" />, path: '/tenant/rented/service-requests' },
-    { id: 'documents', label: 'Documents', icon: <FileText className="w-5 h-5" />, path: '/tenant/rented/documents' },
-    { id: 'messages', label: 'Messages', icon: <MessageSquare className="w-5 h-5" />, path: '/tenant/rented/messages' },
-    { id: 'profile', label: 'Profile', icon: <User className="w-5 h-5" />, path: '/tenant/rented/profile' },
-    { id: 'settings', label: 'Settings', icon: <Settings className="w-5 h-5" />, path: '/tenant/rented/settings' },
+    {
+      id: 'dashboard',
+      label: 'Dashboard',
+      icon: <LayoutDashboard className="w-5 h-5" />,
+      path: '/tenant/rented/dashboard',
+    },
+    {
+      id: 'rentals',
+      label: 'My Rentals',
+      icon: <Building className="w-5 h-5" />,
+      path: '/tenant/rented/my-rentals',
+    },
+    {
+      id: 'service-requests',
+      label: 'Service Requests',
+      icon: <FileText className="w-5 h-5" />,
+      path: '/tenant/rented/service-requests',
+    },
+    {
+      id: 'documents',
+      label: 'Documents',
+      icon: <FileText className="w-5 h-5" />,
+      path: '/tenant/rented/documents',
+    },
+    {
+      id: 'messages',
+      label: 'Messages',
+      icon: <MessageSquare className="w-5 h-5" />,
+      path: '/tenant/rented/messages',
+    },
+    {
+      id: 'profile',
+      label: 'Profile',
+      icon: <User className="w-5 h-5" />,
+      path: '/tenant/rented/profile',
+    },
+    {
+      id: 'settings',
+      label: 'Settings',
+      icon: <Settings className="w-5 h-5" />,
+      path: '/tenant/rented/settings',
+    },
   ];
 
   // Get menu items based on role
-  const menuItems = userRole?.toLowerCase() === 'owner' 
-    ? getOwnerMenuItems()
-    : userRole?.toLowerCase() === 'renter'
-    ? getRenterMenuItems() 
-    : userRole?.toLowerCase() === 'agent'
-    ? getAgentMenuItems()
-    : getTenantMenuItems();
+  const menuItems =
+    userRole?.toLowerCase() === 'owner'
+      ? getOwnerMenuItems()
+      : userRole?.toLowerCase() === 'renter'
+        ? getRenterMenuItems()
+        : userRole?.toLowerCase() === 'agent'
+          ? getAgentMenuItems()
+          : getTenantMenuItems();
 
   const handleNavigation = (path: string) => {
     navigate(path);
@@ -158,14 +278,14 @@ export function DashboardLayout({
     <div className="flex h-screen w-full bg-gray-50 overflow-hidden">
       {/* Mobile Overlay */}
       {isSidebarOpen && (
-        <div 
+        <div
           className="fixed inset-0 bg-black/50 z-40 lg:hidden"
           onClick={() => setIsSidebarOpen(false)}
         />
       )}
 
       {/* Sidebar */}
-      <aside 
+      <aside
         className={`
           fixed lg:static inset-y-0 left-0 z-50
           w-64 bg-[#0E56A4] text-white
@@ -187,11 +307,7 @@ export function DashboardLayout({
 
           {/* Logo */}
           <Link to="/" className="block">
-            <img 
-              src={bobLogo} 
-              alt="Best of Bedz Rentalz" 
-              className="h-10 w-auto object-contain"
-            />
+            <img src={bobLogo} alt="Best of Bedz Rentalz" className="h-10 w-auto object-contain" />
           </Link>
         </div>
 
@@ -199,9 +315,7 @@ export function DashboardLayout({
         <nav className="flex-1 px-4 py-6 overflow-y-auto">
           {/* Section Title */}
           <div className="px-4 mb-3">
-            <p className="text-xs uppercase tracking-wider text-white/60 font-medium">
-              Menu
-            </p>
+            <p className="text-xs uppercase tracking-wider text-white/60 font-medium">Menu</p>
           </div>
 
           {/* Main Navigation Items */}
@@ -215,9 +329,10 @@ export function DashboardLayout({
                     className={`
                       w-full flex items-center gap-3 px-4 py-3 rounded-lg 
                       transition-all duration-200 cursor-pointer
-                      ${isActive 
-                        ? 'bg-white/20 text-white font-semibold' 
-                        : 'text-white hover:bg-white/10'
+                      ${
+                        isActive
+                          ? 'bg-white/20 text-white font-semibold'
+                          : 'text-white hover:bg-white/10'
                       }
                     `}
                   >
@@ -234,9 +349,7 @@ export function DashboardLayout({
 
           {/* Account Section */}
           <div className="px-4 mb-3">
-            <p className="text-xs uppercase tracking-wider text-white/60 font-medium">
-              Account
-            </p>
+            <p className="text-xs uppercase tracking-wider text-white/60 font-medium">Account</p>
           </div>
 
           {/* Profile & Settings Items */}
@@ -250,9 +363,10 @@ export function DashboardLayout({
                     className={`
                       w-full flex items-center gap-3 px-4 py-3 rounded-lg 
                       transition-all duration-200 cursor-pointer
-                      ${isActive 
-                        ? 'bg-white/20 text-white font-semibold' 
-                        : 'text-white hover:bg-white/10'
+                      ${
+                        isActive
+                          ? 'bg-white/20 text-white font-semibold'
+                          : 'text-white hover:bg-white/10'
                       }
                     `}
                   >
@@ -292,75 +406,82 @@ export function DashboardLayout({
             </button>
 
             {/* Page Title */}
-            <h1 className="text-xl sm:text-2xl font-semibold text-[#0E56A4]">
-              {pageTitle}
-            </h1>
+            <h1 className="text-xl sm:text-2xl font-semibold text-[#0E56A4]">{pageTitle}</h1>
           </div>
 
           {/* Right: User Profile Section */}
           <div className="flex items-center gap-2 sm:gap-4">
             {/* Notifications */}
-            <NotificationDropdown 
+            <NotificationDropdown
               userRole={
-                (userRole?.toLowerCase() === 'renter' ? 'tenant' : 
-                 userRole?.toLowerCase() === 'admin' ? 'admin' :
-                 userRole?.toLowerCase() === 'owner' ? 'owner' :
-                 userRole?.toLowerCase() === 'agent' ? 'agent' : 'tenant')
-              } 
+                userRole?.toLowerCase() === 'renter'
+                  ? 'tenant'
+                  : userRole?.toLowerCase() === 'admin'
+                    ? 'admin'
+                    : userRole?.toLowerCase() === 'owner'
+                      ? 'owner'
+                      : userRole?.toLowerCase() === 'agent'
+                        ? 'agent'
+                        : 'tenant'
+              }
             />
 
             <div className="relative">
-            <button 
-              onClick={() => setIsProfileDropdownOpen(!isProfileDropdownOpen)}
-              className="flex items-center gap-3 cursor-pointer group"
-            >
-              {/* User Avatar */}
-              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-[#E9C500] flex items-center justify-center">
-                <User className="w-5 h-5 text-[#0E56A4]" />
-              </div>
+              <button
+                onClick={() => setIsProfileDropdownOpen(!isProfileDropdownOpen)}
+                className="flex items-center gap-3 cursor-pointer group"
+              >
+                {/* User Avatar */}
+                <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-[#E9C500] flex items-center justify-center">
+                  <User className="w-5 h-5 text-[#0E56A4]" />
+                </div>
 
-              {/* User Name (hidden on mobile) */}
-              <div className="hidden sm:block">
-                <p className="text-sm font-medium text-gray-700 group-hover:text-[#0E56A4] transition-colors">
-                  {currentUser.name}
-                </p>
-                <p className="text-xs text-gray-500">{currentUser.role}</p>
-              </div>
+                {/* User Name (hidden on mobile) */}
+                <div className="hidden sm:block">
+                  <p className="text-sm font-medium text-gray-700 group-hover:text-[#0E56A4] transition-colors">
+                    {currentUser.name}
+                  </p>
+                  <p className="text-xs text-gray-500">{currentUser.role}</p>
+                </div>
 
-              {/* Dropdown Arrow */}
-              <ChevronDown className="w-4 h-4 text-gray-500 group-hover:text-[#0E56A4] transition-colors hidden sm:block" />
-            </button>
+                {/* Dropdown Arrow */}
+                <ChevronDown className="w-4 h-4 text-gray-500 group-hover:text-[#0E56A4] transition-colors hidden sm:block" />
+              </button>
 
-            {/* Dropdown Menu */}
-            {isProfileDropdownOpen && (
-              <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg p-2 z-50">
-                <button 
-                  onClick={() => {
-                    const profilePath = normalizedRole === 'owner' ? '/owner/profile' : 
-                                       normalizedRole === 'agent' ? '/agent/profile' : 
-                                       normalizedRole === 'renter' ? '/tenant/rented/profile' :
-                                       '/tenant/profile';
-                    navigate(profilePath);
-                    setIsProfileDropdownOpen(false);
-                  }}
-                  className="flex items-center gap-3 w-full text-left px-3 py-2 text-gray-700 hover:bg-gray-100 rounded-md transition-colors"
-                >
-                  <User className="w-4 h-4" />
-                  <span>Profile</span>
-                </button>
-                <button 
-                  onClick={() => {
-                    navigate('/login');
-                    setIsProfileDropdownOpen(false);
-                  }}
-                  className="flex items-center gap-3 w-full text-left px-3 py-2 text-red-600 hover:bg-red-50 rounded-md transition-colors"
-                >
-                  <LogOut className="w-4 h-4" />
-                  <span>Logout</span>
-                </button>
-              </div>
-            )}
-          </div>
+              {/* Dropdown Menu */}
+              {isProfileDropdownOpen && (
+                <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg p-2 z-50">
+                  <button
+                    onClick={() => {
+                      const profilePath =
+                        normalizedRole === 'owner'
+                          ? '/owner/profile'
+                          : normalizedRole === 'agent'
+                            ? '/agent/profile'
+                            : normalizedRole === 'renter'
+                              ? '/tenant/rented/profile'
+                              : '/tenant/profile';
+                      navigate(profilePath);
+                      setIsProfileDropdownOpen(false);
+                    }}
+                    className="flex items-center gap-3 w-full text-left px-3 py-2 text-gray-700 hover:bg-gray-100 rounded-md transition-colors"
+                  >
+                    <User className="w-4 h-4" />
+                    <span>Profile</span>
+                  </button>
+                  <button
+                    onClick={() => {
+                      navigate('/login');
+                      setIsProfileDropdownOpen(false);
+                    }}
+                    className="flex items-center gap-3 w-full text-left px-3 py-2 text-red-600 hover:bg-red-50 rounded-md transition-colors"
+                  >
+                    <LogOut className="w-4 h-4" />
+                    <span>Logout</span>
+                  </button>
+                </div>
+              )}
+            </div>
           </div>
         </header>
 
@@ -373,7 +494,8 @@ export function DashboardLayout({
                 Welcome to your dashboard
               </h2>
               <p className="text-gray-600 mb-6">
-                This is the main content area. Content will vary based on user role (Tenant, Owner, Agent, Admin).
+                This is the main content area. Content will vary based on user role (Tenant, Owner,
+                Agent, Admin).
               </p>
 
               {/* Sample Stats Grid */}
@@ -408,12 +530,10 @@ export function DashboardLayout({
 
               {/* Recent Activity Section */}
               <div className="mt-8">
-                <h3 className="text-lg font-semibold text-[#0E56A4] mb-4">
-                  Recent Activity
-                </h3>
+                <h3 className="text-lg font-semibold text-[#0E56A4] mb-4">Recent Activity</h3>
                 <div className="space-y-3">
                   {[1, 2, 3].map((item) => (
-                    <div 
+                    <div
                       key={item}
                       className="flex items-center gap-4 p-4 bg-gray-50 rounded-lg border border-gray-200 hover:border-[#0E56A4] transition-colors"
                     >

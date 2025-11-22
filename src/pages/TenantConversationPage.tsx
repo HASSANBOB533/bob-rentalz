@@ -1,16 +1,7 @@
-import { useParams, useNavigate } from 'react-router-dom';
-import { 
-  ArrowLeft,
-  Send,
-  Paperclip,
-  Phone,
-  Video,
-  MoreVertical,
-  MapPin,
-  Home
-} from 'lucide-react';
-import { ImageWithFallback } from '../components/figma/ImageWithFallback';
+import { ArrowLeft, Send, Paperclip, Phone, Video, MoreVertical, MapPin, Home } from 'lucide-react';
 import { useState } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import { ImageWithFallback } from '../components/figma/ImageWithFallback';
 
 export default function TenantConversationPage() {
   const { id } = useParams();
@@ -31,23 +22,23 @@ export default function TenantConversationPage() {
           sender: 'tenant',
           text: 'Hi, I am interested in viewing this property. Is it still available?',
           timestamp: '10:30 AM',
-          date: 'Today'
+          date: 'Today',
         },
         {
           id: 2,
           sender: 'agent',
           text: 'Yes, the property is still available! I would be happy to arrange a viewing for you.',
           timestamp: '10:45 AM',
-          date: 'Today'
+          date: 'Today',
         },
         {
           id: 3,
           sender: 'agent',
           text: 'The property is available for viewing this weekend. What day works best for you?',
           timestamp: '10:46 AM',
-          date: 'Today'
-        }
-      ]
+          date: 'Today',
+        },
+      ],
     },
     '2': {
       propertyName: 'Luxury Villa with Pool',
@@ -61,9 +52,9 @@ export default function TenantConversationPage() {
           sender: 'tenant',
           text: 'I am interested in scheduling a viewing.',
           timestamp: '2:15 PM',
-          date: 'Yesterday'
-        }
-      ]
+          date: 'Yesterday',
+        },
+      ],
     },
     '3': {
       propertyName: 'Cozy Studio Downtown',
@@ -77,16 +68,16 @@ export default function TenantConversationPage() {
           sender: 'tenant',
           text: 'What are the lease terms and move-in dates?',
           timestamp: '9:20 AM',
-          date: '2 days ago'
+          date: '2 days ago',
         },
         {
           id: 2,
           sender: 'agent',
           text: 'The lease term is 12 months minimum, and you can move in as early as next week.',
           timestamp: '11:00 AM',
-          date: '2 days ago'
-        }
-      ]
+          date: '2 days ago',
+        },
+      ],
     },
     '4': {
       propertyName: 'Spacious 3BR Penthouse',
@@ -100,17 +91,17 @@ export default function TenantConversationPage() {
           sender: 'tenant',
           text: 'Is this property pet-friendly?',
           timestamp: '4:30 PM',
-          date: '3 days ago'
+          date: '3 days ago',
         },
         {
           id: 2,
           sender: 'agent',
           text: 'Great! I can arrange a tour for you next Tuesday.',
           timestamp: '5:00 PM',
-          date: '3 days ago'
-        }
-      ]
-    }
+          date: '3 days ago',
+        },
+      ],
+    },
   };
 
   const conversation = conversations[id as keyof typeof conversations] || conversations['1'];
@@ -151,12 +142,8 @@ export default function TenantConversationPage() {
 
               {/* Agent Info */}
               <div className="flex-1 min-w-0">
-                <h3 className="font-semibold text-gray-900 truncate">
-                  {conversation.agentName}
-                </h3>
-                <p className="text-sm text-gray-500 truncate">
-                  {conversation.agentRole}
-                </p>
+                <h3 className="font-semibold text-gray-900 truncate">{conversation.agentName}</h3>
+                <p className="text-sm text-gray-500 truncate">{conversation.agentRole}</p>
               </div>
             </div>
 
@@ -197,9 +184,11 @@ export default function TenantConversationPage() {
                 </p>
               </div>
               <button
-                onClick={() => navigate(`/tenant/property-details/${id}`, {
-                  state: { fromDashboard: true, dashboardType: 'tenant-conversation' }
-                })}
+                onClick={() =>
+                  navigate(`/tenant/property-details/${id}`, {
+                    state: { fromDashboard: true, dashboardType: 'tenant-conversation' },
+                  })
+                }
                 className="text-xs text-[#0E56A4] hover:text-[#0E56A4]/80 font-medium whitespace-nowrap"
               >
                 View Property

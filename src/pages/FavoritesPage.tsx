@@ -1,10 +1,10 @@
+import { Heart, Share2 } from 'lucide-react';
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { PropertyCard } from '../components/PropertyCard';
+import { Button } from '../components/ui/button';
 import { properties } from '../data/mockData';
 import { getFavorites } from '../utils/favorites';
-import { Button } from '../components/ui/button';
-import { Heart, Share2 } from 'lucide-react';
-import { Link } from 'react-router-dom';
 
 export function FavoritesPage() {
   const [favoriteIds, setFavoriteIds] = useState<string[]>([]);
@@ -17,15 +17,15 @@ export function FavoritesPage() {
   const loadFavorites = () => {
     const ids = getFavorites();
     setFavoriteIds(ids);
-    const props = properties.filter(p => ids.includes(p.id));
+    const props = properties.filter((p) => ids.includes(p.id));
     setFavoriteProperties(props);
   };
 
   const handleShare = () => {
     const propertyLinks = favoriteProperties
-      .map(p => `${p.title}: ${window.location.origin}/property/${p.id}`)
+      .map((p) => `${p.title}: ${window.location.origin}/property/${p.id}`)
       .join('\n\n');
-    
+
     const message = `Check out these properties I saved on BOB Rentalz:\n\n${propertyLinks}`;
     const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, '_blank');
@@ -40,14 +40,12 @@ export function FavoritesPage() {
             <div>
               <h1 className="mb-2">My Favorites</h1>
               <p className="text-gray-600">
-                {favoriteProperties.length} {favoriteProperties.length === 1 ? 'property' : 'properties'} saved
+                {favoriteProperties.length}{' '}
+                {favoriteProperties.length === 1 ? 'property' : 'properties'} saved
               </p>
             </div>
             {favoriteProperties.length > 0 && (
-              <Button
-                onClick={handleShare}
-                className="bg-[#D4AF37] hover:bg-[#B8941F] text-white"
-              >
+              <Button onClick={handleShare} className="bg-[#D4AF37] hover:bg-[#B8941F] text-white">
                 <Share2 className="w-4 h-4 mr-2" />
                 Share on WhatsApp
               </Button>

@@ -1,9 +1,9 @@
-import { Link, useLocation } from 'react-router-dom';
-import { Search, Menu, Heart, X } from 'lucide-react';
-import { Button } from './ui/button';
-import { LanguageToggle } from './LanguageToggle';
-import { useState } from 'react';
 import bobLogo from 'figma:asset/c3cbe0198340d6bed05c69174ee79f3b6a4d8624.png';
+import { Search, Menu, Heart, X } from 'lucide-react';
+import { useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
+import { LanguageToggle } from './LanguageToggle';
+import { Button } from './ui/button';
 
 export function Navbar() {
   const location = useLocation();
@@ -26,9 +26,9 @@ export function Navbar() {
         <div className="flex items-center justify-between py-3 md:py-3 lg:h-28">
           {/* Logo - Horizontal Layout - Enhanced Size */}
           <Link to="/" className="flex items-center gap-3">
-            <img 
-              src={bobLogo} 
-              alt="Best of Bedz Rentalz" 
+            <img
+              src={bobLogo}
+              alt="Best of Bedz Rentalz"
               className="h-16 md:h-16 lg:h-24 w-auto object-contain max-w-none"
             />
           </Link>
@@ -40,9 +40,7 @@ export function Navbar() {
                 key={link.path}
                 to={link.path}
                 className={`transition-all duration-200 ${
-                  isActive(link.path)
-                    ? 'text-[#E9C500]'
-                    : 'text-white hover:text-[#E9C500]'
+                  isActive(link.path) ? 'text-[#E9C500]' : 'text-white hover:text-[#E9C500]'
                 }`}
               >
                 {link.label}
@@ -54,12 +52,20 @@ export function Navbar() {
           <div className="hidden md:flex items-center gap-4">
             <LanguageToggle />
             <Link to="/properties">
-              <Button variant="ghost" size="icon" className="text-white hover:text-[#E9C500] hover:bg-[#0A3F79] transition-all duration-200">
+              <Button
+                variant="ghost"
+                size="icon"
+                className="text-white hover:text-[#E9C500] hover:bg-[#0A3F79] transition-all duration-200"
+              >
                 <Search className="w-5 h-5" />
               </Button>
             </Link>
             <Link to="/favorites">
-              <Button variant="ghost" size="icon" className="text-white hover:text-[#E9C500] hover:bg-[#0A3F79] transition-all duration-200">
+              <Button
+                variant="ghost"
+                size="icon"
+                className="text-white hover:text-[#E9C500] hover:bg-[#0A3F79] transition-all duration-200"
+              >
                 <Heart className="w-5 h-5" />
               </Button>
             </Link>
@@ -85,11 +91,7 @@ export function Navbar() {
             className="flex md:hidden p-2 text-white hover:text-[#E9C500] transition-all duration-200"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           >
-            {mobileMenuOpen ? (
-              <X className="w-6 h-6" />
-            ) : (
-              <Menu className="w-6 h-6" />
-            )}
+            {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
         </div>
 
@@ -102,21 +104,19 @@ export function Navbar() {
                   key={link.path}
                   to={link.path}
                   className={`py-2 transition-all duration-200 ${
-                    isActive(link.path)
-                      ? 'text-[#E9C500]'
-                      : 'text-white hover:text-[#E9C500]'
+                    isActive(link.path) ? 'text-[#E9C500]' : 'text-white hover:text-[#E9C500]'
                   }`}
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   {link.label}
                 </Link>
               ))}
-              
+
               {/* Language Toggle - Mobile & Tablet */}
               <div className="py-2">
                 <LanguageToggle />
               </div>
-              
+
               {/* Auth Buttons - Mobile & Tablet */}
               <div className="flex gap-2">
                 <Link to="/login" onClick={() => setMobileMenuOpen(false)} className="flex-1">
@@ -130,10 +130,13 @@ export function Navbar() {
                   </Button>
                 </Link>
               </div>
-              
+
               <div className="flex gap-2 pt-2">
                 <Link to="/favorites" className="flex-1">
-                  <Button variant="outline" className="w-full border-[#E9C500] text-[#E9C500] hover:bg-[#E9C500] hover:text-[#0E56A4]">
+                  <Button
+                    variant="outline"
+                    className="w-full border-[#E9C500] text-[#E9C500] hover:bg-[#E9C500] hover:text-[#0E56A4]"
+                  >
                     <Heart className="w-4 h-4 mr-2" />
                     Favorites
                   </Button>

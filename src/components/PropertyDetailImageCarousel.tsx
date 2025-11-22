@@ -1,6 +1,6 @@
-import { useState, useEffect, useRef } from 'react';
 import { ChevronLeft, ChevronRight, X, ZoomIn } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
+import { useState, useEffect, useRef } from 'react';
 import { ImageWithFallback } from './figma/ImageWithFallback';
 
 interface PropertyDetailImageCarouselProps {
@@ -156,10 +156,10 @@ export function PropertyDetailImageCarousel({
                 }}
                 onClick={() => openLightbox(currentIndex)}
               />
-              
+
               {/* Light Gradient Overlay for depth */}
               <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent pointer-events-none" />
-              
+
               {/* Zoom Icon Hint */}
               <div className="absolute bottom-4 right-4 bg-white/90 backdrop-blur-sm text-gray-700 px-3 py-2 rounded-lg text-sm flex items-center gap-2 opacity-0 hover:opacity-100 transition-all duration-300 ease-in-out pointer-events-none">
                 <ZoomIn className="w-4 h-4" />

@@ -34,9 +34,7 @@ export function TestimonialCard({ testimonial }: TestimonialCardProps) {
             {testimonial.name}
           </p>
           {/* Role - Desktop: 14px | Mobile: 13px */}
-          <p className="text-[13px] md:text-[14px] text-[#6B7280] leading-tight">
-            Verified Tenant
-          </p>
+          <p className="text-[13px] md:text-[14px] text-[#6B7280] leading-tight">Verified Tenant</p>
         </div>
       </div>
     </div>

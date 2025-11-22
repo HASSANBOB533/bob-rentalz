@@ -1,8 +1,8 @@
-import { useState, useEffect } from 'react';
 import { Plus, Check } from 'lucide-react';
 import { motion } from 'motion/react';
-import { isInComparison, toggleComparison } from '../utils/comparison';
+import { useState, useEffect } from 'react';
 import { toast } from 'sonner@2.0.3';
+import { isInComparison, toggleComparison } from '../utils/comparison';
 
 interface CompareCheckboxProps {
   propertyId: string;
@@ -14,7 +14,11 @@ interface CompareCheckboxProps {
  * CompareCheckbox Component
  * Checkbox button for adding/removing properties from comparison
  */
-export function CompareCheckbox({ propertyId, isInComparison: externalIsInComparison, onCompareToggle }: CompareCheckboxProps) {
+export function CompareCheckbox({
+  propertyId,
+  isInComparison: externalIsInComparison,
+  onCompareToggle,
+}: CompareCheckboxProps) {
   const [isSelected, setIsSelected] = useState(false);
 
   useEffect(() => {
@@ -24,16 +28,16 @@ export function CompareCheckbox({ propertyId, isInComparison: externalIsInCompar
   const handleToggle = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    
+
     const success = toggleComparison(propertyId);
-    
+
     if (!success && !isSelected) {
       toast.error('You can compare up to 3 properties', {
         description: 'Remove a property to add another one.',
       });
       return;
     }
-    
+
     setIsSelected(!isSelected);
     onCompareToggle?.();
   };
@@ -51,11 +55,7 @@ export function CompareCheckbox({ propertyId, isInComparison: externalIsInCompar
       aria-label={isSelected ? 'Remove from comparison' : 'Add to comparison'}
       title={isSelected ? 'Remove from comparison' : 'Add to comparison'}
     >
-      {isSelected ? (
-        <Check className="w-5 h-5" />
-      ) : (
-        <Plus className="w-5 h-5" />
-      )}
+      {isSelected ? <Check className="w-5 h-5" /> : <Plus className="w-5 h-5" />}
     </motion.button>
   );
 }

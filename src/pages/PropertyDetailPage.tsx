@@ -1,43 +1,65 @@
-import { useParams, Link, useLocation, useNavigate } from 'react-router-dom';
-import { properties, agents, Property } from '../data/mockData';
-import { useProperty, useProperties } from '../hooks/useProperties';
-import { 
-  Bed, Bath, Maximize, MapPin, Heart, Share2, Download, 
-  ChevronLeft, ChevronRight, ChevronDown, ChevronUp, ArrowLeft,
-  Home, Phone, Mail, MessageCircle, Calendar,
-  Wifi, Car, Shield, Dumbbell, Waves, Trees, Wind, 
-  Building2, Sofa, Zap
+import {
+  Bed,
+  Bath,
+  Maximize,
+  MapPin,
+  Heart,
+  Share2,
+  Download,
+  ChevronLeft,
+  ChevronRight,
+  ChevronDown,
+  ChevronUp,
+  ArrowLeft,
+  Home,
+  Phone,
+  Mail,
+  MessageCircle,
+  Calendar,
+  Wifi,
+  Car,
+  Shield,
+  Dumbbell,
+  Waves,
+  Trees,
+  Wind,
+  Building2,
+  Sofa,
+  Zap,
 } from 'lucide-react';
-import { PropertyImageCarousel } from '../components/PropertyImageCarousel';
-import { PropertyDetailImageCarousel } from '../components/PropertyDetailImageCarousel';
-import { PropertyLocationMap } from '../components/PropertyLocationMap';
-import { VideoTour } from '../components/VideoTour';
-import { PropertyCard } from '../components/PropertyCard';
-import { Button } from '../components/ui/button';
 import { useState, useEffect } from 'react';
-import { isFavorite, toggleFavorite } from '../utils/favorites';
+import { useParams, Link, useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'sonner@2.0.3';
 import { ImageWithFallback } from '../components/figma/ImageWithFallback';
-import { SecurityCardIcon } from '../components/icons/SecurityCardIcon';
 import { TrendUpIcon } from '../components/icons/TrendUpIcon';
 import { CalendarIcon } from '../components/icons/CalendarIcon';
 import { ChairIcon } from '../components/icons/ChairIcon';
+import { SecurityCardIcon } from '../components/icons/SecurityCardIcon';
+import { PropertyCard } from '../components/PropertyCard';
 import { PropertyCodeDisplay } from '../components/PropertyCodeDisplay';
+import { PropertyDetailImageCarousel } from '../components/PropertyDetailImageCarousel';
+import { PropertyImageCarousel } from '../components/PropertyImageCarousel';
+import { PropertyLocationMap } from '../components/PropertyLocationMap';
+import { Button } from '../components/ui/button';
+import { VideoTour } from '../components/VideoTour';
+import { properties, agents, Property } from '../data/mockData';
+import { useProperty, useProperties } from '../hooks/useProperties';
+import { isFavorite, toggleFavorite } from '../utils/favorites';
 import { addPropertyMetadata } from '../utils/propertyUtils';
 
 export function PropertyDetailPage() {
   const { id } = useParams<{ id: string }>();
   const location = useLocation();
   const navigate = useNavigate();
-  
+
   // Fetch property from Supabase
   const { property: supabaseProperty, loading: loadingProperty } = useProperty(id);
-  
+
   // Fallback to mock data if Supabase returns nothing
-  const mockProperty = properties.find(p => p.id === id);
+  const mockProperty = properties.find((p) => p.id === id);
   const property = supabaseProperty || (mockProperty ? addPropertyMetadata(mockProperty) : null);
-  const agent = property ? agents.find(a => (property as any).agentId) : null;
-  
+  const agent = property ? agents.find((a) => (property as any).agentId) : null;
+
   const [favorited, setFavorited] = useState(false);
   const [selectedImage, setSelectedImage] = useState(0);
   const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(false);
@@ -82,29 +104,25 @@ export function PropertyDetailPage() {
   // Smart similar properties algorithm
   const getSimilarProperties = (): Property[] => {
     const availableProperties = properties.filter(
-      p => p.id !== property.id && p.status === 'available'
+      (p) => p.id !== property.id && p.status === 'available',
     );
 
-    const sameLocation = availableProperties.filter(
-      p => p.location === property.location
-    );
+    const sameLocation = availableProperties.filter((p) => p.location === property.location);
 
-    const sameType = availableProperties.filter(
-      p => p.bedrooms === property.bedrooms
-    );
+    const sameType = availableProperties.filter((p) => p.bedrooms === property.bedrooms);
 
     const priceMin = property.price * 0.7;
     const priceMax = property.price * 1.3;
     const similarPrice = availableProperties.filter(
-      p => p.price >= priceMin && p.price <= priceMax
+      (p) => p.price >= priceMin && p.price <= priceMax,
     );
 
     const combined = [...new Set([...sameLocation, ...sameType, ...similarPrice])];
-    
+
     if (combined.length < 3) {
       const remaining = availableProperties
-        .filter(p => !combined.includes(p))
-        .sort((a, b) => b.verified ? 1 : -1);
+        .filter((p) => !combined.includes(p))
+        .sort((a, b) => (b.verified ? 1 : -1));
       combined.push(...remaining);
     }
 
@@ -155,7 +173,12 @@ export function PropertyDetailPage() {
     if (amenityLower.includes('gym') || amenityLower.includes('fitness')) return Dumbbell;
     if (amenityLower.includes('pool') || amenityLower.includes('swimming')) return Waves;
     if (amenityLower.includes('garden') || amenityLower.includes('yard')) return Trees;
-    if (amenityLower.includes('ac') || amenityLower.includes('air') || amenityLower.includes('central')) return Wind;
+    if (
+      amenityLower.includes('ac') ||
+      amenityLower.includes('air') ||
+      amenityLower.includes('central')
+    )
+      return Wind;
     if (amenityLower.includes('balcony') || amenityLower.includes('terrace')) return Building2;
     if (amenityLower.includes('furnish') || amenityLower.includes('furniture')) return Sofa;
     if (amenityLower.includes('elevator') || amenityLower.includes('lift')) return Building2;
@@ -170,7 +193,6 @@ export function PropertyDetailPage() {
     <div className="min-h-screen bg-[#F8F9FA]">
       {/* Container with safe padding */}
       <div className="container mx-auto px-4 lg:px-8 py-5 md:py-6 lg:py-8">
-        
         {/* Back to Dashboard Button - Only shows if user came from a dashboard */}
         {(fromDashboard || from) && (
           <button
@@ -180,7 +202,7 @@ export function PropertyDetailPage() {
                 navigate('/agent/dashboard');
               } else if (from === 'agent-properties') {
                 navigate('/agent/properties');
-              } 
+              }
               // Legacy system using dashboardType
               else if (dashboardType === 'tenant') {
                 navigate('/dashboard');
@@ -195,24 +217,29 @@ export function PropertyDetailPage() {
             className="flex items-center gap-2 text-[#0E56A4] hover:text-[#093B74] transition-colors font-medium mb-4"
           >
             <ArrowLeft className="w-5 h-5" />
-            {from === 'agent-dashboard' ? 'Back to Assigned Properties' : 
-             from === 'agent-properties' ? 'Back to All Assigned Properties' :
-             'Back to Dashboard'}
+            {from === 'agent-dashboard'
+              ? 'Back to Assigned Properties'
+              : from === 'agent-properties'
+                ? 'Back to All Assigned Properties'
+                : 'Back to Dashboard'}
           </button>
         )}
-        
+
         {/* Breadcrumb Navigation */}
         <div className="mb-6 md:mb-7 lg:mb-8">
-          <nav className="flex flex-row items-center flex-wrap gap-x-1 gap-y-1" aria-label="Breadcrumb">
-            <Link 
-              to="/" 
+          <nav
+            className="flex flex-row items-center flex-wrap gap-x-1 gap-y-1"
+            aria-label="Breadcrumb"
+          >
+            <Link
+              to="/"
               className="text-gray-400 hover:text-gray-600 hover:underline transition-colors duration-150 focus:outline-none focus:underline"
             >
               <Home className="w-[13px] h-[13px] md:w-[14px] md:h-[14px] lg:w-[15px] lg:h-[15px]" />
             </Link>
             <ChevronRight className="w-[12px] h-[12px] md:w-[14px] md:h-[14px] lg:w-[16px] lg:h-[16px] text-gray-400 mx-1.5 md:mx-2" />
-            <Link 
-              to="/properties" 
+            <Link
+              to="/properties"
               className="text-[13px] md:text-[14px] lg:text-[15px] text-gray-400 hover:text-gray-600 hover:underline transition-colors duration-150 focus:outline-none focus:underline"
             >
               Properties
@@ -232,7 +259,7 @@ export function PropertyDetailPage() {
             autoPlay={true}
             autoPlayInterval={4000}
           />
-          
+
           {/* Action Buttons Below Carousel */}
           <div className="flex justify-end gap-3 mt-3">
             <Button
@@ -241,7 +268,9 @@ export function PropertyDetailPage() {
               onClick={handleFavoriteClick}
               className="bg-white hover:bg-gray-50 shadow-sm"
             >
-              <Heart className={`w-5 h-5 ${favorited ? 'fill-red-500 text-red-500' : 'text-gray-700'}`} />
+              <Heart
+                className={`w-5 h-5 ${favorited ? 'fill-red-500 text-red-500' : 'text-gray-700'}`}
+              />
             </Button>
             <Button
               size="icon"
@@ -258,7 +287,6 @@ export function PropertyDetailPage() {
         <div className="max-w-5xl mx-auto">
           {/* Tighter vertical spacing: Mobile 20px, Tablet 24px, Desktop 28px */}
           <div className="space-y-5 md:space-y-6 lg:space-y-7">
-            
             {/* 2. PROPERTY TITLE + LOCATION + KEY STATS */}
             <div className="bg-white rounded-2xl p-5 md:p-6 lg:p-7 shadow-sm border border-[#E5E7EB]">
               <div className="flex items-start justify-between">
@@ -270,30 +298,33 @@ export function PropertyDetailPage() {
                         property.status === 'available'
                           ? 'bg-green-100 text-green-700'
                           : property.status === 'pending'
-                          ? 'bg-yellow-100 text-yellow-700'
-                          : 'bg-red-100 text-red-700'
+                            ? 'bg-yellow-100 text-yellow-700'
+                            : 'bg-red-100 text-red-700'
                       }`}
                     >
                       {property.status.charAt(0).toUpperCase() + property.status.slice(1)}
                     </span>
                   </div>
-                  
+
                   {/* Price */}
                   <div className="flex items-baseline gap-2 mb-1.5 md:mb-2 lg:mb-2.5">
                     <span className="text-[#D4AF37]/90 font-semibold text-[20px] md:text-[22px] lg:text-[24px] whitespace-nowrap leading-[1.2]">
-                      {property.price.toLocaleString()} EGP<span className="text-[14px] md:text-[16px] lg:text-[20px]">/month</span>
+                      {property.price.toLocaleString()} EGP
+                      <span className="text-[14px] md:text-[16px] lg:text-[20px]">/month</span>
                     </span>
                   </div>
-                  
+
                   {/* Title - h1 with specific font sizes matching requirements */}
                   <h1 className="mb-1.5 md:mb-2 lg:mb-2.5 font-semibold text-[#2B2B2B] line-clamp-2 text-[24px] leading-[1.25] md:text-[28px] lg:text-[32px] lg:leading-[1.2]">
                     {property.title}
                   </h1>
-                  
+
                   {/* Location */}
                   <div className="flex items-center gap-2 text-gray-700 mb-2.5 md:mb-3 lg:mb-3.5">
                     <MapPin className="w-4 h-4 md:w-5 md:h-5 text-[#D4AF37]" />
-                    <span>{property.region}, {property.location}</span>
+                    <span>
+                      {property.region}, {property.location}
+                    </span>
                   </div>
 
                   {/* Property Code Display */}
@@ -333,7 +364,9 @@ export function PropertyDetailPage() {
               <div className="flex flex-col sm:flex-row items-center gap-4">
                 <div className="flex-1 text-center sm:text-left">
                   <h3 className="text-white text-lg mb-1">Have Questions About This Property?</h3>
-                  <p className="text-white/90 text-sm">Connect with our agent to get instant answers and schedule viewings</p>
+                  <p className="text-white/90 text-sm">
+                    Connect with our agent to get instant answers and schedule viewings
+                  </p>
                 </div>
                 <Button
                   onClick={() => {
@@ -360,16 +393,14 @@ export function PropertyDetailPage() {
             <div className="bg-white rounded-2xl p-5 md:p-6 lg:p-7 shadow-sm border border-[#E5E7EB] border-b-black/[0.04]">
               <h3 className="mb-3 md:mb-4 lg:mb-5">Description</h3>
               <div className="relative">
-                <div 
+                <div
                   className={`overflow-hidden transition-all duration-500 ease-in-out ${
                     isDescriptionExpanded ? 'max-h-[1000px]' : 'max-h-[80px]'
                   }`}
                 >
-                  <p className="text-gray-700 leading-relaxed">
-                    {property.description}
-                  </p>
+                  <p className="text-gray-700 leading-relaxed">{property.description}</p>
                 </div>
-                
+
                 {property.description.length > 250 && (
                   <button
                     onClick={() => setIsDescriptionExpanded(!isDescriptionExpanded)}
@@ -405,7 +436,7 @@ export function PropertyDetailPage() {
                     </div>
                   </div>
                 )}
-                
+
                 {/* Annual Increase */}
                 {property.annualIncrease && (
                   <div className="flex items-start gap-3">
@@ -418,7 +449,7 @@ export function PropertyDetailPage() {
                     </div>
                   </div>
                 )}
-                
+
                 {/* Minimum Stay */}
                 {property.minimumStay && (
                   <div className="flex items-start gap-3">
@@ -431,7 +462,7 @@ export function PropertyDetailPage() {
                     </div>
                   </div>
                 )}
-                
+
                 {/* Furnishing */}
                 <div className="flex items-start gap-3">
                   <div className="flex-shrink-0 w-10 h-10 md:w-11 md:h-11 lg:w-12 lg:h-12 rounded-xl bg-[#F8F9FA] flex items-center justify-center">
@@ -439,7 +470,9 @@ export function PropertyDetailPage() {
                   </div>
                   <div className="flex-1">
                     <div className="text-sm text-gray-600 mb-1">Furnishing</div>
-                    <div className="font-medium text-gray-900 capitalize">{property.furnishing}</div>
+                    <div className="font-medium text-gray-900 capitalize">
+                      {property.furnishing}
+                    </div>
                   </div>
                 </div>
               </div>
@@ -448,7 +481,7 @@ export function PropertyDetailPage() {
             {/* 5. AMENITIES */}
             <div className="bg-white rounded-2xl p-5 md:p-6 lg:p-7 shadow-sm border border-[#E5E7EB] border-b-black/[0.04]">
               <h3 className="mb-4 md:mb-5 lg:mb-6">Amenities</h3>
-              
+
               {/* Airbnb-style responsive grid: 2 cols mobile, 3 cols tablet, 4 cols desktop */}
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
                 {property.amenities.slice(0, 10).map((amenity) => {
@@ -470,7 +503,12 @@ export function PropertyDetailPage() {
                 <button className="mt-4 md:mt-5 lg:mt-6 px-5 py-2.5 border border-gray-900 rounded-lg text-[15px] font-medium text-gray-900 hover:bg-gray-50 transition-all duration-200 flex items-center gap-2">
                   Show all {property.amenities.length} amenities
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M9 5l7 7-7 7"
+                    />
                   </svg>
                 </button>
               )}
@@ -480,7 +518,7 @@ export function PropertyDetailPage() {
             {agent && (
               <div className="bg-white rounded-2xl p-5 md:p-6 lg:p-7 shadow-[0_4px_12px_rgba(0,0,0,0.06)] border border-[#E5E7EB]">
                 <h3 className="mb-3 md:mb-4 lg:mb-5">Contact Your Agent</h3>
-                
+
                 {/* Agent Info */}
                 <div className="flex items-center gap-4 mb-4 md:mb-5 lg:mb-6 pb-4 md:pb-5 lg:pb-6 border-b border-[#E5E7EB]">
                   <ImageWithFallback
@@ -490,8 +528,12 @@ export function PropertyDetailPage() {
                   />
                   <div>
                     <div className="font-bold text-lg">{agent.name}</div>
-                    <div className="text-sm text-gray-600">{agent.specialization || 'Property Agent'}</div>
-                    <div className="text-xs text-gray-500">{agent.listingsCount} Active Listings</div>
+                    <div className="text-sm text-gray-600">
+                      {agent.specialization || 'Property Agent'}
+                    </div>
+                    <div className="text-xs text-gray-500">
+                      {agent.listingsCount} Active Listings
+                    </div>
                   </div>
                 </div>
 
@@ -526,7 +568,7 @@ export function PropertyDetailPage() {
                     <MessageCircle className="w-5 h-5 mr-2" />
                     Message Agent
                   </Button>
-                  
+
                   {/* Secondary Actions */}
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
                     <Button

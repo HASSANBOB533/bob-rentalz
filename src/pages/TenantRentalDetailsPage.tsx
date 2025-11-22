@@ -1,8 +1,21 @@
-import { useParams, useNavigate } from 'react-router-dom';
-import { 
-  ArrowLeft, Calendar, DollarSign, FileText, Phone, Mail, Building, MapPin,
-  Download, MessageCircle, Bed, Bath, Maximize, CheckCircle2, Clock
+import {
+  ArrowLeft,
+  Calendar,
+  DollarSign,
+  FileText,
+  Phone,
+  Mail,
+  Building,
+  MapPin,
+  Download,
+  MessageCircle,
+  Bed,
+  Bath,
+  Maximize,
+  CheckCircle2,
+  Clock,
 } from 'lucide-react';
+import { useParams, useNavigate } from 'react-router-dom';
 import { ImageWithFallback } from '../components/figma/ImageWithFallback';
 import { PropertyCodeDisplay } from '../components/PropertyCodeDisplay';
 import { addPropertyMetadata } from '../utils/propertyUtils';
@@ -19,7 +32,8 @@ export default function TenantRentalDetailsPage() {
       title: 'Modern 2BR Apartment in New Cairo',
       propertyLocation: 'New Cairo, Cairo',
       location: 'New Cairo, Cairo',
-      propertyImage: 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&h=500&fit=crop',
+      propertyImage:
+        'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&h=500&fit=crop',
       bedrooms: 2,
       bathrooms: 2,
       area: '120 sqm',
@@ -36,7 +50,7 @@ export default function TenantRentalDetailsPage() {
         type: 'Owner',
         phone: '+20 123 456 7890',
         email: 'sarah.johnson@bob.com',
-        image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop'
+        image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop',
       },
       paymentHistory: [
         { month: 'November 2024', amount: 15000, date: 'Nov 1, 2024', status: 'Paid' },
@@ -47,7 +61,7 @@ export default function TenantRentalDetailsPage() {
         { name: 'Lease Agreement', type: 'PDF', date: 'Jan 1, 2024' },
         { name: 'Property Inspection Report', type: 'PDF', date: 'Jan 1, 2024' },
         { name: 'Security Deposit Receipt', type: 'PDF', date: 'Jan 1, 2024' },
-      ]
+      ],
     },
     2: {
       id: 2,
@@ -55,7 +69,8 @@ export default function TenantRentalDetailsPage() {
       title: 'Spacious 3BR Penthouse',
       propertyLocation: 'Maadi, Cairo',
       location: 'Maadi, Cairo',
-      propertyImage: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&h=500&fit=crop',
+      propertyImage:
+        'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&h=500&fit=crop',
       bedrooms: 3,
       bathrooms: 2,
       area: '200 sqm',
@@ -72,7 +87,7 @@ export default function TenantRentalDetailsPage() {
         type: 'Owner',
         phone: '+20 111 222 3333',
         email: 'ahmed.hassan@bob.com',
-        image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop'
+        image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop',
       },
       paymentHistory: [
         { month: 'November 2024', amount: 28000, date: 'Nov 15, 2024', status: 'Paid' },
@@ -83,13 +98,13 @@ export default function TenantRentalDetailsPage() {
         { name: 'Lease Agreement', type: 'PDF', date: 'Mar 15, 2024' },
         { name: 'Property Inspection Report', type: 'PDF', date: 'Mar 15, 2024' },
         { name: 'Security Deposit Receipt', type: 'PDF', date: 'Mar 15, 2024' },
-      ]
-    }
+      ],
+    },
   };
 
   // Add metadata to rental data
   const rentalData = Object.fromEntries(
-    Object.entries(rentalDataRaw).map(([key, value]) => [key, addPropertyMetadata(value)])
+    Object.entries(rentalDataRaw).map(([key, value]) => [key, addPropertyMetadata(value)]),
   );
 
   const rental = rentalData[id as keyof typeof rentalData];
@@ -100,7 +115,7 @@ export default function TenantRentalDetailsPage() {
         <div className="flex items-center justify-center min-h-[60vh]">
           <div className="text-center">
             <h2 className="text-xl mb-4 text-gray-700">Rental Agreement Not Found</h2>
-            <button 
+            <button
               onClick={() => navigate('/tenant/rented')}
               className="px-4 py-2 bg-[#0E56A4] text-white rounded-lg hover:bg-[#0A3F79] transition-colors"
             >
@@ -130,7 +145,7 @@ export default function TenantRentalDetailsPage() {
             {/* Property Image */}
             <div className="lg:col-span-1">
               <div className="relative h-64 lg:h-full bg-gray-200">
-                <ImageWithFallback 
+                <ImageWithFallback
                   src={rental.propertyImage}
                   alt={rental.propertyTitle}
                   className="w-full h-full object-cover"
@@ -145,9 +160,7 @@ export default function TenantRentalDetailsPage() {
 
             {/* Property Info */}
             <div className="lg:col-span-2 p-6">
-              <h1 className="text-2xl font-bold text-[#0E56A4] mb-2">
-                {rental.propertyTitle}
-              </h1>
+              <h1 className="text-2xl font-bold text-[#0E56A4] mb-2">{rental.propertyTitle}</h1>
               <div className="flex items-center gap-2 text-gray-600 mb-4">
                 <MapPin className="w-4 h-4" />
                 <span className="text-sm">{rental.propertyLocation}</span>
@@ -177,7 +190,9 @@ export default function TenantRentalDetailsPage() {
                 </div>
                 <div>
                   <p className="text-xs text-gray-500 mb-1">Monthly Rent</p>
-                  <p className="font-semibold text-[#0E56A4]">EGP {rental.monthlyRent.toLocaleString()}</p>
+                  <p className="font-semibold text-[#0E56A4]">
+                    EGP {rental.monthlyRent.toLocaleString()}
+                  </p>
                 </div>
                 <div>
                   <p className="text-xs text-gray-500 mb-1">Lease Duration</p>
@@ -185,7 +200,9 @@ export default function TenantRentalDetailsPage() {
                 </div>
                 <div>
                   <p className="text-xs text-gray-500 mb-1">Security Deposit</p>
-                  <p className="font-semibold text-gray-900">EGP {rental.securityDeposit.toLocaleString()}</p>
+                  <p className="font-semibold text-gray-900">
+                    EGP {rental.securityDeposit.toLocaleString()}
+                  </p>
                 </div>
               </div>
             </div>
@@ -227,13 +244,18 @@ export default function TenantRentalDetailsPage() {
               </div>
               <div className="space-y-3">
                 {rental.paymentHistory.map((payment, index) => (
-                  <div key={index} className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                  <div
+                    key={index}
+                    className="flex items-center justify-between p-4 bg-gray-50 rounded-lg"
+                  >
                     <div>
                       <p className="font-medium text-gray-900 text-sm">{payment.month}</p>
                       <p className="text-xs text-gray-500">{payment.date}</p>
                     </div>
                     <div className="text-right">
-                      <p className="font-semibold text-gray-900">EGP {payment.amount.toLocaleString()}</p>
+                      <p className="font-semibold text-gray-900">
+                        EGP {payment.amount.toLocaleString()}
+                      </p>
                       <div className="flex items-center gap-1 justify-end mt-1">
                         <CheckCircle2 className="w-3 h-3 text-green-600" />
                         <span className="text-xs text-green-600">{payment.status}</span>
@@ -252,14 +274,19 @@ export default function TenantRentalDetailsPage() {
               </div>
               <div className="space-y-3">
                 {rental.documents.map((doc, index) => (
-                  <div key={index} className="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
+                  <div
+                    key={index}
+                    className="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
+                  >
                     <div className="flex items-center gap-3">
                       <div className="w-10 h-10 bg-red-100 rounded-lg flex items-center justify-center">
                         <FileText className="w-5 h-5 text-red-600" />
                       </div>
                       <div>
                         <p className="font-medium text-gray-900 text-sm">{doc.name}</p>
-                        <p className="text-xs text-gray-500">{doc.type} • {doc.date}</p>
+                        <p className="text-xs text-gray-500">
+                          {doc.type} • {doc.date}
+                        </p>
                       </div>
                     </div>
                     <button className="p-2 hover:bg-gray-200 rounded-lg transition-colors">
@@ -282,7 +309,7 @@ export default function TenantRentalDetailsPage() {
               {/* Landlord Profile */}
               <div className="flex items-center gap-3 mb-6">
                 <div className="w-16 h-16 rounded-full overflow-hidden bg-gray-200">
-                  <ImageWithFallback 
+                  <ImageWithFallback
                     src={rental.landlord.image}
                     alt={rental.landlord.name}
                     className="w-full h-full object-cover"
@@ -296,7 +323,7 @@ export default function TenantRentalDetailsPage() {
 
               {/* Contact Information */}
               <div className="space-y-3 mb-6">
-                <a 
+                <a
                   href={`tel:${rental.landlord.phone}`}
                   className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
                 >
@@ -309,7 +336,7 @@ export default function TenantRentalDetailsPage() {
                   </div>
                 </a>
 
-                <a 
+                <a
                   href={`mailto:${rental.landlord.email}`}
                   className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
                 >
@@ -318,14 +345,16 @@ export default function TenantRentalDetailsPage() {
                   </div>
                   <div>
                     <p className="text-xs text-gray-500">Email</p>
-                    <p className="text-sm font-medium text-gray-900 truncate">{rental.landlord.email}</p>
+                    <p className="text-sm font-medium text-gray-900 truncate">
+                      {rental.landlord.email}
+                    </p>
                   </div>
                 </a>
               </div>
 
               {/* Action Buttons */}
               <div className="space-y-3 mb-6">
-                <button 
+                <button
                   onClick={() => {
                     const message = `Hello, I'm contacting you regarding the property: ${rental.propertyTitle}`;
                     const whatsappUrl = `https://wa.me/${rental.landlord.phone.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(message)}`;
@@ -337,14 +366,14 @@ export default function TenantRentalDetailsPage() {
                   WhatsApp Landlord
                 </button>
 
-                <button 
+                <button
                   onClick={() => navigate('/tenant/service-requests')}
                   className="w-full py-3 bg-[#0E56A4] text-white rounded-lg font-medium hover:bg-[#0A3F79] transition-colors"
                 >
                   Request Maintenance
                 </button>
 
-                <button 
+                <button
                   onClick={() => navigate('/tenant/documents')}
                   className="w-full py-3 border border-gray-300 text-gray-700 rounded-lg font-medium hover:bg-gray-50 transition-colors"
                 >

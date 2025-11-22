@@ -1,17 +1,16 @@
-import { Link } from 'react-router-dom';
 import { Bed, Bath, Maximize, MapPin, Heart, CheckCircle, Crown, Plus, Check } from 'lucide-react';
-import { Property, agents } from '../data/mockData';
+import { motion } from 'motion/react';
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { toast } from 'sonner@2.0.3';
+import { Property, agents } from '../data/mockData';
+import { toggleComparison } from '../utils/comparison';
 import { isFavorite, toggleFavorite } from '../utils/favorites';
-import { PropertyImageCarousel } from './PropertyImageCarousel';
+import { addPropertyMetadata } from '../utils/propertyUtils';
 import { CompareCheckbox } from './CompareCheckbox';
 import { ImageWithFallback } from './figma/ImageWithFallback';
-import { motion } from 'motion/react';
-import { toast } from 'sonner@2.0.3';
-import { toggleComparison } from '../utils/comparison';
 import { PropertyCodeDisplay } from './PropertyCodeDisplay';
-import { addPropertyMetadata } from '../utils/propertyUtils';
-
+import { PropertyImageCarousel } from './PropertyImageCarousel';
 import { StatusBadge } from './StatusBadge';
 
 interface PropertyCardProps {
@@ -22,13 +21,19 @@ interface PropertyCardProps {
   viewMode?: 'grid' | 'list' | 'map';
 }
 
-export function PropertyCard({ property: propProperty, onFavoriteChange, isInComparison, onCompareToggle, viewMode = 'grid' }: PropertyCardProps) {
+export function PropertyCard({
+  property: propProperty,
+  onFavoriteChange,
+  isInComparison,
+  onCompareToggle,
+  viewMode = 'grid',
+}: PropertyCardProps) {
   const [favorited, setFavorited] = useState(false);
-  
+
   // Add metadata if not present
   const property = propProperty.shortcode ? propProperty : addPropertyMetadata(propProperty);
-  
-  const agent = agents.find(a => a.id === property.agentId);
+
+  const agent = agents.find((a) => a.id === property.agentId);
 
   useEffect(() => {
     setFavorited(isFavorite(property.id));
@@ -80,7 +85,7 @@ export function PropertyCard({ property: propProperty, onFavoriteChange, isInCom
 
           {/* Status Badge - TOP RIGHT - Absolute */}
           <StatusBadge status={property.status} absolute className="right-3 top-3" />
-          
+
           {/* Verified Badge - Smaller with Crown - TOP LEFT */}
           {property.verified && (
             <div className="absolute top-3 left-3 h-[22px] bg-[#E9C500] text-[#0E56A4] px-2.5 rounded-full text-xs flex items-center gap-1 font-medium z-20 shadow-sm pointer-events-none">
@@ -131,11 +136,7 @@ export function PropertyCard({ property: propProperty, onFavoriteChange, isInCom
               aria-label={isInComparison ? 'Remove from comparison' : 'Add to comparison'}
               title={isInComparison ? 'Remove from comparison' : 'Add to comparison'}
             >
-              {isInComparison ? (
-                <Check className="w-5 h-5" />
-              ) : (
-                <Plus className="w-5 h-5" />
-              )}
+              {isInComparison ? <Check className="w-5 h-5" /> : <Plus className="w-5 h-5" />}
             </button>
           </div>
         </div>
@@ -162,23 +163,30 @@ export function PropertyCard({ property: propProperty, onFavoriteChange, isInCom
           {/* Location - 12-16px spacing - One line only */}
           <div className="flex items-center gap-2 text-gray-600 mb-5 lg:mb-6">
             <MapPin className="w-4 h-4 flex-shrink-0 text-[#E9C500]" />
-            <span className="text-sm truncate">{property.region}, {property.location}</span>
+            <span className="text-sm truncate">
+              {property.region}, {property.location}
+            </span>
           </div>
 
           {/* Features - ALIGNED with consistent spacing */}
           <div className="flex items-center gap-4 pb-4 mb-5 lg:mb-6 border-b border-gray-100">
             <div className="flex items-center gap-2">
               <Bed className="w-5 h-5 lg:w-6 lg:h-6 text-gray-500" />
-              <span className="text-[14px] md:text-[15px] lg:text-[16px] text-gray-700">{property.bedrooms}</span>
+              <span className="text-[14px] md:text-[15px] lg:text-[16px] text-gray-700">
+                {property.bedrooms}
+              </span>
             </div>
             <div className="flex items-center gap-2">
               <Bath className="w-5 h-5 lg:w-6 lg:h-6 text-gray-500" />
-              <span className="text-[14px] md:text-[15px] lg:text-[16px] text-gray-700">{property.bathrooms}</span>
+              <span className="text-[14px] md:text-[15px] lg:text-[16px] text-gray-700">
+                {property.bathrooms}
+              </span>
             </div>
             <div className="flex items-center gap-2">
               <Maximize className="w-5 h-5 lg:w-6 lg:h-6 text-gray-500" />
               <span className="text-[14px] md:text-[15px] lg:text-[16px] text-gray-700">
-                {property.area}<span className="text-[13px] md:text-[14px] lg:text-[15px]"> m²</span>
+                {property.area}
+                <span className="text-[13px] md:text-[14px] lg:text-[15px]"> m²</span>
               </span>
             </div>
           </div>
@@ -204,7 +212,12 @@ export function PropertyCard({ property: propProperty, onFavoriteChange, isInCom
             <button className="w-full h-[44px] md:h-[48px] bg-gradient-to-r from-[#E9C500] to-[#E3B600] text-[#0E56A4] rounded-[10px] font-semibold text-sm transition-all hover:shadow-[0_6px_20px_rgba(233,197,0,0.4)] hover:-translate-y-1 flex items-center justify-center gap-2 shadow-md">
               View Details
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M9 5l7 7-7 7"
+                />
               </svg>
             </button>
           </Link>
@@ -224,7 +237,10 @@ export function PropertyCard({ property: propProperty, onFavoriteChange, isInCom
     >
       {/* Image - Fixed height on desktop for consistency - Premium shadow frame */}
       <div className="relative overflow-hidden h-[180px] md:h-[230px] lg:h-[280px] flex-shrink-0 rounded-xl shadow-[0_4px_12px_rgba(0,0,0,0.06)] m-1.5 md:m-2">
-        <div className="w-full h-full touch-pan-x touch-pan-y pointer-events-auto" style={{ filter: 'contrast(1.05) brightness(1.06)' }}>
+        <div
+          className="w-full h-full touch-pan-x touch-pan-y pointer-events-auto"
+          style={{ filter: 'contrast(1.05) brightness(1.06)' }}
+        >
           <PropertyImageCarousel
             images={property.images}
             alt={property.title}
@@ -238,9 +254,13 @@ export function PropertyCard({ property: propProperty, onFavoriteChange, isInCom
 
         {/* Gradient Overlay for depth */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent pointer-events-none" />
-        
+
         {/* Status Badge - TOP RIGHT */}
-        <StatusBadge status={property.status} absolute className="right-2 top-2 md:right-3 md:top-3" />
+        <StatusBadge
+          status={property.status}
+          absolute
+          className="right-2 top-2 md:right-3 md:top-3"
+        />
 
         {/* Verified Badge - Smaller with Crown - TOP LEFT */}
         {property.verified && (
@@ -255,7 +275,7 @@ export function PropertyCard({ property: propProperty, onFavoriteChange, isInCom
         {/* Or maybe Verified to Bottom Left? Verified is Top Left currently. */}
         {/* If I put Status Top Right, it conflicts with Favorite/Compare. */}
         {/* I'll move Favorite/Compare to BOTTOM RIGHT. */}
-        
+
         <div className="absolute bottom-2 right-2 flex gap-2 p-1.5 bg-white/70 rounded-full shadow-sm backdrop-blur-sm z-20">
           {/* Favorite Button */}
           <button
@@ -284,9 +304,7 @@ export function PropertyCard({ property: propProperty, onFavoriteChange, isInCom
               onCompareToggle?.();
             }}
             className={`w-9 h-9 flex items-center justify-center transition-all duration-200 ease-in-out rounded-full active:scale-95 ${
-              isInComparison
-                ? 'bg-[#E9C500] text-[#0E56A4]'
-                : 'hover:bg-white/90 text-gray-700'
+              isInComparison ? 'bg-[#E9C500] text-[#0E56A4]' : 'hover:bg-white/90 text-gray-700'
             }`}
             aria-label={isInComparison ? 'Remove from comparison' : 'Add to comparison'}
             title={isInComparison ? 'Remove from comparison' : 'Add to comparison'}
@@ -341,16 +359,21 @@ export function PropertyCard({ property: propProperty, onFavoriteChange, isInCom
         <div className="flex items-center gap-3 md:gap-4 pb-3 mb-5 md:mb-6 border-b border-gray-100">
           <div className="flex items-center gap-[6px] flex-shrink-0">
             <Bed className="w-[13px] h-[13px] md:w-[14px] md:h-[14px] lg:w-[15px] lg:h-[15px] text-gray-500" />
-            <span className="text-[14px] md:text-[15px] lg:text-[16px] text-gray-700">{property.bedrooms}</span>
+            <span className="text-[14px] md:text-[15px] lg:text-[16px] text-gray-700">
+              {property.bedrooms}
+            </span>
           </div>
           <div className="flex items-center gap-[6px] flex-shrink-0">
             <Bath className="w-[13px] h-[13px] md:w-[14px] md:h-[14px] lg:w-[15px] lg:h-[15px] text-gray-500" />
-            <span className="text-[14px] md:text-[15px] lg:text-[16px] text-gray-700">{property.bathrooms}</span>
+            <span className="text-[14px] md:text-[15px] lg:text-[16px] text-gray-700">
+              {property.bathrooms}
+            </span>
           </div>
           <div className="flex items-center gap-[6px] flex-shrink-0">
             <Maximize className="w-[13px] h-[13px] md:w-[14px] md:h-[14px] lg:w-[15px] lg:h-[15px] text-gray-500" />
             <span className="text-[14px] md:text-[15px] lg:text-[16px] text-gray-700">
-              {property.area}<span className="text-[12px] md:text-[13px] lg:text-[14px]"> m²</span>
+              {property.area}
+              <span className="text-[12px] md:text-[13px] lg:text-[14px]"> m²</span>
             </span>
           </div>
         </div>
@@ -364,7 +387,9 @@ export function PropertyCard({ property: propProperty, onFavoriteChange, isInCom
               className="w-10 h-10 rounded-full object-cover ring-2 ring-gray-100 flex-shrink-0"
             />
             <div className="min-w-0">
-              <p className="text-sm font-medium text-[#2B2B2B] leading-tight truncate">{agent.name}</p>
+              <p className="text-sm font-medium text-[#2B2B2B] leading-tight truncate">
+                {agent.name}
+              </p>
               <p className="text-xs text-gray-500 leading-tight">Property Agent</p>
             </div>
           </div>

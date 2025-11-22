@@ -1,8 +1,7 @@
-import { DashboardLayout } from '../components/DashboardLayout';
-import { 
-  Heart, 
-  MessageSquare, 
-  User, 
+import {
+  Heart,
+  MessageSquare,
+  User,
   Eye,
   MapPin,
   Clock,
@@ -11,19 +10,19 @@ import {
   Bell,
   Tag,
   Star,
-  DollarSign
+  DollarSign,
 } from 'lucide-react';
-import { ImageWithFallback } from '../components/figma/ImageWithFallback';
 import { useNavigate } from 'react-router-dom';
-
+import { DashboardLayout } from '../components/DashboardLayout';
+import { ImageWithFallback } from '../components/figma/ImageWithFallback';
 import { StatusBadge } from '../components/StatusBadge';
 
 export default function TenantDashboardPage() {
   const navigate = useNavigate();
-  
+
   // Dynamic user info - matches DashboardLayout userInfo for tenant role
-  const tenantName = "Mohamed Ibrahim";
-  
+  const tenantName = 'Mohamed Ibrahim';
+
   // Placeholder data - Saved Properties (using string IDs to match mockData)
   const savedProperties = [
     {
@@ -31,29 +30,33 @@ export default function TenantDashboardPage() {
       title: 'Modern 2BR Apartment',
       location: 'New Cairo, Cairo',
       price: 'EGP 15,000/month',
-      image: 'https://images.unsplash.com/photo-1630699375019-c334927264df?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxhcGFydG1lbnQlMjBiZWRyb29tfGVufDF8fHx8MTc2MzQ2ODc5OXww&ixlib=rb-4.1.0&q=80&w=1080'
+      image:
+        'https://images.unsplash.com/photo-1630699375019-c334927264df?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxhcGFydG1lbnQlMjBiZWRyb29tfGVufDF8fHx8MTc2MzQ2ODc5OXww&ixlib=rb-4.1.0&q=80&w=1080',
     },
     {
       id: '2',
       title: 'Luxury Villa with Pool',
       location: 'Sheikh Zayed, Giza',
       price: 'EGP 45,000/month',
-      image: 'https://images.unsplash.com/photo-1728048756954-be23bd048b56?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx2aWxsYSUyMHN3aW1taW5nJTIwcG9vbHxlbnwxfHx8fDE3NjMzNzQ5NzJ8MA&ixlib=rb-4.1.0&q=80&w=1080'
+      image:
+        'https://images.unsplash.com/photo-1728048756954-be23bd048b56?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx2aWxsYSUyMHN3aW1taW5nJTIwcG9vbHxlbnwxfHx8fDE3NjMzNzQ5NzJ8MA&ixlib=rb-4.1.0&q=80&w=1080',
     },
     {
       id: '3',
       title: 'Cozy Studio Downtown',
       location: 'Downtown, Cairo',
       price: 'EGP 8,500/month',
-      image: 'https://images.unsplash.com/photo-1702014861373-527115231f8c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxzdHVkaW8lMjBhcGFydG1lbnQlMjBraXRjaGVufGVufDF8fHx8MTc2MzQ4MDIyNXww&ixlib=rb-4.1.0&q=80&w=1080'
+      image:
+        'https://images.unsplash.com/photo-1702014861373-527115231f8c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxzdHVkaW8lMjBhcGFydG1lbnQlMjBraXRjaGVufGVufDF8fHx8MTc2MzQ4MDIyNXww&ixlib=rb-4.1.0&q=80&w=1080',
     },
     {
       id: '4',
       title: 'Spacious 3BR Penthouse',
       location: 'Maadi, Cairo',
       price: 'EGP 28,000/month',
-      image: 'https://images.unsplash.com/photo-1568115286680-d203e08a8be6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwZW50aG91c2UlMjBjaXR5JTIwdmlld3xlbnwxfHx8fDE3NjM0NzE3Mzh8MA&ixlib=rb-4.1.0&q=80&w=1080'
-    }
+      image:
+        'https://images.unsplash.com/photo-1568115286680-d203e08a8be6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwZW50aG91c2UlMjBjaXR5JTIwdmlld3xlbnwxfHx8fDE3NjM0NzE3Mzh8MA&ixlib=rb-4.1.0&q=80&w=1080',
+    },
   ];
 
   // Recent Inquiries - Show only last 4
@@ -65,7 +68,7 @@ export default function TenantDashboardPage() {
       status: 'Replied',
       timestamp: '2 hours ago',
       messageSnippet: 'The property is available for viewing this weekend.',
-      seen: true
+      seen: true,
     },
     {
       id: 2,
@@ -74,7 +77,7 @@ export default function TenantDashboardPage() {
       status: 'Pending',
       timestamp: '5 hours ago',
       messageSnippet: 'I am interested in scheduling a viewing.',
-      seen: false
+      seen: false,
     },
     {
       id: 3,
@@ -83,7 +86,7 @@ export default function TenantDashboardPage() {
       status: 'Seen',
       timestamp: '1 day ago',
       messageSnippet: 'What are the lease terms and move-in dates?',
-      seen: true
+      seen: true,
     },
     {
       id: 4,
@@ -92,8 +95,8 @@ export default function TenantDashboardPage() {
       status: 'Replied',
       timestamp: '2 days ago',
       messageSnippet: 'Great! I can arrange a tour for you next Tuesday.',
-      seen: true
-    }
+      seen: true,
+    },
   ].slice(0, 4); // Show only last 4
 
   // Placeholder data - Recommended Properties
@@ -104,7 +107,7 @@ export default function TenantDashboardPage() {
       location: 'Heliopolis, Cairo',
       price: 'EGP 12,000/month',
       image: 'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&q=80',
-      status: 'Available'
+      status: 'Available',
     },
     {
       id: '6',
@@ -112,7 +115,7 @@ export default function TenantDashboardPage() {
       location: 'New Cairo, 5th Settlement',
       price: 'EGP 35,000/month',
       image: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&q=80',
-      status: 'Available'
+      status: 'Available',
     },
     {
       id: '7',
@@ -120,7 +123,7 @@ export default function TenantDashboardPage() {
       location: 'Zamalek, Cairo',
       price: 'EGP 60,000/month',
       image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80',
-      status: 'Available'
+      status: 'Available',
     },
     {
       id: '8',
@@ -128,8 +131,8 @@ export default function TenantDashboardPage() {
       location: 'Maadi, Degla',
       price: 'EGP 9,500/month',
       image: 'https://images.unsplash.com/photo-1536376072261-38c75010e6c9?w=800&q=80',
-      status: 'Available'
-    }
+      status: 'Available',
+    },
   ];
 
   // Mock alerts
@@ -140,7 +143,7 @@ export default function TenantDashboardPage() {
       icon: Bell,
       title: 'New properties added in Zamalek',
       description: '3 new properties match your preferences.',
-      time: '2 hours ago'
+      time: '2 hours ago',
     },
     {
       id: 2,
@@ -148,7 +151,7 @@ export default function TenantDashboardPage() {
       icon: Tag,
       title: 'Price drop on your saved property',
       description: '2BR Apartment in Maadi now EGP 19,500/month.',
-      time: '5 hours ago'
+      time: '5 hours ago',
     },
     {
       id: 3,
@@ -156,8 +159,8 @@ export default function TenantDashboardPage() {
       icon: Star,
       title: 'Saved property is available again',
       description: 'Penthouse in New Cairo is now Vacant.',
-      time: 'Yesterday'
-    }
+      time: 'Yesterday',
+    },
   ];
 
   const getStatusColor = (status: string) => {
@@ -178,9 +181,7 @@ export default function TenantDashboardPage() {
       <div className="px-4 sm:px-6 lg:px-8 py-6 space-y-8">
         {/* Welcome Section */}
         <div>
-          <h2 className="text-2xl font-semibold text-gray-900">
-            Welcome back, {tenantName}
-          </h2>
+          <h2 className="text-2xl font-semibold text-gray-900">Welcome back, {tenantName}</h2>
           <p className="text-gray-600 text-sm mt-1">Here is your activity overview</p>
         </div>
 
@@ -230,9 +231,7 @@ export default function TenantDashboardPage() {
         <div className="space-y-4">
           <div className="flex items-center justify-between">
             <div>
-              <h3 className="text-xl font-semibold text-[#0E56A4]">
-                Saved Properties
-              </h3>
+              <h3 className="text-xl font-semibold text-[#0E56A4]">Saved Properties</h3>
               <p className="text-gray-500 text-sm mt-1">Your wishlist of favorite rentals</p>
             </div>
           </div>
@@ -240,16 +239,18 @@ export default function TenantDashboardPage() {
           {savedProperties.length > 0 ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
               {savedProperties.map((property) => (
-                <div 
+                <div
                   key={property.id}
-                  onClick={() => navigate(`/tenant/property-details/${property.id}`, {
-                    state: { fromDashboard: true, dashboardType: 'tenant' }
-                  })}
+                  onClick={() =>
+                    navigate(`/tenant/property-details/${property.id}`, {
+                      state: { fromDashboard: true, dashboardType: 'tenant' },
+                    })
+                  }
                   className="bg-white rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-all overflow-hidden cursor-pointer group"
                 >
                   {/* Property Image */}
                   <div className="relative">
-                    <ImageWithFallback 
+                    <ImageWithFallback
                       src={property.image}
                       alt={property.title}
                       className="h-48 w-full object-cover group-hover:scale-105 transition-transform duration-300"
@@ -262,24 +263,20 @@ export default function TenantDashboardPage() {
 
                   {/* Property Info */}
                   <div className="p-4 space-y-2">
-                    <h4 className="font-semibold text-[#0E56A4] truncate">
-                      {property.title}
-                    </h4>
+                    <h4 className="font-semibold text-[#0E56A4] truncate">{property.title}</h4>
                     <div className="flex items-center gap-1 text-gray-500 text-sm">
                       <MapPin className="w-4 h-4 flex-shrink-0" />
                       <span className="truncate">{property.location}</span>
                     </div>
-                    <p className="font-bold text-[#0E56A4]">
-                      {property.price}
-                    </p>
-                    
+                    <p className="font-bold text-[#0E56A4]">{property.price}</p>
+
                     {/* Action Buttons */}
                     <div className="flex flex-col gap-2 mt-3">
                       <button
                         onClick={(e) => {
                           e.stopPropagation();
                           navigate(`/tenant/property-details/${property.id}`, {
-                            state: { fromDashboard: true, dashboardType: 'tenant' }
+                            state: { fromDashboard: true, dashboardType: 'tenant' },
                           });
                         }}
                         className="w-full px-4 py-2 bg-[#0E56A4] text-white rounded-lg hover:bg-[#093B74] transition-colors text-sm font-medium"
@@ -305,7 +302,9 @@ export default function TenantDashboardPage() {
             <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-12 text-center">
               <Heart className="w-12 h-12 text-gray-300 mx-auto mb-3" />
               <h4 className="font-semibold text-gray-900 mb-1">No saved properties yet</h4>
-              <p className="text-gray-500 text-sm">Start browsing to save your favorite properties</p>
+              <p className="text-gray-500 text-sm">
+                Start browsing to save your favorite properties
+              </p>
             </div>
           )}
         </div>
@@ -314,23 +313,23 @@ export default function TenantDashboardPage() {
         <div className="space-y-4">
           <div className="flex items-center justify-between">
             <div>
-              <h3 className="text-xl font-semibold text-[#0E56A4]">
-                Recommended For You
-              </h3>
-              <p className="text-gray-500 text-sm mt-1">Based on your viewing history and preferences.</p>
+              <h3 className="text-xl font-semibold text-[#0E56A4]">Recommended For You</h3>
+              <p className="text-gray-500 text-sm mt-1">
+                Based on your viewing history and preferences.
+              </p>
             </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {recommendedProperties.map((property) => (
-              <div 
+              <div
                 key={property.id}
                 onClick={() => navigate(`/property/${property.id}`)}
                 className="bg-white rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-all overflow-hidden cursor-pointer group"
               >
                 {/* Property Image */}
                 <div className="relative overflow-hidden">
-                  <ImageWithFallback 
+                  <ImageWithFallback
                     src={property.image}
                     alt={property.title}
                     className="h-48 w-full object-cover group-hover:scale-105 transition-transform duration-300"
@@ -348,10 +347,8 @@ export default function TenantDashboardPage() {
                     <MapPin className="w-4 h-4 flex-shrink-0 text-[#0E56A4]" />
                     <span className="truncate">{property.location}</span>
                   </div>
-                  <p className="font-bold text-gray-900 text-lg">
-                    {property.price}
-                  </p>
-                  
+                  <p className="font-bold text-gray-900 text-lg">{property.price}</p>
+
                   {/* Action Button */}
                   <button
                     onClick={(e) => {
@@ -372,16 +369,16 @@ export default function TenantDashboardPage() {
         <div className="space-y-4">
           <div className="flex items-center justify-between">
             <div>
-              <h3 className="text-xl font-bold text-[#0E56A4]">
-                Alerts & Notifications
-              </h3>
-              <p className="text-[#6B7280] text-sm mt-1">Updates about new matches, price drops, and saved properties</p>
+              <h3 className="text-xl font-bold text-[#0E56A4]">Alerts & Notifications</h3>
+              <p className="text-[#6B7280] text-sm mt-1">
+                Updates about new matches, price drops, and saved properties
+              </p>
             </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {alerts.map((alert) => (
-              <div 
+              <div
                 key={alert.id}
                 className="bg-white rounded-xl border border-gray-100 shadow-sm p-4 flex items-start gap-4"
               >
@@ -389,16 +386,10 @@ export default function TenantDashboardPage() {
                   <alert.icon className="w-5 h-5 text-[#0E56A4]" />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <h4 className="font-bold text-gray-900 text-sm">
-                    {alert.title}
-                  </h4>
-                  <p className="text-sm text-gray-600 mt-1">
-                    {alert.description}
-                  </p>
+                  <h4 className="font-bold text-gray-900 text-sm">{alert.title}</h4>
+                  <p className="text-sm text-gray-600 mt-1">{alert.description}</p>
                 </div>
-                <span className="text-xs text-gray-400 whitespace-nowrap pt-1">
-                  {alert.time}
-                </span>
+                <span className="text-xs text-gray-400 whitespace-nowrap pt-1">{alert.time}</span>
               </div>
             ))}
           </div>
@@ -408,9 +399,7 @@ export default function TenantDashboardPage() {
         <div className="space-y-4">
           <div className="flex items-center justify-between">
             <div>
-              <h3 className="text-xl font-semibold text-[#0E56A4]">
-                Recent Inquiries
-              </h3>
+              <h3 className="text-xl font-semibold text-[#0E56A4]">Recent Inquiries</h3>
               <p className="text-gray-500 text-sm mt-1">Your recent messages with agents</p>
             </div>
             <button
@@ -425,7 +414,7 @@ export default function TenantDashboardPage() {
           {recentInquiries.length > 0 ? (
             <div className="grid grid-cols-1 gap-4">
               {recentInquiries.map((inquiry) => (
-                <div 
+                <div
                   key={inquiry.id}
                   onClick={() => navigate(`/tenant/conversation/${inquiry.id}`)}
                   className="cursor-pointer bg-white rounded-xl border border-gray-100 shadow-sm hover:shadow-md hover:border-[#0E56A4]/30 transition-all p-5"
@@ -434,8 +423,11 @@ export default function TenantDashboardPage() {
                     {/* Property Thumbnail */}
                     <div className="relative flex-shrink-0">
                       <div className="w-16 h-16 bg-gray-200 rounded-lg overflow-hidden">
-                        <ImageWithFallback 
-                          src={savedProperties[inquiry.id - 1]?.image || 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=100&h=100&fit=crop'}
+                        <ImageWithFallback
+                          src={
+                            savedProperties[inquiry.id - 1]?.image ||
+                            'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=100&h=100&fit=crop'
+                          }
                           alt={inquiry.propertyName}
                           className="w-full h-full object-cover"
                         />
@@ -453,13 +445,17 @@ export default function TenantDashboardPage() {
                           {inquiry.propertyName}
                         </h4>
                         {/* Status Badge */}
-                        <StatusBadge status={inquiry.status} absolute={false} className="flex-shrink-0" />
+                        <StatusBadge
+                          status={inquiry.status}
+                          absolute={false}
+                          className="flex-shrink-0"
+                        />
                       </div>
-                      
+
                       <p className="text-sm text-gray-600">
                         Agent: <span className="font-medium">{inquiry.agentName}</span>
                       </p>
-                      
+
                       {/* Message Preview */}
                       <p className="text-sm text-gray-500 truncate italic">
                         "{inquiry.messageSnippet}"
@@ -479,7 +475,9 @@ export default function TenantDashboardPage() {
             <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-12 text-center">
               <MessageSquare className="w-12 h-12 text-gray-300 mx-auto mb-3" />
               <h4 className="font-semibold text-gray-900 mb-1">No inquiries yet</h4>
-              <p className="text-gray-500 text-sm">Start reaching out to agents about properties you like</p>
+              <p className="text-gray-500 text-sm">
+                Start reaching out to agents about properties you like
+              </p>
             </div>
           )}
         </div>
@@ -487,14 +485,12 @@ export default function TenantDashboardPage() {
         {/* Quick Actions Section */}
         <div className="space-y-4">
           <div>
-            <h3 className="text-xl font-semibold text-[#0E56A4]">
-              Quick Actions
-            </h3>
+            <h3 className="text-xl font-semibold text-[#0E56A4]">Quick Actions</h3>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {/* Update Profile */}
-            <div 
+            <div
               onClick={() => navigate('/tenant/profile')}
               className="p-6 bg-white rounded-xl shadow-sm hover:shadow-md transition-all cursor-pointer border border-gray-100 hover:border-[#0E56A4]/30 group"
             >
@@ -510,7 +506,7 @@ export default function TenantDashboardPage() {
             </div>
 
             {/* View All Saved Properties */}
-            <div 
+            <div
               onClick={() => navigate('/tenant/saved')}
               className="p-6 bg-white rounded-xl shadow-sm hover:shadow-md transition-all cursor-pointer border border-gray-100 hover:border-[#0E56A4]/30 group"
             >
@@ -526,7 +522,7 @@ export default function TenantDashboardPage() {
             </div>
 
             {/* View All Inquiries */}
-            <div 
+            <div
               onClick={() => navigate('/tenant/inquiries')}
               className="p-6 bg-white rounded-xl shadow-sm hover:shadow-md transition-all cursor-pointer border border-gray-100 hover:border-[#0E56A4]/30 group"
             >
@@ -542,7 +538,7 @@ export default function TenantDashboardPage() {
             </div>
 
             {/* Manage Payments */}
-            <div 
+            <div
               onClick={() => navigate('/tenant/payments')}
               className="p-6 bg-white rounded-xl shadow-sm hover:shadow-md transition-all cursor-pointer border border-gray-100 hover:border-[#0E56A4]/30 group"
             >

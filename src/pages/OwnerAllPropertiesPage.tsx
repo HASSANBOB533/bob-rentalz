@@ -1,11 +1,11 @@
-import { StatusBadge } from '../components/StatusBadge';
-import { DashboardLayout } from '../components/DashboardLayout';
-import { Button } from '../components/ui/button';
-import { Input } from '../components/ui/input';
-import { Badge } from '../components/ui/badge';
 import { ArrowLeft, Search, Edit, Eye, AlertTriangle, Archive } from 'lucide-react';
-import { Link } from 'react-router-dom';
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { toast } from 'sonner@2.0.3';
+import { DashboardLayout } from '../components/DashboardLayout';
+import { StatusBadge } from '../components/StatusBadge';
+import { Badge } from '../components/ui/badge';
+import { Button } from '../components/ui/button';
 import {
   Dialog,
   DialogContent,
@@ -13,8 +13,8 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "../components/ui/dialog";
-import { toast } from 'sonner@2.0.3';
+} from '../components/ui/dialog';
+import { Input } from '../components/ui/input';
 
 const MOCK_PROPERTIES = [
   {
@@ -31,8 +31,8 @@ const MOCK_PROPERTIES = [
       avatar: 'https://i.pravatar.cc/150?img=1',
       leaseStart: 'Jan 1, 2024',
       leaseEnd: 'Dec 31, 2025', // Future
-      leaseStatus: 'Active'
-    }
+      leaseStatus: 'Active',
+    },
   },
   {
     id: 2,
@@ -58,8 +58,8 @@ const MOCK_PROPERTIES = [
       avatar: 'https://i.pravatar.cc/150?img=12',
       leaseStart: 'Mar 15, 2024',
       leaseEnd: 'Mar 14, 2025', // Past
-      leaseStatus: 'Active'
-    }
+      leaseStatus: 'Active',
+    },
   },
   {
     id: 4,
@@ -95,8 +95,8 @@ const MOCK_PROPERTIES = [
       avatar: 'https://i.pravatar.cc/150?img=5',
       leaseStart: 'Feb 1, 2024',
       leaseEnd: 'Jan 31, 2025', // Past
-      leaseStatus: 'Ending Soon'
-    }
+      leaseStatus: 'Ending Soon',
+    },
   },
   {
     id: 7,
@@ -118,13 +118,14 @@ export default function OwnerAllPropertiesPage() {
 
   const filteredProperties = properties.filter((property) => {
     const matchesFilter = filter === 'All' || property.status === filter;
-    const matchesSearch = property.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                          property.location.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesSearch =
+      property.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      property.location.toLowerCase().includes(searchTerm.toLowerCase());
     return matchesFilter && matchesSearch;
   });
 
-  const vacantProperties = filteredProperties.filter(p => p.status === 'Vacant');
-  const otherProperties = filteredProperties.filter(p => p.status !== 'Vacant');
+  const vacantProperties = filteredProperties.filter((p) => p.status === 'Vacant');
+  const otherProperties = filteredProperties.filter((p) => p.status !== 'Vacant');
 
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -160,18 +161,20 @@ export default function OwnerAllPropertiesPage() {
 
   const handleEndTenancy = () => {
     if (selectedPropertyToEnd) {
-       setProperties(properties.map(p => {
-         if (p.id === selectedPropertyToEnd) {
-            return { 
-               ...p, 
-               status: 'Vacant', 
-               currentTenant: undefined 
+      setProperties(
+        properties.map((p) => {
+          if (p.id === selectedPropertyToEnd) {
+            return {
+              ...p,
+              status: 'Vacant',
+              currentTenant: undefined,
             };
-         }
-         return p;
-       }));
-       setSelectedPropertyToEnd(null);
-       toast.success('Tenancy ended successfully. Property is now Vacant.');
+          }
+          return p;
+        }),
+      );
+      setSelectedPropertyToEnd(null);
+      toast.success('Tenancy ended successfully. Property is now Vacant.');
     }
   };
 
@@ -229,56 +232,66 @@ export default function OwnerAllPropertiesPage() {
           {/* Vacant Properties Section */}
           {vacantProperties.length > 0 && (
             <section>
-               <h2 className="text-xl font-semibold text-gray-900 mb-4 flex items-center gap-2">
-                 <div className="w-3 h-3 rounded-full bg-gray-400"></div>
-                 Vacant Properties
-               </h2>
-               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {vacantProperties.map((property) => (
-                    <div
-                      key={property.id}
-                      className="bg-white rounded-xl shadow-sm border border-gray-300 overflow-hidden hover:shadow-md transition-shadow"
-                    >
-                      <div className="relative h-48 bg-gray-200">
-                        <img
-                          src={property.image}
-                          alt={property.title}
-                          className="w-full h-full object-cover opacity-90"
-                        />
-                        <StatusBadge status={property.status} absolute className="right-3 top-3" />
+              <h2 className="text-xl font-semibold text-gray-900 mb-4 flex items-center gap-2">
+                <div className="w-3 h-3 rounded-full bg-gray-400"></div>
+                Vacant Properties
+              </h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {vacantProperties.map((property) => (
+                  <div
+                    key={property.id}
+                    className="bg-white rounded-xl shadow-sm border border-gray-300 overflow-hidden hover:shadow-md transition-shadow"
+                  >
+                    <div className="relative h-48 bg-gray-200">
+                      <img
+                        src={property.image}
+                        alt={property.title}
+                        className="w-full h-full object-cover opacity-90"
+                      />
+                      <StatusBadge status={property.status} absolute className="right-3 top-3" />
+                    </div>
+                    <div className="p-5">
+                      <h3 className="text-gray-900 font-medium mb-1">{property.title}</h3>
+                      <p className="text-gray-500 text-sm mb-4">{property.location}</p>
+                      <div className="flex gap-3 mb-4">
+                        <Button
+                          asChild
+                          variant="outline"
+                          className="flex-1 border-[#0E56A4] text-[#0E56A4]"
+                        >
+                          <Link to={`/owner/properties/${property.id}/edit`}>Edit Listing</Link>
+                        </Button>
+                        <Button className="flex-1 bg-[#0E56A4] text-white hover:bg-[#093B74]">
+                          Assign Agent
+                        </Button>
                       </div>
-                      <div className="p-5">
-                        <h3 className="text-gray-900 font-medium mb-1">{property.title}</h3>
-                        <p className="text-gray-500 text-sm mb-4">{property.location}</p>
-                        <div className="flex gap-3 mb-4">
-                           <Button asChild variant="outline" className="flex-1 border-[#0E56A4] text-[#0E56A4]">
-                              <Link to={`/owner/properties/${property.id}/edit`}>Edit Listing</Link>
-                           </Button>
-                           <Button className="flex-1 bg-[#0E56A4] text-white hover:bg-[#093B74]">
-                              Assign Agent
-                           </Button>
-                        </div>
-                        <div className="bg-gray-50 p-3 rounded-lg text-xs text-gray-500 text-center border border-gray-100">
-                           Your property is now vacant and ready for a new tenant.
-                        </div>
+                      <div className="bg-gray-50 p-3 rounded-lg text-xs text-gray-500 text-center border border-gray-100">
+                        Your property is now vacant and ready for a new tenant.
                       </div>
                     </div>
-                  ))}
-               </div>
+                  </div>
+                ))}
+              </div>
             </section>
           )}
 
           {/* Other Properties Section */}
-          {(otherProperties.length > 0 || (filteredProperties.length === 0 && vacantProperties.length === 0)) && (
-             <section>
-                {vacantProperties.length > 0 && (
-                   <h2 className="text-xl font-semibold text-gray-900 mb-4">Active & Rented Properties</h2>
-                )}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {otherProperties.map((property) => {
-                    const leaseEnded = property.status === 'Rented' && property.currentTenant?.leaseEnd && isLeaseEnded(property.currentTenant.leaseEnd);
-                    
-                    return (
+          {(otherProperties.length > 0 ||
+            (filteredProperties.length === 0 && vacantProperties.length === 0)) && (
+            <section>
+              {vacantProperties.length > 0 && (
+                <h2 className="text-xl font-semibold text-gray-900 mb-4">
+                  Active & Rented Properties
+                </h2>
+              )}
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {otherProperties.map((property) => {
+                  const leaseEnded =
+                    property.status === 'Rented' &&
+                    property.currentTenant?.leaseEnd &&
+                    isLeaseEnded(property.currentTenant.leaseEnd);
+
+                  return (
                     <div
                       key={property.id}
                       className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow"
@@ -301,7 +314,7 @@ export default function OwnerAllPropertiesPage() {
                       <div className="p-5">
                         <h3 className="text-[#0E56A4] mb-1">{property.title}</h3>
                         <p className="text-gray-600 text-sm mb-3">{property.location}</p>
-                        
+
                         <p className="text-[#0E56A4] mb-4">
                           {property.price.toLocaleString()} EGP/month
                         </p>
@@ -321,10 +334,15 @@ export default function OwnerAllPropertiesPage() {
                                   {property.currentTenant.name}
                                 </p>
                                 <p className="text-xs text-gray-600">
-                                  {property.currentTenant.leaseStart} - <span className={leaseEnded ? "text-red-600 font-semibold" : ""}>{property.currentTenant.leaseEnd}</span>
+                                  {property.currentTenant.leaseStart} -{' '}
+                                  <span className={leaseEnded ? 'text-red-600 font-semibold' : ''}>
+                                    {property.currentTenant.leaseEnd}
+                                  </span>
                                 </p>
                               </div>
-                              <Badge className={`text-xs ${getTenantLeaseStatusColor(property.currentTenant.leaseStatus)}`}>
+                              <Badge
+                                className={`text-xs ${getTenantLeaseStatusColor(property.currentTenant.leaseStatus)}`}
+                              >
                                 {property.currentTenant.leaseStatus}
                               </Badge>
                             </div>
@@ -332,16 +350,16 @@ export default function OwnerAllPropertiesPage() {
                             {/* Lease Ended Block */}
                             {leaseEnded && (
                               <div className="mt-3 pt-3 border-t border-blue-200">
-                                  <div className="flex items-center gap-2 text-yellow-700 text-xs mb-2">
-                                    <AlertTriangle className="w-4 h-4" />
-                                    <span className="font-bold">Lease Ended</span>
-                                  </div>
-                                  <Button 
-                                    onClick={() => setSelectedPropertyToEnd(property.id)}
-                                    className="w-full bg-[#0E56A4] text-white hover:bg-[#093B74] h-8 text-xs"
-                                  >
-                                    End Tenancy
-                                  </Button>
+                                <div className="flex items-center gap-2 text-yellow-700 text-xs mb-2">
+                                  <AlertTriangle className="w-4 h-4" />
+                                  <span className="font-bold">Lease Ended</span>
+                                </div>
+                                <Button
+                                  onClick={() => setSelectedPropertyToEnd(property.id)}
+                                  className="w-full bg-[#0E56A4] text-white hover:bg-[#093B74] h-8 text-xs"
+                                >
+                                  End Tenancy
+                                </Button>
                               </div>
                             )}
                           </div>
@@ -371,12 +389,10 @@ export default function OwnerAllPropertiesPage() {
                               asChild
                               className="w-full bg-[#E9C500] text-gray-900 hover:bg-[#D4B500]"
                             >
-                              <Link to={`/owner/tenant-chat/${property.id}`}>
-                                Message Tenant
-                              </Link>
+                              <Link to={`/owner/tenant-chat/${property.id}`}>Message Tenant</Link>
                             </Button>
                           )}
-                          
+
                           {/* Edit and Leads Buttons - Different layout for Rented vs Non-Rented */}
                           {property.status === 'Rented' ? (
                             // For rented properties: Only show Edit button (full width)
@@ -417,10 +433,10 @@ export default function OwnerAllPropertiesPage() {
                         </div>
                       </div>
                     </div>
-                    );
-                  })}
-                </div>
-             </section>
+                  );
+                })}
+              </div>
+            </section>
           )}
         </div>
 
@@ -432,21 +448,31 @@ export default function OwnerAllPropertiesPage() {
         )}
 
         {/* End Tenancy Modal */}
-        <Dialog open={!!selectedPropertyToEnd} onOpenChange={(open) => !open && setSelectedPropertyToEnd(null)}>
-           <DialogContent>
-              <DialogHeader>
-                 <DialogTitle>Confirm End of Tenancy</DialogTitle>
-                 <DialogDescription>
-                    Are you sure you want to mark this property as vacated? This will update the property status to Active and move the tenant to history.
-                 </DialogDescription>
-              </DialogHeader>
-              <DialogFooter>
-                 <Button variant="outline" onClick={() => setSelectedPropertyToEnd(null)}>Cancel</Button>
-                 <Button onClick={handleEndTenancy} className="bg-[#0E56A4] text-white hover:bg-[#093B74]">Confirm</Button>
-              </DialogFooter>
-           </DialogContent>
+        <Dialog
+          open={!!selectedPropertyToEnd}
+          onOpenChange={(open) => !open && setSelectedPropertyToEnd(null)}
+        >
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Confirm End of Tenancy</DialogTitle>
+              <DialogDescription>
+                Are you sure you want to mark this property as vacated? This will update the
+                property status to Active and move the tenant to history.
+              </DialogDescription>
+            </DialogHeader>
+            <DialogFooter>
+              <Button variant="outline" onClick={() => setSelectedPropertyToEnd(null)}>
+                Cancel
+              </Button>
+              <Button
+                onClick={handleEndTenancy}
+                className="bg-[#0E56A4] text-white hover:bg-[#093B74]"
+              >
+                Confirm
+              </Button>
+            </DialogFooter>
+          </DialogContent>
         </Dialog>
-
       </div>
     </DashboardLayout>
   );

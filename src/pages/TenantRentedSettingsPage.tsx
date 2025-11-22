@@ -1,8 +1,18 @@
-import { DashboardLayout } from '../components/DashboardLayout';
-import { ArrowLeft, Bell, Lock, Eye, Mail, MessageSquare, Calendar, Shield, Download } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
-import { Button } from '../components/ui/button';
+import {
+  ArrowLeft,
+  Bell,
+  Lock,
+  Eye,
+  Mail,
+  MessageSquare,
+  Calendar,
+  Shield,
+  Download,
+} from 'lucide-react';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { DashboardLayout } from '../components/DashboardLayout';
+import { Button } from '../components/ui/button';
 
 export default function TenantRentedSettingsPage() {
   const navigate = useNavigate();
@@ -77,7 +87,9 @@ export default function TenantRentedSettingsPage() {
                   <input
                     type="checkbox"
                     checked={notifications.emailNotifications}
-                    onChange={(e) => setNotifications({ ...notifications, emailNotifications: e.target.checked })}
+                    onChange={(e) =>
+                      setNotifications({ ...notifications, emailNotifications: e.target.checked })
+                    }
                     className="sr-only peer"
                   />
                   <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-[#0E56A4]/20 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#0E56A4]"></div>
@@ -96,7 +108,9 @@ export default function TenantRentedSettingsPage() {
                   <input
                     type="checkbox"
                     checked={notifications.smsNotifications}
-                    onChange={(e) => setNotifications({ ...notifications, smsNotifications: e.target.checked })}
+                    onChange={(e) =>
+                      setNotifications({ ...notifications, smsNotifications: e.target.checked })
+                    }
                     className="sr-only peer"
                   />
                   <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-[#0E56A4]/20 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#0E56A4]"></div>
@@ -115,7 +129,9 @@ export default function TenantRentedSettingsPage() {
                   <input
                     type="checkbox"
                     checked={notifications.pushNotifications}
-                    onChange={(e) => setNotifications({ ...notifications, pushNotifications: e.target.checked })}
+                    onChange={(e) =>
+                      setNotifications({ ...notifications, pushNotifications: e.target.checked })
+                    }
                     className="sr-only peer"
                   />
                   <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-[#0E56A4]/20 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#0E56A4]"></div>
@@ -124,14 +140,19 @@ export default function TenantRentedSettingsPage() {
 
               <div className="pt-4 space-y-3">
                 <p className="text-sm font-semibold text-gray-700">Notification Types</p>
-                
+
                 <div className="flex items-center justify-between py-2">
                   <p className="text-sm text-gray-700">Service Request Updates</p>
                   <label className="relative inline-flex items-center cursor-pointer">
                     <input
                       type="checkbox"
                       checked={notifications.serviceRequestUpdates}
-                      onChange={(e) => setNotifications({ ...notifications, serviceRequestUpdates: e.target.checked })}
+                      onChange={(e) =>
+                        setNotifications({
+                          ...notifications,
+                          serviceRequestUpdates: e.target.checked,
+                        })
+                      }
                       className="sr-only peer"
                     />
                     <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-[#0E56A4]/20 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#0E56A4]"></div>
@@ -144,7 +165,9 @@ export default function TenantRentedSettingsPage() {
                     <input
                       type="checkbox"
                       checked={notifications.paymentReminders}
-                      onChange={(e) => setNotifications({ ...notifications, paymentReminders: e.target.checked })}
+                      onChange={(e) =>
+                        setNotifications({ ...notifications, paymentReminders: e.target.checked })
+                      }
                       className="sr-only peer"
                     />
                     <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-[#0E56A4]/20 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#0E56A4]"></div>
@@ -157,7 +180,12 @@ export default function TenantRentedSettingsPage() {
                     <input
                       type="checkbox"
                       checked={notifications.maintenanceSchedule}
-                      onChange={(e) => setNotifications({ ...notifications, maintenanceSchedule: e.target.checked })}
+                      onChange={(e) =>
+                        setNotifications({
+                          ...notifications,
+                          maintenanceSchedule: e.target.checked,
+                        })
+                      }
                       className="sr-only peer"
                     />
                     <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-[#0E56A4]/20 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#0E56A4]"></div>
@@ -170,7 +198,9 @@ export default function TenantRentedSettingsPage() {
                     <input
                       type="checkbox"
                       checked={notifications.propertyNews}
-                      onChange={(e) => setNotifications({ ...notifications, propertyNews: e.target.checked })}
+                      onChange={(e) =>
+                        setNotifications({ ...notifications, propertyNews: e.target.checked })
+                      }
                       className="sr-only peer"
                     />
                     <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-[#0E56A4]/20 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#0E56A4]"></div>
@@ -202,10 +232,7 @@ export default function TenantRentedSettingsPage() {
             </div>
 
             <div className="space-y-3">
-              <Button
-                variant="outline"
-                className="w-full justify-between"
-              >
+              <Button variant="outline" className="w-full justify-between">
                 <span className="flex items-center gap-2">
                   <Lock className="w-4 h-4" />
                   Change Password
@@ -213,10 +240,7 @@ export default function TenantRentedSettingsPage() {
                 <span className="text-gray-400">→</span>
               </Button>
 
-              <Button
-                variant="outline"
-                className="w-full justify-between"
-              >
+              <Button variant="outline" className="w-full justify-between">
                 <span className="flex items-center gap-2">
                   <Shield className="w-4 h-4" />
                   Two-Factor Authentication
@@ -224,10 +248,7 @@ export default function TenantRentedSettingsPage() {
                 <span className="text-sm text-gray-500">Not Enabled</span>
               </Button>
 
-              <Button
-                variant="outline"
-                className="w-full justify-between"
-              >
+              <Button variant="outline" className="w-full justify-between">
                 <span className="flex items-center gap-2">
                   <Eye className="w-4 h-4" />
                   Login History
@@ -321,10 +342,7 @@ export default function TenantRentedSettingsPage() {
             </div>
 
             <div className="space-y-3">
-              <Button
-                variant="outline"
-                className="w-full justify-start"
-              >
+              <Button variant="outline" className="w-full justify-start">
                 <Download className="w-4 h-4 mr-2" />
                 Download My Data
               </Button>

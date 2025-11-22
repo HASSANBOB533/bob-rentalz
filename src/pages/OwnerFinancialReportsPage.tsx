@@ -1,7 +1,7 @@
-import { DashboardLayout } from '../components/DashboardLayout';
-import { Badge } from '../components/ui/badge';
 import { ArrowLeft, TrendingUp, DollarSign, Home, AlertCircle } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { DashboardLayout } from '../components/DashboardLayout';
+import { Badge } from '../components/ui/badge';
 
 const OVERVIEW_STATS = [
   {
@@ -128,10 +128,7 @@ export default function OwnerFinancialReportsPage() {
         {/* A) Overview Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           {OVERVIEW_STATS.map((stat, index) => (
-            <div
-              key={index}
-              className="bg-white rounded-xl shadow-sm border border-gray-200 p-6"
-            >
+            <div key={index} className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
               <div className="flex items-center gap-4">
                 <div className={`${stat.bgColor} ${stat.color} p-3 rounded-lg`}>
                   <stat.icon className="w-6 h-6" />
@@ -162,7 +159,7 @@ export default function OwnerFinancialReportsPage() {
           <div className="p-6 border-b border-gray-200">
             <h2 className="text-[#0E56A4]">Payment History</h2>
           </div>
-          
+
           {/* Desktop Table */}
           <div className="hidden md:block overflow-x-auto">
             <table className="w-full">
@@ -189,9 +186,7 @@ export default function OwnerFinancialReportsPage() {
                 {PAYMENT_HISTORY.map((payment) => (
                   <tr key={payment.id} className="hover:bg-gray-50">
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm font-medium text-gray-900">
-                        {payment.property}
-                      </div>
+                      <div className="text-sm font-medium text-gray-900">{payment.property}</div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className="text-sm text-gray-600">{payment.tenant}</div>
@@ -205,9 +200,7 @@ export default function OwnerFinancialReportsPage() {
                       <div className="text-sm text-gray-600">{payment.date}</div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <Badge className={getStatusColor(payment.status)}>
-                        {payment.status}
-                      </Badge>
+                      <Badge className={getStatusColor(payment.status)}>{payment.status}</Badge>
                     </td>
                   </tr>
                 ))}
@@ -224,9 +217,7 @@ export default function OwnerFinancialReportsPage() {
                     <p className="font-medium text-gray-900 mb-1">{payment.property}</p>
                     <p className="text-sm text-gray-600">{payment.tenant}</p>
                   </div>
-                  <Badge className={getStatusColor(payment.status)}>
-                    {payment.status}
-                  </Badge>
+                  <Badge className={getStatusColor(payment.status)}>{payment.status}</Badge>
                 </div>
                 <div className="flex items-center justify-between mt-3">
                   <p className="text-sm text-gray-600">{payment.date}</p>

@@ -1,5 +1,14 @@
+import {
+  ChevronLeft,
+  MapPin,
+  Calendar,
+  Building,
+  Phone,
+  Mail,
+  FileText,
+  Wrench,
+} from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { ChevronLeft, MapPin, Calendar, Building, Phone, Mail, FileText, Wrench } from 'lucide-react';
 import { ImageWithFallback } from '../components/figma/ImageWithFallback';
 import { PropertyCodeDisplay } from '../components/PropertyCodeDisplay';
 import { addPropertyMetadata } from '../utils/propertyUtils';
@@ -21,7 +30,7 @@ export default function TenantRentedPropertiesPage() {
       landlordPhone: '+20 123 456 7890',
       landlordEmail: 'sarah.johnson@bob.com',
       status: 'Active',
-      cycle: 1
+      cycle: 1,
     },
     {
       id: 2,
@@ -35,9 +44,9 @@ export default function TenantRentedPropertiesPage() {
       landlordPhone: '+20 111 222 3333',
       landlordEmail: 'ahmed.hassan@bob.com',
       status: 'Active',
-      cycle: 2
-    }
-  ].map(property => addPropertyMetadata(property));
+      cycle: 2,
+    },
+  ].map((property) => addPropertyMetadata(property));
 
   return (
     <div className="px-4 sm:px-6 lg:px-8 py-6">
@@ -52,23 +61,21 @@ export default function TenantRentedPropertiesPage() {
 
       {/* Header */}
       <div className="mb-6">
-        <h2 className="text-2xl font-bold text-[#0E56A4] mb-2">
-          Rented Properties
-        </h2>
+        <h2 className="text-2xl font-bold text-[#0E56A4] mb-2">Rented Properties</h2>
         <p className="text-sm text-gray-600">Your active rental agreements</p>
       </div>
 
       {/* Properties Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {rentedProperties.map((property) => (
-          <div 
+          <div
             key={property.id}
             onClick={() => navigate(`/tenant/rental-details/${property.id}`)}
             className="cursor-pointer bg-white rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-all overflow-hidden"
           >
             {/* Property Image */}
             <div className="relative h-48 bg-gray-200">
-              <ImageWithFallback 
+              <ImageWithFallback
                 src={property.image}
                 alt={property.title}
                 className="w-full h-full object-cover"
@@ -86,7 +93,7 @@ export default function TenantRentedPropertiesPage() {
               <h3 className="font-semibold text-[#0E56A4] mb-2 line-clamp-2 min-h-[48px]">
                 {property.title}
               </h3>
-              
+
               <div className="flex items-center gap-1 text-xs text-gray-500 mb-4">
                 <MapPin className="w-3.5 h-3.5" />
                 <span>{property.location}</span>
@@ -106,7 +113,9 @@ export default function TenantRentedPropertiesPage() {
               <div className="space-y-2 mb-4">
                 <div className="flex items-center gap-2 text-xs text-gray-600">
                   <Calendar className="w-4 h-4 text-[#0E56A4]" />
-                  <span>Lease: {property.leaseStart} - {property.leaseEnd}</span>
+                  <span>
+                    Lease: {property.leaseStart} - {property.leaseEnd}
+                  </span>
                 </div>
                 <div className="flex items-center justify-between pt-2 border-t border-gray-100">
                   <span className="text-xs text-gray-500">Monthly Rent</span>
@@ -135,7 +144,7 @@ export default function TenantRentedPropertiesPage() {
 
               {/* Action Buttons */}
               <div className="flex gap-2">
-                <button 
+                <button
                   onClick={(e) => {
                     e.stopPropagation();
                     navigate(`/tenant/rental-details/${property.id}`);
@@ -145,7 +154,7 @@ export default function TenantRentedPropertiesPage() {
                   <FileText className="w-3.5 h-3.5" />
                   View Details
                 </button>
-                <button 
+                <button
                   onClick={(e) => {
                     e.stopPropagation();
                     navigate('/tenant/service-requests');
@@ -158,7 +167,7 @@ export default function TenantRentedPropertiesPage() {
               </div>
 
               {/* Documents Button */}
-              <button 
+              <button
                 onClick={(e) => {
                   e.stopPropagation();
                   navigate('/tenant/documents');

@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { useState, useEffect } from 'react';
 import { Button } from './ui/button';
 
 interface CarouselProps {
@@ -10,12 +10,12 @@ interface CarouselProps {
   className?: string;
 }
 
-export function Carousel({ 
-  children, 
-  autoplay = false, 
+export function Carousel({
+  children,
+  autoplay = false,
   autoplaySpeed = 5000,
   slidesToShow = 1,
-  className = ''
+  className = '',
 }: CarouselProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
@@ -25,7 +25,7 @@ export function Carousel({
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 768);
     };
-    
+
     checkMobile();
     window.addEventListener('resize', checkMobile);
     return () => window.removeEventListener('resize', checkMobile);
@@ -37,7 +37,7 @@ export function Carousel({
 
   useEffect(() => {
     if (!autoplay) return;
-    
+
     const interval = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % totalSlides);
     }, autoplaySpeed);
@@ -61,29 +61,25 @@ export function Carousel({
     <div className={`relative ${className}`}>
       {/* Carousel Content */}
       <div className="overflow-hidden">
-        <div 
+        <div
           className="flex transition-transform duration-500 ease-out"
-          style={{ 
-            transform: `translateX(-${currentIndex * 100}%)` 
+          style={{
+            transform: `translateX(-${currentIndex * 100}%)`,
           }}
         >
           {Array.from({ length: totalSlides }).map((_, slideIndex) => (
-            <div 
-              key={slideIndex}
-              className="flex-shrink-0 w-full flex gap-6"
-            >
-              {children.slice(
-                slideIndex * effectiveSlidesToShow, 
-                (slideIndex + 1) * effectiveSlidesToShow
-              ).map((child, childIndex) => (
-                <div 
-                  key={childIndex}
-                  className="flex-1"
-                  style={{ width: `${100 / effectiveSlidesToShow}%` }}
-                >
-                  {child}
-                </div>
-              ))}
+            <div key={slideIndex} className="flex-shrink-0 w-full flex gap-6">
+              {children
+                .slice(slideIndex * effectiveSlidesToShow, (slideIndex + 1) * effectiveSlidesToShow)
+                .map((child, childIndex) => (
+                  <div
+                    key={childIndex}
+                    className="flex-1"
+                    style={{ width: `${100 / effectiveSlidesToShow}%` }}
+                  >
+                    {child}
+                  </div>
+                ))}
             </div>
           ))}
         </div>
@@ -119,9 +115,7 @@ export function Carousel({
               key={index}
               onClick={() => goToSlide(index)}
               className={`w-2 h-2 rounded-full transition-all ${
-                index === currentIndex 
-                  ? 'bg-[#D4AF37] w-8' 
-                  : 'bg-gray-300 hover:bg-gray-400'
+                index === currentIndex ? 'bg-[#D4AF37] w-8' : 'bg-gray-300 hover:bg-gray-400'
               }`}
               aria-label={`Go to slide ${index + 1}`}
             />

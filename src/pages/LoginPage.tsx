@@ -1,11 +1,11 @@
+import bobLogo from 'figma:asset/c3cbe0198340d6bed05c69174ee79f3b6a4d8624.png';
+import { Mail, Lock } from 'lucide-react';
+import { motion } from 'motion/react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'sonner@2.0.3';
 import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
-import { motion } from 'motion/react';
-import { Mail, Lock } from 'lucide-react';
-import bobLogo from 'figma:asset/c3cbe0198340d6bed05c69174ee79f3b6a4d8624.png';
-import { useState } from 'react';
-import { toast } from 'sonner@2.0.3';
 import { useAuth } from '../contexts/AuthContext';
 
 export function LoginPage() {
@@ -30,9 +30,9 @@ export function LoginPage() {
 
       // Get user profile to determine role
       const { user, profile } = useAuth();
-      
+
       toast.success('Login successful!');
-      
+
       // Redirect based on role
       setTimeout(() => {
         if (profile?.role === 'admin') {

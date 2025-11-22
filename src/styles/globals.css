@@ -1,22 +1,22 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 @theme {
   /* Official BOB Brand Colors */
-  --color-brand-blue: #0E56A4;
-  --color-brand-blue-dark: #0A3F79;
-  --color-brand-yellow: #E9C500;
-  --color-brand-yellow-dark: #E3B600;
-  --color-brand-white: #FFFFFF;
-  --color-light-blue-bg: #F2F7FC;
-  
+  --color-brand-blue: #0e56a4;
+  --color-brand-blue-dark: #0a3f79;
+  --color-brand-yellow: #e9c500;
+  --color-brand-yellow-dark: #e3b600;
+  --color-brand-white: #ffffff;
+  --color-light-blue-bg: #f2f7fc;
+
   /* Legacy color mappings for compatibility */
-  --color-gold: #E9C500;
-  --color-gold-light: #E9C500;
-  --color-gold-dark: #E3B600;
-  --color-warm-gray: #F2F7FC;
-  --color-charcoal: #0A3F79;
-  --color-light-gray: #F2F7FC;
-  --color-border: #E5E7EB;
+  --color-gold: #e9c500;
+  --color-gold-light: #e9c500;
+  --color-gold-dark: #e3b600;
+  --color-warm-gray: #f2f7fc;
+  --color-charcoal: #0a3f79;
+  --color-light-gray: #f2f7fc;
+  --color-border: #e5e7eb;
 
   /* Fonts */
   --font-heading: 'Inter', system-ui, sans-serif;
@@ -24,7 +24,7 @@
 
   /* Spacing */
   --spacing-section: 5rem;
-  
+
   /* Shadows */
   --shadow-soft: 0 4px 24px rgba(0, 0, 0, 0.06);
   --shadow-hover: 0 8px 32px rgba(0, 0, 0, 0.12);
@@ -36,7 +36,8 @@
     font-style: normal;
     font-weight: 300 900;
     font-display: swap;
-    src: url(https://fonts.gstatic.com/s/inter/v18/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuLyfAZ9hiA.woff2) format('woff2');
+    src: url(https://fonts.gstatic.com/s/inter/v18/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuLyfAZ9hiA.woff2)
+      format('woff2');
   }
 
   @font-face {
@@ -44,7 +45,8 @@
     font-style: normal;
     font-weight: 400 700;
     font-display: swap;
-    src: url(https://fonts.gstatic.com/s/dmsans/v15/rP2tp2ywxg089UriI5-g4vlH9VoD8CmcqZG40F9JadbnoEwAopxRR252UVs.woff2) format('woff2');
+    src: url(https://fonts.gstatic.com/s/dmsans/v15/rP2tp2ywxg089UriI5-g4vlH9VoD8CmcqZG40F9JadbnoEwAopxRR252UVs.woff2)
+      format('woff2');
   }
 
   * {
@@ -54,12 +56,17 @@
   body {
     font-family: var(--font-body);
     color: var(--color-charcoal);
-    background-color: #FFFFFF;
+    background-color: #ffffff;
     line-height: 1.6;
     font-size: 16px;
   }
 
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     font-family: var(--font-heading);
     font-weight: 600;
     line-height: 1.2;
@@ -205,7 +212,7 @@
   }
 
   .gold-gradient {
-    background: linear-gradient(135deg, #D4AF37 0%, #B8941F 100%);
+    background: linear-gradient(135deg, #d4af37 0%, #b8941f 100%);
   }
 
   .shadow-soft {

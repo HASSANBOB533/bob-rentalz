@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { supabase } from '../lib/supabase';
 import { properties as mockProperties } from '../data/mockData';
+import { supabase } from '../lib/supabase';
 
 export interface Property {
   id: string;
@@ -28,7 +28,7 @@ export interface Property {
  * Transform property data from Supabase with normalized tables to flat structure
  */
 function transformPropertyData(data: any[]): Property[] {
-  return data.map(property => ({
+  return data.map((property) => ({
     id: property.id,
     title: property.title,
     description: property.description,
@@ -47,13 +47,13 @@ function transformPropertyData(data: any[]): Property[] {
     created_at: property.created_at,
     videoUrl: property.video_url,
     // Extract images from property_images relation
-    images: property.property_images
-      ?.sort((a: any, b: any) => a.sort_order - b.sort_order)
-      .map((img: any) => img.image_url) || [],
+    images:
+      property.property_images
+        ?.sort((a: any, b: any) => a.sort_order - b.sort_order)
+        .map((img: any) => img.image_url) || [],
     // Extract amenity names from property_amenities relation
-    amenities: property.property_amenities
-      ?.map((pa: any) => pa.amenities?.name)
-      .filter(Boolean) || [],
+    amenities:
+      property.property_amenities?.map((pa: any) => pa.amenities?.name).filter(Boolean) || [],
   }));
 }
 
@@ -71,7 +71,8 @@ export function useProperties() {
       setLoading(true);
       const { data, error } = await supabase
         .from('properties')
-        .select(`
+        .select(
+          `
           *,
           property_images (
             image_url,
@@ -84,7 +85,8 @@ export function useProperties() {
               icon
             )
           )
-        `)
+        `,
+        )
         .in('status', ['available', 'active'])
         .order('created_at', { ascending: false });
 
@@ -126,7 +128,8 @@ export function useFeaturedProperties() {
       setLoading(true);
       const { data, error } = await supabase
         .from('properties')
-        .select(`
+        .select(
+          `
           *,
           property_images (
             image_url,
@@ -139,7 +142,8 @@ export function useFeaturedProperties() {
               icon
             )
           )
-        `)
+        `,
+        )
         .in('status', ['available', 'active'])
         .eq('featured', true)
         .order('created_at', { ascending: false })
@@ -154,14 +158,14 @@ export function useFeaturedProperties() {
       } else {
         // Use mock data as fallback if Supabase returns empty
         console.log('No featured properties found, using mock featured properties data');
-        const featuredMockProperties = mockProperties.filter(p => p.featured).slice(0, 6);
+        const featuredMockProperties = mockProperties.filter((p) => p.featured).slice(0, 6);
         setProperties(featuredMockProperties as any);
       }
     } catch (err) {
       console.error('Error fetching featured properties:', err);
       console.log('Falling back to mock featured properties data');
       // Fallback to mock data on error
-      const featuredMockProperties = mockProperties.filter(p => p.featured).slice(0, 6);
+      const featuredMockProperties = mockProperties.filter((p) => p.featured).slice(0, 6);
       setProperties(featuredMockProperties as any);
     } finally {
       setLoading(false);
@@ -189,7 +193,8 @@ export function useProperty(propertyId: string | undefined) {
       setLoading(true);
       const { data, error } = await supabase
         .from('properties')
-        .select(`
+        .select(
+          `
           *,
           property_images (
             image_url,
@@ -202,7 +207,8 @@ export function useProperty(propertyId: string | undefined) {
               icon
             )
           )
-        `)
+        `,
+        )
         .eq('id', propertyId)
         .single();
 

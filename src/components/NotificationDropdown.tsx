@@ -1,22 +1,30 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { 
-  Bell, 
-  MessageCircle, 
-  Home, 
-  FileText, 
-  Wrench, 
-  Calendar, 
-  DollarSign, 
-  CheckCircle, 
+import {
+  Bell,
+  MessageCircle,
+  Home,
+  FileText,
+  Wrench,
+  Calendar,
+  DollarSign,
+  CheckCircle,
   Tag,
-  X 
+  X,
 } from 'lucide-react';
+import React, { useState, useEffect, useRef } from 'react';
 
 type UserRole = 'admin' | 'owner' | 'agent' | 'tenant';
 
 interface Notification {
   id: string;
-  type: 'message' | 'alert' | 'property' | 'maintenance' | 'calendar' | 'finance' | 'success' | 'info';
+  type:
+    | 'message'
+    | 'alert'
+    | 'property'
+    | 'maintenance'
+    | 'calendar'
+    | 'finance'
+    | 'success'
+    | 'info';
   title: string;
   description: string;
   time: string;
@@ -36,7 +44,7 @@ export function NotificationDropdown({ userRole }: NotificationDropdownProps) {
   useEffect(() => {
     const getNotifications = (role: UserRole): Notification[] => {
       const baseTime = new Date();
-      
+
       switch (role) {
         case 'admin':
           return [
@@ -46,7 +54,7 @@ export function NotificationDropdown({ userRole }: NotificationDropdownProps) {
               title: 'New Property Pending',
               description: 'Luxury Villa in Cairo needs approval',
               time: '10 min ago',
-              isUnread: true
+              isUnread: true,
             },
             {
               id: '2',
@@ -54,7 +62,7 @@ export function NotificationDropdown({ userRole }: NotificationDropdownProps) {
               title: 'New Tenant Inquiry',
               description: 'Inquiry for Downtown Apartment',
               time: '1 hour ago',
-              isUnread: true
+              isUnread: true,
             },
             {
               id: '3',
@@ -62,7 +70,7 @@ export function NotificationDropdown({ userRole }: NotificationDropdownProps) {
               title: 'Maintenance Request',
               description: 'Plumbing issue reported at Unit 4B',
               time: '2 hours ago',
-              isUnread: false
+              isUnread: false,
             },
             {
               id: '4',
@@ -70,8 +78,8 @@ export function NotificationDropdown({ userRole }: NotificationDropdownProps) {
               title: 'Lease Ending Soon',
               description: 'Unit 12A lease expires in 30 days',
               time: '1 day ago',
-              isUnread: false
-            }
+              isUnread: false,
+            },
           ];
         case 'owner':
           return [
@@ -81,7 +89,7 @@ export function NotificationDropdown({ userRole }: NotificationDropdownProps) {
               title: 'New Message',
               description: 'Tenant Ahmed sent you a message',
               time: '5 min ago',
-              isUnread: true
+              isUnread: true,
             },
             {
               id: '2',
@@ -89,7 +97,7 @@ export function NotificationDropdown({ userRole }: NotificationDropdownProps) {
               title: 'Maintenance Update',
               description: 'Request #1023 received for Villa 5',
               time: '30 min ago',
-              isUnread: true
+              isUnread: true,
             },
             {
               id: '3',
@@ -97,8 +105,8 @@ export function NotificationDropdown({ userRole }: NotificationDropdownProps) {
               title: 'Lease Notice',
               description: 'Apartment 3B lease ending in 60 days',
               time: '2 days ago',
-              isUnread: false
-            }
+              isUnread: false,
+            },
           ];
         case 'agent':
           return [
@@ -108,7 +116,7 @@ export function NotificationDropdown({ userRole }: NotificationDropdownProps) {
               title: 'New Lead Assigned',
               description: 'Mohamed Ali is interested in Unit 5',
               time: '15 min ago',
-              isUnread: true
+              isUnread: true,
             },
             {
               id: '2',
@@ -116,7 +124,7 @@ export function NotificationDropdown({ userRole }: NotificationDropdownProps) {
               title: 'Viewing Confirmed',
               description: 'Tomorrow at 2:00 PM with Sarah',
               time: '1 hour ago',
-              isUnread: true
+              isUnread: true,
             },
             {
               id: '3',
@@ -124,8 +132,8 @@ export function NotificationDropdown({ userRole }: NotificationDropdownProps) {
               title: 'Property Assigned',
               description: 'You have been assigned to Sunset Villa',
               time: '3 hours ago',
-              isUnread: false
-            }
+              isUnread: false,
+            },
           ];
         case 'tenant':
           return [
@@ -135,7 +143,7 @@ export function NotificationDropdown({ userRole }: NotificationDropdownProps) {
               title: 'Agent Replied',
               description: 'Sarah answered your question',
               time: '20 min ago',
-              isUnread: true
+              isUnread: true,
             },
             {
               id: '2',
@@ -143,7 +151,7 @@ export function NotificationDropdown({ userRole }: NotificationDropdownProps) {
               title: 'Viewing Rescheduled',
               description: 'New time: Thursday at 4:00 PM',
               time: '2 hours ago',
-              isUnread: true
+              isUnread: true,
             },
             {
               id: '3',
@@ -151,8 +159,8 @@ export function NotificationDropdown({ userRole }: NotificationDropdownProps) {
               title: 'Price Drop!',
               description: 'A property you saved is now 10% off',
               time: '1 day ago',
-              isUnread: false
-            }
+              isUnread: false,
+            },
           ];
         default:
           return [];
@@ -174,40 +182,58 @@ export function NotificationDropdown({ userRole }: NotificationDropdownProps) {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  const unreadCount = notifications.filter(n => n.isUnread).length;
+  const unreadCount = notifications.filter((n) => n.isUnread).length;
 
   const getIcon = (type: string) => {
     switch (type) {
-      case 'message': return <MessageCircle className="w-5 h-5 text-blue-500" />;
-      case 'property': return <Home className="w-5 h-5 text-indigo-500" />;
-      case 'maintenance': return <Wrench className="w-5 h-5 text-orange-500" />;
-      case 'calendar': return <Calendar className="w-5 h-5 text-purple-500" />;
-      case 'finance': return <DollarSign className="w-5 h-5 text-green-500" />;
-      case 'success': return <CheckCircle className="w-5 h-5 text-green-500" />;
-      case 'tag': return <Tag className="w-5 h-5 text-pink-500" />;
-      case 'info': return <FileText className="w-5 h-5 text-gray-500" />;
-      default: return <Bell className="w-5 h-5 text-[#0E56A4]" />;
+      case 'message':
+        return <MessageCircle className="w-5 h-5 text-blue-500" />;
+      case 'property':
+        return <Home className="w-5 h-5 text-indigo-500" />;
+      case 'maintenance':
+        return <Wrench className="w-5 h-5 text-orange-500" />;
+      case 'calendar':
+        return <Calendar className="w-5 h-5 text-purple-500" />;
+      case 'finance':
+        return <DollarSign className="w-5 h-5 text-green-500" />;
+      case 'success':
+        return <CheckCircle className="w-5 h-5 text-green-500" />;
+      case 'tag':
+        return <Tag className="w-5 h-5 text-pink-500" />;
+      case 'info':
+        return <FileText className="w-5 h-5 text-gray-500" />;
+      default:
+        return <Bell className="w-5 h-5 text-[#0E56A4]" />;
     }
   };
 
   const getIconBg = (type: string) => {
     switch (type) {
-      case 'message': return 'bg-blue-50';
-      case 'property': return 'bg-indigo-50';
-      case 'maintenance': return 'bg-orange-50';
-      case 'calendar': return 'bg-purple-50';
-      case 'finance': return 'bg-green-50';
-      case 'success': return 'bg-green-50';
-      case 'tag': return 'bg-pink-50';
-      case 'info': return 'bg-gray-50';
-      default: return 'bg-blue-50';
+      case 'message':
+        return 'bg-blue-50';
+      case 'property':
+        return 'bg-indigo-50';
+      case 'maintenance':
+        return 'bg-orange-50';
+      case 'calendar':
+        return 'bg-purple-50';
+      case 'finance':
+        return 'bg-green-50';
+      case 'success':
+        return 'bg-green-50';
+      case 'tag':
+        return 'bg-pink-50';
+      case 'info':
+        return 'bg-gray-50';
+      default:
+        return 'bg-blue-50';
     }
   };
 
   return (
     <div className="relative" ref={dropdownRef}>
       {/* Bell Icon Button */}
-      <button 
+      <button
         onClick={() => setIsOpen(!isOpen)}
         className="relative p-2 rounded-full hover:bg-gray-100 transition-colors text-gray-600 hover:text-[#0E56A4]"
       >
@@ -224,7 +250,7 @@ export function NotificationDropdown({ userRole }: NotificationDropdownProps) {
           <div className="fixed inset-0 z-50 bg-white md:hidden flex flex-col animate-in fade-in slide-in-from-bottom-10 duration-200">
             <div className="flex items-center justify-between p-4 border-b border-gray-100">
               <h2 className="text-lg font-bold text-gray-900">Notifications</h2>
-              <button 
+              <button
                 onClick={() => setIsOpen(false)}
                 className="p-2 rounded-full hover:bg-gray-100 text-gray-500"
               >
@@ -246,17 +272,23 @@ export function NotificationDropdown({ userRole }: NotificationDropdownProps) {
                 <div className="space-y-4">
                   {notifications.map((notification) => (
                     <div key={notification.id} className="flex gap-4 p-4 bg-gray-50 rounded-xl">
-                      <div className={`w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 ${getIconBg(notification.type)}`}>
+                      <div
+                        className={`w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 ${getIconBg(notification.type)}`}
+                      >
                         {getIcon(notification.type)}
                       </div>
                       <div className="flex-1 min-w-0">
                         <div className="flex justify-between items-start mb-1">
-                          <p className="font-semibold text-gray-900 text-sm">{notification.title}</p>
+                          <p className="font-semibold text-gray-900 text-sm">
+                            {notification.title}
+                          </p>
                           {notification.isUnread && (
                             <span className="w-2 h-2 bg-blue-500 rounded-full mt-1.5"></span>
                           )}
                         </div>
-                        <p className="text-sm text-gray-600 line-clamp-2 mb-1">{notification.description}</p>
+                        <p className="text-sm text-gray-600 line-clamp-2 mb-1">
+                          {notification.description}
+                        </p>
                         <p className="text-xs text-gray-400">{notification.time}</p>
                       </div>
                     </div>
@@ -276,7 +308,7 @@ export function NotificationDropdown({ userRole }: NotificationDropdownProps) {
                 </span>
               )}
             </div>
-            
+
             <div className="max-h-[400px] overflow-y-auto">
               {notifications.length === 0 ? (
                 <div className="p-8 text-center text-gray-500">
@@ -289,16 +321,20 @@ export function NotificationDropdown({ userRole }: NotificationDropdownProps) {
               ) : (
                 <div className="divide-y divide-gray-50">
                   {notifications.map((notification) => (
-                    <div 
-                      key={notification.id} 
+                    <div
+                      key={notification.id}
                       className={`p-4 hover:bg-gray-50 transition-colors cursor-pointer flex gap-3 ${notification.isUnread ? 'bg-blue-50/30' : ''}`}
                     >
-                      <div className={`w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 ${getIconBg(notification.type)}`}>
+                      <div
+                        className={`w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 ${getIconBg(notification.type)}`}
+                      >
                         {getIcon(notification.type)}
                       </div>
                       <div className="flex-1 min-w-0">
                         <div className="flex justify-between items-start mb-1">
-                          <p className={`text-sm ${notification.isUnread ? 'font-bold text-gray-900' : 'font-medium text-gray-700'}`}>
+                          <p
+                            className={`text-sm ${notification.isUnread ? 'font-bold text-gray-900' : 'font-medium text-gray-700'}`}
+                          >
                             {notification.title}
                           </p>
                           {notification.isUnread && (
@@ -308,9 +344,7 @@ export function NotificationDropdown({ userRole }: NotificationDropdownProps) {
                         <p className="text-sm text-gray-500 line-clamp-2 mb-1.5">
                           {notification.description}
                         </p>
-                        <p className="text-xs text-gray-400">
-                          {notification.time}
-                        </p>
+                        <p className="text-xs text-gray-400">{notification.time}</p>
                       </div>
                     </div>
                   ))}

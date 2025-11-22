@@ -31,14 +31,15 @@ export const getPropertyImages = async (propertyId: string): Promise<PropertyIma
  * Get primary image for a property
  */
 export const getPrimaryImage = async (propertyId: string): Promise<PropertyImage | null> => {
-  const { data, error} = await supabase
+  const { data, error } = await supabase
     .from('property_images')
     .select('*')
     .eq('property_id', propertyId)
     .eq('is_primary', true)
     .single();
 
-  if (error && error.code !== 'PGRST116') { // PGRST116 = no rows returned
+  if (error && error.code !== 'PGRST116') {
+    // PGRST116 = no rows returned
     console.error('Error fetching primary image:', error);
     throw error;
   }
@@ -52,7 +53,7 @@ export const getPrimaryImage = async (propertyId: string): Promise<PropertyImage
 export const addPropertyImages = async (
   propertyId: string,
   imageUrls: string[],
-  primaryIndex: number = 0
+  primaryIndex: number = 0,
 ): Promise<void> => {
   const propertyImages = imageUrls.map((url, index) => ({
     property_id: propertyId,
@@ -61,9 +62,7 @@ export const addPropertyImages = async (
     is_primary: index === primaryIndex,
   }));
 
-  const { error } = await supabase
-    .from('property_images')
-    .insert(propertyImages);
+  const { error } = await supabase.from('property_images').insert(propertyImages);
 
   if (error) {
     console.error('Error adding property images:', error);
@@ -75,10 +74,7 @@ export const addPropertyImages = async (
  * Remove all images from a property
  */
 export const removeAllPropertyImages = async (propertyId: string): Promise<void> => {
-  const { error } = await supabase
-    .from('property_images')
-    .delete()
-    .eq('property_id', propertyId);
+  const { error } = await supabase.from('property_images').delete().eq('property_id', propertyId);
 
   if (error) {
     console.error('Error removing property images:', error);
@@ -90,10 +86,7 @@ export const removeAllPropertyImages = async (propertyId: string): Promise<void>
  * Remove a specific image
  */
 export const removePropertyImage = async (imageId: string): Promise<void> => {
-  const { error } = await supabase
-    .from('property_images')
-    .delete()
-    .eq('id', imageId);
+  const { error } = await supabase.from('property_images').delete().eq('id', imageId);
 
   if (error) {
     console.error('Error removing property image:', error);
@@ -106,7 +99,7 @@ export const removePropertyImage = async (imageId: string): Promise<void> => {
  */
 export const updateImageSortOrder = async (
   imageId: string,
-  newSortOrder: number
+  newSortOrder: number,
 ): Promise<void> => {
   const { error } = await supabase
     .from('property_images')
@@ -122,10 +115,7 @@ export const updateImageSortOrder = async (
 /**
  * Set primary image
  */
-export const setPrimaryImage = async (
-  propertyId: string,
-  imageId: string
-): Promise<void> => {
+export const setPrimaryImage = async (propertyId: string, imageId: string): Promise<void> => {
   // First, unset all primary flags for this property
   const { error: unsetError } = await supabase
     .from('property_images')
@@ -155,7 +145,7 @@ export const setPrimaryImage = async (
 export const updatePropertyImages = async (
   propertyId: string,
   imageUrls: string[],
-  primaryIndex: number = 0
+  primaryIndex: number = 0,
 ): Promise<void> => {
   // Remove all existing images
   await removeAllPropertyImages(propertyId);

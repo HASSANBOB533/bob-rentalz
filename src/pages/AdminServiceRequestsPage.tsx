@@ -1,11 +1,17 @@
+import { Wrench, Search, AlertCircle, Building, User } from 'lucide-react';
 import { useState } from 'react';
+import { toast } from 'sonner@2.0.3';
 import { AdminDashboardLayout } from '../components/AdminDashboardLayout';
 import { Badge } from '../components/ui/badge';
 import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../components/ui/select';
-import { Wrench, Search, AlertCircle, Building, User } from 'lucide-react';
-import { toast } from 'sonner@2.0.3';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '../components/ui/select';
 
 type FilterType = 'all' | 'pending' | 'in-progress' | 'completed' | 'high-priority';
 
@@ -25,7 +31,7 @@ export default function AdminServiceRequestsPage() {
       status: 'Pending',
       assignedTo: null,
       createdDate: '2 hours ago',
-      description: 'Air conditioning not cooling properly'
+      description: 'Air conditioning not cooling properly',
     },
     {
       id: '2',
@@ -37,7 +43,7 @@ export default function AdminServiceRequestsPage() {
       status: 'In Progress',
       assignedTo: 'Cleaning Team A',
       createdDate: '5 hours ago',
-      description: 'Scheduled monthly deep cleaning'
+      description: 'Scheduled monthly deep cleaning',
     },
     {
       id: '3',
@@ -49,7 +55,7 @@ export default function AdminServiceRequestsPage() {
       status: 'Pending',
       assignedTo: null,
       createdDate: '1 day ago',
-      description: 'Leaking faucet in bathroom'
+      description: 'Leaking faucet in bathroom',
     },
     {
       id: '4',
@@ -61,7 +67,7 @@ export default function AdminServiceRequestsPage() {
       status: 'In Progress',
       assignedTo: 'Admin Team',
       createdDate: '2 days ago',
-      description: 'Request for lease renewal documents'
+      description: 'Request for lease renewal documents',
     },
     {
       id: '5',
@@ -73,7 +79,7 @@ export default function AdminServiceRequestsPage() {
       status: 'Completed',
       assignedTo: 'Electrician - Ahmed',
       createdDate: '3 days ago',
-      description: 'Power outlet not working in living room'
+      description: 'Power outlet not working in living room',
     },
     {
       id: '6',
@@ -85,41 +91,42 @@ export default function AdminServiceRequestsPage() {
       status: 'Completed',
       assignedTo: 'Security Team',
       createdDate: '4 days ago',
-      description: 'Parking space allocation inquiry'
+      description: 'Parking space allocation inquiry',
     },
   ];
 
   // Filter requests
-  const filteredRequests = mockServiceRequests.filter(request => {
+  const filteredRequests = mockServiceRequests.filter((request) => {
     let statusMatch = true;
     if (activeFilter === 'pending') statusMatch = request.status === 'Pending';
     else if (activeFilter === 'in-progress') statusMatch = request.status === 'In Progress';
     else if (activeFilter === 'completed') statusMatch = request.status === 'Completed';
     else if (activeFilter === 'high-priority') statusMatch = request.priority === 'High';
-    
-    const searchMatch = searchQuery === '' || 
+
+    const searchMatch =
+      searchQuery === '' ||
       request.property.toLowerCase().includes(searchQuery.toLowerCase()) ||
       request.tenant.toLowerCase().includes(searchQuery.toLowerCase()) ||
       request.type.toLowerCase().includes(searchQuery.toLowerCase()) ||
       request.category.toLowerCase().includes(searchQuery.toLowerCase());
-    
+
     return statusMatch && searchMatch;
   });
 
   const getPriorityBadge = (priority: string) => {
     const config: Record<string, string> = {
-      'High': 'bg-red-100 text-red-700',
-      'Medium': 'bg-yellow-100 text-yellow-700',
-      'Low': 'bg-gray-100 text-gray-700',
+      High: 'bg-red-100 text-red-700',
+      Medium: 'bg-yellow-100 text-yellow-700',
+      Low: 'bg-gray-100 text-gray-700',
     };
     return <Badge className={config[priority] || 'bg-gray-100 text-gray-700'}>{priority}</Badge>;
   };
 
   const getStatusBadge = (status: string) => {
     const config: Record<string, string> = {
-      'Pending': 'bg-yellow-100 text-yellow-700',
+      Pending: 'bg-yellow-100 text-yellow-700',
       'In Progress': 'bg-blue-100 text-blue-700',
-      'Completed': 'bg-green-100 text-green-700',
+      Completed: 'bg-green-100 text-green-700',
     };
     return <Badge className={config[status] || 'bg-gray-100 text-gray-700'}>{status}</Badge>;
   };
@@ -262,12 +269,10 @@ export default function AdminServiceRequestsPage() {
                           Assigned to: {request.assignedTo}
                         </Badge>
                       ) : (
-                        <Badge className="bg-gray-100 text-gray-700">
-                          Not Assigned
-                        </Badge>
+                        <Badge className="bg-gray-100 text-gray-700">Not Assigned</Badge>
                       )}
-                      
-                      <Select 
+
+                      <Select
                         defaultValue={request.status}
                         onValueChange={(value) => handleChangeStatus(request.id, value)}
                       >
@@ -282,8 +287,8 @@ export default function AdminServiceRequestsPage() {
                       </Select>
 
                       {!request.assignedTo && (
-                        <Button 
-                          size="sm" 
+                        <Button
+                          size="sm"
                           variant="outline"
                           className="border-[#0E56A4] text-[#0E56A4]"
                         >
@@ -302,7 +307,9 @@ export default function AdminServiceRequestsPage() {
           ) : (
             <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-12 text-center">
               <Wrench className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-              <h3 className="text-lg font-semibold text-gray-700 mb-2">No service requests found</h3>
+              <h3 className="text-lg font-semibold text-gray-700 mb-2">
+                No service requests found
+              </h3>
               <p className="text-gray-600">Try adjusting your filters or search terms.</p>
             </div>
           )}
@@ -319,19 +326,19 @@ export default function AdminServiceRequestsPage() {
               <div>
                 <p className="text-sm text-gray-600 mb-1">Pending</p>
                 <p className="text-2xl font-bold text-yellow-600">
-                  {mockServiceRequests.filter(r => r.status === 'Pending').length}
+                  {mockServiceRequests.filter((r) => r.status === 'Pending').length}
                 </p>
               </div>
               <div>
                 <p className="text-sm text-gray-600 mb-1">In Progress</p>
                 <p className="text-2xl font-bold text-blue-600">
-                  {mockServiceRequests.filter(r => r.status === 'In Progress').length}
+                  {mockServiceRequests.filter((r) => r.status === 'In Progress').length}
                 </p>
               </div>
               <div>
                 <p className="text-sm text-gray-600 mb-1">High Priority</p>
                 <p className="text-2xl font-bold text-red-600">
-                  {mockServiceRequests.filter(r => r.priority === 'High').length}
+                  {mockServiceRequests.filter((r) => r.priority === 'High').length}
                 </p>
               </div>
             </div>

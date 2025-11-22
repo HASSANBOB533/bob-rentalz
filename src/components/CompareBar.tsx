@@ -1,8 +1,8 @@
 import { X, ArrowRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Button } from './ui/button';
 import { properties as allProperties } from '../data/mockData';
 import { ImageWithFallback } from './figma/ImageWithFallback';
+import { Button } from './ui/button';
 
 interface CompareBarProps {
   properties: string[];
@@ -15,10 +15,15 @@ interface CompareBarProps {
  * CompareBar Component
  * Floating bottom bar showing selected properties for comparison
  */
-export function CompareBar({ properties: propertyIds, onRemove, onClear, onOpenModal }: CompareBarProps) {
+export function CompareBar({
+  properties: propertyIds,
+  onRemove,
+  onClear,
+  onOpenModal,
+}: CompareBarProps) {
   if (propertyIds.length === 0) return null;
 
-  const properties = allProperties.filter(p => propertyIds.includes(p.id));
+  const properties = allProperties.filter((p) => propertyIds.includes(p.id));
 
   return (
     <AnimatePresence>
@@ -39,10 +44,7 @@ export function CompareBar({ properties: propertyIds, onRemove, onClear, onOpenM
 
               <div className="flex gap-3">
                 {properties.map((property) => (
-                  <div
-                    key={property.id}
-                    className="relative flex-shrink-0 group"
-                  >
+                  <div key={property.id} className="relative flex-shrink-0 group">
                     <div className="w-16 h-16 rounded-lg overflow-hidden border-2 border-[#D4AF37]">
                       <ImageWithFallback
                         src={property.images[0]}

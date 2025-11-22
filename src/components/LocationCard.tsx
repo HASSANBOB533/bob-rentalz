@@ -1,7 +1,7 @@
 import { MapPin } from 'lucide-react';
+import { motion } from 'motion/react';
 import { Link } from 'react-router-dom';
 import { ImageWithFallback } from './figma/ImageWithFallback';
-import { motion } from 'motion/react';
 
 interface LocationCardProps {
   name: string;

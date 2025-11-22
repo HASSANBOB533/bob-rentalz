@@ -1,5 +1,5 @@
-import { supabase } from './api';
 import { addPropertyAmenities, removeAllPropertyAmenities } from './amenitiesApi';
+import { supabase } from './api';
 
 export interface PropertyFormData {
   title: string;
@@ -29,11 +29,14 @@ export interface PropertyImage {
 export const createProperty = async (
   propertyData: PropertyFormData,
   amenityIds: string[] = [],
-  imageUrls: string[] = []
+  imageUrls: string[] = [],
 ): Promise<{ id: string }> => {
   try {
     // Get current user
-    const { data: { user }, error: userError } = await supabase.auth.getUser();
+    const {
+      data: { user },
+      error: userError,
+    } = await supabase.auth.getUser();
     if (userError || !user) {
       throw new Error('User not authenticated');
     }
@@ -58,7 +61,7 @@ export const createProperty = async (
           // Keep old arrays empty for backward compatibility
           images: [],
           amenities: [],
-        }
+        },
       ])
       .select('id')
       .single();
@@ -84,9 +87,7 @@ export const createProperty = async (
         is_primary: index === 0, // First image is primary
       }));
 
-      const { error: imagesError } = await supabase
-        .from('property_images')
-        .insert(propertyImages);
+      const { error: imagesError } = await supabase.from('property_images').insert(propertyImages);
 
       if (imagesError) {
         console.error('Error adding property images:', imagesError);
@@ -108,7 +109,7 @@ export const updateProperty = async (
   propertyId: string,
   propertyData: Partial<PropertyFormData>,
   amenityIds?: string[],
-  imageUrls?: string[]
+  imageUrls?: string[],
 ): Promise<void> => {
   try {
     // Update property basic info
@@ -188,7 +189,8 @@ export const getPropertyById = async (propertyId: string) => {
   try {
     const { data: property, error: propertyError } = await supabase
       .from('properties')
-      .select(`
+      .select(
+        `
         *,
         property_amenities (
           amenity_id,
@@ -204,7 +206,8 @@ export const getPropertyById = async (propertyId: string) => {
           sort_order,
           is_primary
         )
-      `)
+      `,
+      )
       .eq('id', propertyId)
       .single();
 
@@ -225,14 +228,18 @@ export const getPropertyById = async (propertyId: string) => {
  */
 export const getMyProperties = async () => {
   try {
-    const { data: { user }, error: userError } = await supabase.auth.getUser();
+    const {
+      data: { user },
+      error: userError,
+    } = await supabase.auth.getUser();
     if (userError || !user) {
       throw new Error('User not authenticated');
     }
 
     const { data: properties, error: propertiesError } = await supabase
       .from('properties')
-      .select(`
+      .select(
+        `
         *,
         property_amenities (
           amenity_id,
@@ -248,7 +255,8 @@ export const getMyProperties = async () => {
           sort_order,
           is_primary
         )
-      `)
+      `,
+      )
       .eq('owner_id', user.id)
       .order('created_at', { ascending: false });
 
@@ -287,23 +295,18 @@ export const deleteProperty = async (propertyId: string): Promise<void> => {
 /**
  * Upload property image to Supabase Storage
  */
-export const uploadPropertyImage = async (
-  file: File,
-  propertyId?: string
-): Promise<string> => {
+export const uploadPropertyImage = async (file: File, propertyId?: string): Promise<string> => {
   try {
     const fileExt = file.name.split('.').pop();
     const fileName = `${Date.now()}-${Math.random().toString(36).substring(7)}.${fileExt}`;
-    const filePath = propertyId 
+    const filePath = propertyId
       ? `properties/${propertyId}/${fileName}`
       : `properties/temp/${fileName}`;
 
-    const { data, error } = await supabase.storage
-      .from('property-images')
-      .upload(filePath, file, {
-        cacheControl: '3600',
-        upsert: false
-      });
+    const { data, error } = await supabase.storage.from('property-images').upload(filePath, file, {
+      cacheControl: '3600',
+      upsert: false,
+    });
 
     if (error) {
       console.error('Error uploading image:', error);
@@ -311,9 +314,9 @@ export const uploadPropertyImage = async (
     }
 
     // Get public URL
-    const { data: { publicUrl } } = supabase.storage
-      .from('property-images')
-      .getPublicUrl(data.path);
+    const {
+      data: { publicUrl },
+    } = supabase.storage.from('property-images').getPublicUrl(data.path);
 
     return publicUrl;
   } catch (error) {

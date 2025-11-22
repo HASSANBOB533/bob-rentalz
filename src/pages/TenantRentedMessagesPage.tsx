@@ -1,8 +1,8 @@
-import { DashboardLayout } from '../components/DashboardLayout';
 import { ArrowLeft, Send, Paperclip, Search, User, ChevronLeft } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
-import { Button } from '../components/ui/button';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { DashboardLayout } from '../components/DashboardLayout';
+import { Button } from '../components/ui/button';
 
 export default function TenantRentedMessagesPage() {
   const navigate = useNavigate();
@@ -19,7 +19,7 @@ export default function TenantRentedMessagesPage() {
       avatar: 'AH',
       lastMessage: 'Thank you for the update. Let me know if you need anything else.',
       time: '2 hours ago',
-      unread: 0
+      unread: 0,
     },
     {
       id: 2,
@@ -29,7 +29,7 @@ export default function TenantRentedMessagesPage() {
       avatar: 'SA',
       lastMessage: 'The maintenance team will arrive tomorrow at 9 AM.',
       time: '1 day ago',
-      unread: 2
+      unread: 2,
     },
     {
       id: 3,
@@ -39,13 +39,14 @@ export default function TenantRentedMessagesPage() {
       avatar: 'JT',
       lastMessage: 'AC repair completed. Please test it and let me know.',
       time: '3 days ago',
-      unread: 0
-    }
+      unread: 0,
+    },
   ];
 
   // Separate messages for each conversation
   const allMessages = {
-    1: [ // Ahmed Hassan - Landlord
+    1: [
+      // Ahmed Hassan - Landlord
       {
         id: 1,
         conversationId: 1,
@@ -54,7 +55,7 @@ export default function TenantRentedMessagesPage() {
         message: 'Hello Mohamed! How are you settling into the apartment?',
         time: '10:30 AM',
         date: 'Jan 15',
-        isOwn: false
+        isOwn: false,
       },
       {
         id: 2,
@@ -64,37 +65,40 @@ export default function TenantRentedMessagesPage() {
         message: 'Hi Ahmed! Everything is great, thank you. The apartment is wonderful.',
         time: '10:45 AM',
         date: 'Jan 15',
-        isOwn: true
+        isOwn: true,
       },
       {
         id: 3,
         conversationId: 1,
         sender: 'Ahmed Hassan',
         senderRole: 'Landlord',
-        message: 'That\'s great to hear! If you need anything at all, please don\'t hesitate to reach out.',
+        message:
+          "That's great to hear! If you need anything at all, please don't hesitate to reach out.",
         time: '11:00 AM',
         date: 'Jan 15',
-        isOwn: false
+        isOwn: false,
       },
       {
         id: 4,
         conversationId: 1,
         sender: 'You',
         senderRole: 'Tenant',
-        message: 'Thank you! I noticed the AC in the master bedroom isn\'t cooling properly. I\'ve submitted a service request.',
+        message:
+          "Thank you! I noticed the AC in the master bedroom isn't cooling properly. I've submitted a service request.",
         time: '2:15 PM',
         date: 'Jan 15',
-        isOwn: true
+        isOwn: true,
       },
       {
         id: 5,
         conversationId: 1,
         sender: 'Ahmed Hassan',
         senderRole: 'Landlord',
-        message: 'I see the request. I\'ve assigned John, our technician. He\'ll contact you to schedule a visit.',
+        message:
+          "I see the request. I've assigned John, our technician. He'll contact you to schedule a visit.",
         time: '2:30 PM',
         date: 'Jan 15',
-        isOwn: false
+        isOwn: false,
       },
       {
         id: 6,
@@ -104,7 +108,7 @@ export default function TenantRentedMessagesPage() {
         message: 'Perfect, thank you for the quick response!',
         time: '2:35 PM',
         date: 'Jan 15',
-        isOwn: true
+        isOwn: true,
       },
       {
         id: 7,
@@ -114,19 +118,21 @@ export default function TenantRentedMessagesPage() {
         message: 'Thank you for the update. Let me know if you need anything else.',
         time: '3:00 PM',
         date: 'Jan 15',
-        isOwn: false
-      }
+        isOwn: false,
+      },
     ],
-    2: [ // Sarah Anderson - Property Manager
+    2: [
+      // Sarah Anderson - Property Manager
       {
         id: 1,
         conversationId: 2,
         sender: 'Sarah Anderson',
         senderRole: 'Property Manager',
-        message: 'Good morning Mohamed! I\'m Sarah, your property manager. Feel free to reach out anytime.',
+        message:
+          "Good morning Mohamed! I'm Sarah, your property manager. Feel free to reach out anytime.",
         time: '9:00 AM',
         date: 'Jan 14',
-        isOwn: false
+        isOwn: false,
       },
       {
         id: 2,
@@ -136,17 +142,18 @@ export default function TenantRentedMessagesPage() {
         message: 'Good morning Sarah! Nice to meet you. I have a maintenance request for the AC.',
         time: '9:15 AM',
         date: 'Jan 14',
-        isOwn: true
+        isOwn: true,
       },
       {
         id: 3,
         conversationId: 2,
         sender: 'Sarah Anderson',
         senderRole: 'Property Manager',
-        message: 'I\'ve received your request. I\'ll coordinate with our maintenance team right away.',
+        message:
+          "I've received your request. I'll coordinate with our maintenance team right away.",
         time: '9:30 AM',
         date: 'Jan 14',
-        isOwn: false
+        isOwn: false,
       },
       {
         id: 4,
@@ -156,49 +163,51 @@ export default function TenantRentedMessagesPage() {
         message: 'Good news! The maintenance team will arrive tomorrow at 9 AM.',
         time: '11:00 AM',
         date: 'Jan 14',
-        isOwn: false
+        isOwn: false,
       },
       {
         id: 5,
         conversationId: 2,
         sender: 'You',
         senderRole: 'Tenant',
-        message: 'That\'s perfect! I\'ll be home at that time. Thank you!',
+        message: "That's perfect! I'll be home at that time. Thank you!",
         time: '11:15 AM',
         date: 'Jan 14',
-        isOwn: true
-      }
+        isOwn: true,
+      },
     ],
-    3: [ // John Technician - Maintenance
+    3: [
+      // John Technician - Maintenance
       {
         id: 1,
         conversationId: 3,
         sender: 'John Technician',
         senderRole: 'Maintenance',
-        message: 'Hello! I\'m John from maintenance. I\'ll be visiting tomorrow at 9 AM for the AC repair.',
+        message:
+          "Hello! I'm John from maintenance. I'll be visiting tomorrow at 9 AM for the AC repair.",
         time: '2:00 PM',
         date: 'Jan 13',
-        isOwn: false
+        isOwn: false,
       },
       {
         id: 2,
         conversationId: 3,
         sender: 'You',
         senderRole: 'Tenant',
-        message: 'Hi John! Thank you for letting me know. I\'ll be home.',
+        message: "Hi John! Thank you for letting me know. I'll be home.",
         time: '2:10 PM',
         date: 'Jan 13',
-        isOwn: true
+        isOwn: true,
       },
       {
         id: 3,
         conversationId: 3,
         sender: 'John Technician',
         senderRole: 'Maintenance',
-        message: 'Great! I\'ll bring all the necessary tools and parts.',
+        message: "Great! I'll bring all the necessary tools and parts.",
         time: '2:15 PM',
         date: 'Jan 13',
-        isOwn: false
+        isOwn: false,
       },
       {
         id: 4,
@@ -208,7 +217,7 @@ export default function TenantRentedMessagesPage() {
         message: 'AC repair completed. Please test it and let me know.',
         time: '10:30 AM',
         date: 'Jan 14',
-        isOwn: false
+        isOwn: false,
       },
       {
         id: 5,
@@ -218,19 +227,19 @@ export default function TenantRentedMessagesPage() {
         message: 'Tested it! Working perfectly now. Thank you so much!',
         time: '11:00 AM',
         date: 'Jan 14',
-        isOwn: true
+        isOwn: true,
       },
       {
         id: 6,
         conversationId: 3,
         sender: 'John Technician',
         senderRole: 'Maintenance',
-        message: 'You\'re welcome! If you have any issues, don\'t hesitate to contact me.',
+        message: "You're welcome! If you have any issues, don't hesitate to contact me.",
         time: '11:15 AM',
         date: 'Jan 14',
-        isOwn: false
-      }
-    ]
+        isOwn: false,
+      },
+    ],
   };
 
   const handleSendMessage = () => {
@@ -241,8 +250,10 @@ export default function TenantRentedMessagesPage() {
     }
   };
 
-  const selectedConvo = conversations.find(c => c.id === selectedConversation);
-  const messages = selectedConversation ? allMessages[selectedConversation as keyof typeof allMessages] || [] : [];
+  const selectedConvo = conversations.find((c) => c.id === selectedConversation);
+  const messages = selectedConversation
+    ? allMessages[selectedConversation as keyof typeof allMessages] || []
+    : [];
 
   const handleSelectConversation = (id: number) => {
     setSelectedConversation(id);
@@ -274,9 +285,10 @@ export default function TenantRentedMessagesPage() {
         {/* Messages Interface */}
         <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
           <div className="grid grid-cols-1 md:grid-cols-3 min-h-[400px] md:h-[600px]">
-            
             {/* Left Sidebar - Conversations List */}
-            <div className={`${showConversationList ? 'block' : 'hidden'} md:block border-r border-gray-200 flex flex-col`}>
+            <div
+              className={`${showConversationList ? 'block' : 'hidden'} md:block border-r border-gray-200 flex flex-col`}
+            >
               {/* Search */}
               <div className="p-4 border-b border-gray-200">
                 <div className="relative">
@@ -296,7 +308,9 @@ export default function TenantRentedMessagesPage() {
                     key={convo.id}
                     onClick={() => handleSelectConversation(convo.id)}
                     className={`p-4 cursor-pointer border-b border-gray-200 hover:bg-gray-50 transition-colors ${
-                      selectedConversation === convo.id ? 'bg-blue-50 border-l-4 border-l-[#0E56A4]' : ''
+                      selectedConversation === convo.id
+                        ? 'bg-blue-50 border-l-4 border-l-[#0E56A4]'
+                        : ''
                     }`}
                   >
                     <div className="flex items-start gap-3">
@@ -328,7 +342,9 @@ export default function TenantRentedMessagesPage() {
             </div>
 
             {/* Right Side - Chat Area */}
-            <div className={`${!showConversationList ? 'block' : 'hidden'} md:block md:col-span-2 flex flex-col min-h-[500px] md:min-h-0`}>
+            <div
+              className={`${!showConversationList ? 'block' : 'hidden'} md:block md:col-span-2 flex flex-col min-h-[500px] md:min-h-0`}
+            >
               {selectedConvo ? (
                 <>
                   {/* Chat Header */}
@@ -341,13 +357,15 @@ export default function TenantRentedMessagesPage() {
                       >
                         <ChevronLeft className="w-5 h-5 text-gray-600" />
                       </button>
-                      
+
                       <div className="w-10 h-10 bg-[#0E56A4] text-white rounded-full flex items-center justify-center font-semibold">
                         {selectedConvo.avatar}
                       </div>
                       <div>
                         <p className="font-semibold text-gray-900">{selectedConvo.name}</p>
-                        <p className="text-sm text-gray-600">{selectedConvo.role} • {selectedConvo.property}</p>
+                        <p className="text-sm text-gray-600">
+                          {selectedConvo.role} • {selectedConvo.property}
+                        </p>
                       </div>
                     </div>
                   </div>
@@ -359,7 +377,9 @@ export default function TenantRentedMessagesPage() {
                         key={msg.id}
                         className={`flex ${msg.isOwn ? 'justify-end' : 'justify-start'}`}
                       >
-                        <div className={`max-w-[85%] md:max-w-[70%] ${msg.isOwn ? 'order-2' : 'order-1'}`}>
+                        <div
+                          className={`max-w-[85%] md:max-w-[70%] ${msg.isOwn ? 'order-2' : 'order-1'}`}
+                        >
                           {!msg.isOwn && (
                             <p className="text-xs text-gray-500 mb-1 ml-1">{msg.sender}</p>
                           )}
@@ -409,7 +429,9 @@ export default function TenantRentedMessagesPage() {
                         <Send className="w-4 h-4" />
                       </Button>
                     </div>
-                    <p className="text-xs text-gray-500 mt-2">Press Enter to send, Shift+Enter for new line</p>
+                    <p className="text-xs text-gray-500 mt-2">
+                      Press Enter to send, Shift+Enter for new line
+                    </p>
                   </div>
                 </>
               ) : (
@@ -428,7 +450,9 @@ export default function TenantRentedMessagesPage() {
             <div>
               <h3 className="font-medium text-[#0E56A4] mb-1">Communication Guidelines</h3>
               <p className="text-sm text-gray-600">
-                This messaging system is for property-related communication with your landlord and property team. For urgent maintenance issues, please submit a service request or call the emergency number.
+                This messaging system is for property-related communication with your landlord and
+                property team. For urgent maintenance issues, please submit a service request or
+                call the emergency number.
               </p>
             </div>
           </div>

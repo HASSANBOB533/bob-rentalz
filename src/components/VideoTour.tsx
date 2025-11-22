@@ -1,7 +1,7 @@
+import { Play, X, Youtube } from 'lucide-react';
+import { motion, AnimatePresence } from 'motion/react';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { motion, AnimatePresence } from 'motion/react';
-import { Play, X, Youtube } from 'lucide-react';
 import { Property } from '../data/mockData';
 
 interface VideoTourProps {
@@ -25,7 +25,7 @@ export function VideoTour({ property }: VideoTourProps) {
   };
 
   const videoId = getYouTubeId(property.videoUrl);
-  const thumbnailUrl = videoId 
+  const thumbnailUrl = videoId
     ? `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`
     : property.images[0];
 
@@ -89,7 +89,7 @@ export function VideoTour({ property }: VideoTourProps) {
                   transition={{
                     duration: 2,
                     repeat: Infinity,
-                    ease: "easeInOut"
+                    ease: 'easeInOut',
                   }}
                   className="absolute inset-0 bg-[#D4AF37] rounded-full hidden md:block"
                   style={{ width: '120px', height: '120px', top: '-10px', left: '-10px' }}
@@ -103,7 +103,9 @@ export function VideoTour({ property }: VideoTourProps) {
 
               {/* Play Tour Text */}
               <div className="absolute bottom-6 md:bottom-8 left-1/2 transform -translate-x-1/2 bg-white/95 backdrop-blur-sm px-4 py-2 md:px-6 md:py-3 rounded-full shadow-xl">
-                <span className="font-semibold text-[#2B2B2B] text-sm md:text-base">▶ Play Tour</span>
+                <span className="font-semibold text-[#2B2B2B] text-sm md:text-base">
+                  ▶ Play Tour
+                </span>
               </div>
             </button>
           </div>
@@ -146,7 +148,7 @@ export function VideoTour({ property }: VideoTourProps) {
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
-              transition={{ duration: 0.3, type: "spring" }}
+              transition={{ duration: 0.3, type: 'spring' }}
               className="relative w-full max-w-5xl z-10"
               onClick={(e) => e.stopPropagation()}
             >

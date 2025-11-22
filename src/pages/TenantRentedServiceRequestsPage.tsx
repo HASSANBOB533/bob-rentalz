@@ -1,9 +1,9 @@
-import { DashboardLayout } from '../components/DashboardLayout';
 import { ArrowLeft, Clock, Plus, Filter, CheckCircle2, Circle, User } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
-import { Button } from '../components/ui/button';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { DashboardLayout } from '../components/DashboardLayout';
 import { Badge } from '../components/ui/badge';
+import { Button } from '../components/ui/button';
 import { Separator } from '../components/ui/separator';
 
 export default function TenantRentedServiceRequestsPage() {
@@ -18,7 +18,8 @@ export default function TenantRentedServiceRequestsPage() {
       type: 'Maintenance',
       property: 'Modern 2BR Apartment',
       issue: 'Air conditioning not cooling properly',
-      description: 'The AC unit in the master bedroom is not cooling effectively. It runs but doesn\'t reach the set temperature.',
+      description:
+        "The AC unit in the master bedroom is not cooling effectively. It runs but doesn't reach the set temperature.",
       date: '2024-01-15',
       status: 'In Progress', // Blue
       priority: 'High',
@@ -26,8 +27,8 @@ export default function TenantRentedServiceRequestsPage() {
       timeline: {
         received: '2024-01-15',
         inProgress: '2024-01-16',
-        completed: null
-      }
+        completed: null,
+      },
     },
     {
       id: 2,
@@ -42,8 +43,8 @@ export default function TenantRentedServiceRequestsPage() {
       timeline: {
         received: '2024-01-10',
         inProgress: '2024-01-11',
-        completed: '2024-01-12'
-      }
+        completed: '2024-01-12',
+      },
     },
     {
       id: 3,
@@ -58,8 +59,8 @@ export default function TenantRentedServiceRequestsPage() {
       timeline: {
         received: '2024-01-08',
         inProgress: '2024-01-08',
-        completed: '2024-01-09'
-      }
+        completed: '2024-01-09',
+      },
     },
     {
       id: 4,
@@ -74,8 +75,8 @@ export default function TenantRentedServiceRequestsPage() {
       timeline: {
         received: '2024-01-20',
         inProgress: null,
-        completed: null
-      }
+        completed: null,
+      },
     },
   ];
 
@@ -107,7 +108,7 @@ export default function TenantRentedServiceRequestsPage() {
   };
 
   // Filter logic
-  const filteredRequests = serviceRequests.filter(request => {
+  const filteredRequests = serviceRequests.filter((request) => {
     const statusMatch = filterStatus === 'All' || request.status === filterStatus;
     const typeMatch = filterType === 'All' || request.type === filterType;
     return statusMatch && typeMatch;
@@ -122,11 +123,11 @@ export default function TenantRentedServiceRequestsPage() {
       <div className="relative w-full mt-4 mb-2">
         {/* Progress Bar Background */}
         <div className="absolute top-1.5 left-0 w-full h-0.5 bg-gray-200 rounded-full" />
-        
+
         {/* Active Progress Bar */}
-        <div 
-           className="absolute top-1.5 left-0 h-0.5 bg-[#0E56A4] rounded-full transition-all duration-500"
-           style={{ width: `${(currentStepIndex / (steps.length - 1)) * 100}%` }}
+        <div
+          className="absolute top-1.5 left-0 h-0.5 bg-[#0E56A4] rounded-full transition-all duration-500"
+          style={{ width: `${(currentStepIndex / (steps.length - 1)) * 100}%` }}
         />
 
         {/* Steps */}
@@ -138,22 +139,30 @@ export default function TenantRentedServiceRequestsPage() {
 
             return (
               <div key={step} className="flex flex-col items-center gap-2">
-                <div 
+                <div
                   className={`w-3.5 h-3.5 rounded-full border-[2px] z-10 flex items-center justify-center bg-white transition-colors duration-300
-                    ${isCurrent ? 'border-[#0E56A4] scale-110' : 
-                      isCompleted ? 'border-[#0E56A4] bg-[#0E56A4]' : 
-                      'border-gray-300'
+                    ${
+                      isCurrent
+                        ? 'border-[#0E56A4] scale-110'
+                        : isCompleted
+                          ? 'border-[#0E56A4] bg-[#0E56A4]'
+                          : 'border-gray-300'
                     }
                   `}
                 >
-                   {isCompleted && !isCurrent && <div className="w-full h-full rounded-full bg-[#0E56A4]" />}
-                   {isCurrent && <div className="w-1.5 h-1.5 rounded-full bg-[#0E56A4]" />}
+                  {isCompleted && !isCurrent && (
+                    <div className="w-full h-full rounded-full bg-[#0E56A4]" />
+                  )}
+                  {isCurrent && <div className="w-1.5 h-1.5 rounded-full bg-[#0E56A4]" />}
                 </div>
-                <span 
+                <span
                   className={`text-[10px] font-medium transition-colors duration-300
-                    ${isCurrent ? 'text-[#0E56A4] font-semibold' : 
-                      isCompleted ? 'text-[#0E56A4]' : 
-                      'text-gray-400'
+                    ${
+                      isCurrent
+                        ? 'text-[#0E56A4] font-semibold'
+                        : isCompleted
+                          ? 'text-[#0E56A4]'
+                          : 'text-gray-400'
                     }
                   `}
                 >
@@ -183,7 +192,9 @@ export default function TenantRentedServiceRequestsPage() {
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
           <div>
             <h1 className="text-3xl font-bold text-[#0E56A4]">Service Requests</h1>
-            <p className="text-gray-600 mt-1">Track and manage your maintenance and service requests</p>
+            <p className="text-gray-600 mt-1">
+              Track and manage your maintenance and service requests
+            </p>
           </div>
           <Button
             onClick={() => navigate('/tenant/rented/new-request')}
@@ -202,7 +213,9 @@ export default function TenantRentedServiceRequestsPage() {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium text-gray-500 uppercase tracking-wider mb-2">Status</label>
+              <label className="block text-xs font-medium text-gray-500 uppercase tracking-wider mb-2">
+                Status
+              </label>
               <select
                 value={filterStatus}
                 onChange={(e) => setFilterStatus(e.target.value)}
@@ -215,7 +228,9 @@ export default function TenantRentedServiceRequestsPage() {
               </select>
             </div>
             <div>
-              <label className="block text-xs font-medium text-gray-500 uppercase tracking-wider mb-2">Type</label>
+              <label className="block text-xs font-medium text-gray-500 uppercase tracking-wider mb-2">
+                Type
+              </label>
               <select
                 value={filterType}
                 onChange={(e) => setFilterType(e.target.value)}
@@ -233,13 +248,13 @@ export default function TenantRentedServiceRequestsPage() {
         {/* Service Requests List */}
         <div className="space-y-4">
           <div className="flex items-center justify-between">
-             <h2 className="text-xl font-semibold text-gray-900">
-              {filterStatus === 'All' && filterType === 'All' 
-                ? 'All Requests' 
+            <h2 className="text-xl font-semibold text-gray-900">
+              {filterStatus === 'All' && filterType === 'All'
+                ? 'All Requests'
                 : `Filtered Results (${filteredRequests.length})`}
             </h2>
           </div>
-          
+
           {filteredRequests.length === 0 ? (
             <div className="bg-white rounded-xl p-12 text-center shadow-sm border border-gray-100 border-dashed">
               <div className="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -250,56 +265,55 @@ export default function TenantRentedServiceRequestsPage() {
             </div>
           ) : (
             filteredRequests.map((request) => (
-              <div 
+              <div
                 key={request.id}
                 className="bg-white border border-gray-200 rounded-xl p-6 hover:shadow-md transition-all"
               >
                 <div className="flex flex-col gap-4">
-                  
                   {/* Card Header: Type, Date, Badge */}
                   <div className="flex items-start justify-between gap-4">
                     <div className="flex items-center gap-3">
-                       <Badge variant="outline" className={`${getTypeColor(request.type)} font-medium border`}>
-                          {request.type}
-                       </Badge>
-                       <span className="text-xs text-gray-500 flex items-center gap-1">
-                          <Clock className="w-3 h-3" />
-                          {request.date}
-                       </span>
+                      <Badge
+                        variant="outline"
+                        className={`${getTypeColor(request.type)} font-medium border`}
+                      >
+                        {request.type}
+                      </Badge>
+                      <span className="text-xs text-gray-500 flex items-center gap-1">
+                        <Clock className="w-3 h-3" />
+                        {request.date}
+                      </span>
                     </div>
-                    <Badge 
-                       variant="outline" 
-                       className={`${getStatusBadgeStyles(request.status)} border font-semibold px-3 py-1`}
+                    <Badge
+                      variant="outline"
+                      className={`${getStatusBadgeStyles(request.status)} border font-semibold px-3 py-1`}
                     >
-                       {request.status}
+                      {request.status}
                     </Badge>
                   </div>
 
                   {/* Card Content: Title, Description */}
                   <div>
-                     <h3 className="font-bold text-lg text-gray-900 mb-1">{request.issue}</h3>
-                     <p className="text-sm text-gray-600 leading-relaxed">{request.description}</p>
+                    <h3 className="font-bold text-lg text-gray-900 mb-1">{request.issue}</h3>
+                    <p className="text-sm text-gray-600 leading-relaxed">{request.description}</p>
                   </div>
 
                   {/* Timeline */}
                   <div className="py-2 px-1">
-                     <RequestTimeline status={request.status} />
+                    <RequestTimeline status={request.status} />
                   </div>
 
                   <Separator className="bg-gray-100" />
 
                   {/* Footer: Agent, Property */}
                   <div className="flex items-center justify-between text-sm">
-                     <div className="flex items-center gap-2 text-gray-600">
-                        <User className="w-4 h-4 text-gray-400" />
-                        <span className="text-gray-500">Assigned to:</span>
-                        <span className="font-medium text-gray-900">{request.assignedTo}</span>
-                     </div>
-                     <div className="hidden sm:block text-gray-400 text-xs">
-                        {request.property}
-                     </div>
+                    <div className="flex items-center gap-2 text-gray-600">
+                      <User className="w-4 h-4 text-gray-400" />
+                      <span className="text-gray-500">Assigned to:</span>
+                      <span className="font-medium text-gray-900">{request.assignedTo}</span>
+                    </div>
+                    <div className="hidden sm:block text-gray-400 text-xs">{request.property}</div>
                   </div>
-
                 </div>
               </div>
             ))

@@ -16,10 +16,7 @@ export interface PropertyAmenity {
  * Get all available amenities
  */
 export const getAllAmenities = async (): Promise<Amenity[]> => {
-  const { data, error } = await supabase
-    .from('amenities')
-    .select('*')
-    .order('name');
+  const { data, error } = await supabase.from('amenities').select('*').order('name');
 
   if (error) {
     console.error('Error fetching amenities:', error);
@@ -35,14 +32,16 @@ export const getAllAmenities = async (): Promise<Amenity[]> => {
 export const getPropertyAmenities = async (propertyId: string): Promise<Amenity[]> => {
   const { data, error } = await supabase
     .from('property_amenities')
-    .select(`
+    .select(
+      `
       amenity_id,
       amenities (
         id,
         name,
         icon
       )
-    `)
+    `,
+    )
     .eq('property_id', propertyId);
 
   if (error) {
@@ -59,16 +58,14 @@ export const getPropertyAmenities = async (propertyId: string): Promise<Amenity[
  */
 export const addPropertyAmenities = async (
   propertyId: string,
-  amenityIds: string[]
+  amenityIds: string[],
 ): Promise<void> => {
-  const propertyAmenities = amenityIds.map(amenityId => ({
+  const propertyAmenities = amenityIds.map((amenityId) => ({
     property_id: propertyId,
     amenity_id: amenityId,
   }));
 
-  const { error } = await supabase
-    .from('property_amenities')
-    .insert(propertyAmenities);
+  const { error } = await supabase.from('property_amenities').insert(propertyAmenities);
 
   if (error) {
     console.error('Error adding property amenities:', error);
@@ -96,7 +93,7 @@ export const removeAllPropertyAmenities = async (propertyId: string): Promise<vo
  */
 export const updatePropertyAmenities = async (
   propertyId: string,
-  amenityIds: string[]
+  amenityIds: string[],
 ): Promise<void> => {
   // Remove all existing amenities
   await removeAllPropertyAmenities(propertyId);

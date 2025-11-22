@@ -1,13 +1,10 @@
-import { StatusBadge } from '../components/StatusBadge';
-import { DashboardLayout } from '../components/DashboardLayout';
-import { Link } from 'react-router-dom';
-import { 
-  Building, 
-  CheckCircle, 
-  Clock, 
-  Users, 
-  Plus, 
-  User, 
+import {
+  Building,
+  CheckCircle,
+  Clock,
+  Users,
+  Plus,
+  User,
   LineChart,
   MapPin,
   Eye,
@@ -16,16 +13,19 @@ import {
   Phone,
   Calendar,
   Home,
-  DollarSign
+  DollarSign,
 } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { DashboardLayout } from '../components/DashboardLayout';
 import { ImageWithFallback } from '../components/figma/ImageWithFallback';
 import { PropertyCodeDisplay } from '../components/PropertyCodeDisplay';
+import { StatusBadge } from '../components/StatusBadge';
 import { addPropertyMetadata } from '../utils/propertyUtils';
 
 export default function OwnerDashboardPage() {
   // Placeholder data
-  const ownerName = "Ahmed Hassan";
-  
+  const ownerName = 'Ahmed Hassan';
+
   const statsCards = [
     {
       id: 1,
@@ -33,7 +33,7 @@ export default function OwnerDashboardPage() {
       value: '5',
       icon: CheckCircle,
       bgColor: 'bg-green-50',
-      iconColor: 'text-green-600'
+      iconColor: 'text-green-600',
     },
     {
       id: 2,
@@ -41,7 +41,7 @@ export default function OwnerDashboardPage() {
       value: '3',
       icon: Building,
       bgColor: 'bg-blue-50',
-      iconColor: 'text-blue-600'
+      iconColor: 'text-blue-600',
     },
     {
       id: 3,
@@ -49,7 +49,7 @@ export default function OwnerDashboardPage() {
       value: '1',
       icon: Home,
       bgColor: 'bg-gray-100',
-      iconColor: 'text-gray-500'
+      iconColor: 'text-gray-500',
     },
     {
       id: 4,
@@ -57,8 +57,8 @@ export default function OwnerDashboardPage() {
       value: '12',
       icon: Users,
       bgColor: 'bg-[#0E56A4]/10',
-      iconColor: 'text-[#0E56A4]'
-    }
+      iconColor: 'text-[#0E56A4]',
+    },
   ];
 
   const properties = [
@@ -80,8 +80,8 @@ export default function OwnerDashboardPage() {
         avatar: 'https://i.pravatar.cc/150?img=1',
         leaseStart: 'Jan 1, 2024',
         leaseEnd: 'Dec 31, 2024',
-        leaseStatus: 'Active'
-      }
+        leaseStatus: 'Active',
+      },
     },
     {
       id: 2,
@@ -95,7 +95,7 @@ export default function OwnerDashboardPage() {
       cycle: 1,
       propertyType: 'Villa',
       governorate: 'Giza',
-      area: 'Sheikh Zayed'
+      area: 'Sheikh Zayed',
     },
     {
       id: 3,
@@ -115,8 +115,8 @@ export default function OwnerDashboardPage() {
         avatar: 'https://i.pravatar.cc/150?img=12',
         leaseStart: 'Mar 15, 2024',
         leaseEnd: 'Mar 14, 2025',
-        leaseStatus: 'Active'
-      }
+        leaseStatus: 'Active',
+      },
     },
     {
       id: 4,
@@ -130,7 +130,7 @@ export default function OwnerDashboardPage() {
       cycle: 1,
       propertyType: 'Apartment',
       governorate: 'Cairo',
-      area: 'Nasr City'
+      area: 'Nasr City',
     },
     {
       id: 5,
@@ -144,7 +144,7 @@ export default function OwnerDashboardPage() {
       cycle: 1,
       propertyType: 'Loft',
       governorate: 'Cairo',
-      area: 'Zamalek'
+      area: 'Zamalek',
     },
     {
       id: 6,
@@ -158,9 +158,9 @@ export default function OwnerDashboardPage() {
       cycle: 1,
       propertyType: 'Studio',
       governorate: 'Cairo',
-      area: 'Downtown'
-    }
-  ].map(property => addPropertyMetadata(property));
+      area: 'Downtown',
+    },
+  ].map((property) => addPropertyMetadata(property));
 
   const quickActions = [
     {
@@ -169,7 +169,7 @@ export default function OwnerDashboardPage() {
       icon: Plus,
       bgColor: 'bg-[#0E56A4]/10',
       iconColor: 'text-[#0E56A4]',
-      link: '/owner/add-property'
+      link: '/owner/add-property',
     },
     {
       id: 2,
@@ -177,7 +177,7 @@ export default function OwnerDashboardPage() {
       icon: Users,
       bgColor: 'bg-[#E9C500]/10',
       iconColor: 'text-[#E9C500]',
-      link: '/owner/leads'
+      link: '/owner/leads',
     },
     {
       id: 3,
@@ -185,7 +185,7 @@ export default function OwnerDashboardPage() {
       icon: User,
       bgColor: 'bg-[#0E56A4]/10',
       iconColor: 'text-[#0E56A4]',
-      link: '/owner/profile'
+      link: '/owner/profile',
     },
     {
       id: 4,
@@ -193,7 +193,7 @@ export default function OwnerDashboardPage() {
       icon: DollarSign,
       bgColor: 'bg-green-50',
       iconColor: 'text-green-600',
-      link: '/owner/payments'
+      link: '/owner/payments',
     },
     {
       id: 5,
@@ -201,8 +201,8 @@ export default function OwnerDashboardPage() {
       icon: LineChart,
       bgColor: 'bg-[#E9C500]/10',
       iconColor: 'text-[#E9C500]',
-      link: '/owner/reports'
-    }
+      link: '/owner/reports',
+    },
   ];
 
   const recentLeads = [
@@ -211,18 +211,19 @@ export default function OwnerDashboardPage() {
       tenantName: 'Sarah Ahmed',
       tenantAvatar: 'https://i.pravatar.cc/150?img=1',
       property: 'Luxury 3BR Apartment',
-      message: 'Hi, I\'m interested in viewing this property. Is it still available?',
+      message: "Hi, I'm interested in viewing this property. Is it still available?",
       timestamp: '2 hours ago',
-      status: 'New'
+      status: 'New',
     },
     {
       id: 2,
       tenantName: 'Mohamed Hassan',
       tenantAvatar: 'https://i.pravatar.cc/150?img=12',
       property: 'Modern Villa with Pool',
-      message: 'Hello, I would like to schedule a viewing for this weekend. Please let me know your availability.',
+      message:
+        'Hello, I would like to schedule a viewing for this weekend. Please let me know your availability.',
       timestamp: '5 hours ago',
-      status: 'Contacted'
+      status: 'Contacted',
     },
     {
       id: 3,
@@ -231,24 +232,24 @@ export default function OwnerDashboardPage() {
       property: 'Spacious 2BR Penthouse',
       message: 'Is the property pet-friendly? I have a small dog.',
       timestamp: '1 day ago',
-      status: 'New'
+      status: 'New',
     },
     {
       id: 4,
       tenantName: 'Omar Youssef',
       tenantAvatar: 'https://i.pravatar.cc/150?img=13',
       property: 'Sea View Apartment',
-      message: 'I saw your listing and I\'m very interested. Can we discuss the lease terms?',
+      message: "I saw your listing and I'm very interested. Can we discuss the lease terms?",
       timestamp: '1 day ago',
-      status: 'Contacted'
-    }
+      status: 'Contacted',
+    },
   ];
 
   const analyticsData = [
     { label: 'Total Views', value: '1,525' },
     { label: 'Total Leads', value: '37' },
     { label: 'Conversion Rate', value: '24%' },
-    { label: 'Approval Rate', value: '87%' }
+    { label: 'Approval Rate', value: '87%' },
   ];
 
   const getStatusColor = (status: string) => {
@@ -284,9 +285,7 @@ export default function OwnerDashboardPage() {
       <div className="px-4 sm:px-6 lg:px-8 space-y-8">
         {/* 1️⃣ PAGE HEADER */}
         <div className="mb-6">
-          <h2 className="text-3xl font-bold text-[#0E56A4]">
-            Welcome back, {ownerName}
-          </h2>
+          <h2 className="text-3xl font-bold text-[#0E56A4]">Welcome back, {ownerName}</h2>
           <p className="text-gray-600">Here is your property performance overview</p>
         </div>
 
@@ -295,7 +294,7 @@ export default function OwnerDashboardPage() {
           {statsCards.map((stat) => {
             const IconComponent = stat.icon;
             return (
-              <div 
+              <div
                 key={stat.id}
                 className="bg-white rounded-xl shadow-sm border border-gray-100 p-5 flex items-center justify-between hover:shadow-md transition-all"
               >
@@ -303,7 +302,9 @@ export default function OwnerDashboardPage() {
                   <p className="text-sm text-gray-500">{stat.title}</p>
                   <p className="text-2xl font-bold mt-1">{stat.value}</p>
                 </div>
-                <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${stat.bgColor}`}>
+                <div
+                  className={`w-12 h-12 rounded-xl flex items-center justify-center ${stat.bgColor}`}
+                >
                   <IconComponent className={`w-6 h-6 ${stat.iconColor}`} />
                 </div>
               </div>
@@ -345,21 +346,19 @@ export default function OwnerDashboardPage() {
         {/* 3️⃣ PROPERTY MANAGEMENT SECTION */}
         <div className="space-y-4">
           <div>
-            <h3 className="text-xl font-semibold text-[#0E56A4] mb-2">
-              My Properties
-            </h3>
+            <h3 className="text-xl font-semibold text-[#0E56A4] mb-2">My Properties</h3>
             <p className="text-gray-500 text-sm mb-4">Manage your listings and track performance</p>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {properties.map((property) => (
-              <div 
+              <div
                 key={property.id}
                 className="bg-white rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-all p-4"
               >
                 {/* Property Image */}
                 <div className="relative mb-3">
-                  <ImageWithFallback 
+                  <ImageWithFallback
                     src={property.image}
                     alt={property.title}
                     className="rounded-lg h-40 w-full object-cover"
@@ -373,7 +372,7 @@ export default function OwnerDashboardPage() {
                   <h4 className="text-base font-semibold text-[#0E56A4] truncate">
                     {property.title}
                   </h4>
-                  
+
                   <div className="flex items-center gap-1 text-gray-500 text-sm mt-1 mb-3">
                     <MapPin className="w-4 h-4 flex-shrink-0" />
                     <span className="truncate">{property.location}</span>
@@ -389,9 +388,7 @@ export default function OwnerDashboardPage() {
                     className="mb-3"
                   />
 
-                  <p className="text-lg font-bold text-[#0E56A4] mt-2">
-                    {property.price}
-                  </p>
+                  <p className="text-lg font-bold text-[#0E56A4] mt-2">{property.price}</p>
 
                   {/* Current Tenant Section (Only for Rented Properties) */}
                   {property.status === 'Rented' && property.currentTenant && (
@@ -431,13 +428,13 @@ export default function OwnerDashboardPage() {
                     {property.status === 'Rented' && property.currentTenant ? (
                       // For rented properties: Message Tenant is primary action
                       <>
-                        <Link 
+                        <Link
                           to={`/owner/tenant-chat/${property.id}`}
                           className="w-full py-2 rounded-lg bg-[#E9C500] text-gray-900 hover:bg-[#D4B500] transition text-center block text-sm font-medium"
                         >
                           Message Tenant
                         </Link>
-                        <Link 
+                        <Link
                           to={`/owner/properties/${property.id}/edit`}
                           className="w-full py-2 rounded-lg border border-[#0E56A4] text-[#0E56A4] hover:bg-[#0E56A4]/10 transition text-center block text-sm font-medium"
                         >
@@ -447,13 +444,13 @@ export default function OwnerDashboardPage() {
                     ) : (
                       // For non-rented properties: Edit and View Leads
                       <>
-                        <Link 
+                        <Link
                           to={`/owner/properties/${property.id}/edit`}
                           className="w-full py-2 rounded-lg bg-[#0E56A4] text-white hover:bg-[#093B74] transition text-center block text-sm font-medium"
                         >
                           Edit Listing
                         </Link>
-                        <Link 
+                        <Link
                           to="/owner/leads"
                           className="w-full py-2 rounded-lg border border-[#0E56A4] text-[#0E56A4] hover:bg-[#0E56A4]/10 transition text-center block text-sm font-medium"
                         >
@@ -471,21 +468,21 @@ export default function OwnerDashboardPage() {
         {/* 4️⃣ QUICK ACTIONS FOR OWNERS */}
         <div className="space-y-4">
           <div>
-            <h3 className="text-xl font-semibold text-[#0E56A4] mb-2">
-              Quick Actions
-            </h3>
+            <h3 className="text-xl font-semibold text-[#0E56A4] mb-2">Quick Actions</h3>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {quickActions.map((action) => {
               const IconComponent = action.icon;
               return (
-                <Link 
+                <Link
                   key={action.id}
                   to={action.link}
                   className="p-5 bg-white rounded-xl shadow-sm hover:shadow-md transition-all cursor-pointer flex items-center gap-4 border border-gray-100"
                 >
-                  <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${action.bgColor}`}>
+                  <div
+                    className={`w-12 h-12 rounded-xl flex items-center justify-center ${action.bgColor}`}
+                  >
                     <IconComponent className={`w-6 h-6 ${action.iconColor}`} />
                   </div>
                   <div>
@@ -500,22 +497,22 @@ export default function OwnerDashboardPage() {
         {/* 5️⃣ LEADS CENTER (PREVIEW SECTION) */}
         <div className="space-y-4">
           <div>
-            <h3 className="text-xl font-semibold text-[#0E56A4] mb-2">
-              Recent Leads
-            </h3>
-            <p className="text-gray-500 text-sm mb-4">Latest tenant inquiries handled by your assigned agents</p>
+            <h3 className="text-xl font-semibold text-[#0E56A4] mb-2">Recent Leads</h3>
+            <p className="text-gray-500 text-sm mb-4">
+              Latest tenant inquiries handled by your assigned agents
+            </p>
           </div>
 
           <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-5">
             <div className="space-y-4">
               {recentLeads.map((lead) => (
-                <div 
+                <div
                   key={lead.id}
                   className="flex items-center justify-between py-4 border-b last:border-none"
                 >
                   {/* Lead Avatar & Info */}
                   <div className="flex items-center gap-3 flex-1 min-w-0 mr-4">
-                    <img 
+                    <img
                       src={lead.tenantAvatar}
                       alt={lead.tenantName}
                       className="w-10 h-10 rounded-full object-cover flex-shrink-0"
@@ -531,7 +528,7 @@ export default function OwnerDashboardPage() {
                   </div>
 
                   {/* View Lead Details Link */}
-                  <Link 
+                  <Link
                     to={`/owner/lead-details/${lead.id}`}
                     className="text-[#0E56A4] hover:underline text-sm whitespace-nowrap"
                   >
@@ -546,14 +543,12 @@ export default function OwnerDashboardPage() {
         {/* 6️⃣ ANALYTICS OVERVIEW */}
         <div className="space-y-4">
           <div>
-            <h3 className="text-xl font-semibold text-[#0E56A4] mb-2">
-              Performance Overview
-            </h3>
+            <h3 className="text-xl font-semibold text-[#0E56A4] mb-2">Performance Overview</h3>
           </div>
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             {analyticsData.map((item, index) => (
-              <div 
+              <div
                 key={index}
                 className="bg-white rounded-xl shadow-sm border border-gray-100 p-5 flex flex-col items-center justify-center hover:shadow-md transition-all"
               >
@@ -597,7 +592,7 @@ export default function OwnerDashboardPage() {
               </div>
 
               {/* Action Button */}
-              <Link 
+              <Link
                 to="/owner/profile"
                 className="w-full sm:w-auto px-6 py-2.5 bg-[#0E56A4] text-white rounded-lg font-medium hover:bg-[#093B74] transition-all whitespace-nowrap text-center"
               >

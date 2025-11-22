@@ -30,7 +30,7 @@ export const AmenitiesSelector: React.FC<AmenitiesSelectorProps> = ({
 
   const toggleAmenity = (amenityId: string) => {
     if (selectedAmenityIds.includes(amenityId)) {
-      onChange(selectedAmenityIds.filter(id => id !== amenityId));
+      onChange(selectedAmenityIds.filter((id) => id !== amenityId));
     } else {
       onChange([...selectedAmenityIds, amenityId]);
     }
@@ -42,9 +42,7 @@ export const AmenitiesSelector: React.FC<AmenitiesSelectorProps> = ({
 
   return (
     <div className="space-y-2">
-      <label className="block text-sm font-medium text-gray-700">
-        Amenities
-      </label>
+      <label className="block text-sm font-medium text-gray-700">Amenities</label>
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
         {amenities.map((amenity) => {
           const isSelected = selectedAmenityIds.includes(amenity.id);
@@ -68,9 +66,7 @@ export const AmenitiesSelector: React.FC<AmenitiesSelectorProps> = ({
           );
         })}
       </div>
-      <p className="text-xs text-gray-500 mt-2">
-        {selectedAmenityIds.length} amenities selected
-      </p>
+      <p className="text-xs text-gray-500 mt-2">{selectedAmenityIds.length} amenities selected</p>
     </div>
   );
 };

@@ -24,7 +24,7 @@ export function AuditLog({ entries }: AuditLogProps) {
             <div key={entry.id} className="relative flex gap-4">
               {/* Dot */}
               <div className="absolute -left-[15px] mt-1.5 w-2.5 h-2.5 rounded-full bg-[#0E56A4] ring-4 ring-white" />
-              
+
               {/* Content */}
               <div className="flex-1 pb-6 border-b border-gray-100 last:border-0 last:pb-0">
                 <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-1">

@@ -1,12 +1,12 @@
+import { ArrowLeft, Upload, User } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { toast } from 'sonner@2.0.3';
 import { DashboardLayout } from '../components/DashboardLayout';
+import { Badge } from '../components/ui/badge';
 import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
 import { Label } from '../components/ui/label';
 import { Textarea } from '../components/ui/textarea';
-import { Badge } from '../components/ui/badge';
-import { ArrowLeft, Upload, User } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { toast } from 'sonner@2.0.3';
 
 export default function OwnerProfilePage() {
   const handleSave = () => {
@@ -40,9 +40,7 @@ export default function OwnerProfilePage() {
           <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
             <div className="flex items-center justify-between mb-6">
               <h2 className="text-[#0E56A4]">Personal Information</h2>
-              <Badge className="bg-[#E9C500] text-gray-900 border-[#E9C500]">
-                Owner
-              </Badge>
+              <Badge className="bg-[#E9C500] text-gray-900 border-[#E9C500]">Owner</Badge>
             </div>
 
             <div className="space-y-6">
@@ -67,19 +65,11 @@ export default function OwnerProfilePage() {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <div>
                   <Label htmlFor="first-name">First Name</Label>
-                  <Input
-                    id="first-name"
-                    defaultValue="Ahmed"
-                    className="mt-1.5"
-                  />
+                  <Input id="first-name" defaultValue="Ahmed" className="mt-1.5" />
                 </div>
                 <div>
                   <Label htmlFor="last-name">Last Name</Label>
-                  <Input
-                    id="last-name"
-                    defaultValue="Hassan"
-                    className="mt-1.5"
-                  />
+                  <Input id="last-name" defaultValue="Hassan" className="mt-1.5" />
                 </div>
               </div>
 
@@ -87,21 +77,11 @@ export default function OwnerProfilePage() {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <div>
                   <Label htmlFor="email">Email Address</Label>
-                  <Input
-                    id="email"
-                    type="email"
-                    defaultValue="owner@bob.com"
-                    className="mt-1.5"
-                  />
+                  <Input id="email" type="email" defaultValue="owner@bob.com" className="mt-1.5" />
                 </div>
                 <div>
                   <Label htmlFor="phone">Phone Number</Label>
-                  <Input
-                    id="phone"
-                    type="tel"
-                    defaultValue="+20 100 123 4567"
-                    className="mt-1.5"
-                  />
+                  <Input id="phone" type="tel" defaultValue="+20 100 123 4567" className="mt-1.5" />
                 </div>
               </div>
 
@@ -125,21 +105,13 @@ export default function OwnerProfilePage() {
               {/* Company Name */}
               <div>
                 <Label htmlFor="company">Company Name (Optional)</Label>
-                <Input
-                  id="company"
-                  placeholder="e.g., Hassan Properties LLC"
-                  className="mt-1.5"
-                />
+                <Input id="company" placeholder="e.g., Hassan Properties LLC" className="mt-1.5" />
               </div>
 
               {/* Tax Number */}
               <div>
                 <Label htmlFor="tax-number">Tax Number (Optional)</Label>
-                <Input
-                  id="tax-number"
-                  placeholder="e.g., 123-456-789"
-                  className="mt-1.5"
-                />
+                <Input id="tax-number" placeholder="e.g., 123-456-789" className="mt-1.5" />
                 <p className="text-sm text-gray-500 mt-2">
                   For financial reporting and tax purposes
                 </p>
@@ -178,9 +150,7 @@ export default function OwnerProfilePage() {
               </div>
               <div className="flex items-center justify-between py-3">
                 <span className="text-gray-600">Account Status</span>
-                <Badge className="bg-green-100 text-green-700 border-green-200">
-                  Verified
-                </Badge>
+                <Badge className="bg-green-100 text-green-700 border-green-200">Verified</Badge>
               </div>
             </div>
           </div>

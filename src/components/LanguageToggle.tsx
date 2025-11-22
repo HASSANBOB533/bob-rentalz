@@ -1,5 +1,5 @@
-import { useState } from 'react';
 import { Globe } from 'lucide-react';
+import { useState } from 'react';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -17,14 +17,14 @@ export function LanguageToggle() {
         <span>{language === 'en' ? 'EN' : 'AR'}</span>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="bg-white border-gray-200">
-        <DropdownMenuItem 
-          onClick={() => setLanguage('en')} 
+        <DropdownMenuItem
+          onClick={() => setLanguage('en')}
           className={`cursor-pointer ${language === 'en' ? 'bg-[#0E56A4]/10 text-[#0E56A4]' : 'hover:bg-gray-100'}`}
         >
           🇬🇧 English
         </DropdownMenuItem>
-        <DropdownMenuItem 
-          onClick={() => setLanguage('ar')} 
+        <DropdownMenuItem
+          onClick={() => setLanguage('ar')}
           className={`cursor-pointer ${language === 'ar' ? 'bg-[#0E56A4]/10 text-[#0E56A4]' : 'hover:bg-gray-100'}`}
         >
           🇪🇬 العربية

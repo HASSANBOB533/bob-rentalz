@@ -1,11 +1,11 @@
+import { User, Mail, Phone, MapPin, Shield, Camera } from 'lucide-react';
+import { useState } from 'react';
+import { toast } from 'sonner@2.0.3';
 import { AdminDashboardLayout } from '../components/AdminDashboardLayout';
 import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
 import { Label } from '../components/ui/label';
 import { Textarea } from '../components/ui/textarea';
-import { User, Mail, Phone, MapPin, Shield, Camera } from 'lucide-react';
-import { useState } from 'react';
-import { toast } from 'sonner@2.0.3';
 
 export default function AdminProfilePage() {
   const [formData, setFormData] = useState({
@@ -19,9 +19,9 @@ export default function AdminProfilePage() {
   });
 
   const handleInputChange = (field: string, value: string) => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [field]: value
+      [field]: value,
     }));
   };
 
@@ -203,10 +203,7 @@ export default function AdminProfilePage() {
               >
                 Save Changes
               </Button>
-              <Button
-                variant="outline"
-                className="flex-1 sm:flex-initial border-gray-300"
-              >
+              <Button variant="outline" className="flex-1 sm:flex-initial border-gray-300">
                 Cancel
               </Button>
             </div>

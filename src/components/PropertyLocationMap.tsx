@@ -1,6 +1,6 @@
 import { MapPin, Navigation, School, ShoppingBag, Coffee, Building2 } from 'lucide-react';
-import { Property } from '../data/mockData';
 import { motion } from 'motion/react';
+import { Property } from '../data/mockData';
 
 interface PropertyLocationMapProps {
   property: Property;
@@ -20,7 +20,7 @@ export function PropertyLocationMap({ property }: PropertyLocationMapProps) {
     // Generate default coordinates based on location
     const locationCoords: Record<string, { lat: number; lng: number }> = {
       'New Cairo': { lat: 30.0444, lng: 31.2357 },
-      'Maadi': { lat: 29.9602, lng: 31.2497 },
+      Maadi: { lat: 29.9602, lng: 31.2497 },
       'New Alamein': { lat: 31.3547, lng: 27.8813 },
     };
 
@@ -81,28 +81,30 @@ export function PropertyLocationMap({ property }: PropertyLocationMapProps) {
       <div className="flex items-start gap-2 mb-4 p-4 bg-[#F8F7F5] rounded-xl">
         <MapPin className="w-5 h-5 text-[#D4AF37] mt-0.5 flex-shrink-0" />
         <div>
-          <p className="font-medium">{property.region}, {property.location}</p>
+          <p className="font-medium">
+            {property.region}, {property.location}
+          </p>
           <p className="text-sm text-gray-600">Cairo, Egypt</p>
         </div>
       </div>
 
       {/* Interactive Map - Responsive Heights */}
-      <motion.div 
+      <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
         className="relative h-[260px] md:h-[320px] lg:h-[400px] bg-gradient-to-br from-gray-200 to-gray-300 rounded-xl overflow-hidden"
       >
         {/* Grid Pattern Background */}
-        <div 
-          className="absolute inset-0 opacity-20" 
+        <div
+          className="absolute inset-0 opacity-20"
           style={{
             backgroundImage: `
               linear-gradient(rgba(0,0,0,0.1) 1px, transparent 1px),
               linear-gradient(90deg, rgba(0,0,0,0.1) 1px, transparent 1px)
             `,
-            backgroundSize: '40px 40px'
-          }} 
+            backgroundSize: '40px 40px',
+          }}
         />
 
         {/* Street patterns */}
@@ -146,7 +148,7 @@ export function PropertyLocationMap({ property }: PropertyLocationMapProps) {
               transition={{
                 duration: 2,
                 repeat: Infinity,
-                ease: "easeInOut"
+                ease: 'easeInOut',
               }}
               className="absolute inset-0 bg-[#D4AF37] rounded-full"
               style={{ width: '60px', height: '60px', top: '-10px', left: '-10px' }}
@@ -159,7 +161,9 @@ export function PropertyLocationMap({ property }: PropertyLocationMapProps) {
 
             {/* Property Label */}
             <div className="absolute -top-12 left-1/2 transform -translate-x-1/2 bg-white px-3 py-2 rounded-lg shadow-xl whitespace-nowrap border border-gray-200">
-              <p className="text-xs font-semibold text-[#2B2B2B] mb-0.5">{property.title.substring(0, 20)}...</p>
+              <p className="text-xs font-semibold text-[#2B2B2B] mb-0.5">
+                {property.title.substring(0, 20)}...
+              </p>
               <p className="text-xs text-[#D4AF37] font-semibold">
                 {property.price.toLocaleString()} EGP<span className="text-[10px]">/month</span>
               </p>
@@ -171,7 +175,7 @@ export function PropertyLocationMap({ property }: PropertyLocationMapProps) {
         {landmarks.map((landmark, index) => {
           const position = coordsToPosition(landmark.lat, landmark.lng);
           const Icon = landmark.icon;
-          
+
           return (
             <motion.div
               key={landmark.id}

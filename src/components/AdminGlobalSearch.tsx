@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react';
 import { Search, X, ArrowRight, Building, User, Users, FileText, UserCheck } from 'lucide-react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { properties, agents } from '../data/mockData';
 
@@ -58,68 +58,73 @@ export function AdminGlobalSearch() {
     const newResults: SearchResult[] = [];
 
     // Search Properties
-    properties.forEach(p => {
-      if (p.title.toLowerCase().includes(lowerQuery) || 
-          p.location.toLowerCase().includes(lowerQuery) || 
-          p.referenceCode?.toLowerCase().includes(lowerQuery)) {
+    properties.forEach((p) => {
+      if (
+        p.title.toLowerCase().includes(lowerQuery) ||
+        p.location.toLowerCase().includes(lowerQuery) ||
+        p.referenceCode?.toLowerCase().includes(lowerQuery)
+      ) {
         newResults.push({
           id: p.id,
           type: 'Property',
           title: p.title,
           subtitle: p.referenceCode || p.location,
-          link: `/admin/properties/${p.id}`
+          link: `/admin/properties/${p.id}`,
         });
       }
     });
 
     // Search Tenants
-    mockTenants.forEach(t => {
+    mockTenants.forEach((t) => {
       if (t.name.toLowerCase().includes(lowerQuery) || t.email.toLowerCase().includes(lowerQuery)) {
         newResults.push({
           id: t.id,
           type: 'Tenant',
           title: t.name,
           subtitle: t.email,
-          link: `/admin/tenants/${t.id}`
+          link: `/admin/tenants/${t.id}`,
         });
       }
     });
 
     // Search Agents
-    agents.forEach(a => {
+    agents.forEach((a) => {
       if (a.name.toLowerCase().includes(lowerQuery) || a.email.toLowerCase().includes(lowerQuery)) {
         newResults.push({
           id: a.id,
           type: 'Agent',
           title: a.name,
           subtitle: a.email,
-          link: `/admin/agents/${a.id}`
+          link: `/admin/agents/${a.id}`,
         });
       }
     });
 
     // Search Owners
-    mockOwners.forEach(o => {
+    mockOwners.forEach((o) => {
       if (o.name.toLowerCase().includes(lowerQuery) || o.email.toLowerCase().includes(lowerQuery)) {
         newResults.push({
           id: o.id,
           type: 'Owner',
           title: o.name,
           subtitle: o.email,
-          link: `/admin/owners/${o.id}`
+          link: `/admin/owners/${o.id}`,
         });
       }
     });
 
     // Search Leads
-    mockLeads.forEach(l => {
-      if (l.name.toLowerCase().includes(lowerQuery) || l.interest.toLowerCase().includes(lowerQuery)) {
+    mockLeads.forEach((l) => {
+      if (
+        l.name.toLowerCase().includes(lowerQuery) ||
+        l.interest.toLowerCase().includes(lowerQuery)
+      ) {
         newResults.push({
           id: l.id,
           type: 'Lead',
           title: l.name,
           subtitle: `Interested in: ${l.interest}`,
-          link: `/admin/leads/${l.id}`
+          link: `/admin/leads/${l.id}`,
         });
       }
     });
@@ -134,11 +139,11 @@ export function AdminGlobalSearch() {
   };
 
   const groupedResults = {
-    PROPERTIES: results.filter(r => r.type === 'Property'),
-    TENANTS: results.filter(r => r.type === 'Tenant'),
-    AGENTS: results.filter(r => r.type === 'Agent'),
-    OWNERS: results.filter(r => r.type === 'Owner'),
-    LEADS: results.filter(r => r.type === 'Lead'),
+    PROPERTIES: results.filter((r) => r.type === 'Property'),
+    TENANTS: results.filter((r) => r.type === 'Tenant'),
+    AGENTS: results.filter((r) => r.type === 'Agent'),
+    OWNERS: results.filter((r) => r.type === 'Owner'),
+    LEADS: results.filter((r) => r.type === 'Lead'),
   };
 
   const hasResults = results.length > 0;
@@ -163,7 +168,13 @@ export function AdminGlobalSearch() {
         />
         {query && (
           <div className="absolute inset-y-0 right-0 pr-3 flex items-center">
-            <button onClick={() => { setQuery(''); setResults([]); }} className="p-1 rounded-full hover:bg-gray-100 text-gray-400">
+            <button
+              onClick={() => {
+                setQuery('');
+                setResults([]);
+              }}
+              className="p-1 rounded-full hover:bg-gray-100 text-gray-400"
+            >
               <X className="h-4 w-4" />
             </button>
           </div>
@@ -171,37 +182,40 @@ export function AdminGlobalSearch() {
       </div>
 
       {/* Desktop Dropdown / Mobile Overlay */}
-      {isOpen && (query.length >= 2) && (
+      {isOpen && query.length >= 2 && (
         <>
           {/* Mobile Overlay Background */}
           <div className="fixed inset-0 bg-white z-50 md:hidden flex flex-col">
-             <div className="flex items-center justify-between p-4 border-b border-gray-200">
-               <h2 className="text-lg font-semibold text-gray-900">Search</h2>
-               <button onClick={() => setIsOpen(false)} className="p-2 rounded-full bg-gray-100 text-gray-500">
-                 <X className="w-5 h-5" />
-               </button>
-             </div>
-             <div className="p-4 border-b border-gray-200">
-                <div className="relative">
-                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
-                  <input
-                    type="text"
-                    className="block w-full pl-10 pr-3 py-3 border border-gray-200 rounded-xl bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#0E56A4]"
-                    placeholder="Search..."
-                    value={query}
-                    onChange={(e) => setQuery(e.target.value)}
-                    autoFocus
-                  />
-                </div>
-             </div>
-             <div className="flex-1 overflow-y-auto p-4">
-                {renderResultsList(groupedResults, handleSelect, hasResults)}
-             </div>
+            <div className="flex items-center justify-between p-4 border-b border-gray-200">
+              <h2 className="text-lg font-semibold text-gray-900">Search</h2>
+              <button
+                onClick={() => setIsOpen(false)}
+                className="p-2 rounded-full bg-gray-100 text-gray-500"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+            <div className="p-4 border-b border-gray-200">
+              <div className="relative">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
+                <input
+                  type="text"
+                  className="block w-full pl-10 pr-3 py-3 border border-gray-200 rounded-xl bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#0E56A4]"
+                  placeholder="Search..."
+                  value={query}
+                  onChange={(e) => setQuery(e.target.value)}
+                  autoFocus
+                />
+              </div>
+            </div>
+            <div className="flex-1 overflow-y-auto p-4">
+              {renderResultsList(groupedResults, handleSelect, hasResults)}
+            </div>
           </div>
 
           {/* Desktop Dropdown */}
           <div className="hidden md:block absolute mt-2 w-full bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden z-50 max-h-[600px] overflow-y-auto">
-             {renderResultsList(groupedResults, handleSelect, hasResults)}
+            {renderResultsList(groupedResults, handleSelect, hasResults)}
           </div>
         </>
       )}
@@ -209,7 +223,11 @@ export function AdminGlobalSearch() {
   );
 }
 
-function renderResultsList(groupedResults: any, handleSelect: (link: string) => void, hasResults: boolean) {
+function renderResultsList(
+  groupedResults: any,
+  handleSelect: (link: string) => void,
+  hasResults: boolean,
+) {
   if (!hasResults) {
     return (
       <div className="p-8 text-center text-gray-500">
@@ -222,7 +240,7 @@ function renderResultsList(groupedResults: any, handleSelect: (link: string) => 
     <div className="py-2">
       {Object.entries(groupedResults).map(([category, items]: [string, any[]]) => {
         if (items.length === 0) return null;
-        
+
         return (
           <div key={category} className="mb-2 last:mb-0">
             <div className="px-4 py-2 text-xs font-bold text-[#0E56A4] bg-gray-50/50 uppercase tracking-wider">
@@ -236,7 +254,9 @@ function renderResultsList(groupedResults: any, handleSelect: (link: string) => 
                     className="w-full text-left px-4 py-3 hover:bg-gray-50 transition-colors flex items-center justify-between group border-b border-gray-50 last:border-0"
                   >
                     <div className="flex items-center gap-3">
-                      <div className={`w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 ${getBadgeColor(item.type)}`}>
+                      <div
+                        className={`w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 ${getBadgeColor(item.type)}`}
+                      >
                         {getIcon(item.type)}
                       </div>
                       <div>
@@ -258,22 +278,34 @@ function renderResultsList(groupedResults: any, handleSelect: (link: string) => 
 
 function getIcon(type: string) {
   switch (type) {
-    case 'Property': return <Building className="w-4 h-4" />;
-    case 'Tenant': return <UserCheck className="w-4 h-4" />;
-    case 'Agent': return <User className="w-4 h-4" />;
-    case 'Owner': return <Users className="w-4 h-4" />; // Using Users for Owner roughly
-    case 'Lead': return <FileText className="w-4 h-4" />;
-    default: return <Search className="w-4 h-4" />;
+    case 'Property':
+      return <Building className="w-4 h-4" />;
+    case 'Tenant':
+      return <UserCheck className="w-4 h-4" />;
+    case 'Agent':
+      return <User className="w-4 h-4" />;
+    case 'Owner':
+      return <Users className="w-4 h-4" />; // Using Users for Owner roughly
+    case 'Lead':
+      return <FileText className="w-4 h-4" />;
+    default:
+      return <Search className="w-4 h-4" />;
   }
 }
 
 function getBadgeColor(type: string) {
   switch (type) {
-    case 'Property': return 'bg-blue-100 text-blue-600';
-    case 'Tenant': return 'bg-green-100 text-green-600';
-    case 'Agent': return 'bg-purple-100 text-purple-600';
-    case 'Owner': return 'bg-orange-100 text-orange-600';
-    case 'Lead': return 'bg-yellow-100 text-yellow-600';
-    default: return 'bg-gray-100 text-gray-600';
+    case 'Property':
+      return 'bg-blue-100 text-blue-600';
+    case 'Tenant':
+      return 'bg-green-100 text-green-600';
+    case 'Agent':
+      return 'bg-purple-100 text-purple-600';
+    case 'Owner':
+      return 'bg-orange-100 text-orange-600';
+    case 'Lead':
+      return 'bg-yellow-100 text-yellow-600';
+    default:
+      return 'bg-gray-100 text-gray-600';
   }
 }

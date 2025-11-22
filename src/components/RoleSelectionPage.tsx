@@ -1,10 +1,10 @@
-import { Link, useNavigate, useLocation } from 'react-router-dom';
+import bobLogo from 'figma:asset/c3cbe0198340d6bed05c69174ee79f3b6a4d8624.png';
 import { Home, Building2, Briefcase, Check } from 'lucide-react';
 import { useState } from 'react';
-import bobLogo from 'figma:asset/c3cbe0198340d6bed05c69174ee79f3b6a4d8624.png';
-import { Button } from './ui/button';
-import { useAuth } from '../contexts/AuthContext';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { toast } from 'sonner@2.0.3';
+import { useAuth } from '../contexts/AuthContext';
+import { Button } from './ui/button';
 
 export function RoleSelectionPage() {
   const navigate = useNavigate();
@@ -86,9 +86,9 @@ export function RoleSelectionPage() {
         {/* Logo */}
         <div className="flex justify-center mb-8">
           <Link to="/">
-            <img 
-              src={bobLogo} 
-              alt="Best of Bedz Rentalz" 
+            <img
+              src={bobLogo}
+              alt="Best of Bedz Rentalz"
               className="h-16 md:h-20 w-auto object-contain"
             />
           </Link>
@@ -99,9 +99,7 @@ export function RoleSelectionPage() {
           <h1 className="text-2xl sm:text-3xl font-semibold text-[#0E56A4] mb-2 text-center">
             Choose Your Role
           </h1>
-          <p className="text-gray-600 text-center">
-            Select the type of account you want to create
-          </p>
+          <p className="text-gray-600 text-center">Select the type of account you want to create</p>
         </div>
 
         {/* Role Selection Grid */}
@@ -109,16 +107,17 @@ export function RoleSelectionPage() {
           {roles.map((role) => {
             const Icon = role.icon;
             const isSelected = selectedRole === role.id;
-            
+
             return (
               <button
                 key={role.id}
                 onClick={() => setSelectedRole(role.id)}
                 className={`
                   relative p-6 rounded-xl border-2 transition-all duration-200
-                  ${isSelected 
-                    ? 'border-[#0E56A4] bg-[#0E56A4]/5 shadow-lg' 
-                    : 'border-gray-200 bg-white hover:border-[#0E56A4]/50 hover:shadow-md'
+                  ${
+                    isSelected
+                      ? 'border-[#0E56A4] bg-[#0E56A4]/5 shadow-lg'
+                      : 'border-gray-200 bg-white hover:border-[#0E56A4]/50 hover:shadow-md'
                   }
                 `}
                 disabled={loading}
@@ -131,20 +130,22 @@ export function RoleSelectionPage() {
                 )}
 
                 {/* Icon */}
-                <div className={`
+                <div
+                  className={`
                   w-16 h-16 rounded-full flex items-center justify-center mb-4 mx-auto
                   ${isSelected ? 'bg-[#0E56A4]' : 'bg-gray-100'}
-                `}>
+                `}
+                >
                   <Icon className={`w-8 h-8 ${isSelected ? 'text-white' : 'text-gray-600'}`} />
                 </div>
 
                 {/* Label */}
-                <h3 className={`text-xl font-semibold mb-2 ${isSelected ? 'text-[#0E56A4]' : 'text-gray-900'}`}>
+                <h3
+                  className={`text-xl font-semibold mb-2 ${isSelected ? 'text-[#0E56A4]' : 'text-gray-900'}`}
+                >
                   {role.label}
                 </h3>
-                <p className="text-sm text-gray-600">
-                  {role.subtext}
-                </p>
+                <p className="text-sm text-gray-600">{role.subtext}</p>
               </button>
             );
           })}

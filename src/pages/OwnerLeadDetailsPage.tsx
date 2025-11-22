@@ -1,5 +1,4 @@
-import { useParams, useNavigate } from 'react-router-dom';
-import { 
+import {
   ArrowLeft,
   MapPin,
   Home,
@@ -8,10 +7,11 @@ import {
   Mail,
   MessageSquare,
   Clock,
-  Shield
+  Shield,
 } from 'lucide-react';
-import { ImageWithFallback } from '../components/figma/ImageWithFallback';
+import { useParams, useNavigate } from 'react-router-dom';
 import { DashboardLayout } from '../components/DashboardLayout';
+import { ImageWithFallback } from '../components/figma/ImageWithFallback';
 import { Badge } from '../components/ui/badge';
 import { Button } from '../components/ui/button';
 
@@ -38,9 +38,9 @@ export default function OwnerLeadDetailsPage() {
           id: 1,
           sender: 'tenant',
           senderName: 'Sarah Ahmed',
-          text: 'Hi, I\'m interested in viewing this property. Is it still available?',
+          text: "Hi, I'm interested in viewing this property. Is it still available?",
           timestamp: '2 hours ago',
-          date: 'Today'
+          date: 'Today',
         },
         {
           id: 2,
@@ -48,17 +48,17 @@ export default function OwnerLeadDetailsPage() {
           senderName: 'Ahmed Mansour',
           text: 'Yes! The property is available. When would you like to schedule a viewing?',
           timestamp: '1 hour ago',
-          date: 'Today'
+          date: 'Today',
         },
         {
           id: 3,
           sender: 'tenant',
           senderName: 'Sarah Ahmed',
-          text: 'I\'m available this Saturday afternoon. Does 2 PM work?',
+          text: "I'm available this Saturday afternoon. Does 2 PM work?",
           timestamp: '30 minutes ago',
-          date: 'Today'
-        }
-      ]
+          date: 'Today',
+        },
+      ],
     },
     '2': {
       tenantName: 'Mohamed Hassan',
@@ -79,17 +79,17 @@ export default function OwnerLeadDetailsPage() {
           senderName: 'Mohamed Hassan',
           text: 'Hello, I would like to schedule a viewing for this weekend. Please let me know your availability.',
           timestamp: '5 hours ago',
-          date: 'Today'
+          date: 'Today',
         },
         {
           id: 2,
           sender: 'agent',
           senderName: 'Fatima El-Sayed',
-          text: 'Hello Mohamed! I\'d be happy to arrange a viewing. This weekend works perfectly. Would Saturday at 10 AM be convenient for you?',
+          text: "Hello Mohamed! I'd be happy to arrange a viewing. This weekend works perfectly. Would Saturday at 10 AM be convenient for you?",
           timestamp: '4 hours ago',
-          date: 'Today'
-        }
-      ]
+          date: 'Today',
+        },
+      ],
     },
     '3': {
       tenantName: 'Layla Ibrahim',
@@ -110,9 +110,9 @@ export default function OwnerLeadDetailsPage() {
           senderName: 'Layla Ibrahim',
           text: 'Is the property pet-friendly? I have a small dog.',
           timestamp: '1 day ago',
-          date: 'Yesterday'
-        }
-      ]
+          date: 'Yesterday',
+        },
+      ],
     },
     '4': {
       tenantName: 'Omar Youssef',
@@ -131,9 +131,9 @@ export default function OwnerLeadDetailsPage() {
           id: 1,
           sender: 'tenant',
           senderName: 'Omar Youssef',
-          text: 'I saw your listing and I\'m very interested. Can we discuss the lease terms?',
+          text: "I saw your listing and I'm very interested. Can we discuss the lease terms?",
           timestamp: '1 day ago',
-          date: 'Yesterday'
+          date: 'Yesterday',
         },
         {
           id: 2,
@@ -141,18 +141,18 @@ export default function OwnerLeadDetailsPage() {
           senderName: 'Mona Saad',
           text: 'Of course! The lease is for 12 months minimum. The deposit is 2 months rent. We can schedule a call to discuss all the details.',
           timestamp: '1 day ago',
-          date: 'Yesterday'
+          date: 'Yesterday',
         },
         {
           id: 3,
           sender: 'tenant',
           senderName: 'Omar Youssef',
-          text: 'That sounds great. I\'m available tomorrow afternoon for a call.',
+          text: "That sounds great. I'm available tomorrow afternoon for a call.",
           timestamp: '1 day ago',
-          date: 'Yesterday'
-        }
-      ]
-    }
+          date: 'Yesterday',
+        },
+      ],
+    },
   };
 
   const conversation = leadId ? conversations[leadId] : null;
@@ -163,9 +163,7 @@ export default function OwnerLeadDetailsPage() {
         <div className="px-4 sm:px-6 lg:px-8 py-8 max-w-5xl mx-auto">
           <div className="text-center">
             <h2 className="text-2xl font-semibold text-gray-700 mb-4">Lead Not Found</h2>
-            <Button onClick={() => navigate('/owner/leads')}>
-              Back to Leads Center
-            </Button>
+            <Button onClick={() => navigate('/owner/leads')}>Back to Leads Center</Button>
           </div>
         </div>
       </DashboardLayout>
@@ -199,7 +197,7 @@ export default function OwnerLeadDetailsPage() {
               >
                 <ArrowLeft className="w-5 h-5" />
               </button>
-              
+
               <div className="min-w-0 flex-1">
                 <h1 className="text-2xl font-semibold text-[#0E56A4] mb-1">Lead Details</h1>
                 <p className="text-sm text-gray-600">Read-only view of prospect inquiry</p>
@@ -207,9 +205,7 @@ export default function OwnerLeadDetailsPage() {
             </div>
 
             {/* Status Badge */}
-            <Badge className={getStatusColor(conversation.status)}>
-              {conversation.status}
-            </Badge>
+            <Badge className={getStatusColor(conversation.status)}>{conversation.status}</Badge>
           </div>
 
           {/* Info Notice */}
@@ -219,7 +215,8 @@ export default function OwnerLeadDetailsPage() {
               <div>
                 <p className="text-sm text-blue-900 font-medium">Agent-Managed Communication</p>
                 <p className="text-sm text-blue-700 mt-1">
-                  Conversations with prospects are managed by your assigned agent. You can monitor progress here.
+                  Conversations with prospects are managed by your assigned agent. You can monitor
+                  progress here.
                 </p>
               </div>
             </div>
@@ -233,7 +230,7 @@ export default function OwnerLeadDetailsPage() {
                 <User className="w-5 h-5 text-[#0E56A4]" />
                 Tenant (Prospect)
               </h3>
-              
+
               <div className="flex items-center gap-4 mb-4">
                 <img
                   src={conversation.tenantAvatar}
@@ -264,7 +261,7 @@ export default function OwnerLeadDetailsPage() {
                 <User className="w-5 h-5 text-[#E9C500]" />
                 Assigned Agent
               </h3>
-              
+
               <div className="flex items-center gap-4 mb-4">
                 <img
                   src={conversation.agentAvatar}
@@ -289,7 +286,7 @@ export default function OwnerLeadDetailsPage() {
               <Home className="w-5 h-5 text-[#0E56A4]" />
               Property
             </h3>
-            
+
             <div className="flex flex-col sm:flex-row gap-4">
               <ImageWithFallback
                 src={conversation.propertyImage}
@@ -332,30 +329,38 @@ export default function OwnerLeadDetailsPage() {
                       message.sender === 'tenant'
                         ? 'bg-gray-100 text-gray-900'
                         : message.sender === 'agent'
-                        ? 'bg-[#0E56A4] text-white'
-                        : 'bg-[#E9C500] text-gray-900'
+                          ? 'bg-[#0E56A4] text-white'
+                          : 'bg-[#E9C500] text-gray-900'
                     }`}
                   >
                     <div className="flex items-center gap-2 mb-1">
-                      <p className={`text-xs font-medium ${
-                        message.sender === 'agent' ? 'text-white/80' : 'text-gray-600'
-                      }`}>
+                      <p
+                        className={`text-xs font-medium ${
+                          message.sender === 'agent' ? 'text-white/80' : 'text-gray-600'
+                        }`}
+                      >
                         {message.senderName}
                       </p>
-                      <span className={`text-xs ${
-                        message.sender === 'agent' ? 'text-white/60' : 'text-gray-400'
-                      }`}>
+                      <span
+                        className={`text-xs ${
+                          message.sender === 'agent' ? 'text-white/60' : 'text-gray-400'
+                        }`}
+                      >
                         • {message.sender === 'tenant' ? 'Prospect' : 'Agent'}
                       </span>
                     </div>
                     <p className="text-sm break-words">{message.text}</p>
                     <div className="flex items-center gap-1 mt-2">
-                      <Clock className={`w-3 h-3 ${
-                        message.sender === 'agent' ? 'text-white/60' : 'text-gray-400'
-                      }`} />
-                      <span className={`text-xs ${
-                        message.sender === 'agent' ? 'text-white/60' : 'text-gray-400'
-                      }`}>
+                      <Clock
+                        className={`w-3 h-3 ${
+                          message.sender === 'agent' ? 'text-white/60' : 'text-gray-400'
+                        }`}
+                      />
+                      <span
+                        className={`text-xs ${
+                          message.sender === 'agent' ? 'text-white/60' : 'text-gray-400'
+                        }`}
+                      >
                         {message.timestamp}
                       </span>
                     </div>
@@ -369,7 +374,8 @@ export default function OwnerLeadDetailsPage() {
               <div className="flex items-center gap-3 text-sm text-gray-600">
                 <Shield className="w-5 h-5 text-gray-400" />
                 <p>
-                  This conversation is managed by your agent. You cannot send messages to prospects directly.
+                  This conversation is managed by your agent. You cannot send messages to prospects
+                  directly.
                 </p>
               </div>
             </div>

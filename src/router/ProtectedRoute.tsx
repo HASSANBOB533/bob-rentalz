@@ -1,6 +1,6 @@
-import { Navigate } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { api } from "../lib/supabase/api";
+import { useEffect, useState } from 'react';
+import { Navigate } from 'react-router-dom';
+import { api } from '../lib/supabase/api';
 
 interface ProtectedRouteProps {
   children: JSX.Element;

@@ -153,7 +153,8 @@ export const properties: Property[] = [
     bedrooms: 4,
     bathrooms: 3,
     area: 350,
-    description: 'Stunning modern villa with contemporary design, spacious living areas, and a beautiful garden. Located in a gated community with 24/7 security.',
+    description:
+      'Stunning modern villa with contemporary design, spacious living areas, and a beautiful garden. Located in a gated community with 24/7 security.',
     status: 'available',
     amenities: ['Garden', 'Parking', 'Security', 'Pool', 'Gym'],
     images: [
@@ -194,7 +195,8 @@ export const properties: Property[] = [
     bedrooms: 3,
     bathrooms: 2,
     area: 200,
-    description: 'Beautiful apartment in the heart of Maadi, featuring modern amenities and a large balcony with garden views. Walking distance to schools and shops. This elegant residence boasts high ceilings, premium hardwood flooring throughout, and floor-to-ceiling windows that flood the space with natural light. The gourmet kitchen is equipped with top-of-the-line appliances, granite countertops, and ample storage space. The master suite includes a walk-in closet and spa-like bathroom with dual vanities. Additional highlights include a dedicated laundry room, guest powder room, and secure underground parking. The building offers 24/7 concierge service, a modern fitness center, and landscaped communal gardens perfect for relaxation.',
+    description:
+      'Beautiful apartment in the heart of Maadi, featuring modern amenities and a large balcony with garden views. Walking distance to schools and shops. This elegant residence boasts high ceilings, premium hardwood flooring throughout, and floor-to-ceiling windows that flood the space with natural light. The gourmet kitchen is equipped with top-of-the-line appliances, granite countertops, and ample storage space. The master suite includes a walk-in closet and spa-like bathroom with dual vanities. Additional highlights include a dedicated laundry room, guest powder room, and secure underground parking. The building offers 24/7 concierge service, a modern fitness center, and landscaped communal gardens perfect for relaxation.',
     status: 'available',
     amenities: ['Balcony', 'Parking', 'Elevator', 'Central AC'],
     images: [
@@ -234,7 +236,8 @@ export const properties: Property[] = [
     bedrooms: 5,
     bathrooms: 4,
     area: 450,
-    description: 'Exclusive beachfront villa with direct sea access, infinity pool, and panoramic views. Perfect for families seeking a luxurious coastal lifestyle.',
+    description:
+      'Exclusive beachfront villa with direct sea access, infinity pool, and panoramic views. Perfect for families seeking a luxurious coastal lifestyle.',
     status: 'available',
     amenities: ['Beach Access', 'Pool', 'Garden', 'Security', 'Parking', 'Gym'],
     images: [
@@ -274,7 +277,8 @@ export const properties: Property[] = [
     bedrooms: 3,
     bathrooms: 2,
     area: 250,
-    description: 'Modern duplex with open-plan living, high ceilings, and a private rooftop terrace. Located in a family-friendly compound.',
+    description:
+      'Modern duplex with open-plan living, high ceilings, and a private rooftop terrace. Located in a family-friendly compound.',
     status: 'pending',
     amenities: ['Terrace', 'Parking', 'Security', 'Playground'],
     images: [
@@ -288,8 +292,8 @@ export const properties: Property[] = [
     type: 'Duplex',
     videoUrl: 'https://www.youtube.com/embed/zumJJUL_ruM',
     coordinates: {
-      lat: 30.0520,
-      lng: 31.2450,
+      lat: 30.052,
+      lng: 31.245,
     },
     // Rental Terms
     insuranceDeposit: '10% of rent',
@@ -311,7 +315,8 @@ export const properties: Property[] = [
     bedrooms: 4,
     bathrooms: 3,
     area: 280,
-    description: 'Charming townhouse with private garden, modern kitchen, and spacious bedrooms. Ideal for families.',
+    description:
+      'Charming townhouse with private garden, modern kitchen, and spacious bedrooms. Ideal for families.',
     status: 'available',
     amenities: ['Garden', 'Parking', 'Security', 'Storage'],
     images: [
@@ -327,8 +332,8 @@ export const properties: Property[] = [
     type: 'Townhouse',
     videoUrl: 'https://www.youtube.com/embed/A9bPV2kN1SE',
     coordinates: {
-      lat: 29.9650,
-      lng: 31.2550,
+      lat: 29.965,
+      lng: 31.255,
     },
     // Rental Terms
     insuranceDeposit: '10% of rent',
@@ -350,7 +355,8 @@ export const properties: Property[] = [
     bedrooms: 2,
     bathrooms: 2,
     area: 150,
-    description: 'Bright and modern 2-bedroom apartment with contemporary finishes and great natural light. Perfect for young professionals.',
+    description:
+      'Bright and modern 2-bedroom apartment with contemporary finishes and great natural light. Perfect for young professionals.',
     status: 'available',
     amenities: ['Balcony', 'Parking', 'Elevator', 'Central AC'],
     images: [
@@ -364,8 +370,8 @@ export const properties: Property[] = [
     type: 'Apartment',
     videoUrl: 'https://www.youtube.com/embed/RpKQEeovaNY',
     coordinates: {
-      lat: 30.0380,
-      lng: 31.2280,
+      lat: 30.038,
+      lng: 31.228,
     },
     // Rental Terms
     insuranceDeposit: '10% of rent',
@@ -387,7 +393,8 @@ export const properties: Property[] = [
     bedrooms: 4,
     bathrooms: 3,
     area: 320,
-    description: 'Spectacular penthouse with panoramic sea views, private terrace, and premium finishes throughout.',
+    description:
+      'Spectacular penthouse with panoramic sea views, private terrace, and premium finishes throughout.',
     status: 'available',
     amenities: ['Terrace', 'Beach Access', 'Pool', 'Parking', 'Security', 'Concierge'],
     images: [
@@ -401,8 +408,8 @@ export const properties: Property[] = [
     type: 'Penthouse',
     videoUrl: 'https://www.youtube.com/embed/ptm8a-DC2gk',
     coordinates: {
-      lat: 31.3600,
-      lng: 27.8900,
+      lat: 31.36,
+      lng: 27.89,
     },
     // Rental Terms
     insuranceDeposit: '10% of rent',
@@ -424,7 +431,8 @@ export const properties: Property[] = [
     bedrooms: 4,
     bathrooms: 3,
     area: 300,
-    description: 'Beautiful family villa with spacious garden, modern kitchen, and multiple living areas. Close to international schools.',
+    description:
+      'Beautiful family villa with spacious garden, modern kitchen, and multiple living areas. Close to international schools.',
     status: 'rented',
     amenities: ['Garden', 'Parking', 'Security', 'Maid Room'],
     images: [
@@ -438,8 +446,8 @@ export const properties: Property[] = [
     type: 'Villa',
     videoUrl: 'https://www.youtube.com/embed/c1u0Bk6MwBg',
     coordinates: {
-      lat: 29.9560,
-      lng: 31.2450,
+      lat: 29.956,
+      lng: 31.245,
     },
     // Rental Terms
     insuranceDeposit: '10% of rent',
@@ -461,7 +469,8 @@ export const properties: Property[] = [
     bedrooms: 2,
     bathrooms: 2,
     area: 180,
-    description: 'Stylish contemporary apartment in the heart of Zamalek with Nile views. Walking distance to restaurants, cafes, and cultural attractions.',
+    description:
+      'Stylish contemporary apartment in the heart of Zamalek with Nile views. Walking distance to restaurants, cafes, and cultural attractions.',
     status: 'available',
     amenities: ['Balcony', 'Elevator', 'Central AC', 'Security'],
     images: [
@@ -499,7 +508,8 @@ export const properties: Property[] = [
     bedrooms: 3,
     bathrooms: 3,
     area: 280,
-    description: 'Modern townhouse in gated community with premium amenities including clubhouse, pool, and gym. Perfect for executive families.',
+    description:
+      'Modern townhouse in gated community with premium amenities including clubhouse, pool, and gym. Perfect for executive families.',
     status: 'available',
     amenities: ['Garden', 'Parking', 'Pool', 'Gym', 'Security', 'Clubhouse'],
     images: [
@@ -515,7 +525,7 @@ export const properties: Property[] = [
     type: 'Townhouse',
     videoUrl: 'https://www.youtube.com/embed/ptm8a-DC2gk',
     coordinates: {
-      lat: 30.0330,
+      lat: 30.033,
       lng: 31.4913,
     },
     insuranceDeposit: '10% of rent',
@@ -537,7 +547,8 @@ export const properties: Property[] = [
     bedrooms: 1,
     bathrooms: 1,
     area: 85,
-    description: 'Compact and elegant studio perfect for young professionals. Modern finishes, fully equipped kitchen, and close to metro station.',
+    description:
+      'Compact and elegant studio perfect for young professionals. Modern finishes, fully equipped kitchen, and close to metro station.',
     status: 'available',
     amenities: ['Elevator', 'Central AC', 'Parking', 'Security'],
     images: [
@@ -573,7 +584,8 @@ export const properties: Property[] = [
     bedrooms: 3,
     bathrooms: 2,
     area: 200,
-    description: 'Beautifully designed chalet with direct beach access and stunning Mediterranean views. Ideal for summer living or year-round coastal lifestyle.',
+    description:
+      'Beautifully designed chalet with direct beach access and stunning Mediterranean views. Ideal for summer living or year-round coastal lifestyle.',
     status: 'available',
     amenities: ['Beach Access', 'Pool', 'Parking', 'Security', 'BBQ Area'],
     images: [
@@ -610,7 +622,8 @@ export const properties: Property[] = [
     bedrooms: 2,
     bathrooms: 2,
     area: 220,
-    description: 'Industrial-chic loft with high ceilings, exposed brick, and floor-to-ceiling windows. Perfect for creative professionals seeking unique living space.',
+    description:
+      'Industrial-chic loft with high ceilings, exposed brick, and floor-to-ceiling windows. Perfect for creative professionals seeking unique living space.',
     status: 'available',
     amenities: ['Parking', 'Elevator', 'Central AC', 'Security', 'Gym'],
     images: [
@@ -646,7 +659,8 @@ export const properties: Property[] = [
     bedrooms: 2,
     bathrooms: 2,
     area: 160,
-    description: 'Ground floor apartment with private garden access. Family-friendly compound with playground and green spaces. Close to schools and shops.',
+    description:
+      'Ground floor apartment with private garden access. Family-friendly compound with playground and green spaces. Close to schools and shops.',
     status: 'available',
     amenities: ['Garden', 'Parking', 'Security', 'Playground', 'Central AC'],
     images: [
@@ -660,8 +674,8 @@ export const properties: Property[] = [
     verified: true,
     type: 'Apartment',
     coordinates: {
-      lat: 29.9650,
-      lng: 31.2580,
+      lat: 29.965,
+      lng: 31.258,
     },
     insuranceDeposit: '10% of rent',
     annualIncrease: '5%',
@@ -711,7 +725,8 @@ export const blogPosts: BlogPost[] = [
     id: '1',
     title: 'Top 5 Tips for Renting a Property in Egypt',
     slug: 'top-5-tips-for-renting-a-property-in-egypt',
-    featuredImage: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&h=600&fit=crop',
+    featuredImage:
+      'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&h=600&fit=crop',
     category: 'Real Estate Tips',
     tags: ['renting', 'egypt', 'tips'],
     author: {
@@ -721,7 +736,8 @@ export const blogPosts: BlogPost[] = [
     },
     publishDate: '2023-09-15',
     readingTime: '5 min',
-    excerpt: 'Renting a property in Egypt can be a daunting task, but with the right tips, you can find your perfect home. In this article, we share the top 5 tips for renting a property in Egypt.',
+    excerpt:
+      'Renting a property in Egypt can be a daunting task, but with the right tips, you can find your perfect home. In this article, we share the top 5 tips for renting a property in Egypt.',
     content: `Renting a property in Egypt can be a daunting task, but with the right tips, you can find your perfect home. In this article, we share the top 5 tips for renting a property in Egypt.
 
 1. **Research the Area**: Before you start looking for a property, research the area you are interested in. Consider factors such as proximity to schools, hospitals, shopping centers, and public transportation. This will help you find a property that meets your needs and lifestyle.
@@ -736,13 +752,15 @@ export const blogPosts: BlogPost[] = [
 
 By following these tips, you can ensure a smooth and hassle-free rental experience in Egypt. Remember to do your research, check the legal documents, inspect the property, negotiate the lease terms, and get a security deposit. Happy renting!`,
     metaTitle: 'Top 5 Tips for Renting a Property in Egypt',
-    metaDescription: 'Renting a property in Egypt can be a daunting task, but with the right tips, you can find your perfect home. In this article, we share the top 5 tips for renting a property in Egypt.',
+    metaDescription:
+      'Renting a property in Egypt can be a daunting task, but with the right tips, you can find your perfect home. In this article, we share the top 5 tips for renting a property in Egypt.',
   },
   {
     id: '2',
     title: 'The Benefits of Renting a Property in New Cairo',
     slug: 'the-benefits-of-renting-a-property-in-new-cairo',
-    featuredImage: 'https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=800&h=600&fit=crop',
+    featuredImage:
+      'https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=800&h=600&fit=crop',
     category: 'Real Estate Benefits',
     tags: ['renting', 'new cairo', 'benefits'],
     author: {
@@ -752,7 +770,8 @@ By following these tips, you can ensure a smooth and hassle-free rental experien
     },
     publishDate: '2023-09-10',
     readingTime: '4 min',
-    excerpt: 'Renting a property in New Cairo offers numerous benefits, from convenient location to modern amenities. In this article, we explore the top benefits of renting a property in New Cairo.',
+    excerpt:
+      'Renting a property in New Cairo offers numerous benefits, from convenient location to modern amenities. In this article, we explore the top benefits of renting a property in New Cairo.',
     content: `Renting a property in New Cairo offers numerous benefits, from convenient location to modern amenities. In this article, we explore the top benefits of renting a property in New Cairo.
 
 1. **Convenient Location**: New Cairo is one of the most convenient locations in Egypt, with easy access to major highways, public transportation, and international airports. This makes it an ideal location for both locals and expatriates.
@@ -767,13 +786,15 @@ By following these tips, you can ensure a smooth and hassle-free rental experien
 
 By renting a property in New Cairo, you can enjoy a modern and convenient lifestyle without the high cost of ownership. Remember to research the area, check the legal documents, inspect the property, negotiate the lease terms, and get a security deposit. Happy renting!`,
     metaTitle: 'The Benefits of Renting a Property in New Cairo',
-    metaDescription: 'Renting a property in New Cairo offers numerous benefits, from convenient location to modern amenities. In this article, we explore the top benefits of renting a property in New Cairo.',
+    metaDescription:
+      'Renting a property in New Cairo offers numerous benefits, from convenient location to modern amenities. In this article, we explore the top benefits of renting a property in New Cairo.',
   },
   {
     id: '3',
     title: 'How to Choose the Right Property in Maadi',
     slug: 'how-to-choose-the-right-property-in-maadi',
-    featuredImage: 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800&h=600&fit=crop',
+    featuredImage:
+      'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800&h=600&fit=crop',
     category: 'Real Estate Tips',
     tags: ['renting', 'maadi', 'tips'],
     author: {
@@ -783,7 +804,8 @@ By renting a property in New Cairo, you can enjoy a modern and convenient lifest
     },
     publishDate: '2023-09-05',
     readingTime: '6 min',
-    excerpt: 'Choosing the right property in Maadi can be a challenging task, but with the right tips, you can find your perfect home. In this article, we share the top tips for choosing the right property in Maadi.',
+    excerpt:
+      'Choosing the right property in Maadi can be a challenging task, but with the right tips, you can find your perfect home. In this article, we share the top tips for choosing the right property in Maadi.',
     content: `Choosing the right property in Maadi can be a challenging task, but with the right tips, you can find your perfect home. In this article, we share the top tips for choosing the right property in Maadi.
 
 1. **Research the Area**: Before you start looking for a property, research the area you are interested in. Consider factors such as proximity to schools, hospitals, shopping centers, and public transportation. This will help you find a property that meets your needs and lifestyle.
@@ -804,13 +826,15 @@ By renting a property in New Cairo, you can enjoy a modern and convenient lifest
 
 By following these tips, you can ensure a smooth and hassle-free rental experience in Maadi. Remember to do your research, check the legal documents, inspect the property, negotiate the lease terms, get a security deposit, consider the neighborhood, check the amenities, and visit the property. Happy renting!`,
     metaTitle: 'How to Choose the Right Property in Maadi',
-    metaDescription: 'Choosing the right property in Maadi can be a challenging task, but with the right tips, you can find your perfect home. In this article, we share the top tips for choosing the right property in Maadi.',
+    metaDescription:
+      'Choosing the right property in Maadi can be a challenging task, but with the right tips, you can find your perfect home. In this article, we share the top tips for choosing the right property in Maadi.',
   },
   {
     id: '4',
     title: 'The Best Properties in New Alamein',
     slug: 'the-best-properties-in-new-alamein',
-    featuredImage: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&h=600&fit=crop',
+    featuredImage:
+      'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&h=600&fit=crop',
     category: 'Real Estate Highlights',
     tags: ['renting', 'new alamein', 'properties'],
     author: {
@@ -820,7 +844,8 @@ By following these tips, you can ensure a smooth and hassle-free rental experien
     },
     publishDate: '2023-09-01',
     readingTime: '5 min',
-    excerpt: 'New Alamein is a popular destination for beachfront properties, and there are many great options to choose from. In this article, we highlight the best properties in New Alamein.',
+    excerpt:
+      'New Alamein is a popular destination for beachfront properties, and there are many great options to choose from. In this article, we highlight the best properties in New Alamein.',
     content: `New Alamein is a popular destination for beachfront properties, and there are many great options to choose from. In this article, we highlight the best properties in New Alamein.
 
 1. **Beachfront Villa**: This exclusive beachfront villa offers direct sea access, infinity pool, and panoramic views. Perfect for families seeking a luxurious coastal lifestyle.
@@ -841,6 +866,7 @@ By following these tips, you can ensure a smooth and hassle-free rental experien
 
 By highlighting the best properties in New Alamein, we hope to help you find your perfect home. Remember to do your research, check the legal documents, inspect the property, negotiate the lease terms, get a security deposit, consider the neighborhood, check the amenities, and visit the property. Happy renting!`,
     metaTitle: 'The Best Properties in New Alamein',
-    metaDescription: 'New Alamein is a popular destination for beachfront properties, and there are many great options to choose from. In this article, we highlight the best properties in New Alamein.',
+    metaDescription:
+      'New Alamein is a popular destination for beachfront properties, and there are many great options to choose from. In this article, we highlight the best properties in New Alamein.',
   },
 ];

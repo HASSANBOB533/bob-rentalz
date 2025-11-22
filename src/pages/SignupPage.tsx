@@ -1,11 +1,11 @@
+import bobLogo from 'figma:asset/c3cbe0198340d6bed05c69174ee79f3b6a4d8624.png';
+import { Mail, Lock, User } from 'lucide-react';
+import { motion } from 'motion/react';
+import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { toast } from 'sonner@2.0.3';
 import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
-import { motion } from 'motion/react';
-import { Mail, Lock, User } from 'lucide-react';
-import bobLogo from 'figma:asset/c3cbe0198340d6bed05c69174ee79f3b6a4d8624.png';
-import { useState } from 'react';
-import { toast } from 'sonner@2.0.3';
 import { useAuth } from '../contexts/AuthContext';
 
 export function SignupPage() {
@@ -35,7 +35,7 @@ export function SignupPage() {
     try {
       // Navigate to role selection with signup data
       navigate('/role-selection', {
-        state: { email, password, fullName }
+        state: { email, password, fullName },
       });
     } catch (error: any) {
       toast.error('An error occurred');
@@ -54,9 +54,9 @@ export function SignupPage() {
         {/* Logo */}
         <div className="text-center mb-8">
           <Link to="/" className="inline-block">
-            <img 
-              src={bobLogo} 
-              alt="Best of Bedz Rentalz" 
+            <img
+              src={bobLogo}
+              alt="Best of Bedz Rentalz"
               className="h-16 md:h-20 w-auto mx-auto object-contain"
             />
           </Link>
@@ -78,7 +78,10 @@ export function SignupPage() {
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Full Name Input */}
             <div>
-              <label htmlFor="fullname" className="block text-[14px] sm:text-[15px] font-medium text-gray-700 mb-1.5">
+              <label
+                htmlFor="fullname"
+                className="block text-[14px] sm:text-[15px] font-medium text-gray-700 mb-1.5"
+              >
                 Full Name
               </label>
               <div className="relative">
@@ -100,7 +103,10 @@ export function SignupPage() {
 
             {/* Email Input */}
             <div>
-              <label htmlFor="email" className="block text-[14px] sm:text-[15px] font-medium text-gray-700 mb-1.5">
+              <label
+                htmlFor="email"
+                className="block text-[14px] sm:text-[15px] font-medium text-gray-700 mb-1.5"
+              >
                 Email Address
               </label>
               <div className="relative">
@@ -122,7 +128,10 @@ export function SignupPage() {
 
             {/* Password Input */}
             <div>
-              <label htmlFor="password" className="block text-[14px] sm:text-[15px] font-medium text-gray-700 mb-1.5">
+              <label
+                htmlFor="password"
+                className="block text-[14px] sm:text-[15px] font-medium text-gray-700 mb-1.5"
+              >
                 Password
               </label>
               <div className="relative">
@@ -144,7 +153,10 @@ export function SignupPage() {
 
             {/* Confirm Password Input */}
             <div>
-              <label htmlFor="confirm-password" className="block text-[14px] sm:text-[15px] font-medium text-gray-700 mb-1.5">
+              <label
+                htmlFor="confirm-password"
+                className="block text-[14px] sm:text-[15px] font-medium text-gray-700 mb-1.5"
+              >
                 Confirm Password
               </label>
               <div className="relative">

@@ -1,14 +1,23 @@
+import {
+  MapPin,
+  Phone,
+  Mail,
+  MessageCircle,
+  Facebook,
+  Instagram,
+  Linkedin,
+  Youtube,
+} from 'lucide-react';
+import { motion } from 'motion/react';
+import { toast } from 'sonner@2.0.3';
 import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
 import { Textarea } from '../components/ui/textarea';
-import { MapPin, Phone, Mail, MessageCircle, Facebook, Instagram, Linkedin, Youtube } from 'lucide-react';
-import { toast } from 'sonner@2.0.3';
-import { motion } from 'motion/react';
 
 export function ContactPage() {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    toast.success('Message sent successfully! We\'ll get back to you soon.');
+    toast.success("Message sent successfully! We'll get back to you soon.");
     (e.target as HTMLFormElement).reset();
   };
 
@@ -16,7 +25,7 @@ export function ContactPage() {
     initial: { opacity: 0, y: 20 },
     whileInView: { opacity: 1, y: 0 },
     viewport: { once: true },
-    transition: { duration: 0.6 }
+    transition: { duration: 0.6 },
   };
 
   return (
@@ -49,7 +58,8 @@ export function ContactPage() {
               Get In Touch
             </h1>
             <p className="text-[14px] sm:text-[15px] md:text-[16px] lg:text-[17px] text-white/90 max-w-[550px] mx-auto mb-4 sm:mb-5 md:mb-6 leading-relaxed">
-              Have questions? We'd love to hear from you. Send us a message and we'll respond as soon as possible.
+              Have questions? We'd love to hear from you. Send us a message and we'll respond as
+              soon as possible.
             </p>
           </motion.div>
         </div>
@@ -60,11 +70,18 @@ export function ContactPage() {
         <div className="container mx-auto px-4 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 md:gap-10 lg:gap-12">
             {/* Contact Form */}
-            <motion.div {...fadeInUp} className="bg-white rounded-2xl p-6 sm:p-7 md:p-8 shadow-md border border-[#E5E7EB]">
-              <h3 className="text-[20px] sm:text-[22px] md:text-[24px] font-semibold mb-5 sm:mb-6 text-[#2B2B2B]">Send Us a Message</h3>
+            <motion.div
+              {...fadeInUp}
+              className="bg-white rounded-2xl p-6 sm:p-7 md:p-8 shadow-md border border-[#E5E7EB]"
+            >
+              <h3 className="text-[20px] sm:text-[22px] md:text-[24px] font-semibold mb-5 sm:mb-6 text-[#2B2B2B]">
+                Send Us a Message
+              </h3>
               <form onSubmit={handleSubmit} className="space-y-5 sm:space-y-6">
                 <div>
-                  <label className="block text-[14px] sm:text-[15px] font-medium mb-1.5 text-[#2B2B2B]">Full Name *</label>
+                  <label className="block text-[14px] sm:text-[15px] font-medium mb-1.5 text-[#2B2B2B]">
+                    Full Name *
+                  </label>
                   <Input
                     required
                     placeholder="Enter your name"
@@ -73,7 +90,9 @@ export function ContactPage() {
                 </div>
 
                 <div>
-                  <label className="block text-[14px] sm:text-[15px] font-medium mb-1.5 text-[#2B2B2B]">Phone Number *</label>
+                  <label className="block text-[14px] sm:text-[15px] font-medium mb-1.5 text-[#2B2B2B]">
+                    Phone Number *
+                  </label>
                   <Input
                     type="tel"
                     required
@@ -83,7 +102,9 @@ export function ContactPage() {
                 </div>
 
                 <div>
-                  <label className="block text-[14px] sm:text-[15px] font-medium mb-1.5 text-[#2B2B2B]">Email Address *</label>
+                  <label className="block text-[14px] sm:text-[15px] font-medium mb-1.5 text-[#2B2B2B]">
+                    Email Address *
+                  </label>
                   <Input
                     type="email"
                     required
@@ -93,7 +114,9 @@ export function ContactPage() {
                 </div>
 
                 <div>
-                  <label className="block text-[14px] sm:text-[15px] font-medium mb-1.5 text-[#2B2B2B]">Message *</label>
+                  <label className="block text-[14px] sm:text-[15px] font-medium mb-1.5 text-[#2B2B2B]">
+                    Message *
+                  </label>
                   <Textarea
                     required
                     rows={6}
@@ -114,15 +137,23 @@ export function ContactPage() {
             {/* Contact Info */}
             <div className="space-y-4 sm:space-y-5 md:space-y-6">
               {/* Contact Details */}
-              <motion.div {...fadeInUp} transition={{ delay: 0.1 }} className="bg-white rounded-2xl p-4 sm:p-5 md:p-6 shadow-sm border border-[#E5E7EB]">
-                <h3 className="text-[20px] sm:text-[22px] md:text-[24px] font-semibold mb-4 sm:mb-5 md:mb-6 text-[#2B2B2B]">Contact Information</h3>
+              <motion.div
+                {...fadeInUp}
+                transition={{ delay: 0.1 }}
+                className="bg-white rounded-2xl p-4 sm:p-5 md:p-6 shadow-sm border border-[#E5E7EB]"
+              >
+                <h3 className="text-[20px] sm:text-[22px] md:text-[24px] font-semibold mb-4 sm:mb-5 md:mb-6 text-[#2B2B2B]">
+                  Contact Information
+                </h3>
                 <div className="space-y-4 sm:space-y-5">
                   <div className="flex items-start gap-3 sm:gap-4">
                     <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-[#D4AF37] to-[#B8941F] rounded-xl flex items-center justify-center flex-shrink-0">
                       <MapPin className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                     </div>
                     <div>
-                      <div className="text-[15px] sm:text-[16px] font-medium mb-1 text-[#2B2B2B]">Address</div>
+                      <div className="text-[15px] sm:text-[16px] font-medium mb-1 text-[#2B2B2B]">
+                        Address
+                      </div>
                       <p className="text-[14px] sm:text-[15px] md:text-[16px] text-gray-600">
                         New Cairo, Cairo Governorate, Egypt
                       </p>
@@ -134,7 +165,9 @@ export function ContactPage() {
                       <Phone className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                     </div>
                     <div>
-                      <div className="text-[15px] sm:text-[16px] font-medium mb-1 text-[#2B2B2B]">Phone</div>
+                      <div className="text-[15px] sm:text-[16px] font-medium mb-1 text-[#2B2B2B]">
+                        Phone
+                      </div>
                       <a
                         href="tel:+201001234567"
                         className="text-[14px] sm:text-[15px] md:text-[16px] text-gray-600 hover:text-[#D4AF37] transition-colors"
@@ -149,7 +182,9 @@ export function ContactPage() {
                       <Mail className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                     </div>
                     <div>
-                      <div className="text-[15px] sm:text-[16px] font-medium mb-1 text-[#2B2B2B]">Email</div>
+                      <div className="text-[15px] sm:text-[16px] font-medium mb-1 text-[#2B2B2B]">
+                        Email
+                      </div>
                       <a
                         href="mailto:info@bobrentalz.com"
                         className="text-[14px] sm:text-[15px] md:text-[16px] text-gray-600 hover:text-[#D4AF37] transition-colors"
@@ -164,7 +199,9 @@ export function ContactPage() {
                       <MessageCircle className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                     </div>
                     <div>
-                      <div className="text-[15px] sm:text-[16px] font-medium mb-1 text-[#2B2B2B]">WhatsApp</div>
+                      <div className="text-[15px] sm:text-[16px] font-medium mb-1 text-[#2B2B2B]">
+                        WhatsApp
+                      </div>
                       <a
                         href="https://wa.me/201001234567"
                         target="_blank"
@@ -179,8 +216,14 @@ export function ContactPage() {
               </motion.div>
 
               {/* Social Media */}
-              <motion.div {...fadeInUp} transition={{ delay: 0.2 }} className="bg-white rounded-2xl p-4 sm:p-5 md:p-6 shadow-sm border border-[#E5E7EB]">
-                <h3 className="text-[20px] sm:text-[22px] md:text-[24px] font-semibold mb-4 sm:mb-5 md:mb-6 text-[#2B2B2B]">Follow Us</h3>
+              <motion.div
+                {...fadeInUp}
+                transition={{ delay: 0.2 }}
+                className="bg-white rounded-2xl p-4 sm:p-5 md:p-6 shadow-sm border border-[#E5E7EB]"
+              >
+                <h3 className="text-[20px] sm:text-[22px] md:text-[24px] font-semibold mb-4 sm:mb-5 md:mb-6 text-[#2B2B2B]">
+                  Follow Us
+                </h3>
                 <div className="flex gap-3 sm:gap-4">
                   <a
                     href="https://facebook.com"
@@ -226,20 +269,38 @@ export function ContactPage() {
               </motion.div>
 
               {/* Office Hours */}
-              <motion.div {...fadeInUp} transition={{ delay: 0.3 }} className="bg-white rounded-2xl p-4 sm:p-5 md:p-6 shadow-sm border border-[#E5E7EB]">
-                <h3 className="text-[20px] sm:text-[22px] md:text-[24px] font-semibold mb-4 sm:mb-5 md:mb-6 text-[#2B2B2B]">Office Hours</h3>
+              <motion.div
+                {...fadeInUp}
+                transition={{ delay: 0.3 }}
+                className="bg-white rounded-2xl p-4 sm:p-5 md:p-6 shadow-sm border border-[#E5E7EB]"
+              >
+                <h3 className="text-[20px] sm:text-[22px] md:text-[24px] font-semibold mb-4 sm:mb-5 md:mb-6 text-[#2B2B2B]">
+                  Office Hours
+                </h3>
                 <div className="space-y-2 sm:space-y-3">
                   <div className="flex justify-between items-center">
-                    <span className="text-[14px] sm:text-[15px] md:text-[16px] text-gray-600">Sunday - Thursday</span>
-                    <span className="text-[14px] sm:text-[15px] md:text-[16px] font-medium text-[#2B2B2B]">9:00 AM - 6:00 PM</span>
+                    <span className="text-[14px] sm:text-[15px] md:text-[16px] text-gray-600">
+                      Sunday - Thursday
+                    </span>
+                    <span className="text-[14px] sm:text-[15px] md:text-[16px] font-medium text-[#2B2B2B]">
+                      9:00 AM - 6:00 PM
+                    </span>
                   </div>
                   <div className="flex justify-between items-center">
-                    <span className="text-[14px] sm:text-[15px] md:text-[16px] text-gray-600">Friday</span>
-                    <span className="text-[14px] sm:text-[15px] md:text-[16px] font-medium text-[#2B2B2B]">Closed</span>
+                    <span className="text-[14px] sm:text-[15px] md:text-[16px] text-gray-600">
+                      Friday
+                    </span>
+                    <span className="text-[14px] sm:text-[15px] md:text-[16px] font-medium text-[#2B2B2B]">
+                      Closed
+                    </span>
                   </div>
                   <div className="flex justify-between items-center">
-                    <span className="text-[14px] sm:text-[15px] md:text-[16px] text-gray-600">Saturday</span>
-                    <span className="text-[14px] sm:text-[15px] md:text-[16px] font-medium text-[#2B2B2B]">10:00 AM - 4:00 PM</span>
+                    <span className="text-[14px] sm:text-[15px] md:text-[16px] text-gray-600">
+                      Saturday
+                    </span>
+                    <span className="text-[14px] sm:text-[15px] md:text-[16px] font-medium text-[#2B2B2B]">
+                      10:00 AM - 4:00 PM
+                    </span>
                   </div>
                 </div>
               </motion.div>
@@ -252,7 +313,9 @@ export function ContactPage() {
       <section className="py-8 sm:py-10 md:py-12 lg:py-14">
         <div className="container mx-auto px-4 lg:px-8">
           <motion.div {...fadeInUp}>
-            <h2 className="text-[20px] sm:text-[22px] md:text-[24px] lg:text-[26px] font-semibold mb-4 sm:mb-5 md:mb-6 text-[#2B2B2B]">Find Us on the Map</h2>
+            <h2 className="text-[20px] sm:text-[22px] md:text-[24px] lg:text-[26px] font-semibold mb-4 sm:mb-5 md:mb-6 text-[#2B2B2B]">
+              Find Us on the Map
+            </h2>
             <div className="w-full h-[300px] sm:h-[360px] md:h-[420px] lg:h-[480px] xl:h-[520px] rounded-xl overflow-hidden shadow-md border border-[#E5E7EB]">
               <iframe
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d55251.37709181968!2d31.434810699999997!3d30.044420000000003!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14583d4b0f89ca79%3A0xc863f5eb0769f90d!2sNew%20Cairo%201%2C%20Cairo%20Governorate!5e0!3m2!1sen!2seg!4v1234567890123!5m2!1sen!2seg"

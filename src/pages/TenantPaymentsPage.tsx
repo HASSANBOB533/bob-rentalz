@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
+import { MainLayout } from '../components/MainLayout';
 import { useAuth } from '../contexts/AuthContext';
 import { getTenantPayments, getPendingPayments, Payment } from '../lib/supabase/paymentsApi';
-import { MainLayout } from '../components/MainLayout';
 
 export const TenantPaymentsPage: React.FC = () => {
   const { user } = useAuth();
@@ -46,8 +46,8 @@ export const TenantPaymentsPage: React.FC = () => {
     return new Date(payment.due_date) < new Date();
   };
 
-  const pendingPayments = payments.filter(p => p.status === 'pending');
-  const paidPayments = payments.filter(p => p.status === 'paid');
+  const pendingPayments = payments.filter((p) => p.status === 'pending');
+  const paidPayments = payments.filter((p) => p.status === 'paid');
   const overduePayments = pendingPayments.filter(isOverdue);
   const totalPending = pendingPayments.reduce((sum, p) => sum + p.amount, 0);
 
@@ -64,8 +64,12 @@ export const TenantPaymentsPage: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
           <div className="bg-white rounded-lg shadow p-6">
             <div className="text-sm text-gray-600 mb-1">Pending Payments</div>
-            <div className="text-3xl font-bold text-yellow-600">{totalPending.toLocaleString()} EGP</div>
-            <div className="text-sm text-gray-500 mt-1">{pendingPayments.length} payment{pendingPayments.length !== 1 ? 's' : ''}</div>
+            <div className="text-3xl font-bold text-yellow-600">
+              {totalPending.toLocaleString()} EGP
+            </div>
+            <div className="text-sm text-gray-500 mt-1">
+              {pendingPayments.length} payment{pendingPayments.length !== 1 ? 's' : ''}
+            </div>
           </div>
 
           <div className="bg-white rounded-lg shadow p-6">
@@ -99,10 +103,18 @@ export const TenantPaymentsPage: React.FC = () => {
                         <p className="text-sm text-gray-600 mt-1">{payment.notes}</p>
                       )}
                       <div className="flex items-center gap-4 mt-3 text-sm text-gray-600">
-                        <span>Amount: <strong className="text-gray-900">{payment.amount.toLocaleString()} EGP</strong></span>
-                        <span>Due: <strong className={isOverdue(payment) ? 'text-red-600' : 'text-gray-900'}>
-                          {new Date(payment.due_date).toLocaleDateString()}
-                        </strong></span>
+                        <span>
+                          Amount:{' '}
+                          <strong className="text-gray-900">
+                            {payment.amount.toLocaleString()} EGP
+                          </strong>
+                        </span>
+                        <span>
+                          Due:{' '}
+                          <strong className={isOverdue(payment) ? 'text-red-600' : 'text-gray-900'}>
+                            {new Date(payment.due_date).toLocaleDateString()}
+                          </strong>
+                        </span>
                       </div>
                     </div>
                     <div className="ml-4 flex flex-col items-end gap-2">
@@ -172,7 +184,9 @@ export const TenantPaymentsPage: React.FC = () => {
                   {payments.map((payment) => (
                     <tr key={payment.id} className="hover:bg-gray-50">
                       <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="text-sm font-medium text-gray-900">{payment.payment_for}</div>
+                        <div className="text-sm font-medium text-gray-900">
+                          {payment.payment_for}
+                        </div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
                         <div className="text-sm font-semibold text-gray-900">
@@ -180,7 +194,9 @@ export const TenantPaymentsPage: React.FC = () => {
                         </div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
-                        <div className={`text-sm ${isOverdue(payment) ? 'text-red-600 font-semibold' : 'text-gray-900'}`}>
+                        <div
+                          className={`text-sm ${isOverdue(payment) ? 'text-red-600 font-semibold' : 'text-gray-900'}`}
+                        >
                           {new Date(payment.due_date).toLocaleDateString()}
                         </div>
                       </td>
@@ -188,9 +204,7 @@ export const TenantPaymentsPage: React.FC = () => {
                         {getStatusBadge(payment.status)}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                        {payment.paid_at
-                          ? new Date(payment.paid_at).toLocaleDateString()
-                          : '-'}
+                        {payment.paid_at ? new Date(payment.paid_at).toLocaleDateString() : '-'}
                       </td>
                     </tr>
                   ))}

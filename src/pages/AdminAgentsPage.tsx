@@ -1,7 +1,7 @@
-import { AdminDashboardLayout } from '../components/AdminDashboardLayout';
 import { Users, Mail, Phone, Building, MessageSquare } from 'lucide-react';
-import { Badge } from '../components/ui/badge';
 import { Link } from 'react-router-dom';
+import { AdminDashboardLayout } from '../components/AdminDashboardLayout';
+import { Badge } from '../components/ui/badge';
 
 export default function AdminAgentsPage() {
   const mockAgents = [
@@ -13,7 +13,7 @@ export default function AdminAgentsPage() {
       properties: 12,
       activeLeads: 23,
       status: 'Active',
-      joined: 'Dec 2023'
+      joined: 'Dec 2023',
     },
     {
       id: '2',
@@ -23,7 +23,7 @@ export default function AdminAgentsPage() {
       properties: 15,
       activeLeads: 31,
       status: 'Active',
-      joined: 'Jan 2024'
+      joined: 'Jan 2024',
     },
     {
       id: '3',
@@ -33,7 +33,7 @@ export default function AdminAgentsPage() {
       properties: 8,
       activeLeads: 18,
       status: 'Active',
-      joined: 'Feb 2024'
+      joined: 'Feb 2024',
     },
     {
       id: '4',
@@ -43,7 +43,7 @@ export default function AdminAgentsPage() {
       properties: 10,
       activeLeads: 25,
       status: 'Active',
-      joined: 'Mar 2024'
+      joined: 'Mar 2024',
     },
   ];
 
@@ -57,7 +57,10 @@ export default function AdminAgentsPage() {
 
         <div className="space-y-4">
           {mockAgents.map((agent) => (
-            <div key={agent.id} className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+            <div
+              key={agent.id}
+              className="bg-white rounded-xl shadow-sm border border-gray-200 p-6"
+            >
               <div className="flex items-start gap-4">
                 <div className="w-16 h-16 bg-[#E9C500] rounded-full flex items-center justify-center">
                   <Users className="w-8 h-8 text-[#0E56A4]" />
@@ -85,8 +88,10 @@ export default function AdminAgentsPage() {
                   <div className="flex flex-wrap items-center gap-4 text-sm">
                     <div className="flex items-center gap-2">
                       <Building className="w-4 h-4 text-[#0E56A4]" />
-                      <span className="font-medium text-[#0E56A4]">{agent.properties} properties</span>
-                      <Link 
+                      <span className="font-medium text-[#0E56A4]">
+                        {agent.properties} properties
+                      </span>
+                      <Link
                         to={`/admin/agents/${agent.id}`}
                         className="text-xs text-[#0E56A4] font-medium hover:underline flex items-center gap-1 ml-1"
                       >
@@ -96,8 +101,10 @@ export default function AdminAgentsPage() {
                     <span className="text-gray-300">•</span>
                     <div className="flex items-center gap-2">
                       <MessageSquare className="w-4 h-4 text-[#0E56A4]" />
-                      <span className="font-medium text-[#0E56A4]">{agent.activeLeads} active leads</span>
-                      <Link 
+                      <span className="font-medium text-[#0E56A4]">
+                        {agent.activeLeads} active leads
+                      </span>
+                      <Link
                         to={`/admin/agents/${agent.id}/leads`}
                         className="text-xs text-[#0E56A4] font-medium hover:underline flex items-center gap-1 ml-1"
                       >

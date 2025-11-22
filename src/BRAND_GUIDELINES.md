@@ -5,7 +5,9 @@
 ---
 
 ## 📋 Brand Name
+
 **BOB - Best of Bedz**
+
 - Full Name: Best of Bedz
 - Acronym: BOB
 - Tagline positioning optional
@@ -15,6 +17,7 @@
 ## 🎨 Brand Colors
 
 ### Primary Color
+
 - **Light Cream/Beige**
   - CMYK: 5/3/14/0
   - HEX: #F9F4D0
@@ -23,16 +26,19 @@
 ### Secondary Colors
 
 #### Blue
+
 - CMYK: 88/85/0/0
 - HEX: #2B4682
 - Usage: Trust elements, headers, CTA buttons
 
 #### Green (Teal)
+
 - CMYK: 82/7/78/0
 - HEX: #00AB89
 - Usage: Success states, verification badges, eco-friendly messaging
 
 #### Yellow
+
 - CMYK: 3/3/68/0
 - HEX: #F9E84C
 - Usage: Highlights, attention elements, energy accents
@@ -42,16 +48,19 @@
 ## 🔤 Typography
 
 ### Primary Font Family
+
 **Mundial Narrow Variable**
 
 Font Weights:
+
 - Thin
-- Light  
+- Light
 - Regular (body text)
 - Medium (subheadings)
 - Bold (headings, emphasis)
 
 ### Usage Guidelines
+
 - **Headlines (H1-H2):** Mundial Narrow Bold
 - **Subheadings (H3-H4):** Mundial Narrow Medium
 - **Body Text:** Mundial Narrow Regular
@@ -62,10 +71,12 @@ Font Weights:
 ## 🏷️ Logo Variations
 
 ### Primary Logo
+
 - Dark text on light backgrounds
 - Full "BOB Best of Bedz" lockup
 
 ### Logo Color Variations
+
 1. **Black on Light Gray** - Default, most versatile
 2. **White on Dark Gray/Black** - Dark mode, footer
 3. **Red on White** - Bold, promotional
@@ -74,6 +85,7 @@ Font Weights:
 6. **Red on Yellow** - High energy, special offers
 
 ### Logo Guidelines (from Brand Book)
+
 - **Safe Area:** Maintain clear space around logo equal to the height of "B" in BOB
 - **Minimum Size:** Logo should never be smaller than 24px height for digital
 - **Don't:**
@@ -88,6 +100,7 @@ Font Weights:
 ## 🎯 Design System Tokens
 
 ### Spacing Scale
+
 - xs: 4px
 - sm: 8px
 - md: 16px
@@ -97,6 +110,7 @@ Font Weights:
 - 3xl: 64px
 
 ### Border Radius
+
 - Small: 8px (buttons, chips)
 - Medium: 12px (cards, inputs)
 - Large: 16px (property cards)
@@ -104,6 +118,7 @@ Font Weights:
 - Round: 9999px (avatars, badges)
 
 ### Shadows
+
 - Soft: 0 2px 8px rgba(0, 0, 0, 0.08)
 - Medium: 0 4px 16px rgba(0, 0, 0, 0.12)
 - Hover: 0 8px 24px rgba(0, 0, 0, 0.16)
@@ -116,6 +131,7 @@ Font Weights:
 ### Buttons
 
 #### Primary Button
+
 - Background: #00AB89 (Green) or #2B4682 (Blue)
 - Text: White
 - Border Radius: 8px
@@ -123,17 +139,20 @@ Font Weights:
 - Font: Mundial Narrow Medium
 
 #### Secondary Button
+
 - Background: Transparent
 - Border: 2px solid #2B4682
 - Text: #2B4682
 - Hover: Fill with #2B4682, text to white
 
 #### Accent Button
+
 - Background: #F9E84C (Yellow)
 - Text: #2B2B2B (Dark)
 - Used for: Special offers, featured actions
 
 ### Cards
+
 - Background: White
 - Border: 1px solid #E5E7EB
 - Border Radius: 16px
@@ -141,6 +160,7 @@ Font Weights:
 - Padding: 24px
 
 ### Inputs
+
 - Border: 1px solid #D1D5DB
 - Border Radius: 8px
 - Padding: 12px 16px
@@ -149,6 +169,7 @@ Font Weights:
 ---
 
 ## 📸 Photography Style
+
 - Clean, bright, natural lighting
 - Modern, aspirational lifestyle imagery
 - Focus on space, comfort, and lifestyle
@@ -160,12 +181,14 @@ Font Weights:
 ## ✍️ Tone & Voice
 
 ### Brand Personality
+
 - **Professional yet approachable**
 - **Trustworthy and transparent**
 - **Modern and sophisticated**
 - **Customer-centric**
 
 ### Writing Style
+
 - Use clear, concise language
 - Avoid jargon unless necessary
 - Be informative but conversational
@@ -173,6 +196,7 @@ Font Weights:
 - Use active voice
 
 ### Content Themes
+
 - Trust & Verification
 - Quality & Luxury
 - Transparency & Honesty
@@ -186,11 +210,13 @@ Font Weights:
 ### Current vs. Brand Book Discrepancies
 
 The current website uses:
+
 - Gold #D4AF37 (should be replaced with Brand colors)
 - Warm gray #F8F7F5 (can stay as neutral)
 - Inter/DM Sans fonts (should be Mundial Narrow Variable)
 
 ### Migration Plan
+
 1. **Phase 1:** Update color tokens in globals.css
 2. **Phase 2:** Import Mundial Narrow Variable font
 3. **Phase 3:** Update all components to use new colors
@@ -200,6 +226,7 @@ The current website uses:
 ---
 
 ## 🔗 Resources
+
 - Logo files: `/imports/` directory
 - Brand colors: See globals.css tokens
 - Font files: Mundial Narrow Variable (to be imported)

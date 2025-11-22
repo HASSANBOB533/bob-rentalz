@@ -1,14 +1,20 @@
+import { Building, Search, User, MapPin, MessageSquare, GitBranch } from 'lucide-react';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'sonner@2.0.3';
 import { AdminDashboardLayout } from '../components/AdminDashboardLayout';
 import { Badge } from '../components/ui/badge';
 import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../components/ui/select';
-import { Textarea } from '../components/ui/textarea';
 import { Label } from '../components/ui/label';
-import { Building, Search, User, MapPin, MessageSquare, GitBranch } from 'lucide-react';
-import { toast } from 'sonner@2.0.3';
-import { useNavigate } from 'react-router-dom';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '../components/ui/select';
+import { Textarea } from '../components/ui/textarea';
 
 type FilterType = 'all' | 'unassigned' | 'assigned';
 
@@ -32,7 +38,7 @@ export default function AdminAssignmentsPage() {
       assignedAgent: null,
       leads: 8,
       status: 'Approved',
-      views: 45
+      views: 45,
     },
     {
       id: '201',
@@ -43,7 +49,7 @@ export default function AdminAssignmentsPage() {
       assignedAgent: null,
       leads: 15,
       status: 'Approved',
-      views: 120
+      views: 120,
     },
     {
       id: '202',
@@ -54,7 +60,7 @@ export default function AdminAssignmentsPage() {
       assignedAgent: null,
       leads: 12,
       status: 'Approved',
-      views: 89
+      views: 89,
     },
     {
       id: '104',
@@ -66,7 +72,7 @@ export default function AdminAssignmentsPage() {
       assignedAgentId: '1',
       leads: 18,
       status: 'Assigned',
-      views: 142
+      views: 142,
     },
     {
       id: '105',
@@ -78,7 +84,7 @@ export default function AdminAssignmentsPage() {
       assignedAgentId: '2',
       leads: 22,
       status: 'Assigned',
-      views: 198
+      views: 198,
     },
   ];
 
@@ -91,16 +97,18 @@ export default function AdminAssignmentsPage() {
   ];
 
   // Filter properties
-  const filteredProperties = mockProperties.filter(property => {
-    const statusMatch = activeFilter === 'all' || 
+  const filteredProperties = mockProperties.filter((property) => {
+    const statusMatch =
+      activeFilter === 'all' ||
       (activeFilter === 'unassigned' && !property.assignedAgent) ||
       (activeFilter === 'assigned' && property.assignedAgent);
-    
-    const searchMatch = searchQuery === '' || 
+
+    const searchMatch =
+      searchQuery === '' ||
       property.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       property.city.toLowerCase().includes(searchQuery.toLowerCase()) ||
       property.owner.toLowerCase().includes(searchQuery.toLowerCase());
-    
+
     return statusMatch && searchMatch;
   });
 
@@ -116,7 +124,7 @@ export default function AdminAssignmentsPage() {
       toast.error('Please select an agent');
       return;
     }
-    const agent = mockAgents.find(a => a.id === selectedAgentId);
+    const agent = mockAgents.find((a) => a.id === selectedAgentId);
     toast.success(`Property assigned to ${agent?.name} successfully!`);
     setShowAssignModal(false);
     setSelectedProperty(null);
@@ -238,16 +246,20 @@ export default function AdminAssignmentsPage() {
 
                     {/* Actions */}
                     <div className="flex items-center gap-2 mt-3">
-                      <Button 
-                        size="sm" 
+                      <Button
+                        size="sm"
                         variant="outline"
                         className="border-[#0E56A4] text-[#0E56A4] hover:bg-blue-50"
-                        onClick={() => navigate(`/admin/properties/${property.id}`, { state: { from: '/admin/assignments' } })}
+                        onClick={() =>
+                          navigate(`/admin/properties/${property.id}`, {
+                            state: { from: '/admin/assignments' },
+                          })
+                        }
                       >
                         View Details
                       </Button>
-                      <Button 
-                        size="sm" 
+                      <Button
+                        size="sm"
                         onClick={() => handleOpenAssignModal(property)}
                         className="bg-[#0E56A4] text-white hover:bg-[#0A3F79]"
                       >
@@ -279,13 +291,13 @@ export default function AdminAssignmentsPage() {
               <div>
                 <p className="text-sm text-gray-600 mb-1">Unassigned</p>
                 <p className="text-2xl font-bold text-yellow-600">
-                  {mockProperties.filter(p => !p.assignedAgent).length}
+                  {mockProperties.filter((p) => !p.assignedAgent).length}
                 </p>
               </div>
               <div>
                 <p className="text-sm text-gray-600 mb-1">Assigned</p>
                 <p className="text-2xl font-bold text-purple-600">
-                  {mockProperties.filter(p => p.assignedAgent).length}
+                  {mockProperties.filter((p) => p.assignedAgent).length}
                 </p>
               </div>
             </div>
@@ -320,7 +332,8 @@ export default function AdminAssignmentsPage() {
                     <SelectContent>
                       {mockAgents.map((agent) => (
                         <SelectItem key={agent.id} value={agent.id}>
-                          {agent.name} - {agent.properties} properties, {agent.activeLeads} active leads
+                          {agent.name} - {agent.properties} properties, {agent.activeLeads} active
+                          leads
                         </SelectItem>
                       ))}
                     </SelectContent>

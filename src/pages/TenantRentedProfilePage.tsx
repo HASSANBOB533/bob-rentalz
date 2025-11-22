@@ -1,8 +1,8 @@
-import { DashboardLayout } from '../components/DashboardLayout';
 import { ArrowLeft, Camera, Mail, Phone, MapPin, Calendar, User, Building } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
-import { Button } from '../components/ui/button';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { DashboardLayout } from '../components/DashboardLayout';
+import { Button } from '../components/ui/button';
 
 export default function TenantRentedProfilePage() {
   const navigate = useNavigate();
@@ -52,16 +52,10 @@ export default function TenantRentedProfilePage() {
             </Button>
           ) : (
             <div className="flex gap-2">
-              <Button
-                onClick={() => setIsEditing(false)}
-                variant="outline"
-              >
+              <Button onClick={() => setIsEditing(false)} variant="outline">
                 Cancel
               </Button>
-              <Button
-                onClick={handleSave}
-                className="bg-[#0E56A4] hover:bg-[#0A3F79] text-white"
-              >
+              <Button onClick={handleSave} className="bg-[#0E56A4] hover:bg-[#0A3F79] text-white">
                 Save Changes
               </Button>
             </div>
@@ -115,17 +109,15 @@ export default function TenantRentedProfilePage() {
               </h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Full Name
-                  </label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
                   <input
                     type="text"
                     value={profileData.fullName}
                     onChange={(e) => setProfileData({ ...profileData, fullName: e.target.value })}
                     disabled={!isEditing}
                     className={`w-full px-4 py-2 border rounded-lg ${
-                      isEditing 
-                        ? 'border-gray-300 focus:ring-2 focus:ring-[#0E56A4] focus:border-transparent' 
+                      isEditing
+                        ? 'border-gray-300 focus:ring-2 focus:ring-[#0E56A4] focus:border-transparent'
                         : 'border-gray-200 bg-gray-50'
                     }`}
                   />
@@ -141,8 +133,8 @@ export default function TenantRentedProfilePage() {
                     onChange={(e) => setProfileData({ ...profileData, email: e.target.value })}
                     disabled={!isEditing}
                     className={`w-full px-4 py-2 border rounded-lg ${
-                      isEditing 
-                        ? 'border-gray-300 focus:ring-2 focus:ring-[#0E56A4] focus:border-transparent' 
+                      isEditing
+                        ? 'border-gray-300 focus:ring-2 focus:ring-[#0E56A4] focus:border-transparent'
                         : 'border-gray-200 bg-gray-50'
                     }`}
                   />
@@ -158,8 +150,8 @@ export default function TenantRentedProfilePage() {
                     onChange={(e) => setProfileData({ ...profileData, phone: e.target.value })}
                     disabled={!isEditing}
                     className={`w-full px-4 py-2 border rounded-lg ${
-                      isEditing 
-                        ? 'border-gray-300 focus:ring-2 focus:ring-[#0E56A4] focus:border-transparent' 
+                      isEditing
+                        ? 'border-gray-300 focus:ring-2 focus:ring-[#0E56A4] focus:border-transparent'
                         : 'border-gray-200 bg-gray-50'
                     }`}
                   />
@@ -172,11 +164,13 @@ export default function TenantRentedProfilePage() {
                   <input
                     type="tel"
                     value={profileData.emergencyContact}
-                    onChange={(e) => setProfileData({ ...profileData, emergencyContact: e.target.value })}
+                    onChange={(e) =>
+                      setProfileData({ ...profileData, emergencyContact: e.target.value })
+                    }
                     disabled={!isEditing}
                     className={`w-full px-4 py-2 border rounded-lg ${
-                      isEditing 
-                        ? 'border-gray-300 focus:ring-2 focus:ring-[#0E56A4] focus:border-transparent' 
+                      isEditing
+                        ? 'border-gray-300 focus:ring-2 focus:ring-[#0E56A4] focus:border-transparent'
                         : 'border-gray-200 bg-gray-50'
                     }`}
                   />
@@ -196,34 +190,30 @@ export default function TenantRentedProfilePage() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Occupation
-                  </label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Occupation</label>
                   <input
                     type="text"
                     value={profileData.occupation}
                     onChange={(e) => setProfileData({ ...profileData, occupation: e.target.value })}
                     disabled={!isEditing}
                     className={`w-full px-4 py-2 border rounded-lg ${
-                      isEditing 
-                        ? 'border-gray-300 focus:ring-2 focus:ring-[#0E56A4] focus:border-transparent' 
+                      isEditing
+                        ? 'border-gray-300 focus:ring-2 focus:ring-[#0E56A4] focus:border-transparent'
                         : 'border-gray-200 bg-gray-50'
                     }`}
                   />
                 </div>
 
                 <div className="md:col-span-2">
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Employer
-                  </label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Employer</label>
                   <input
                     type="text"
                     value={profileData.employer}
                     onChange={(e) => setProfileData({ ...profileData, employer: e.target.value })}
                     disabled={!isEditing}
                     className={`w-full px-4 py-2 border rounded-lg ${
-                      isEditing 
-                        ? 'border-gray-300 focus:ring-2 focus:ring-[#0E56A4] focus:border-transparent' 
+                      isEditing
+                        ? 'border-gray-300 focus:ring-2 focus:ring-[#0E56A4] focus:border-transparent'
                         : 'border-gray-200 bg-gray-50'
                     }`}
                   />
@@ -276,9 +266,7 @@ export default function TenantRentedProfilePage() {
 
             {/* Security Information */}
             <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">
-                Security
-              </h3>
+              <h3 className="text-lg font-semibold text-gray-900 mb-4">Security</h3>
               <div className="space-y-3">
                 <Button
                   variant="outline"
@@ -287,10 +275,7 @@ export default function TenantRentedProfilePage() {
                 >
                   Change Password
                 </Button>
-                <Button
-                  variant="outline"
-                  className="w-full justify-start"
-                >
+                <Button variant="outline" className="w-full justify-start">
                   Two-Factor Authentication
                 </Button>
               </div>

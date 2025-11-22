@@ -1,12 +1,18 @@
+import { Lock, Bell, Shield, Globe, Palette, Database, AlertTriangle } from 'lucide-react';
+import { useState } from 'react';
+import { toast } from 'sonner@2.0.3';
 import { AdminDashboardLayout } from '../components/AdminDashboardLayout';
 import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
 import { Label } from '../components/ui/label';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '../components/ui/select';
 import { Switch } from '../components/ui/switch';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../components/ui/select';
-import { Lock, Bell, Shield, Globe, Palette, Database, AlertTriangle } from 'lucide-react';
-import { useState } from 'react';
-import { toast } from 'sonner@2.0.3';
 
 export default function AdminSettingsPage() {
   const [notificationSettings, setNotificationSettings] = useState({
@@ -31,30 +37,30 @@ export default function AdminSettingsPage() {
   });
 
   const handleNotificationToggle = (key: string, value: boolean) => {
-    setNotificationSettings(prev => ({
+    setNotificationSettings((prev) => ({
       ...prev,
-      [key]: value
+      [key]: value,
     }));
   };
 
   const handleSecurityToggle = (key: string, value: boolean) => {
-    setSecuritySettings(prev => ({
+    setSecuritySettings((prev) => ({
       ...prev,
-      [key]: value
+      [key]: value,
     }));
   };
 
   const handleSecurityChange = (key: string, value: string) => {
-    setSecuritySettings(prev => ({
+    setSecuritySettings((prev) => ({
       ...prev,
-      [key]: value
+      [key]: value,
     }));
   };
 
   const handleSystemChange = (key: string, value: string) => {
-    setSystemSettings(prev => ({
+    setSystemSettings((prev) => ({
       ...prev,
-      [key]: value
+      [key]: value,
     }));
   };
 
@@ -73,7 +79,9 @@ export default function AdminSettingsPage() {
           {/* Page Header */}
           <div className="mb-8">
             <h1 className="text-3xl font-bold text-[#0E56A4]">Settings</h1>
-            <p className="text-gray-600 mt-2">Configure your admin account and system preferences</p>
+            <p className="text-gray-600 mt-2">
+              Configure your admin account and system preferences
+            </p>
           </div>
 
           <div className="space-y-6">
@@ -83,18 +91,13 @@ export default function AdminSettingsPage() {
                 <Shield className="w-5 h-5 text-[#0E56A4]" />
                 <h2 className="text-xl font-semibold text-gray-900">Security Settings</h2>
               </div>
-              
+
               <div className="space-y-6">
                 {/* Change Password */}
                 <div>
                   <Label>Password</Label>
                   <div className="flex items-center gap-4 mt-2">
-                    <Input
-                      type="password"
-                      value="••••••••"
-                      disabled
-                      className="flex-1"
-                    />
+                    <Input type="password" value="••••••••" disabled className="flex-1" />
                     <Button
                       onClick={handleChangePassword}
                       variant="outline"
@@ -104,9 +107,7 @@ export default function AdminSettingsPage() {
                       Change Password
                     </Button>
                   </div>
-                  <p className="text-sm text-gray-500 mt-2">
-                    Last changed: 30 days ago
-                  </p>
+                  <p className="text-sm text-gray-500 mt-2">Last changed: 30 days ago</p>
                 </div>
 
                 {/* Two-Factor Authentication */}
@@ -164,7 +165,7 @@ export default function AdminSettingsPage() {
                 <Bell className="w-5 h-5 text-[#0E56A4]" />
                 <h2 className="text-xl font-semibold text-gray-900">Notification Preferences</h2>
               </div>
-              
+
               <div className="space-y-4">
                 <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
                   <div>
@@ -173,29 +174,39 @@ export default function AdminSettingsPage() {
                   </div>
                   <Switch
                     checked={notificationSettings.emailNotifications}
-                    onCheckedChange={(checked) => handleNotificationToggle('emailNotifications', checked)}
+                    onCheckedChange={(checked) =>
+                      handleNotificationToggle('emailNotifications', checked)
+                    }
                   />
                 </div>
 
                 <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
                   <div>
                     <Label className="cursor-pointer">New Property Alerts</Label>
-                    <p className="text-sm text-gray-600 mt-1">Get notified when new properties are submitted</p>
+                    <p className="text-sm text-gray-600 mt-1">
+                      Get notified when new properties are submitted
+                    </p>
                   </div>
                   <Switch
                     checked={notificationSettings.newPropertyAlerts}
-                    onCheckedChange={(checked) => handleNotificationToggle('newPropertyAlerts', checked)}
+                    onCheckedChange={(checked) =>
+                      handleNotificationToggle('newPropertyAlerts', checked)
+                    }
                   />
                 </div>
 
                 <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
                   <div>
                     <Label className="cursor-pointer">Service Request Alerts</Label>
-                    <p className="text-sm text-gray-600 mt-1">Notifications for new service requests</p>
+                    <p className="text-sm text-gray-600 mt-1">
+                      Notifications for new service requests
+                    </p>
                   </div>
                   <Switch
                     checked={notificationSettings.serviceRequestAlerts}
-                    onCheckedChange={(checked) => handleNotificationToggle('serviceRequestAlerts', checked)}
+                    onCheckedChange={(checked) =>
+                      handleNotificationToggle('serviceRequestAlerts', checked)
+                    }
                   />
                 </div>
 
@@ -206,7 +217,9 @@ export default function AdminSettingsPage() {
                   </div>
                   <Switch
                     checked={notificationSettings.assignmentNotifications}
-                    onCheckedChange={(checked) => handleNotificationToggle('assignmentNotifications', checked)}
+                    onCheckedChange={(checked) =>
+                      handleNotificationToggle('assignmentNotifications', checked)
+                    }
                   />
                 </div>
 
@@ -228,7 +241,9 @@ export default function AdminSettingsPage() {
                   </div>
                   <Switch
                     checked={notificationSettings.weeklyReports}
-                    onCheckedChange={(checked) => handleNotificationToggle('weeklyReports', checked)}
+                    onCheckedChange={(checked) =>
+                      handleNotificationToggle('weeklyReports', checked)
+                    }
                   />
                 </div>
               </div>
@@ -240,7 +255,7 @@ export default function AdminSettingsPage() {
                 <Globe className="w-5 h-5 text-[#0E56A4]" />
                 <h2 className="text-xl font-semibold text-gray-900">System Preferences</h2>
               </div>
-              
+
               <div className="space-y-6">
                 <div>
                   <Label htmlFor="language">Language</Label>
@@ -302,7 +317,7 @@ export default function AdminSettingsPage() {
                 <Database className="w-5 h-5 text-[#0E56A4]" />
                 <h2 className="text-xl font-semibold text-gray-900">Advanced Settings</h2>
               </div>
-              
+
               <div className="space-y-4">
                 <Button variant="outline" className="w-full justify-start">
                   <Palette className="w-4 h-4 mr-2" />
@@ -312,7 +327,10 @@ export default function AdminSettingsPage() {
                   <Database className="w-4 h-4 mr-2" />
                   Data Export & Backup
                 </Button>
-                <Button variant="outline" className="w-full justify-start text-red-600 hover:text-red-700">
+                <Button
+                  variant="outline"
+                  className="w-full justify-start text-red-600 hover:text-red-700"
+                >
                   <AlertTriangle className="w-4 h-4 mr-2" />
                   System Maintenance Mode
                 </Button>
@@ -327,10 +345,7 @@ export default function AdminSettingsPage() {
               >
                 Save Settings
               </Button>
-              <Button
-                variant="outline"
-                className="flex-1 sm:flex-initial border-gray-300"
-              >
+              <Button variant="outline" className="flex-1 sm:flex-initial border-gray-300">
                 Reset to Defaults
               </Button>
             </div>

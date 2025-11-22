@@ -22,11 +22,11 @@ function getSupabaseClient(): SupabaseClient {
       console.error('VITE_SUPABASE_ANON_KEY:', supabaseAnonKey ? 'SET' : 'MISSING');
       throw new Error('Supabase environment variables are not configured');
     }
-    
+
     supabaseInstance = createClient(supabaseUrl, supabaseAnonKey);
     console.log('Supabase client initialized successfully in api.ts');
   }
-  
+
   return supabaseInstance;
 }
 
@@ -36,7 +36,7 @@ export const supabase = new Proxy({} as SupabaseClient, {
     const client = getSupabaseClient();
     const value = client[prop as keyof SupabaseClient];
     return typeof value === 'function' ? value.bind(client) : value;
-  }
+  },
 });
 
 // =======================================================
@@ -142,7 +142,7 @@ export const authApi = {
   async signUp(email: string, password: string, role: Role) {
     const { data, error } = await supabase.auth.signUp({
       email,
-      password
+      password,
     });
 
     if (error || !data.user) return { error };
@@ -150,7 +150,7 @@ export const authApi = {
     await supabase.from('profiles').insert({
       id: data.user.id,
       email,
-      role
+      role,
     });
 
     return { user: data.user };
@@ -158,7 +158,7 @@ export const authApi = {
 
   async signOut() {
     return supabase.auth.signOut();
-  }
+  },
 };
 
 // =======================================================
@@ -172,7 +172,7 @@ export const profilesApi = {
 
   async updateProfile(id: string, updates: Partial<Profile>) {
     return supabase.from('profiles').update(updates).eq('id', id).single();
-  }
+  },
 };
 
 // =======================================================
@@ -181,20 +181,14 @@ export const profilesApi = {
 
 export const propertiesApi = {
   async getAllVerified() {
-    return supabase
-      .from('properties')
-      .select('*')
-      .eq('verified', true);
+    return supabase.from('properties').select('*').eq('verified', true);
   },
 
   async getMyProperties() {
     const { data: user } = await supabase.auth.getUser();
     if (!user?.user) return { data: [] };
 
-    return supabase
-      .from('properties')
-      .select('*')
-      .eq('owner_id', user.user.id);
+    return supabase.from('properties').select('*').eq('owner_id', user.user.id);
   },
 
   async getById(id: string) {
@@ -207,7 +201,7 @@ export const propertiesApi = {
 
   async update(id: string, payload: Partial<Property>) {
     return supabase.from('properties').update(payload).eq('id', id).single();
-  }
+  },
 };
 
 // =======================================================
@@ -222,21 +216,18 @@ export const inquiriesApi = {
     return supabase.from('inquiries').insert({
       property_id: propertyId,
       tenant_id: user.user.id,
-      message
+      message,
     });
   },
 
   async getMyInquiries() {
     const { data: user } = await supabase.auth.getUser();
-    return supabase
-      .from('inquiries')
-      .select('*')
-      .eq('tenant_id', user.user?.id);
+    return supabase.from('inquiries').select('*').eq('tenant_id', user.user?.id);
   },
 
   async getForOwner() {
     return supabase.rpc('owner_dashboard_inquiries');
-  }
+  },
 };
 
 // =======================================================
@@ -251,21 +242,18 @@ export const serviceRequestsApi = {
     return supabase.from('service_requests').insert({
       property_id: propertyId,
       tenant_id: user.user.id,
-      ...payload
+      ...payload,
     });
   },
 
   async getMyRequests() {
     const { data: user } = await supabase.auth.getUser();
-    return supabase
-      .from('service_requests')
-      .select('*')
-      .eq('tenant_id', user.user?.id);
+    return supabase.from('service_requests').select('*').eq('tenant_id', user.user?.id);
   },
 
   async getForOwner() {
     return supabase.rpc('owner_dashboard_service_requests');
-  }
+  },
 };
 
 // =======================================================
@@ -279,16 +267,14 @@ export const documentsApi = {
 
     const filePath = `${user.user.id}/${documentType}-${Date.now()}.pdf`;
 
-    const { error: uploadError } = await supabase.storage
-      .from('documents')
-      .upload(filePath, file);
+    const { error: uploadError } = await supabase.storage.from('documents').upload(filePath, file);
 
     if (uploadError) return { error: uploadError };
 
     await supabase.from('documents').insert({
       user_id: user.user.id,
       file_path: filePath,
-      document_type: documentType
+      document_type: documentType,
     });
 
     return { filePath };
@@ -296,11 +282,8 @@ export const documentsApi = {
 
   async getMyDocuments() {
     const { data: user } = await supabase.auth.getUser();
-    return supabase
-      .from('documents')
-      .select('*')
-      .eq('user_id', user.user?.id);
-  }
+    return supabase.from('documents').select('*').eq('user_id', user.user?.id);
+  },
 };
 
 // =======================================================
@@ -318,7 +301,7 @@ export const dashboardApi = {
 
   async getTenantStats() {
     return supabase.rpc('tenant_dashboard_stats');
-  }
+  },
 };
 
 // =======================================================
@@ -332,5 +315,5 @@ export const api = {
   inquiries: inquiriesApi,
   serviceRequests: serviceRequestsApi,
   documents: documentsApi,
-  dashboard: dashboardApi
+  dashboard: dashboardApi,
 };

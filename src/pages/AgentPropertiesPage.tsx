@@ -1,6 +1,6 @@
+import { Search, MapPin, Home, ArrowLeft } from 'lucide-react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Search, MapPin, Home, ArrowLeft } from 'lucide-react';
 
 export default function AgentPropertiesPage() {
   const navigate = useNavigate();
@@ -11,100 +11,100 @@ export default function AgentPropertiesPage() {
   const properties = [
     {
       id: 1,
-      title: "Modern 2BR Apartment in New Cairo",
-      referenceCode: "BOB-NC-APT-1023-R2 • X7PM3C",
-      price: "EGP 18,000 / month",
-      location: "New Cairo",
-      image: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&q=80",
-      status: "Active",
+      title: 'Modern 2BR Apartment in New Cairo',
+      referenceCode: 'BOB-NC-APT-1023-R2 • X7PM3C',
+      price: 'EGP 18,000 / month',
+      location: 'New Cairo',
+      image: 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&q=80',
+      status: 'Active',
       bedrooms: 2,
       bathrooms: 2,
-      area: "120 sqm"
+      area: '120 sqm',
     },
     {
       id: 2,
-      title: "Luxury Villa with Private Pool",
-      referenceCode: "BOB-MD-VIL-0041-R1 • LQ9X7P",
-      price: "EGP 55,000 / month",
-      location: "Madinaty",
-      image: "https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=800&q=80",
-      status: "Pending",
+      title: 'Luxury Villa with Private Pool',
+      referenceCode: 'BOB-MD-VIL-0041-R1 • LQ9X7P',
+      price: 'EGP 55,000 / month',
+      location: 'Madinaty',
+      image: 'https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=800&q=80',
+      status: 'Pending',
       bedrooms: 5,
       bathrooms: 4,
-      area: "450 sqm"
+      area: '450 sqm',
     },
     {
       id: 3,
-      title: "Family Apartment in October City",
-      referenceCode: "BOB-O6-APT-2331-R3 • P7HZ9Q",
-      price: "EGP 12,000 / month",
-      location: "6th of October",
-      image: "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800&q=80",
-      status: "Rented",
+      title: 'Family Apartment in October City',
+      referenceCode: 'BOB-O6-APT-2331-R3 • P7HZ9Q',
+      price: 'EGP 12,000 / month',
+      location: '6th of October',
+      image: 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800&q=80',
+      status: 'Rented',
       bedrooms: 3,
       bathrooms: 2,
-      area: "150 sqm"
+      area: '150 sqm',
     },
     {
       id: 4,
-      title: "Spacious 3BR Penthouse",
-      referenceCode: "BOB-MD-PNT-0512-R1 • K2MN8V",
-      price: "EGP 32,000 / month",
-      location: "Madinaty",
-      image: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&q=80",
-      status: "Active",
+      title: 'Spacious 3BR Penthouse',
+      referenceCode: 'BOB-MD-PNT-0512-R1 • K2MN8V',
+      price: 'EGP 32,000 / month',
+      location: 'Madinaty',
+      image: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&q=80',
+      status: 'Active',
       bedrooms: 3,
       bathrooms: 3,
-      area: "200 sqm"
+      area: '200 sqm',
     },
     {
       id: 5,
-      title: "Modern Loft in Zamalek",
-      referenceCode: "BOB-ZM-LFT-0891-R2 • T5WX4R",
-      price: "EGP 28,000 / month",
-      location: "Zamalek",
-      image: "https://images.unsplash.com/photo-1502672260066-6bc35f0af07e?w=800&q=80",
-      status: "Draft",
+      title: 'Modern Loft in Zamalek',
+      referenceCode: 'BOB-ZM-LFT-0891-R2 • T5WX4R',
+      price: 'EGP 28,000 / month',
+      location: 'Zamalek',
+      image: 'https://images.unsplash.com/photo-1502672260066-6bc35f0af07e?w=800&q=80',
+      status: 'Draft',
       bedrooms: 2,
       bathrooms: 1,
-      area: "110 sqm"
+      area: '110 sqm',
     },
     {
       id: 6,
-      title: "Cozy Studio Downtown",
-      referenceCode: "BOB-DT-STD-1457-R1 • M9PL2K",
-      price: "EGP 9,000 / month",
-      location: "Downtown Cairo",
-      image: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&q=80",
-      status: "Active",
+      title: 'Cozy Studio Downtown',
+      referenceCode: 'BOB-DT-STD-1457-R1 • M9PL2K',
+      price: 'EGP 9,000 / month',
+      location: 'Downtown Cairo',
+      image: 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&q=80',
+      status: 'Active',
       bedrooms: 1,
       bathrooms: 1,
-      area: "55 sqm"
+      area: '55 sqm',
     },
     {
       id: 7,
-      title: "Garden View Apartment",
-      referenceCode: "BOB-NC-APT-0782-R3 • Y8QN6B",
-      price: "EGP 22,000 / month",
-      location: "New Cairo",
-      image: "https://images.unsplash.com/photo-1493809842364-78817add7ffb?w=800&q=80",
-      status: "Pending",
+      title: 'Garden View Apartment',
+      referenceCode: 'BOB-NC-APT-0782-R3 • Y8QN6B',
+      price: 'EGP 22,000 / month',
+      location: 'New Cairo',
+      image: 'https://images.unsplash.com/photo-1493809842364-78817add7ffb?w=800&q=80',
+      status: 'Pending',
       bedrooms: 3,
       bathrooms: 2,
-      area: "180 sqm"
+      area: '180 sqm',
     },
     {
       id: 8,
-      title: "Luxury 4BR Villa",
-      referenceCode: "BOB-SZ-VIL-0234-R1 • A3FK7D",
-      price: "EGP 65,000 / month",
-      location: "Sheikh Zayed",
-      image: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&q=80",
-      status: "Rented",
+      title: 'Luxury 4BR Villa',
+      referenceCode: 'BOB-SZ-VIL-0234-R1 • A3FK7D',
+      price: 'EGP 65,000 / month',
+      location: 'Sheikh Zayed',
+      image: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&q=80',
+      status: 'Rented',
       bedrooms: 4,
       bathrooms: 4,
-      area: "400 sqm"
-    }
+      area: '400 sqm',
+    },
   ];
 
   // Filter statuses
@@ -113,7 +113,7 @@ export default function AgentPropertiesPage() {
   // Filter and search logic
   const filteredProperties = properties.filter((property) => {
     const matchesFilter = activeFilter === 'All' || property.status === activeFilter;
-    const matchesSearch = 
+    const matchesSearch =
       property.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
       property.location.toLowerCase().includes(searchQuery.toLowerCase()) ||
       property.referenceCode.toLowerCase().includes(searchQuery.toLowerCase());
@@ -138,7 +138,6 @@ export default function AgentPropertiesPage() {
 
   return (
     <div className="space-y-8">
-      
       {/* BACK TO DASHBOARD BUTTON */}
       <button
         onClick={() => navigate('/agent/dashboard')}
@@ -184,7 +183,7 @@ export default function AgentPropertiesPage() {
           <Home className="w-16 h-16 text-gray-300 mx-auto mb-4" />
           <h3 className="text-xl font-semibold text-gray-900 mb-2">No properties found</h3>
           <p className="text-gray-600 mb-6">
-            {searchQuery 
+            {searchQuery
               ? `No properties match "${searchQuery}"`
               : `No properties with status "${activeFilter}"`}
           </p>
@@ -214,7 +213,7 @@ export default function AgentPropertiesPage() {
                 {/* Status Badge on Image */}
                 <span
                   className={`absolute top-3 right-3 text-xs px-3 py-1 rounded-full font-medium ${getStatusClass(
-                    property.status
+                    property.status,
                   )}`}
                 >
                   {property.status}
@@ -264,7 +263,9 @@ export default function AgentPropertiesPage() {
                     View Viewings
                   </button>
                   <button
-                    onClick={() => navigate(`/property/${property.id}`, { state: { from: 'agent-properties' } })}
+                    onClick={() =>
+                      navigate(`/property/${property.id}`, { state: { from: 'agent-properties' } })
+                    }
                     className="w-full px-3 py-2 border border-gray-300 text-gray-600 rounded-lg hover:bg-gray-100 transition text-sm font-medium"
                   >
                     View Property

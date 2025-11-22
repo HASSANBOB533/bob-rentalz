@@ -1,6 +1,6 @@
+import { UserCog, Mail, Phone, Building } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { AdminDashboardLayout } from '../components/AdminDashboardLayout';
-import { UserCog, Mail, Phone, Building } from 'lucide-react';
 import { Badge } from '../components/ui/badge';
 
 export default function AdminOwnersPage() {
@@ -12,7 +12,7 @@ export default function AdminOwnersPage() {
       phone: '+20 100 123 4567',
       properties: 3,
       status: 'Active',
-      joined: 'Jan 2024'
+      joined: 'Jan 2024',
     },
     {
       ownerId: 'saraId',
@@ -21,7 +21,7 @@ export default function AdminOwnersPage() {
       phone: '+20 100 234 5678',
       properties: 2,
       status: 'Active',
-      joined: 'Feb 2024'
+      joined: 'Feb 2024',
     },
     {
       ownerId: 'mohamedId',
@@ -30,7 +30,7 @@ export default function AdminOwnersPage() {
       phone: '+20 100 345 6789',
       properties: 1,
       status: 'Active',
-      joined: 'Mar 2024'
+      joined: 'Mar 2024',
     },
   ];
 
@@ -44,9 +44,9 @@ export default function AdminOwnersPage() {
 
         <div className="space-y-4">
           {mockOwners.map((owner) => (
-            <Link 
-              to={`/admin/owners/${owner.ownerId}`} 
-              key={owner.ownerId} 
+            <Link
+              to={`/admin/owners/${owner.ownerId}`}
+              key={owner.ownerId}
               className="block bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md hover:border-[#0E56A4]/50 transition-all"
             >
               <div className="flex items-start gap-4">
@@ -73,7 +73,9 @@ export default function AdminOwnersPage() {
                   </div>
                   <div className="flex items-center gap-2 text-sm">
                     <Building className="w-4 h-4 text-[#0E56A4]" />
-                    <span className="font-medium text-[#0E56A4]">{owner.properties} properties</span>
+                    <span className="font-medium text-[#0E56A4]">
+                      {owner.properties} properties
+                    </span>
                   </div>
                 </div>
               </div>

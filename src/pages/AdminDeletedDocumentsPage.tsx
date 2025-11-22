@@ -1,7 +1,7 @@
-import { useNavigate } from 'react-router-dom';
-import { useState, useEffect } from 'react';
-import { toast } from 'sonner';
 import { FileText, RotateCcw, Trash2, Calendar, User, Home } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'sonner';
 import * as adminApi from '../lib/supabase/adminApi';
 
 interface DeletedDocument {
@@ -54,7 +54,7 @@ export function AdminDeletedDocumentsPage() {
       if (success) {
         toast.success('Document restored successfully!');
         // Remove from list
-        setDocuments(documents.filter(doc => doc.id !== documentId));
+        setDocuments(documents.filter((doc) => doc.id !== documentId));
       } else {
         toast.error(error || 'Failed to restore document');
       }
@@ -72,7 +72,7 @@ export function AdminDeletedDocumentsPage() {
       month: 'short',
       day: 'numeric',
       hour: '2-digit',
-      minute: '2-digit'
+      minute: '2-digit',
     });
   };
 
@@ -82,7 +82,7 @@ export function AdminDeletedDocumentsPage() {
       tenancy_agreement: 'bg-green-100 text-green-800',
       id_document: 'bg-purple-100 text-purple-800',
       proof_of_income: 'bg-yellow-100 text-yellow-800',
-      other: 'bg-gray-100 text-gray-800'
+      other: 'bg-gray-100 text-gray-800',
     };
     return colors[type] || colors.other;
   };
@@ -98,9 +98,7 @@ export function AdminDeletedDocumentsPage() {
                 <Trash2 className="h-8 w-8 text-red-600" />
                 Deleted Documents
               </h1>
-              <p className="mt-2 text-sm text-gray-600">
-                View and restore soft-deleted documents
-              </p>
+              <p className="mt-2 text-sm text-gray-600">View and restore soft-deleted documents</p>
             </div>
             <button
               onClick={() => navigate('/admin/dashboard')}
@@ -123,9 +121,7 @@ export function AdminDeletedDocumentsPage() {
           <div className="bg-white rounded-lg shadow-sm p-12 text-center">
             <FileText className="h-16 w-16 text-gray-400 mx-auto mb-4" />
             <h3 className="text-lg font-medium text-gray-900 mb-2">No Deleted Documents</h3>
-            <p className="text-gray-600">
-              There are no soft-deleted documents in the system.
-            </p>
+            <p className="text-gray-600">There are no soft-deleted documents in the system.</p>
           </div>
         ) : (
           <div className="bg-white rounded-lg shadow-sm overflow-hidden">
@@ -153,20 +149,28 @@ export function AdminDeletedDocumentsPage() {
                 {documents.map((doc) => (
                   <tr key={doc.id} className="hover:bg-gray-50">
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getDocumentTypeColor(doc.document_type)}`}>
+                      <span
+                        className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getDocumentTypeColor(doc.document_type)}`}
+                      >
                         <FileText className="h-3 w-3 mr-1" />
                         {doc.document_type || 'Unknown'}
                       </span>
                     </td>
                     <td className="px-6 py-4">
-                      <div className="text-sm text-gray-900 truncate max-w-xs" title={doc.file_path}>
+                      <div
+                        className="text-sm text-gray-900 truncate max-w-xs"
+                        title={doc.file_path}
+                      >
                         {doc.file_path}
                       </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className="flex items-center text-sm text-gray-500">
                         <User className="h-4 w-4 mr-1" />
-                        <span className="font-mono text-xs truncate max-w-[120px]" title={doc.user_id}>
+                        <span
+                          className="font-mono text-xs truncate max-w-[120px]"
+                          title={doc.user_id}
+                        >
                           {doc.user_id.substring(0, 8)}...
                         </span>
                       </div>
@@ -209,15 +213,20 @@ export function AdminDeletedDocumentsPage() {
             <div className="flex">
               <div className="flex-shrink-0">
                 <svg className="h-5 w-5 text-blue-400" viewBox="0 0 20 20" fill="currentColor">
-                  <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
+                  <path
+                    fillRule="evenodd"
+                    d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+                    clipRule="evenodd"
+                  />
                 </svg>
               </div>
               <div className="ml-3">
                 <h3 className="text-sm font-medium text-blue-800">About Soft Delete</h3>
                 <div className="mt-2 text-sm text-blue-700">
                   <p>
-                    These documents have been soft-deleted and are invisible to all users via RLS policies. 
-                    Click "Restore" to make a document visible again by setting <code className="bg-blue-100 px-1 rounded">deleted = false</code>.
+                    These documents have been soft-deleted and are invisible to all users via RLS
+                    policies. Click "Restore" to make a document visible again by setting{' '}
+                    <code className="bg-blue-100 px-1 rounded">deleted = false</code>.
                   </p>
                 </div>
               </div>

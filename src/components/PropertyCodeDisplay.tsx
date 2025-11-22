@@ -17,7 +17,7 @@ export function PropertyCodeDisplay({
   qrCode,
   showQR = false,
   variant = 'compact',
-  className = ''
+  className = '',
 }: PropertyCodeDisplayProps) {
   const [copied, setCopied] = useState(false);
   const [showQRModal, setShowQRModal] = useState(false);
@@ -25,7 +25,8 @@ export function PropertyCodeDisplay({
   const copyToClipboard = (text: string, label: string) => {
     // Try modern Clipboard API first
     if (navigator.clipboard && window.isSecureContext) {
-      navigator.clipboard.writeText(text)
+      navigator.clipboard
+        .writeText(text)
         .then(() => {
           setCopied(true);
           toast.success(`${label} copied to clipboard!`);
@@ -45,7 +46,7 @@ export function PropertyCodeDisplay({
     // Create a temporary textarea element
     const textArea = document.createElement('textarea');
     textArea.value = text;
-    
+
     // Make it invisible and prevent scrolling
     textArea.style.position = 'fixed';
     textArea.style.top = '0';
@@ -58,11 +59,11 @@ export function PropertyCodeDisplay({
     textArea.style.boxShadow = 'none';
     textArea.style.background = 'transparent';
     textArea.style.opacity = '0';
-    
+
     document.body.appendChild(textArea);
     textArea.focus();
     textArea.select();
-    
+
     try {
       const successful = document.execCommand('copy');
       if (successful) {
@@ -76,7 +77,7 @@ export function PropertyCodeDisplay({
       console.error('Fallback copy failed:', err);
       toast.error('Failed to copy. Please copy manually.');
     }
-    
+
     document.body.removeChild(textArea);
   };
 
@@ -154,7 +155,7 @@ export function PropertyCodeDisplay({
   return (
     <div className={`bg-gray-50 rounded-lg p-4 ${className}`}>
       <h4 className="text-sm font-semibold text-gray-700 mb-3">Property Reference</h4>
-      
+
       <div className="space-y-3">
         {/* Full Reference */}
         <div>
@@ -171,7 +172,11 @@ export function PropertyCodeDisplay({
               className="p-2 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
               title="Copy reference"
             >
-              {copied ? <Check className="w-4 h-4 text-green-600" /> : <Copy className="w-4 h-4 text-gray-600" />}
+              {copied ? (
+                <Check className="w-4 h-4 text-green-600" />
+              ) : (
+                <Copy className="w-4 h-4 text-gray-600" />
+              )}
             </button>
           </div>
         </div>

@@ -1,15 +1,15 @@
-import { useParams, Link } from 'react-router-dom';
 import { Calendar, Clock, Share2, Tag, ArrowLeft, Facebook, Twitter } from 'lucide-react';
-import { blogPosts } from '../data/mockData';
-import { Button } from '../components/ui/button';
+import { motion } from 'motion/react';
+import { useParams, Link } from 'react-router-dom';
+import { toast } from 'sonner@2.0.3';
 import { BlogCard } from '../components/BlogCard';
 import { ImageWithFallback } from '../components/figma/ImageWithFallback';
-import { motion } from 'motion/react';
-import { toast } from 'sonner@2.0.3';
+import { Button } from '../components/ui/button';
+import { blogPosts } from '../data/mockData';
 
 export function BlogPostPage() {
   const { slug } = useParams<{ slug: string }>();
-  const post = blogPosts.find(p => p.slug === slug);
+  const post = blogPosts.find((p) => p.slug === slug);
 
   if (!post) {
     return (
@@ -17,9 +17,7 @@ export function BlogPostPage() {
         <div className="text-center">
           <h2 className="mb-4">Blog Post Not Found</h2>
           <Link to="/blog">
-            <Button className="bg-[#D4AF37] hover:bg-[#B8941F] text-white">
-              Back to Blog
-            </Button>
+            <Button className="bg-[#D4AF37] hover:bg-[#B8941F] text-white">Back to Blog</Button>
           </Link>
         </div>
       </div>
@@ -28,18 +26,19 @@ export function BlogPostPage() {
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
-    return date.toLocaleDateString('en-US', { 
-      year: 'numeric', 
-      month: 'long', 
-      day: 'numeric' 
+    return date.toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
     });
   };
 
   const relatedPosts = blogPosts
-    .filter(p => p.id !== post.id && (
-      p.category === post.category ||
-      p.tags.some(tag => post.tags.includes(tag))
-    ))
+    .filter(
+      (p) =>
+        p.id !== post.id &&
+        (p.category === post.category || p.tags.some((tag) => post.tags.includes(tag))),
+    )
     .slice(0, 3);
 
   const handleShare = (platform: string) => {
@@ -69,7 +68,10 @@ export function BlogPostPage() {
       {/* Back Button */}
       <div className="bg-white border-b border-gray-100">
         <div className="container mx-auto px-4 lg:px-8 py-4">
-          <Link to="/blog" className="inline-flex items-center gap-2 text-gray-600 hover:text-[#D4AF37] transition-colors">
+          <Link
+            to="/blog"
+            className="inline-flex items-center gap-2 text-gray-600 hover:text-[#D4AF37] transition-colors"
+          >
             <ArrowLeft className="w-4 h-4" />
             <span>Back to Blog</span>
           </Link>
@@ -89,7 +91,7 @@ export function BlogPostPage() {
           className="w-full h-full object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-        
+
         {/* Category Chip */}
         <div className="absolute top-8 left-8">
           <span className="bg-[#D4AF37] text-white px-4 py-2 rounded-full font-medium">
@@ -110,7 +112,7 @@ export function BlogPostPage() {
             {/* Header */}
             <header className="mb-8">
               <h1 className="mb-6">{post.title}</h1>
-              
+
               {/* Meta Info */}
               <div className="flex flex-wrap items-center gap-6 text-gray-600 mb-6">
                 <div className="flex items-center gap-2">
@@ -150,8 +152,7 @@ export function BlogPostPage() {
                   onClick={() => handleShare('twitter')}
                   className="gap-2"
                 >
-                  <Twitter className="w-4 h-4" />
-                  X
+                  <Twitter className="w-4 h-4" />X
                 </Button>
               </div>
             </header>
@@ -161,16 +162,28 @@ export function BlogPostPage() {
               {post.content.split('\n\n').map((paragraph, index) => {
                 // Check if it's a heading (starts with #)
                 if (paragraph.startsWith('# ')) {
-                  return <h1 key={index} className="mt-8 mb-4">{paragraph.slice(2)}</h1>;
+                  return (
+                    <h1 key={index} className="mt-8 mb-4">
+                      {paragraph.slice(2)}
+                    </h1>
+                  );
                 } else if (paragraph.startsWith('## ')) {
-                  return <h2 key={index} className="mt-6 mb-4">{paragraph.slice(3)}</h2>;
+                  return (
+                    <h2 key={index} className="mt-6 mb-4">
+                      {paragraph.slice(3)}
+                    </h2>
+                  );
                 } else if (paragraph.startsWith('### ')) {
-                  return <h3 key={index} className="mt-4 mb-3">{paragraph.slice(4)}</h3>;
+                  return (
+                    <h3 key={index} className="mt-4 mb-3">
+                      {paragraph.slice(4)}
+                    </h3>
+                  );
                 }
-                
+
                 // Check if it's a numbered list item
                 if (/^\d+\./.test(paragraph)) {
-                  const items = paragraph.split('\n').filter(line => /^\d+\./.test(line));
+                  const items = paragraph.split('\n').filter((line) => /^\d+\./.test(line));
                   return (
                     <ol key={index} className="list-decimal list-inside space-y-2 mb-4">
                       {items.map((item, i) => {
@@ -179,8 +192,8 @@ export function BlogPostPage() {
                         const parts = content.split(/\*\*(.*?)\*\*/g);
                         return (
                           <li key={i} className="text-gray-700">
-                            {parts.map((part, j) => 
-                              j % 2 === 0 ? part : <strong key={j}>{part}</strong>
+                            {parts.map((part, j) =>
+                              j % 2 === 0 ? part : <strong key={j}>{part}</strong>,
                             )}
                           </li>
                         );
@@ -193,9 +206,7 @@ export function BlogPostPage() {
                 const parts = paragraph.split(/\*\*(.*?)\*\*/g);
                 return (
                   <p key={index} className="text-gray-700 leading-relaxed mb-4">
-                    {parts.map((part, i) => 
-                      i % 2 === 0 ? part : <strong key={i}>{part}</strong>
-                    )}
+                    {parts.map((part, i) => (i % 2 === 0 ? part : <strong key={i}>{part}</strong>))}
                   </p>
                 );
               })}

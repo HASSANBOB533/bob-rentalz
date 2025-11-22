@@ -1,18 +1,10 @@
+import { ArrowLeft, Send, MapPin, Home, Calendar, Shield, AlertCircle } from 'lucide-react';
+import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { 
-  ArrowLeft,
-  Send,
-  MapPin,
-  Home,
-  Calendar,
-  Shield,
-  AlertCircle
-} from 'lucide-react';
+import { toast } from 'sonner';
 import { DashboardLayout } from '../components/DashboardLayout';
 import { Badge } from '../components/ui/badge';
 import { Button } from '../components/ui/button';
-import { useState, useEffect } from 'react';
-import { toast } from 'sonner';
 
 export default function OwnerTenantChatPage() {
   const { propertyId } = useParams();
@@ -35,7 +27,7 @@ export default function OwnerTenantChatPage() {
 
   // Permission checks on mount
   useEffect(() => {
-    const property = MOCK_PROPERTIES.find(p => p.id === propertyId);
+    const property = MOCK_PROPERTIES.find((p) => p.id === propertyId);
 
     // Check 1: Property exists
     if (!property) {
@@ -46,14 +38,16 @@ export default function OwnerTenantChatPage() {
 
     // Check 2: Property belongs to current owner
     if (property.ownerId !== currentOwnerId) {
-      toast.error('You don\'t have access to this property\'s tenant chat.');
+      toast.error("You don't have access to this property's tenant chat.");
       navigate('/owner/messages');
       return;
     }
 
     // Check 3: Property has an active tenant
     if (!property.hasActiveTenant || property.status !== 'Rented') {
-      toast.error('No active tenant found for this property. You can only message tenants with an active lease.');
+      toast.error(
+        'No active tenant found for this property. You can only message tenants with an active lease.',
+      );
       navigate('/owner/messages');
       return;
     }
@@ -76,23 +70,23 @@ export default function OwnerTenantChatPage() {
           sender: 'system',
           text: 'Lease started on January 1, 2024',
           timestamp: 'Jan 1, 2024',
-          date: 'Jan 1'
+          date: 'Jan 1',
         },
         {
           id: 2,
           sender: 'tenant',
           senderName: 'Sarah Ahmed',
-          text: 'Hi! The heating system doesn\'t seem to be working properly. Could you please have someone take a look?',
+          text: "Hi! The heating system doesn't seem to be working properly. Could you please have someone take a look?",
           timestamp: '2 days ago',
-          date: 'Nov 16'
+          date: 'Nov 16',
         },
         {
           id: 3,
           sender: 'owner',
           senderName: 'You',
-          text: 'Hello Sarah! I\'ll send a technician tomorrow morning. Is 10 AM convenient for you?',
+          text: "Hello Sarah! I'll send a technician tomorrow morning. Is 10 AM convenient for you?",
           timestamp: '2 days ago',
-          date: 'Nov 16'
+          date: 'Nov 16',
         },
         {
           id: 4,
@@ -100,9 +94,9 @@ export default function OwnerTenantChatPage() {
           senderName: 'Sarah Ahmed',
           text: 'Perfect! 10 AM works great. Thank you for the quick response.',
           timestamp: '2 days ago',
-          date: 'Nov 16'
-        }
-      ]
+          date: 'Nov 16',
+        },
+      ],
     },
     '3': {
       propertyName: 'Spacious 2BR Penthouse',
@@ -119,15 +113,15 @@ export default function OwnerTenantChatPage() {
           sender: 'system',
           text: 'Lease started on March 15, 2024',
           timestamp: 'Mar 15, 2024',
-          date: 'Mar 15'
+          date: 'Mar 15',
         },
         {
           id: 2,
           sender: 'tenant',
           senderName: 'Mohamed Hassan',
-          text: 'Good morning! I wanted to inform you that I\'ll be traveling for a month. The property will be empty but secure.',
+          text: "Good morning! I wanted to inform you that I'll be traveling for a month. The property will be empty but secure.",
           timestamp: '1 week ago',
-          date: 'Nov 11'
+          date: 'Nov 11',
         },
         {
           id: 3,
@@ -135,9 +129,9 @@ export default function OwnerTenantChatPage() {
           senderName: 'You',
           text: 'Thank you for letting me know, Mohamed. Have a safe trip!',
           timestamp: '1 week ago',
-          date: 'Nov 11'
-        }
-      ]
+          date: 'Nov 11',
+        },
+      ],
     },
     '6': {
       propertyName: 'Sea View Apartment',
@@ -154,7 +148,7 @@ export default function OwnerTenantChatPage() {
           sender: 'system',
           text: 'Lease started on February 1, 2024',
           timestamp: 'Feb 1, 2024',
-          date: 'Feb 1'
+          date: 'Feb 1',
         },
         {
           id: 2,
@@ -162,25 +156,25 @@ export default function OwnerTenantChatPage() {
           senderName: 'You',
           text: 'Hi Layla, I wanted to reach out regarding the lease renewal. Are you interested in extending for another year?',
           timestamp: '3 days ago',
-          date: 'Nov 15'
+          date: 'Nov 15',
         },
         {
           id: 3,
           sender: 'tenant',
           senderName: 'Layla Ibrahim',
-          text: 'Hello! I\'m still considering my options. Can I let you know by the end of this week?',
+          text: "Hello! I'm still considering my options. Can I let you know by the end of this week?",
           timestamp: '3 days ago',
-          date: 'Nov 15'
+          date: 'Nov 15',
         },
         {
           id: 4,
           sender: 'owner',
           senderName: 'You',
-          text: 'Of course! Take your time. Just let me know when you\'ve decided.',
+          text: "Of course! Take your time. Just let me know when you've decided.",
           timestamp: '3 days ago',
-          date: 'Nov 15'
-        }
-      ]
+          date: 'Nov 15',
+        },
+      ],
     },
     '7': {
       propertyName: 'Modern Studio in Zamalek',
@@ -197,7 +191,7 @@ export default function OwnerTenantChatPage() {
           sender: 'system',
           text: 'Lease started on April 1, 2024',
           timestamp: 'Apr 1, 2024',
-          date: 'Apr 1'
+          date: 'Apr 1',
         },
         {
           id: 2,
@@ -205,15 +199,15 @@ export default function OwnerTenantChatPage() {
           senderName: 'Ahmed Mahmoud',
           text: 'Good afternoon! The air conditioning unit is making unusual noises. Could you arrange for a maintenance check?',
           timestamp: '5 days ago',
-          date: 'Nov 13'
+          date: 'Nov 13',
         },
         {
           id: 3,
           sender: 'owner',
           senderName: 'You',
-          text: 'Thank you for letting me know. I\'ll send a technician this afternoon to take a look.',
+          text: "Thank you for letting me know. I'll send a technician this afternoon to take a look.",
           timestamp: '5 days ago',
-          date: 'Nov 13'
+          date: 'Nov 13',
         },
         {
           id: 4,
@@ -221,10 +215,10 @@ export default function OwnerTenantChatPage() {
           senderName: 'Ahmed Mahmoud',
           text: 'The air conditioning has been fixed. Thank you!',
           timestamp: '4 days ago',
-          date: 'Nov 14'
-        }
-      ]
-    }
+          date: 'Nov 14',
+        },
+      ],
+    },
   };
 
   const chat = propertyId ? propertyChats[propertyId] : null;
@@ -235,9 +229,7 @@ export default function OwnerTenantChatPage() {
         <div className="px-4 sm:px-6 lg:px-8 py-8 max-w-5xl mx-auto">
           <div className="text-center">
             <h2 className="text-2xl font-semibold text-gray-700 mb-4">Property Not Found</h2>
-            <Button onClick={() => navigate('/owner/properties')}>
-              Back to My Properties
-            </Button>
+            <Button onClick={() => navigate('/owner/properties')}>Back to My Properties</Button>
           </div>
         </div>
       </DashboardLayout>
@@ -278,7 +270,7 @@ export default function OwnerTenantChatPage() {
               >
                 <ArrowLeft className="w-5 h-5" />
               </button>
-              
+
               <div className="min-w-0 flex-1">
                 <h1 className="text-2xl font-semibold text-[#0E56A4] mb-1">Chat with Tenant</h1>
                 <p className="text-sm text-gray-600">Active lease conversation</p>
@@ -286,9 +278,7 @@ export default function OwnerTenantChatPage() {
             </div>
 
             {/* Lease Status Badge */}
-            <Badge className={getLeaseStatusColor(chat.leaseStatus)}>
-              {chat.leaseStatus}
-            </Badge>
+            <Badge className={getLeaseStatusColor(chat.leaseStatus)}>{chat.leaseStatus}</Badge>
           </div>
 
           {/* Info Notice */}
@@ -298,7 +288,9 @@ export default function OwnerTenantChatPage() {
               <div>
                 <p className="text-sm text-green-900 font-medium">Post-Rental Communication</p>
                 <p className="text-sm text-green-700 mt-1">
-                  This conversation is between you and your current tenant for this property. You can communicate directly about maintenance, lease renewals, and property-related matters.
+                  This conversation is between you and your current tenant for this property. You
+                  can communicate directly about maintenance, lease renewals, and property-related
+                  matters.
                 </p>
               </div>
             </div>
@@ -312,7 +304,7 @@ export default function OwnerTenantChatPage() {
                 <Home className="w-5 h-5 text-[#0E56A4]" />
                 Property
               </h3>
-              
+
               <div>
                 <h4 className="font-semibold text-[#0E56A4] mb-2">{chat.propertyName}</h4>
                 <div className="space-y-1">
@@ -330,7 +322,7 @@ export default function OwnerTenantChatPage() {
               <h3 className="font-semibold text-gray-900 mb-4 flex items-center gap-2">
                 <Badge className="bg-blue-100 text-blue-700">Active Tenant</Badge>
               </h3>
-              
+
               <div className="flex items-center gap-4 mb-4">
                 <img
                   src={chat.tenantAvatar}
@@ -345,7 +337,9 @@ export default function OwnerTenantChatPage() {
 
               <div className="flex items-center gap-2 text-sm text-gray-600">
                 <Calendar className="w-4 h-4 text-[#0E56A4]" />
-                <span>{chat.leaseStart} - {chat.leaseEnd}</span>
+                <span>
+                  {chat.leaseStart} - {chat.leaseEnd}
+                </span>
               </div>
             </div>
           </div>
@@ -382,16 +376,20 @@ export default function OwnerTenantChatPage() {
                         }`}
                       >
                         <div className="flex items-center gap-2 mb-1">
-                          <p className={`text-xs font-medium ${
-                            message.sender === 'owner' ? 'text-white/80' : 'text-gray-600'
-                          }`}>
+                          <p
+                            className={`text-xs font-medium ${
+                              message.sender === 'owner' ? 'text-white/80' : 'text-gray-600'
+                            }`}
+                          >
                             {message.senderName}
                           </p>
                         </div>
                         <p className="text-sm break-words">{message.text}</p>
-                        <p className={`text-xs mt-2 ${
-                          message.sender === 'owner' ? 'text-white/60' : 'text-gray-400'
-                        }`}>
+                        <p
+                          className={`text-xs mt-2 ${
+                            message.sender === 'owner' ? 'text-white/60' : 'text-gray-400'
+                          }`}
+                        >
                           {message.timestamp}
                         </p>
                       </div>

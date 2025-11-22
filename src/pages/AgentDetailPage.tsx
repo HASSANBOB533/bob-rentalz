@@ -1,14 +1,14 @@
-import { useParams, Link } from 'react-router-dom';
-import { agents, properties } from '../data/mockData';
 import { Mail, Phone, MessageCircle } from 'lucide-react';
-import { Button } from '../components/ui/button';
-import { PropertyCard } from '../components/PropertyCard';
+import { useParams, Link } from 'react-router-dom';
 import { ImageWithFallback } from '../components/figma/ImageWithFallback';
+import { PropertyCard } from '../components/PropertyCard';
+import { Button } from '../components/ui/button';
+import { agents, properties } from '../data/mockData';
 
 export function AgentDetailPage() {
   const { id } = useParams<{ id: string }>();
-  const agent = agents.find(a => a.id === id);
-  const agentProperties = properties.filter(p => p.agentId === id);
+  const agent = agents.find((a) => a.id === id);
+  const agentProperties = properties.filter((p) => p.agentId === id);
 
   if (!agent) {
     return (
@@ -16,9 +16,7 @@ export function AgentDetailPage() {
         <div className="text-center">
           <h2 className="mb-4">Agent Not Found</h2>
           <Link to="/agents">
-            <Button className="bg-[#D4AF37] hover:bg-[#B8941F] text-white">
-              Browse Agents
-            </Button>
+            <Button className="bg-[#D4AF37] hover:bg-[#B8941F] text-white">Browse Agents</Button>
           </Link>
         </div>
       </div>
@@ -46,13 +44,9 @@ export function AgentDetailPage() {
             {/* Info */}
             <div className="flex-1">
               <h1 className="mb-2">{agent.name}</h1>
-              <p className="text-gray-600 mb-6">
-                {agent.listingsCount} Active Listings
-              </p>
+              <p className="text-gray-600 mb-6">{agent.listingsCount} Active Listings</p>
 
-              {agent.bio && (
-                <p className="text-gray-700 mb-6">{agent.bio}</p>
-              )}
+              {agent.bio && <p className="text-gray-700 mb-6">{agent.bio}</p>}
 
               {/* Contact Info */}
               <div className="space-y-3 mb-6">
@@ -64,7 +58,10 @@ export function AgentDetailPage() {
                 </div>
                 <div className="flex items-center gap-2 text-gray-600">
                   <Mail className="w-5 h-5 flex-shrink-0" />
-                  <a href={`mailto:${agent.email}`} className="hover:text-[#D4AF37] transition-colors">
+                  <a
+                    href={`mailto:${agent.email}`}
+                    className="hover:text-[#D4AF37] transition-colors"
+                  >
                     {agent.email}
                   </a>
                 </div>
@@ -73,7 +70,7 @@ export function AgentDetailPage() {
               {/* Actions */}
               <div className="flex flex-wrap gap-3">
                 <Button
-                  onClick={() => window.location.href = `mailto:${agent.email}`}
+                  onClick={() => (window.location.href = `mailto:${agent.email}`)}
                   className="bg-[#D4AF37] hover:bg-[#B8941F] text-white"
                 >
                   <Mail className="w-4 h-4 mr-2" />
@@ -81,14 +78,16 @@ export function AgentDetailPage() {
                 </Button>
                 <Button
                   variant="outline"
-                  onClick={() => window.open(`https://wa.me/${agent.whatsapp.replace(/[^0-9]/g, '')}`, '_blank')}
+                  onClick={() =>
+                    window.open(`https://wa.me/${agent.whatsapp.replace(/[^0-9]/g, '')}`, '_blank')
+                  }
                 >
                   <MessageCircle className="w-4 h-4 mr-2" />
                   WhatsApp
                 </Button>
                 <Button
                   variant="outline"
-                  onClick={() => window.location.href = `tel:${agent.phone}`}
+                  onClick={() => (window.location.href = `tel:${agent.phone}`)}
                 >
                   <Phone className="w-4 h-4 mr-2" />
                   Call

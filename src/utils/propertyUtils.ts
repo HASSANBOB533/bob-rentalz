@@ -17,20 +17,20 @@ export function generateShortcode(): string {
 export function getCityCode(location: string): string {
   const cityMap: Record<string, string> = {
     'New Cairo': 'NC',
-    'Cairo': 'CAI',
-    'Maadi': 'MAD',
-    'Zamalek': 'ZAM',
-    'Heliopolis': 'HEL',
+    Cairo: 'CAI',
+    Maadi: 'MAD',
+    Zamalek: 'ZAM',
+    Heliopolis: 'HEL',
     'Nasr City': 'NAS',
     'Sheikh Zayed': 'SHZ',
     '6th of October': '6OC',
-    'Alexandria': 'ALX',
-    'Hurghada': 'HUR',
+    Alexandria: 'ALX',
+    Hurghada: 'HUR',
     'Sharm El Sheikh': 'SHR',
     'Ain Sokhna': 'ASK',
     'North Coast': 'NTC',
     'El Gouna': 'ELG',
-    'Somabay': 'SOM',
+    Somabay: 'SOM',
   };
 
   // Try to match the location with known cities
@@ -49,7 +49,7 @@ export function getCityCode(location: string): string {
  */
 export function getTypeCode(title: string): string {
   const titleLower = title.toLowerCase();
-  
+
   if (titleLower.includes('apartment') || titleLower.includes('apt')) return 'APT';
   if (titleLower.includes('villa')) return 'VIL';
   if (titleLower.includes('penthouse')) return 'PNT';
@@ -57,7 +57,7 @@ export function getTypeCode(title: string): string {
   if (titleLower.includes('duplex')) return 'DPX';
   if (titleLower.includes('townhouse')) return 'TWN';
   if (titleLower.includes('chalet')) return 'CHL';
-  
+
   return 'UNT'; // Default to "unit"
 }
 
@@ -70,12 +70,12 @@ export function generateReferenceCode(
   location: string,
   title: string,
   shortcode: string,
-  cycle: number = 1
+  cycle: number = 1,
 ): string {
   const cityCode = getCityCode(location);
   const typeCode = getTypeCode(title);
   const idCode = id.toString().padStart(4, '0');
-  
+
   return `BOB-${cityCode}-${typeCode}-${idCode}-R${cycle} • ${shortcode}`;
 }
 
@@ -86,15 +86,15 @@ export function generateReferenceCode(
 export async function generateQRCode(url: string): Promise<string> {
   // Using qrcode library
   const QRCode = await import('qrcode');
-  
+
   try {
     const qrDataUrl = await QRCode.toDataURL(url, {
       width: 200,
       margin: 1,
       color: {
         dark: '#0E56A4', // BOB blue
-        light: '#FFFFFF'
-      }
+        light: '#FFFFFF',
+      },
     });
     return qrDataUrl;
   } catch (err) {
@@ -119,7 +119,7 @@ export function generateQRCodeSync(url: string): string {
 export function addPropertyMetadata(property: any): any {
   const shortcode = generateShortcode();
   const propertyUrl = `https://bobrentalz.com/property/${property.id}`;
-  
+
   return {
     ...property,
     shortcode,
@@ -128,9 +128,9 @@ export function addPropertyMetadata(property: any): any {
       property.location,
       property.title,
       shortcode,
-      property.cycle || 1
+      property.cycle || 1,
     ),
     qrCode: generateQRCodeSync(propertyUrl),
-    propertyUrl
+    propertyUrl,
   };
 }

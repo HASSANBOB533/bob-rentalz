@@ -1,5 +1,5 @@
-import { useNavigate } from 'react-router-dom';
 import { ChevronLeft, Clock, MessageSquare } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { ImageWithFallback } from '../components/figma/ImageWithFallback';
 
 export default function TenantInquiriesPage() {
@@ -10,69 +10,75 @@ export default function TenantInquiriesPage() {
     {
       id: 1,
       propertyName: 'Modern 2BR Apartment in New Cairo',
-      propertyImage: 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=100&h=100&fit=crop',
+      propertyImage:
+        'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=100&h=100&fit=crop',
       agentName: 'Sarah Johnson',
       agentRole: 'Real Estate Agent',
-      message: 'Hi, I\'m interested in viewing this property. Is it available next week?',
+      message: "Hi, I'm interested in viewing this property. Is it available next week?",
       status: 'Replied',
       timestamp: '2 hours ago',
-      lastReply: 'Yes, we can schedule a viewing for Tuesday at 3 PM.'
+      lastReply: 'Yes, we can schedule a viewing for Tuesday at 3 PM.',
     },
     {
       id: 2,
       propertyName: 'Luxury Villa with Private Pool',
-      propertyImage: 'https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=100&h=100&fit=crop',
+      propertyImage:
+        'https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=100&h=100&fit=crop',
       agentName: 'Ahmed Hassan',
       agentRole: 'Property Owner',
       message: 'What are the lease terms for this villa?',
       status: 'Pending',
       timestamp: '5 hours ago',
-      lastReply: null
+      lastReply: null,
     },
     {
       id: 3,
       propertyName: 'Cozy Studio Downtown',
-      propertyImage: 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=100&h=100&fit=crop',
+      propertyImage:
+        'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=100&h=100&fit=crop',
       agentName: 'Mona Ali',
       agentRole: 'Real Estate Agent',
       message: 'Is the studio furnished? And are utilities included?',
       status: 'Seen',
       timestamp: '1 day ago',
-      lastReply: null
+      lastReply: null,
     },
     {
       id: 4,
       propertyName: 'Spacious 3BR Penthouse',
-      propertyImage: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=100&h=100&fit=crop',
+      propertyImage:
+        'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=100&h=100&fit=crop',
       agentName: 'Omar Khalil',
       agentRole: 'Real Estate Agent',
       message: 'I would like to know more about the neighborhood and nearby amenities.',
       status: 'Replied',
       timestamp: '2 days ago',
-      lastReply: 'The area has schools, shopping centers, and great transport links.'
+      lastReply: 'The area has schools, shopping centers, and great transport links.',
     },
     {
       id: 5,
       propertyName: 'Family Apartment with Garden View',
-      propertyImage: 'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=100&h=100&fit=crop',
+      propertyImage:
+        'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=100&h=100&fit=crop',
       agentName: 'Layla Mohamed',
       agentRole: 'Property Owner',
       message: 'Can I bring pets? I have a small dog.',
       status: 'Replied',
       timestamp: '3 days ago',
-      lastReply: 'Yes, small pets are allowed with a small deposit.'
+      lastReply: 'Yes, small pets are allowed with a small deposit.',
     },
     {
       id: 6,
       propertyName: 'Modern Loft in Zamalek',
-      propertyImage: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=100&h=100&fit=crop',
+      propertyImage:
+        'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=100&h=100&fit=crop',
       agentName: 'Karim Ashraf',
       agentRole: 'Real Estate Agent',
       message: 'Is parking included with this loft?',
       status: 'Pending',
       timestamp: '4 days ago',
-      lastReply: null
-    }
+      lastReply: null,
+    },
   ];
 
   const getStatusColor = (status: string) => {
@@ -101,16 +107,14 @@ export default function TenantInquiriesPage() {
 
       {/* Header */}
       <div className="mb-6">
-        <h2 className="text-2xl font-bold text-[#0E56A4] mb-2">
-          Your Inquiries
-        </h2>
+        <h2 className="text-2xl font-bold text-[#0E56A4] mb-2">Your Inquiries</h2>
         <p className="text-sm text-gray-600">Messages you have sent to owners and agents</p>
       </div>
 
       {/* Inquiries List */}
       <div className="space-y-4">
         {inquiries.map((inquiry) => (
-          <div 
+          <div
             key={inquiry.id}
             className="bg-white rounded-xl shadow hover:shadow-lg transition-all duration-300 border border-gray-100 overflow-hidden"
           >
@@ -119,7 +123,7 @@ export default function TenantInquiriesPage() {
               <div className="flex items-start gap-4">
                 {/* Property Thumbnail */}
                 <div className="w-16 h-16 bg-gray-200 rounded-lg flex-shrink-0 overflow-hidden">
-                  <ImageWithFallback 
+                  <ImageWithFallback
                     src={inquiry.propertyImage}
                     alt={inquiry.propertyName}
                     className="w-full h-full object-cover"
@@ -136,7 +140,9 @@ export default function TenantInquiriesPage() {
                     <span className="text-gray-400"> • {inquiry.agentRole}</span>
                   </p>
                   <div className="flex items-center gap-3">
-                    <span className={`px-2 py-1 rounded-md text-xs font-medium ${getStatusColor(inquiry.status)}`}>
+                    <span
+                      className={`px-2 py-1 rounded-md text-xs font-medium ${getStatusColor(inquiry.status)}`}
+                    >
                       {inquiry.status}
                     </span>
                     <div className="flex items-center gap-1 text-xs text-gray-500">
@@ -161,7 +167,9 @@ export default function TenantInquiriesPage() {
               {/* Agent Reply */}
               {inquiry.lastReply && (
                 <div>
-                  <p className="text-xs font-medium text-gray-500 mb-2">Reply from {inquiry.agentName}:</p>
+                  <p className="text-xs font-medium text-gray-500 mb-2">
+                    Reply from {inquiry.agentName}:
+                  </p>
                   <div className="bg-white border border-gray-200 rounded-lg p-3">
                     <p className="text-sm text-gray-700">{inquiry.lastReply}</p>
                   </div>
@@ -178,7 +186,7 @@ export default function TenantInquiriesPage() {
 
             {/* Action Footer */}
             <div className="px-5 py-3 bg-white border-t border-gray-100">
-              <button 
+              <button
                 onClick={() => navigate(`/tenant/conversation/${inquiry.id}`)}
                 className="text-sm text-[#0E56A4] font-medium hover:text-[#0A3F79] transition-colors"
               >

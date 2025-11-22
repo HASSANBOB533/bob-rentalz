@@ -1,6 +1,6 @@
-import { useState } from 'react';
-import { motion } from 'motion/react';
 import { LucideIcon } from 'lucide-react';
+import { motion } from 'motion/react';
+import { useState } from 'react';
 
 interface FlipCardProps {
   frontIcon: LucideIcon;
@@ -19,7 +19,7 @@ export function FlipCard({
   backTitle,
   backBullets,
   backIcon: BackIcon,
-  delay = 0
+  delay = 0,
 }: FlipCardProps) {
   const [isFlipped, setIsFlipped] = useState(false);
 
@@ -58,7 +58,7 @@ export function FlipCard({
           }`}
           style={{
             transformStyle: 'preserve-3d',
-            transform: isFlipped ? 'rotateY(180deg)' : 'rotateY(0deg)'
+            transform: isFlipped ? 'rotateY(180deg)' : 'rotateY(0deg)',
           }}
         >
           {/* FRONT SIDE */}
@@ -66,7 +66,7 @@ export function FlipCard({
             className="absolute inset-0 w-full h-full backface-hidden bg-white rounded-xl border border-black/5 p-6 md:p-8 flex flex-col items-center justify-center text-center"
             style={{
               backfaceVisibility: 'hidden',
-              boxShadow: '0 6px 20px rgba(0,0,0,0.08)'
+              boxShadow: '0 6px 20px rgba(0,0,0,0.08)',
             }}
           >
             {/* Gold Icon */}
@@ -85,12 +85,8 @@ export function FlipCard({
             </p>
 
             {/* Hint Text */}
-            <p className="text-xs text-gray-400 mt-6 hidden lg:block">
-              Hover to learn more
-            </p>
-            <p className="text-xs text-gray-400 mt-6 lg:hidden">
-              Tap to learn more
-            </p>
+            <p className="text-xs text-gray-400 mt-6 hidden lg:block">Hover to learn more</p>
+            <p className="text-xs text-gray-400 mt-6 lg:hidden">Tap to learn more</p>
           </div>
 
           {/* BACK SIDE */}
@@ -99,7 +95,7 @@ export function FlipCard({
             style={{
               backfaceVisibility: 'hidden',
               transform: 'rotateY(180deg)',
-              boxShadow: '0 6px 20px rgba(0,0,0,0.08)'
+              boxShadow: '0 6px 20px rgba(0,0,0,0.08)',
             }}
           >
             {/* Small Icon */}
@@ -107,9 +103,7 @@ export function FlipCard({
               <div className="w-10 h-10 bg-[#E9C500]/20 rounded-lg flex items-center justify-center">
                 <BackIcon className="w-5 h-5 text-[#E9C500]" />
               </div>
-              <h4 className="text-[18px] font-semibold text-[#2B2B2B]">
-                {backTitle}
-              </h4>
+              <h4 className="text-[18px] font-semibold text-[#2B2B2B]">{backTitle}</h4>
             </div>
 
             {/* Bullet Points */}
@@ -117,9 +111,7 @@ export function FlipCard({
               {backBullets.map((bullet, index) => (
                 <li key={index} className="flex items-start gap-3">
                   <div className="w-1.5 h-1.5 bg-[#D4AF37] rounded-full mt-2 flex-shrink-0" />
-                  <span className="text-[14px] text-gray-700 leading-relaxed">
-                    {bullet}
-                  </span>
+                  <span className="text-[14px] text-gray-700 leading-relaxed">{bullet}</span>
                 </li>
               ))}
             </ul>
@@ -128,9 +120,7 @@ export function FlipCard({
             <p className="text-xs text-gray-400 mt-6 text-center hidden lg:block">
               Hover away to return
             </p>
-            <p className="text-xs text-gray-400 mt-6 text-center lg:hidden">
-              Tap to return
-            </p>
+            <p className="text-xs text-gray-400 mt-6 text-center lg:hidden">Tap to return</p>
           </div>
         </div>
       </div>

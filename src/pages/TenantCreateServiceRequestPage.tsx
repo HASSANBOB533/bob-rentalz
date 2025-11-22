@@ -1,6 +1,6 @@
+import { ArrowLeft, Home, Wrench, FileText, MessageCircle, Upload, X } from 'lucide-react';
 import { useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { ArrowLeft, Home, Wrench, FileText, MessageCircle, Upload, X } from 'lucide-react';
 import { toast } from 'sonner@2.0.3';
 
 export default function TenantCreateServiceRequestPage() {
@@ -22,30 +22,30 @@ export default function TenantCreateServiceRequestPage() {
   // Mock properties for selection
   const rentedProperties = [
     { id: 1, name: 'Modern 2BR Apartment in New Cairo' },
-    { id: 2, name: 'Spacious 3BR Penthouse in Maadi' }
+    { id: 2, name: 'Spacious 3BR Penthouse in Maadi' },
   ];
 
   const serviceTypeConfig: Record<string, { icon: any; color: string; title: string }> = {
-    'Housekeeping': {
+    Housekeeping: {
       icon: Home,
       color: '#0E56A4',
-      title: 'Housekeeping Request'
+      title: 'Housekeeping Request',
     },
-    'Maintenance': {
+    Maintenance: {
       icon: Wrench,
       color: '#E9C500',
-      title: 'Maintenance Request'
+      title: 'Maintenance Request',
     },
     'Document Request': {
       icon: FileText,
       color: '#0E56A4',
-      title: 'Document Request'
+      title: 'Document Request',
     },
     'General Inquiry': {
       icon: MessageCircle,
       color: '#E9C500',
-      title: 'General Inquiry'
-    }
+      title: 'General Inquiry',
+    },
   };
 
   const config = serviceTypeConfig[serviceType] || serviceTypeConfig['Maintenance'];
@@ -64,7 +64,7 @@ export default function TenantCreateServiceRequestPage() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     // Validation
     if (!formData.property) {
       toast.error('Please select a property');
@@ -101,7 +101,7 @@ export default function TenantCreateServiceRequestPage() {
         {/* Header */}
         <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6 mb-6">
           <div className="flex items-center gap-4">
-            <div 
+            <div
               className="w-16 h-16 rounded-full flex items-center justify-center flex-shrink-0"
               style={{ backgroundColor: `${config.color}20` }}
             >
@@ -109,13 +109,18 @@ export default function TenantCreateServiceRequestPage() {
             </div>
             <div>
               <h1 className="text-2xl font-bold text-[#0E56A4] mb-1">{config.title}</h1>
-              <p className="text-sm text-gray-600">Fill out the form below to submit your request</p>
+              <p className="text-sm text-gray-600">
+                Fill out the form below to submit your request
+              </p>
             </div>
           </div>
         </div>
 
         {/* Form */}
-        <form onSubmit={handleSubmit} className="bg-white rounded-xl shadow-sm border border-gray-100 p-6 space-y-6">
+        <form
+          onSubmit={handleSubmit}
+          className="bg-white rounded-xl shadow-sm border border-gray-100 p-6 space-y-6"
+        >
           {/* Property Selection */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -226,9 +231,7 @@ export default function TenantCreateServiceRequestPage() {
 
           {/* File Attachments */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Attachments
-            </label>
+            <label className="block text-sm font-medium text-gray-700 mb-2">Attachments</label>
             <div className="space-y-3">
               {/* Upload Button */}
               <label className="flex items-center justify-center gap-2 px-4 py-3 border-2 border-dashed border-gray-300 rounded-lg hover:border-[#0E56A4] cursor-pointer transition-colors">
@@ -247,7 +250,10 @@ export default function TenantCreateServiceRequestPage() {
               {attachments.length > 0 && (
                 <div className="space-y-2">
                   {attachments.map((file, index) => (
-                    <div key={index} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                    <div
+                      key={index}
+                      className="flex items-center justify-between p-3 bg-gray-50 rounded-lg"
+                    >
                       <div className="flex items-center gap-2 flex-1 min-w-0">
                         <FileText className="w-4 h-4 text-gray-400 flex-shrink-0" />
                         <span className="text-sm text-gray-700 truncate">{file.name}</span>

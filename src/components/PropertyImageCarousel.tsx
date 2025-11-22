@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
+import { useState, useEffect } from 'react';
 import { ImageWithFallback } from './figma/ImageWithFallback';
 
 interface PropertyImageCarouselProps {
@@ -117,7 +117,7 @@ export function PropertyImageCarousel({
                 filter: 'contrast(1.05) brightness(1.06)',
               }}
             />
-            
+
             {/* Light Gradient Overlay for depth */}
             <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent pointer-events-none" />
           </motion.div>

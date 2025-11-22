@@ -1,14 +1,10 @@
-import { useState } from 'react';
 import { Search, MapPin, DollarSign, Home, Sofa, SlidersHorizontal } from 'lucide-react';
+import { useState } from 'react';
+import { topLevelRegions } from '../data/locationData';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
+import { Popover, PopoverContent, PopoverTrigger } from './ui/popover';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from './ui/popover';
-import { topLevelRegions } from '../data/locationData';
 
 interface EnhancedSearchBarProps {
   onSearch: (filters: SearchFilters) => void;
@@ -46,14 +42,19 @@ export function EnhancedSearchBar({ onSearch, className = '' }: EnhancedSearchBa
         {/* Location */}
         <div className="flex-1 flex items-center gap-2 border border-gray-200 rounded-xl px-4 py-3 hover:border-[#D4AF37] transition-colors">
           <MapPin className="w-5 h-5 text-[#D4AF37]" />
-          <Select value={filters.location} onValueChange={(value) => setFilters({ ...filters, location: value })}>
+          <Select
+            value={filters.location}
+            onValueChange={(value) => setFilters({ ...filters, location: value })}
+          >
             <SelectTrigger className="border-0 p-0 h-auto focus:ring-0">
               <SelectValue placeholder="Location" />
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="all">All Locations</SelectItem>
-              {topLevelRegions.map(region => (
-                <SelectItem key={region.id} value={region.name}>{region.name}</SelectItem>
+              {topLevelRegions.map((region) => (
+                <SelectItem key={region.id} value={region.name}>
+                  {region.name}
+                </SelectItem>
               ))}
             </SelectContent>
           </Select>
@@ -74,7 +75,10 @@ export function EnhancedSearchBar({ onSearch, className = '' }: EnhancedSearchBa
         {/* Bedrooms */}
         <div className="flex-1 flex items-center gap-2 border border-gray-200 rounded-xl px-4 py-3 hover:border-[#D4AF37] transition-colors">
           <Home className="w-5 h-5 text-[#D4AF37]" />
-          <Select value={filters.bedrooms} onValueChange={(value) => setFilters({ ...filters, bedrooms: value })}>
+          <Select
+            value={filters.bedrooms}
+            onValueChange={(value) => setFilters({ ...filters, bedrooms: value })}
+          >
             <SelectTrigger className="border-0 p-0 h-auto focus:ring-0">
               <SelectValue placeholder="Bedrooms" />
             </SelectTrigger>
@@ -98,7 +102,10 @@ export function EnhancedSearchBar({ onSearch, className = '' }: EnhancedSearchBa
             <div className="space-y-4">
               <div>
                 <label className="text-sm font-medium mb-2 block">Bathrooms</label>
-                <Select value={filters.bathrooms} onValueChange={(value) => setFilters({ ...filters, bathrooms: value })}>
+                <Select
+                  value={filters.bathrooms}
+                  onValueChange={(value) => setFilters({ ...filters, bathrooms: value })}
+                >
                   <SelectTrigger>
                     <SelectValue />
                   </SelectTrigger>
@@ -113,7 +120,10 @@ export function EnhancedSearchBar({ onSearch, className = '' }: EnhancedSearchBa
 
               <div>
                 <label className="text-sm font-medium mb-2 block">Furnishing</label>
-                <Select value={filters.furnishing} onValueChange={(value) => setFilters({ ...filters, furnishing: value })}>
+                <Select
+                  value={filters.furnishing}
+                  onValueChange={(value) => setFilters({ ...filters, furnishing: value })}
+                >
                   <SelectTrigger>
                     <SelectValue />
                   </SelectTrigger>
@@ -128,7 +138,10 @@ export function EnhancedSearchBar({ onSearch, className = '' }: EnhancedSearchBa
 
               <div>
                 <label className="text-sm font-medium mb-2 block">Property Type</label>
-                <Select value={filters.propertyType} onValueChange={(value) => setFilters({ ...filters, propertyType: value })}>
+                <Select
+                  value={filters.propertyType}
+                  onValueChange={(value) => setFilters({ ...filters, propertyType: value })}
+                >
                   <SelectTrigger>
                     <SelectValue />
                   </SelectTrigger>
@@ -154,7 +167,10 @@ export function EnhancedSearchBar({ onSearch, className = '' }: EnhancedSearchBa
         </Popover>
 
         {/* Search Button */}
-        <Button onClick={handleSearch} className="gold-gradient text-white rounded-xl px-8 hover:opacity-90 transition-opacity">
+        <Button
+          onClick={handleSearch}
+          className="gold-gradient text-white rounded-xl px-8 hover:opacity-90 transition-opacity"
+        >
           <Search className="w-5 h-5 mr-2" />
           Search
         </Button>

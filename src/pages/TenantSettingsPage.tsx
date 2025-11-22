@@ -1,13 +1,13 @@
-import { useState } from 'react';
 import { Lock, Bell, Mail, MessageSquare, Eye, EyeOff, ArrowLeft } from 'lucide-react';
-import { toast } from 'sonner@2.0.3';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'sonner@2.0.3';
 
 export default function TenantSettingsPage() {
   const [settings, setSettings] = useState({
-    currentPassword: "",
-    newPassword: "",
-    confirmPassword: "",
+    currentPassword: '',
+    newPassword: '',
+    confirmPassword: '',
     emailNotifications: true,
     smsNotifications: false,
     propertyAlerts: true,
@@ -39,13 +39,13 @@ export default function TenantSettingsPage() {
 
     // Simulate successful password update
     toast.success('Password updated successfully!');
-    
+
     // Clear password fields
     setSettings({
       ...settings,
-      currentPassword: "",
-      newPassword: "",
-      confirmPassword: ""
+      currentPassword: '',
+      newPassword: '',
+      confirmPassword: '',
     });
   };
 
@@ -57,7 +57,6 @@ export default function TenantSettingsPage() {
 
   return (
     <div className="px-4 sm:px-6 lg:px-8 py-6 space-y-8">
-      
       {/* BACK TO DASHBOARD BUTTON */}
       <button
         onClick={() => navigate('/dashboard')}
@@ -75,10 +74,8 @@ export default function TenantSettingsPage() {
 
       {/* 2️⃣ MAIN SECTIONS */}
       <div className="space-y-10">
-        
         {/* SECTION A — PASSWORD CHANGE */}
         <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6 space-y-6">
-          
           {/* Section Header */}
           <div className="flex items-center gap-2">
             <Lock className="w-5 h-5 text-[#0E56A4]" />
@@ -91,7 +88,6 @@ export default function TenantSettingsPage() {
 
           {/* Password Form */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            
             {/* CURRENT PASSWORD */}
             <div className="md:col-span-2">
               <label className="block text-sm font-medium text-gray-600 mb-1">
@@ -99,7 +95,7 @@ export default function TenantSettingsPage() {
               </label>
               <div className="relative">
                 <input
-                  type={showCurrentPassword ? "text" : "password"}
+                  type={showCurrentPassword ? 'text' : 'password'}
                   placeholder="Enter current password"
                   className="w-full p-3 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#0E56A4] focus:border-transparent pr-10"
                   value={settings.currentPassword}
@@ -110,19 +106,21 @@ export default function TenantSettingsPage() {
                   onClick={() => setShowCurrentPassword(!showCurrentPassword)}
                   className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
                 >
-                  {showCurrentPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                  {showCurrentPassword ? (
+                    <EyeOff className="w-4 h-4" />
+                  ) : (
+                    <Eye className="w-4 h-4" />
+                  )}
                 </button>
               </div>
             </div>
 
             {/* NEW PASSWORD */}
             <div>
-              <label className="block text-sm font-medium text-gray-600 mb-1">
-                New Password
-              </label>
+              <label className="block text-sm font-medium text-gray-600 mb-1">New Password</label>
               <div className="relative">
                 <input
-                  type={showNewPassword ? "text" : "password"}
+                  type={showNewPassword ? 'text' : 'password'}
                   placeholder="Enter new password"
                   className="w-full p-3 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#0E56A4] focus:border-transparent pr-10"
                   value={settings.newPassword}
@@ -145,7 +143,7 @@ export default function TenantSettingsPage() {
               </label>
               <div className="relative">
                 <input
-                  type={showConfirmPassword ? "text" : "password"}
+                  type={showConfirmPassword ? 'text' : 'password'}
                   placeholder="Re-enter new password"
                   className="w-full p-3 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#0E56A4] focus:border-transparent pr-10"
                   value={settings.confirmPassword}
@@ -156,7 +154,11 @@ export default function TenantSettingsPage() {
                   onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                   className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
                 >
-                  {showConfirmPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                  {showConfirmPassword ? (
+                    <EyeOff className="w-4 h-4" />
+                  ) : (
+                    <Eye className="w-4 h-4" />
+                  )}
                 </button>
               </div>
             </div>
@@ -167,16 +169,22 @@ export default function TenantSettingsPage() {
             <div className="space-y-2">
               <p className="text-xs font-medium text-gray-600">Password strength:</p>
               <div className="flex gap-1">
-                <div className={`h-1 flex-1 rounded ${settings.newPassword.length >= 8 ? 'bg-green-500' : 'bg-gray-200'}`}></div>
-                <div className={`h-1 flex-1 rounded ${settings.newPassword.length >= 10 ? 'bg-green-500' : 'bg-gray-200'}`}></div>
-                <div className={`h-1 flex-1 rounded ${settings.newPassword.length >= 12 ? 'bg-green-500' : 'bg-gray-200'}`}></div>
+                <div
+                  className={`h-1 flex-1 rounded ${settings.newPassword.length >= 8 ? 'bg-green-500' : 'bg-gray-200'}`}
+                ></div>
+                <div
+                  className={`h-1 flex-1 rounded ${settings.newPassword.length >= 10 ? 'bg-green-500' : 'bg-gray-200'}`}
+                ></div>
+                <div
+                  className={`h-1 flex-1 rounded ${settings.newPassword.length >= 12 ? 'bg-green-500' : 'bg-gray-200'}`}
+                ></div>
               </div>
               <p className="text-xs text-gray-500">
-                {settings.newPassword.length < 8 
-                  ? 'Weak - Use at least 8 characters' 
-                  : settings.newPassword.length < 10 
-                  ? 'Good' 
-                  : 'Strong'}
+                {settings.newPassword.length < 8
+                  ? 'Weak - Use at least 8 characters'
+                  : settings.newPassword.length < 10
+                    ? 'Good'
+                    : 'Strong'}
               </p>
             </div>
           )}
@@ -192,20 +200,16 @@ export default function TenantSettingsPage() {
 
         {/* SECTION B — NOTIFICATION SETTINGS */}
         <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6 space-y-6">
-          
           {/* Section Header */}
           <div className="flex items-center gap-2">
             <Bell className="w-5 h-5 text-[#0E56A4]" />
             <h2 className="text-xl font-semibold text-[#0E56A4]">Notification Preferences</h2>
           </div>
 
-          <p className="text-sm text-gray-500">
-            Choose how you want to receive updates and alerts
-          </p>
+          <p className="text-sm text-gray-500">Choose how you want to receive updates and alerts</p>
 
           {/* Notification Options */}
           <div className="space-y-5">
-            
             {/* EMAIL NOTIFICATIONS */}
             <div className="flex justify-between items-center p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition">
               <div className="flex items-start gap-3">
@@ -241,9 +245,7 @@ export default function TenantSettingsPage() {
                 <input
                   type="checkbox"
                   checked={settings.smsNotifications}
-                  onChange={(e) =>
-                    setSettings({ ...settings, smsNotifications: e.target.checked })
-                  }
+                  onChange={(e) => setSettings({ ...settings, smsNotifications: e.target.checked })}
                   className="sr-only peer"
                 />
                 <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-[#0E56A4]/20 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#0E56A4]"></div>
@@ -263,9 +265,7 @@ export default function TenantSettingsPage() {
                 <input
                   type="checkbox"
                   checked={settings.propertyAlerts}
-                  onChange={(e) =>
-                    setSettings({ ...settings, propertyAlerts: e.target.checked })
-                  }
+                  onChange={(e) => setSettings({ ...settings, propertyAlerts: e.target.checked })}
                   className="sr-only peer"
                 />
                 <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-[#0E56A4]/20 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#0E56A4]"></div>
@@ -311,7 +311,8 @@ export default function TenantSettingsPage() {
             <div>
               <h3 className="font-medium text-[#0E56A4] mb-1">Security Tip</h3>
               <p className="text-sm text-gray-600">
-                We recommend using a unique password and enabling all notification options to stay updated on new properties and messages. Never share your password with anyone.
+                We recommend using a unique password and enabling all notification options to stay
+                updated on new properties and messages. Never share your password with anyone.
               </p>
             </div>
           </div>

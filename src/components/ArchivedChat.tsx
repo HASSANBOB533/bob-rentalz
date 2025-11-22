@@ -1,5 +1,5 @@
-import React from 'react';
 import { MessageSquare, AlertTriangle } from 'lucide-react';
+import React from 'react';
 
 export interface ChatMessage {
   id: string | number;
@@ -15,7 +15,12 @@ interface ArchivedChatProps {
   viewingAs?: 'admin' | 'tenant' | 'owner';
 }
 
-export function ArchivedChat({ messages, endDate, title = "Archived Conversation", viewingAs = 'admin' }: ArchivedChatProps) {
+export function ArchivedChat({
+  messages,
+  endDate,
+  title = 'Archived Conversation',
+  viewingAs = 'admin',
+}: ArchivedChatProps) {
   return (
     <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
       {/* Header */}
@@ -25,9 +30,7 @@ export function ArchivedChat({ messages, endDate, title = "Archived Conversation
             <MessageSquare className="w-5 h-5 text-[#0E56A4]" />
             {title}
           </h3>
-          <p className="text-sm text-gray-500 mt-1">
-            Read-only view of past messages.
-          </p>
+          <p className="text-sm text-gray-500 mt-1">Read-only view of past messages.</p>
         </div>
         <div className="bg-gray-200 px-3 py-1 rounded-full text-xs font-medium text-gray-600">
           Archived
@@ -37,7 +40,9 @@ export function ArchivedChat({ messages, endDate, title = "Archived Conversation
       {/* Banner */}
       <div className="bg-gray-100 border-b border-gray-200 p-3 flex items-center justify-center gap-2 text-sm text-gray-600">
         <AlertTriangle className="w-4 h-4 text-gray-500" />
-        <span>Chat closed — tenancy ended on <span className="font-medium">{endDate}</span>.</span>
+        <span>
+          Chat closed — tenancy ended on <span className="font-medium">{endDate}</span>.
+        </span>
       </div>
 
       {/* Chat Area */}
@@ -47,23 +52,25 @@ export function ArchivedChat({ messages, endDate, title = "Archived Conversation
           // Admin: Tenant Left, Owner/Agent Right
           // Tenant: Tenant Right, Owner/Agent Left
           // Owner: Owner/Agent Right, Tenant Left
-          
+
           let alignRight = false;
           if (viewingAs === 'admin') {
             alignRight = msg.sender !== 'tenant'; // Owner/Agent on right
           } else if (viewingAs === 'tenant') {
-             alignRight = msg.sender === 'tenant'; // Me (Tenant) on right
+            alignRight = msg.sender === 'tenant'; // Me (Tenant) on right
           } else if (viewingAs === 'owner') {
-             alignRight = msg.sender !== 'tenant'; // Me (Owner) on right
+            alignRight = msg.sender !== 'tenant'; // Me (Owner) on right
           }
 
           return (
-            <div 
-              key={msg.id} 
+            <div
+              key={msg.id}
               className={`flex w-full ${alignRight ? 'justify-end' : 'justify-start'}`}
             >
-              <div className={`max-w-[80%] flex flex-col ${alignRight ? 'items-end' : 'items-start'}`}>
-                <div 
+              <div
+                className={`max-w-[80%] flex flex-col ${alignRight ? 'items-end' : 'items-start'}`}
+              >
+                <div
                   className={`px-4 py-3 rounded-2xl text-sm opacity-70 ${
                     !alignRight
                       ? 'bg-gray-100 text-gray-800 rounded-tl-none'

@@ -1,7 +1,7 @@
-import { DashboardLayout } from '../components/DashboardLayout';
 import { ArrowLeft, MapPin, Calendar, Phone, Mail, QrCode, FileText, Wrench } from 'lucide-react';
-import { ImageWithFallback } from '../components/figma/ImageWithFallback';
 import { useNavigate } from 'react-router-dom';
+import { DashboardLayout } from '../components/DashboardLayout';
+import { ImageWithFallback } from '../components/figma/ImageWithFallback';
 import { Button } from '../components/ui/button';
 
 export default function TenantRentedMyRentalsPage() {
@@ -20,8 +20,8 @@ export default function TenantRentedMyRentalsPage() {
       landlordPhone: '+20 100 123 4567',
       landlordEmail: 'ahmed.hassan@bob.com',
       image: 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&h=600&fit=crop',
-      status: 'Active'
-    }
+      status: 'Active',
+    },
   ];
 
   return (
@@ -45,7 +45,7 @@ export default function TenantRentedMyRentalsPage() {
         {/* Rentals List */}
         <div className="space-y-5">
           {activeRentals.map((rental) => (
-            <div 
+            <div
               key={rental.id}
               className="bg-white border border-gray-200 rounded-xl overflow-hidden hover:shadow-lg transition-all"
             >
@@ -73,7 +73,9 @@ export default function TenantRentedMyRentalsPage() {
                       </div>
                       <div className="inline-flex items-center gap-2 bg-gray-100 px-3 py-1.5 rounded-lg">
                         <span className="text-sm text-gray-600">Reference:</span>
-                        <span className="font-mono font-semibold text-[#0E56A4]">{rental.referenceCode}</span>
+                        <span className="font-mono font-semibold text-[#0E56A4]">
+                          {rental.referenceCode}
+                        </span>
                       </div>
                     </div>
                     <div className="text-right">

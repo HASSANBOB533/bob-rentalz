@@ -16,10 +16,12 @@ import { supabase } from './api';
  * @param propertyId - UUID of the property to verify
  * @returns Promise with success status
  */
-export async function verifyProperty(propertyId: string): Promise<{ success: boolean; error?: string }> {
+export async function verifyProperty(
+  propertyId: string,
+): Promise<{ success: boolean; error?: string }> {
   try {
     const { data, error } = await supabase.rpc('verify_property', {
-      property_id: propertyId
+      property_id: propertyId,
     });
 
     if (error) {
@@ -39,10 +41,12 @@ export async function verifyProperty(propertyId: string): Promise<{ success: boo
  * @param propertyId - UUID of the property to unverify
  * @returns Promise with success status
  */
-export async function unverifyProperty(propertyId: string): Promise<{ success: boolean; error?: string }> {
+export async function unverifyProperty(
+  propertyId: string,
+): Promise<{ success: boolean; error?: string }> {
   try {
     const { data, error } = await supabase.rpc('unverify_property', {
-      property_id: propertyId
+      property_id: propertyId,
     });
 
     if (error) {
@@ -66,10 +70,12 @@ export async function unverifyProperty(propertyId: string): Promise<{ success: b
  * @param documentId - UUID of the document to soft delete
  * @returns Promise with success status
  */
-export async function softDeleteDocument(documentId: string): Promise<{ success: boolean; error?: string }> {
+export async function softDeleteDocument(
+  documentId: string,
+): Promise<{ success: boolean; error?: string }> {
   try {
     const { data, error } = await supabase.rpc('soft_delete_document', {
-      doc_id: documentId
+      doc_id: documentId,
     });
 
     if (error) {
@@ -89,10 +95,12 @@ export async function softDeleteDocument(documentId: string): Promise<{ success:
  * @param documentId - UUID of the document to restore
  * @returns Promise with success status
  */
-export async function restoreDocument(documentId: string): Promise<{ success: boolean; error?: string }> {
+export async function restoreDocument(
+  documentId: string,
+): Promise<{ success: boolean; error?: string }> {
   try {
     const { data, error } = await supabase.rpc('restore_document', {
-      doc_id: documentId
+      doc_id: documentId,
     });
 
     if (error) {
@@ -203,12 +211,12 @@ export async function getTenantDashboardStats(): Promise<{ data?: any; error?: s
  */
 export async function updateUserRole(
   userId: string,
-  newRole: 'admin' | 'owner' | 'agent' | 'tenant'
+  newRole: 'admin' | 'owner' | 'agent' | 'tenant',
 ): Promise<{ success: boolean; error?: string }> {
   try {
     const { data, error } = await supabase.rpc('update_user_role', {
       user_id: userId,
-      new_role: newRole
+      new_role: newRole,
     });
 
     if (error) {
@@ -231,18 +239,16 @@ export const adminApi = {
   // Property verification
   verifyProperty,
   unverifyProperty,
-  
+
   // Document management
   softDeleteDocument,
   restoreDocument,
-  
+
   // Dashboard statistics
   getAdminDashboardStats,
   getOwnerDashboardStats,
   getTenantDashboardStats,
-  
+
   // User management
-  updateUserRole
+  updateUserRole,
 };
-
-

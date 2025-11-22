@@ -1,10 +1,10 @@
-import { useState, useEffect } from 'react';
 import { MapPin, Navigation, X, ChevronLeft, ChevronRight } from 'lucide-react';
-import { Property, agents } from '../data/mockData';
-import { PropertyCard } from './PropertyCard';
 import { motion, AnimatePresence } from 'motion/react';
-import { ImageWithFallback } from './figma/ImageWithFallback';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { Property, agents } from '../data/mockData';
+import { ImageWithFallback } from './figma/ImageWithFallback';
+import { PropertyCard } from './PropertyCard';
 import { Button } from './ui/button';
 
 interface MapViewProps {
@@ -14,7 +14,7 @@ interface MapViewProps {
 
 /**
  * Enhanced MapView Component for BOB Rentalz
- * 
+ *
  * Features:
  * - Split-screen layout (60% property list, 40% map) on desktop/tablet
  * - Interactive map pins with hover effects and click tooltips
@@ -37,7 +37,7 @@ export function MapView({ properties, onPropertySelect }: MapViewProps) {
 
     // Generate coordinates based on location
     let baseCoords = { lat: 30.0444, lng: 31.2357 }; // Default: New Cairo
-    
+
     if (property.location === 'Maadi') {
       baseCoords = { lat: 29.9602, lng: 31.2497 };
     } else if (property.location === 'New Alamein') {
@@ -71,10 +71,10 @@ export function MapView({ properties, onPropertySelect }: MapViewProps) {
               onMouseEnter={() => setHoveredPropertyId(property.id)}
               onMouseLeave={() => setHoveredPropertyId(null)}
               initial={{ opacity: 0, x: -20 }}
-              animate={{ 
-                opacity: 1, 
+              animate={{
+                opacity: 1,
                 x: 0,
-                scale: hoveredPropertyId === property.id ? 1.02 : 1
+                scale: hoveredPropertyId === property.id ? 1.02 : 1,
               }}
               transition={{ duration: 0.3 }}
               className={`transition-all ${
@@ -88,9 +88,7 @@ export function MapView({ properties, onPropertySelect }: MapViewProps) {
       </div>
 
       {/* Right: Map (40%) */}
-      <div className="w-[40%] sticky top-0 h-full">
-        {renderMap()}
-      </div>
+      <div className="w-[40%] sticky top-0 h-full">{renderMap()}</div>
     </div>
   );
 
@@ -143,8 +141,8 @@ export function MapView({ properties, onPropertySelect }: MapViewProps) {
                     exit={{ opacity: 0, x: -50 }}
                     transition={{ duration: 0.3 }}
                   >
-                    <MobilePropertyCard 
-                      property={propertiesWithCoordinates[mobileCardIndex]} 
+                    <MobilePropertyCard
+                      property={propertiesWithCoordinates[mobileCardIndex]}
                       onPropertySelect={onPropertySelect}
                     />
                   </motion.div>
@@ -154,9 +152,11 @@ export function MapView({ properties, onPropertySelect }: MapViewProps) {
                 {propertiesWithCoordinates.length > 1 && (
                   <div className="flex items-center justify-between mt-4">
                     <button
-                      onClick={() => setMobileCardIndex((prev) => 
-                        prev > 0 ? prev - 1 : propertiesWithCoordinates.length - 1
-                      )}
+                      onClick={() =>
+                        setMobileCardIndex((prev) =>
+                          prev > 0 ? prev - 1 : propertiesWithCoordinates.length - 1,
+                        )
+                      }
                       className="w-10 h-10 bg-white rounded-full shadow-soft flex items-center justify-center hover:bg-gray-50 transition-colors border border-gray-200"
                     >
                       <ChevronLeft className="w-5 h-5 text-gray-700" />
@@ -167,9 +167,11 @@ export function MapView({ properties, onPropertySelect }: MapViewProps) {
                     </div>
 
                     <button
-                      onClick={() => setMobileCardIndex((prev) => 
-                        prev < propertiesWithCoordinates.length - 1 ? prev + 1 : 0
-                      )}
+                      onClick={() =>
+                        setMobileCardIndex((prev) =>
+                          prev < propertiesWithCoordinates.length - 1 ? prev + 1 : 0,
+                        )
+                      }
                       className="w-10 h-10 bg-white rounded-full shadow-soft flex items-center justify-center hover:bg-gray-50 transition-colors border border-gray-200"
                     >
                       <ChevronRight className="w-5 h-5 text-gray-700" />
@@ -188,29 +190,29 @@ export function MapView({ properties, onPropertySelect }: MapViewProps) {
   const renderMap = () => (
     <div className="h-full bg-gradient-to-br from-gray-200 to-gray-300 relative overflow-hidden">
       {/* Mock Map Background with Grid Pattern */}
-      <div 
-        className="absolute inset-0 opacity-20 transition-transform duration-300" 
+      <div
+        className="absolute inset-0 opacity-20 transition-transform duration-300"
         style={{
           backgroundImage: `
             linear-gradient(rgba(0,0,0,0.1) 1px, transparent 1px),
             linear-gradient(90deg, rgba(0,0,0,0.1) 1px, transparent 1px)
           `,
           backgroundSize: `${50 * mapZoom}px ${50 * mapZoom}px`,
-          transform: `scale(${mapZoom})`
-        }} 
+          transform: `scale(${mapZoom})`,
+        }}
       />
 
       {/* Map Controls */}
       <div className="absolute top-4 left-4 bg-white rounded-xl shadow-soft overflow-hidden z-10">
-        <button 
-          onClick={() => setMapZoom(prev => Math.min(prev + 0.2, 2))}
+        <button
+          onClick={() => setMapZoom((prev) => Math.min(prev + 0.2, 2))}
           className="w-10 h-10 flex items-center justify-center hover:bg-gray-100 transition-colors border-b border-gray-200"
           aria-label="Zoom in"
         >
           <span className="text-lg font-medium text-gray-700">+</span>
         </button>
-        <button 
-          onClick={() => setMapZoom(prev => Math.max(prev - 0.2, 0.6))}
+        <button
+          onClick={() => setMapZoom((prev) => Math.max(prev - 0.2, 0.6))}
           className="w-10 h-10 flex items-center justify-center hover:bg-gray-100 transition-colors"
           aria-label="Zoom out"
         >
@@ -229,10 +231,13 @@ export function MapView({ properties, onPropertySelect }: MapViewProps) {
         {propertiesWithCoordinates.map((property, index) => {
           // Convert lat/lng to screen position (simplified)
           const coords = property.coordinates!;
-          
+
           // Map New Cairo area
-          const minLat = 29.9, maxLat = 30.1, minLng = 31.2, maxLng = 31.5;
-          
+          const minLat = 29.9,
+            maxLat = 30.1,
+            minLng = 31.2,
+            maxLng = 31.5;
+
           let top = ((maxLat - coords.lat) / (maxLat - minLat)) * 100;
           let left = ((coords.lng - minLng) / (maxLng - minLng)) * 100;
 
@@ -259,10 +264,10 @@ export function MapView({ properties, onPropertySelect }: MapViewProps) {
               onMouseEnter={() => setHoveredPropertyId(property.id)}
               onMouseLeave={() => setHoveredPropertyId(null)}
               className="absolute transform -translate-x-1/2 -translate-y-full group z-20"
-              style={{ 
-                top: `${top}%`, 
+              style={{
+                top: `${top}%`,
                 left: `${left}%`,
-                transition: 'all 0.3s ease'
+                transition: 'all 0.3s ease',
               }}
             >
               <div className="relative">
@@ -270,15 +275,16 @@ export function MapView({ properties, onPropertySelect }: MapViewProps) {
                 <motion.div
                   animate={{
                     scale: isHovered || isSelected ? 1.2 : 1,
-                    boxShadow: isHovered || isSelected 
-                      ? '0 0 20px 8px rgba(212, 175, 55, 0.6)' 
-                      : '0 4px 6px rgba(0, 0, 0, 0.1)'
+                    boxShadow:
+                      isHovered || isSelected
+                        ? '0 0 20px 8px rgba(212, 175, 55, 0.6)'
+                        : '0 4px 6px rgba(0, 0, 0, 0.1)',
                   }}
                   transition={{ duration: 0.3 }}
                   className="w-12 h-12 bg-[#D4AF37] rounded-full flex items-center justify-center border-4 border-white relative"
                 >
                   <MapPin className="w-6 h-6 text-white fill-white" />
-                  
+
                   {/* Price Label */}
                   <div className="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-white px-2 py-1 rounded-lg shadow-lg whitespace-nowrap border border-gray-200">
                     <span className="text-xs font-semibold text-[#D4AF37]">
@@ -310,7 +316,9 @@ export function MapView({ properties, onPropertySelect }: MapViewProps) {
 
                       {/* Property Details */}
                       <div className="p-4">
-                        <h4 className="font-semibold mb-1 line-clamp-2 text-[14px] md:text-[15px] lg:text-[16px]">{property.title}</h4>
+                        <h4 className="font-semibold mb-1 line-clamp-2 text-[14px] md:text-[15px] lg:text-[16px]">
+                          {property.title}
+                        </h4>
                         <p className="text-[#D4AF37] font-semibold mb-2 text-[18px]">
                           {property.price.toLocaleString()} EGP/month
                         </p>
@@ -321,13 +329,8 @@ export function MapView({ properties, onPropertySelect }: MapViewProps) {
                         <div className="text-sm text-gray-600 mb-4">
                           {property.bedrooms} beds • {property.bathrooms} baths • {property.area}m²
                         </div>
-                        <Link
-                          to={`/property/${property.id}`}
-                          className="block w-full"
-                        >
-                          <Button className="w-full gold-gradient text-white">
-                            View Details
-                          </Button>
+                        <Link to={`/property/${property.id}`} className="block w-full">
+                          <Button className="w-full gold-gradient text-white">View Details</Button>
                         </Link>
                       </div>
 
@@ -366,7 +369,7 @@ interface MobilePropertyCardProps {
 }
 
 function MobilePropertyCard({ property, onPropertySelect }: MobilePropertyCardProps) {
-  const agent = agents.find(a => a.id === property.agentId);
+  const agent = agents.find((a) => a.id === property.agentId);
 
   return (
     <div className="bg-white rounded-2xl overflow-hidden shadow-soft border border-gray-100">
@@ -386,7 +389,9 @@ function MobilePropertyCard({ property, onPropertySelect }: MobilePropertyCardPr
 
       {/* Property Info */}
       <div className="p-4">
-        <h4 className="font-semibold mb-2 line-clamp-2 text-[14px] md:text-[15px] lg:text-[16px]">{property.title}</h4>
+        <h4 className="font-semibold mb-2 line-clamp-2 text-[14px] md:text-[15px] lg:text-[16px]">
+          {property.title}
+        </h4>
         <p className="text-[#D4AF37] font-semibold mb-2 text-[18px]">
           {property.price.toLocaleString()} EGP<span className="text-[16px]">/month</span>
         </p>
@@ -398,9 +403,7 @@ function MobilePropertyCard({ property, onPropertySelect }: MobilePropertyCardPr
           {property.bedrooms} beds • {property.bathrooms} baths • {property.area}m²
         </div>
         <Link to={`/property/${property.id}`} className="block w-full">
-          <Button className="w-full gold-gradient text-white">
-            View Details
-          </Button>
+          <Button className="w-full gold-gradient text-white">View Details</Button>
         </Link>
       </div>
     </div>

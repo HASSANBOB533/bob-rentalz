@@ -1,20 +1,26 @@
+import { ArrowLeft, Upload, MapPin, Shield, User, FileText, Save, X } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import { toast } from 'sonner@2.0.3';
+import { AdminDashboardLayout } from '../components/AdminDashboardLayout';
+import { Badge } from '../components/ui/badge';
 import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
 import { Label } from '../components/ui/label';
-import { Textarea } from '../components/ui/textarea';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../components/ui/select';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '../components/ui/select';
 import { Switch } from '../components/ui/switch';
-import { Badge } from '../components/ui/badge';
-import { ArrowLeft, Upload, MapPin, Shield, User, FileText, Save, X } from 'lucide-react';
-import { useParams, useNavigate } from 'react-router-dom';
-import { useState, useEffect } from 'react';
-import { toast } from 'sonner@2.0.3';
-import { AdminDashboardLayout } from '../components/AdminDashboardLayout';
+import { Textarea } from '../components/ui/textarea';
 
 export default function AdminEditPropertyPage() {
   const { propertyId } = useParams();
   const navigate = useNavigate();
-  
+
   // Mock property database - Merged with OwnerEditPropertyPage and AdminPropertyDetailPage data
   const MOCK_PROPERTIES: Record<string, any> = {
     '1': {
@@ -22,7 +28,8 @@ export default function AdminEditPropertyPage() {
       refCode: 'BOB-NC-APT-0001-R1',
       title: 'Modern 2BR Apartment in New Cairo',
       tagline: 'Spacious modern living in the heart of New Cairo',
-      description: 'Spacious and modern 2-bedroom apartment located in the heart of New Cairo. Features include modern kitchen, balcony, and parking.',
+      description:
+        'Spacious and modern 2-bedroom apartment located in the heart of New Cairo. Features include modern kitchen, balcony, and parking.',
       propertyType: 'apartment',
       bedrooms: '2',
       bathrooms: '2',
@@ -52,14 +59,15 @@ export default function AdminEditPropertyPage() {
         balcony: true,
         petsAllowed: false,
         seaView: false,
-      }
+      },
     },
     '101': {
       id: '101',
       refCode: 'BOB-NC-VIL-0101-P1',
       title: 'Luxury 4BR Villa with Pool',
       tagline: 'Stunning luxury villa',
-      description: 'Stunning luxury villa featuring 4 spacious bedrooms, private swimming pool, landscaped garden, and modern amenities throughout. Perfect for families seeking comfort and elegance.',
+      description:
+        'Stunning luxury villa featuring 4 spacious bedrooms, private swimming pool, landscaped garden, and modern amenities throughout. Perfect for families seeking comfort and elegance.',
       propertyType: 'villa',
       bedrooms: '4',
       bathrooms: '3',
@@ -89,14 +97,15 @@ export default function AdminEditPropertyPage() {
         balcony: true,
         petsAllowed: true,
         seaView: false,
-      }
+      },
     },
     '103': {
       id: '103',
       refCode: 'BOB-ZM-PEN-0103-A1',
       title: 'Spacious Penthouse',
       tagline: 'Elegant penthouse with city views',
-      description: 'Elegant penthouse with breathtaking city views, modern finishes, and premium amenities. Features an expansive terrace perfect for entertaining.',
+      description:
+        'Elegant penthouse with breathtaking city views, modern finishes, and premium amenities. Features an expansive terrace perfect for entertaining.',
       propertyType: 'penthouse',
       bedrooms: '3',
       bathrooms: '3',
@@ -126,8 +135,8 @@ export default function AdminEditPropertyPage() {
         balcony: true,
         petsAllowed: false,
         seaView: true,
-      }
-    }
+      },
+    },
   };
 
   // Form state
@@ -153,7 +162,7 @@ export default function AdminEditPropertyPage() {
     coordinates: '',
     videoUrl: '',
   });
-  
+
   const [amenities, setAmenities] = useState({
     parking: false,
     garden: false,
@@ -182,7 +191,7 @@ export default function AdminEditPropertyPage() {
   useEffect(() => {
     if (propertyId && MOCK_PROPERTIES[propertyId]) {
       const property = MOCK_PROPERTIES[propertyId];
-      
+
       // Pre-fill form with existing property data
       setFormData({
         title: property.title || '',
@@ -211,14 +220,14 @@ export default function AdminEditPropertyPage() {
       if (property.amenities) {
         // Check if amenities is array (from AdminPropDetail style) or object (from OwnerEdit style)
         if (Array.isArray(property.amenities)) {
-           const amenityObj: any = { ...amenities };
-           property.amenities.forEach((a: string) => {
-             const key = a.toLowerCase().replace(' ', '');
-             // map some common ones if names differ slightly
-             if (key === 'seaview') amenityObj.seaView = true;
-             else if (amenityObj[key] !== undefined) amenityObj[key] = true;
-           });
-           setAmenities(amenityObj);
+          const amenityObj: any = { ...amenities };
+          property.amenities.forEach((a: string) => {
+            const key = a.toLowerCase().replace(' ', '');
+            // map some common ones if names differ slightly
+            if (key === 'seaview') amenityObj.seaView = true;
+            else if (amenityObj[key] !== undefined) amenityObj[key] = true;
+          });
+          setAmenities(amenityObj);
         } else {
           setAmenities(property.amenities);
         }
@@ -230,7 +239,7 @@ export default function AdminEditPropertyPage() {
         status: property.status || '',
         assignedAgent: property.assignedAgent || null,
       });
-      
+
       // Pre-fill Admin Notes if they existed (mocked empty for now)
       setAdminNotes(property.adminNotes || '');
 
@@ -243,23 +252,29 @@ export default function AdminEditPropertyPage() {
   }, [propertyId]);
 
   const handleInputChange = (field: string, value: string) => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [field]: value
+      [field]: value,
     }));
   };
 
   const handleAmenityToggle = (amenity: string, checked: boolean) => {
-    setAmenities(prev => ({
+    setAmenities((prev) => ({
       ...prev,
-      [amenity]: checked
+      [amenity]: checked,
     }));
   };
 
   const handleSaveChanges = () => {
     // Validate required fields
-    if (!formData.title || !formData.description || !formData.propertyType || 
-        !formData.bedrooms || !formData.price || !formData.city) {
+    if (
+      !formData.title ||
+      !formData.description ||
+      !formData.propertyType ||
+      !formData.bedrooms ||
+      !formData.price ||
+      !formData.city
+    ) {
       toast.error('Please fill in all required fields');
       return;
     }
@@ -269,7 +284,7 @@ export default function AdminEditPropertyPage() {
       ...formData,
       amenities,
       adminNotes,
-      ...systemFields
+      ...systemFields,
     });
 
     toast.success('Property changes saved successfully!');
@@ -284,11 +299,11 @@ export default function AdminEditPropertyPage() {
 
   const getStatusBadge = (status: string) => {
     const statusConfig: Record<string, { bg: string; text: string }> = {
-      'Pending': { bg: 'bg-yellow-100', text: 'text-yellow-700' },
-      'Approved': { bg: 'bg-blue-100', text: 'text-blue-700' },
-      'Active': { bg: 'bg-green-100', text: 'text-green-700' },
-      'Rented': { bg: 'bg-purple-100', text: 'text-purple-700' },
-      'Rejected': { bg: 'bg-red-100', text: 'text-red-700' },
+      Pending: { bg: 'bg-yellow-100', text: 'text-yellow-700' },
+      Approved: { bg: 'bg-blue-100', text: 'text-blue-700' },
+      Active: { bg: 'bg-green-100', text: 'text-green-700' },
+      Rented: { bg: 'bg-purple-100', text: 'text-purple-700' },
+      Rejected: { bg: 'bg-red-100', text: 'text-red-700' },
     };
     const config = statusConfig[status] || { bg: 'bg-gray-100', text: 'text-gray-700' };
     return <Badge className={`${config.bg} ${config.text}`}>{status}</Badge>;
@@ -299,9 +314,7 @@ export default function AdminEditPropertyPage() {
       <AdminDashboardLayout>
         <div className="px-4 sm:px-6 lg:px-8 py-8 max-w-5xl mx-auto">
           <div className="text-center py-12">
-            <h2 className="text-2xl font-semibold text-gray-700 mb-4">
-              Property Not Found
-            </h2>
+            <h2 className="text-2xl font-semibold text-gray-700 mb-4">Property Not Found</h2>
             <Button type="button" onClick={() => navigate('/admin/properties')}>
               Back to Properties
             </Button>
@@ -379,7 +392,9 @@ export default function AdminEditPropertyPage() {
               <h2 className="text-lg font-semibold text-[#0E56A4]">Admin Notes (Internal Only)</h2>
             </div>
             <div>
-              <Label htmlFor="admin-notes" className="sr-only">Admin Notes</Label>
+              <Label htmlFor="admin-notes" className="sr-only">
+                Admin Notes
+              </Label>
               <Textarea
                 id="admin-notes"
                 placeholder="Add internal notes about this property (e.g., verification details, owner requests, etc.)"
@@ -447,8 +462,8 @@ export default function AdminEditPropertyPage() {
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
                 <div>
                   <Label htmlFor="property-type">Property Type *</Label>
-                  <Select 
-                    value={formData.propertyType} 
+                  <Select
+                    value={formData.propertyType}
                     onValueChange={(value) => handleInputChange('propertyType', value)}
                   >
                     <SelectTrigger id="property-type" className="mt-1.5">
@@ -467,8 +482,8 @@ export default function AdminEditPropertyPage() {
 
                 <div>
                   <Label htmlFor="bedrooms">Bedrooms *</Label>
-                  <Select 
-                    value={formData.bedrooms} 
+                  <Select
+                    value={formData.bedrooms}
                     onValueChange={(value) => handleInputChange('bedrooms', value)}
                   >
                     <SelectTrigger id="bedrooms" className="mt-1.5">
@@ -487,8 +502,8 @@ export default function AdminEditPropertyPage() {
 
                 <div>
                   <Label htmlFor="bathrooms">Bathrooms *</Label>
-                  <Select 
-                    value={formData.bathrooms} 
+                  <Select
+                    value={formData.bathrooms}
                     onValueChange={(value) => handleInputChange('bathrooms', value)}
                   >
                     <SelectTrigger id="bathrooms" className="mt-1.5">
@@ -532,8 +547,8 @@ export default function AdminEditPropertyPage() {
 
                 <div>
                   <Label htmlFor="parking-spaces">Parking Spaces</Label>
-                  <Select 
-                    value={formData.parkingSpaces} 
+                  <Select
+                    value={formData.parkingSpaces}
                     onValueChange={(value) => handleInputChange('parkingSpaces', value)}
                   >
                     <SelectTrigger id="parking-spaces" className="mt-1.5">
@@ -552,8 +567,8 @@ export default function AdminEditPropertyPage() {
               {/* Furnishing */}
               <div>
                 <Label htmlFor="furnishing">Furnishing *</Label>
-                <Select 
-                  value={formData.furnishing} 
+                <Select
+                  value={formData.furnishing}
                   onValueChange={(value) => handleInputChange('furnishing', value)}
                 >
                   <SelectTrigger id="furnishing" className="mt-1.5">
@@ -602,8 +617,8 @@ export default function AdminEditPropertyPage() {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <div>
                   <Label htmlFor="min-lease-term">Minimum Lease Term (months)</Label>
-                  <Select 
-                    value={formData.minLeaseTerm} 
+                  <Select
+                    value={formData.minLeaseTerm}
                     onValueChange={(value) => handleInputChange('minLeaseTerm', value)}
                   >
                     <SelectTrigger id="min-lease-term" className="mt-1.5">
@@ -640,8 +655,8 @@ export default function AdminEditPropertyPage() {
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
                 <div>
                   <Label htmlFor="city">City *</Label>
-                  <Select 
-                    value={formData.city} 
+                  <Select
+                    value={formData.city}
                     onValueChange={(value) => handleInputChange('city', value)}
                   >
                     <SelectTrigger id="city" className="mt-1.5">
@@ -658,8 +673,8 @@ export default function AdminEditPropertyPage() {
 
                 <div>
                   <Label htmlFor="area">Area *</Label>
-                  <Select 
-                    value={formData.area} 
+                  <Select
+                    value={formData.area}
                     onValueChange={(value) => handleInputChange('area', value)}
                   >
                     <SelectTrigger id="area" className="mt-1.5">
@@ -724,80 +739,80 @@ export default function AdminEditPropertyPage() {
             <h2 className="text-[#0E56A4] mb-6">Amenities</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
               <div className="flex items-center space-x-2">
-                <Switch 
-                  id="parking" 
+                <Switch
+                  id="parking"
                   checked={amenities.parking}
                   onCheckedChange={(checked) => handleAmenityToggle('parking', checked)}
                 />
                 <Label htmlFor="parking">Private Parking</Label>
               </div>
-              
+
               <div className="flex items-center space-x-2">
-                <Switch 
-                  id="garden" 
+                <Switch
+                  id="garden"
                   checked={amenities.garden}
                   onCheckedChange={(checked) => handleAmenityToggle('garden', checked)}
                 />
                 <Label htmlFor="garden">Private Garden</Label>
               </div>
-              
+
               <div className="flex items-center space-x-2">
-                <Switch 
-                  id="pool" 
+                <Switch
+                  id="pool"
                   checked={amenities.pool}
                   onCheckedChange={(checked) => handleAmenityToggle('pool', checked)}
                 />
                 <Label htmlFor="pool">Swimming Pool</Label>
               </div>
-              
+
               <div className="flex items-center space-x-2">
-                <Switch 
-                  id="security" 
+                <Switch
+                  id="security"
                   checked={amenities.security}
                   onCheckedChange={(checked) => handleAmenityToggle('security', checked)}
                 />
                 <Label htmlFor="security">24/7 Security</Label>
               </div>
-              
+
               <div className="flex items-center space-x-2">
-                <Switch 
-                  id="elevator" 
+                <Switch
+                  id="elevator"
                   checked={amenities.elevator}
                   onCheckedChange={(checked) => handleAmenityToggle('elevator', checked)}
                 />
                 <Label htmlFor="elevator">Elevator</Label>
               </div>
-              
+
               <div className="flex items-center space-x-2">
-                <Switch 
-                  id="gym" 
+                <Switch
+                  id="gym"
                   checked={amenities.gym}
                   onCheckedChange={(checked) => handleAmenityToggle('gym', checked)}
                 />
                 <Label htmlFor="gym">Shared Gym</Label>
               </div>
-              
+
               <div className="flex items-center space-x-2">
-                <Switch 
-                  id="balcony" 
+                <Switch
+                  id="balcony"
                   checked={amenities.balcony}
                   onCheckedChange={(checked) => handleAmenityToggle('balcony', checked)}
                 />
                 <Label htmlFor="balcony">Balcony / Terrace</Label>
               </div>
-              
+
               <div className="flex items-center space-x-2">
-                <Switch 
-                  id="pets" 
+                <Switch
+                  id="pets"
                   checked={amenities.petsAllowed}
                   onCheckedChange={(checked) => handleAmenityToggle('petsAllowed', checked)}
                 />
                 <Label htmlFor="pets">Pets Allowed</Label>
               </div>
-              
+
               <div className="flex items-center space-x-2">
-                <Switch 
-                  id="seaview" 
+                <Switch
+                  id="seaview"
                   checked={amenities.seaView}
                   onCheckedChange={(checked) => handleAmenityToggle('seaView', checked)}
                 />
@@ -860,7 +875,7 @@ export default function AdminEditPropertyPage() {
               <X className="w-4 h-4 mr-2" />
               Cancel
             </Button>
-            
+
             <Button
               type="button"
               onClick={handleSaveChanges}

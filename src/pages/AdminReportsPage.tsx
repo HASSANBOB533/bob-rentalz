@@ -1,12 +1,5 @@
+import { DollarSign, Building, TrendingUp, Users, BarChart3, Calendar } from 'lucide-react';
 import { AdminDashboardLayout } from '../components/AdminDashboardLayout';
-import { 
-  DollarSign, 
-  Building, 
-  TrendingUp, 
-  Users,
-  BarChart3,
-  Calendar
-} from 'lucide-react';
 
 export default function AdminReportsPage() {
   // Mock report data
@@ -26,7 +19,7 @@ export default function AdminReportsPage() {
       change: '+18%',
       trend: 'up',
       icon: <DollarSign className="w-6 h-6" />,
-      color: 'bg-green-50 text-green-600'
+      color: 'bg-green-50 text-green-600',
     },
     {
       label: 'Total Rented Properties',
@@ -34,7 +27,7 @@ export default function AdminReportsPage() {
       change: '+5 this month',
       trend: 'up',
       icon: <Building className="w-6 h-6" />,
-      color: 'bg-blue-50 text-blue-600'
+      color: 'bg-blue-50 text-blue-600',
     },
     {
       label: 'Average Occupancy Rate',
@@ -42,7 +35,7 @@ export default function AdminReportsPage() {
       change: '+3%',
       trend: 'up',
       icon: <TrendingUp className="w-6 h-6" />,
-      color: 'bg-purple-50 text-purple-600'
+      color: 'bg-purple-50 text-purple-600',
     },
     {
       label: 'New Tenants This Month',
@@ -50,7 +43,7 @@ export default function AdminReportsPage() {
       change: '+2 vs last month',
       trend: 'up',
       icon: <Users className="w-6 h-6" />,
-      color: 'bg-orange-50 text-orange-600'
+      color: 'bg-orange-50 text-orange-600',
     },
   ];
 
@@ -68,9 +61,7 @@ export default function AdminReportsPage() {
           {kpiCards.map((kpi, index) => (
             <div key={index} className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
               <div className="flex items-start justify-between mb-4">
-                <div className={`p-3 rounded-lg ${kpi.color}`}>
-                  {kpi.icon}
-                </div>
+                <div className={`p-3 rounded-lg ${kpi.color}`}>{kpi.icon}</div>
               </div>
               <h3 className="text-3xl font-bold text-gray-900 mb-1">{kpi.value}</h3>
               <p className="text-sm text-gray-600 mb-2">{kpi.label}</p>
@@ -91,25 +82,29 @@ export default function AdminReportsPage() {
             </div>
             <BarChart3 className="w-6 h-6 text-[#0E56A4]" />
           </div>
-          
+
           {/* Simple Bar Chart Visualization */}
           <div className="space-y-3">
             {monthlyStats.map((stat, index) => {
-              const maxRevenue = Math.max(...monthlyStats.map(s => s.revenue));
+              const maxRevenue = Math.max(...monthlyStats.map((s) => s.revenue));
               const widthPercent = (stat.revenue / maxRevenue) * 100;
-              
+
               return (
                 <div key={index}>
                   <div className="flex items-center justify-between mb-1 text-sm">
                     <span className="font-medium text-gray-700">{stat.month}</span>
-                    <span className="text-gray-600">EGP {(stat.revenue / 1000000).toFixed(2)}M</span>
+                    <span className="text-gray-600">
+                      EGP {(stat.revenue / 1000000).toFixed(2)}M
+                    </span>
                   </div>
                   <div className="w-full bg-gray-200 rounded-full h-8 overflow-hidden">
-                    <div 
+                    <div
                       className="bg-[#0E56A4] h-full rounded-full flex items-center justify-end pr-3"
                       style={{ width: `${widthPercent}%` }}
                     >
-                      <span className="text-xs text-white font-medium">{stat.leases} new leases</span>
+                      <span className="text-xs text-white font-medium">
+                        {stat.leases} new leases
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -127,13 +122,13 @@ export default function AdminReportsPage() {
             </div>
             <Calendar className="w-6 h-6 text-[#0E56A4]" />
           </div>
-          
+
           {/* Simple Line Chart Visualization */}
           <div className="space-y-3">
             {monthlyStats.map((stat, index) => {
-              const maxLeases = Math.max(...monthlyStats.map(s => s.leases));
+              const maxLeases = Math.max(...monthlyStats.map((s) => s.leases));
               const widthPercent = (stat.leases / maxLeases) * 100;
-              
+
               return (
                 <div key={index}>
                   <div className="flex items-center justify-between mb-1 text-sm">
@@ -141,7 +136,7 @@ export default function AdminReportsPage() {
                     <span className="text-gray-600">{stat.leases} leases</span>
                   </div>
                   <div className="w-full bg-gray-200 rounded-full h-6 overflow-hidden">
-                    <div 
+                    <div
                       className="bg-[#E9C500] h-full rounded-full"
                       style={{ width: `${widthPercent}%` }}
                     />
@@ -168,10 +163,12 @@ export default function AdminReportsPage() {
                 <div key={index}>
                   <div className="flex items-center justify-between mb-1 text-sm">
                     <span className="font-medium text-gray-700">{item.city}</span>
-                    <span className="text-gray-600">{item.count} properties ({item.percentage}%)</span>
+                    <span className="text-gray-600">
+                      {item.count} properties ({item.percentage}%)
+                    </span>
                   </div>
                   <div className="w-full bg-gray-200 rounded-full h-4 overflow-hidden">
-                    <div 
+                    <div
                       className="bg-[#0E56A4] h-full rounded-full"
                       style={{ width: `${item.percentage}%` }}
                     />
@@ -191,7 +188,10 @@ export default function AdminReportsPage() {
                 { name: 'David Martinez', properties: 10, leases: 25 },
                 { name: 'Emma Wilson', properties: 8, leases: 18 },
               ].map((agent, index) => (
-                <div key={index} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                <div
+                  key={index}
+                  className="flex items-center justify-between p-3 bg-gray-50 rounded-lg"
+                >
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 bg-[#E9C500] rounded-full flex items-center justify-center">
                       <span className="font-semibold text-[#0E56A4]">{index + 1}</span>

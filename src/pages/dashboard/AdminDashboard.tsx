@@ -1,5 +1,5 @@
-import { useNavigate } from 'react-router-dom';
 import { Trash2, Users, Home, FileText, Settings } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 export default function AdminDashboard() {
   const navigate = useNavigate();
@@ -10,29 +10,29 @@ export default function AdminDashboard() {
       description: 'View and restore soft-deleted documents',
       icon: Trash2,
       color: 'bg-red-500',
-      path: '/admin/deleted-documents'
+      path: '/admin/deleted-documents',
     },
     {
       title: 'Manage Users',
       description: 'View and manage user accounts',
       icon: Users,
       color: 'bg-blue-500',
-      path: '/admin/users'
+      path: '/admin/users',
     },
     {
       title: 'Properties',
       description: 'Manage property listings',
       icon: Home,
       color: 'bg-green-500',
-      path: '/admin/properties'
+      path: '/admin/properties',
     },
     {
       title: 'Documents',
       description: 'Manage all documents',
       icon: FileText,
       color: 'bg-purple-500',
-      path: '/admin/documents'
-    }
+      path: '/admin/documents',
+    },
   ];
 
   return (
@@ -50,7 +50,9 @@ export default function AdminDashboard() {
               onClick={() => navigate(action.path)}
               className="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow p-6 text-left"
             >
-              <div className={`${action.color} w-12 h-12 rounded-lg flex items-center justify-center mb-4`}>
+              <div
+                className={`${action.color} w-12 h-12 rounded-lg flex items-center justify-center mb-4`}
+              >
                 <action.icon className="h-6 w-6 text-white" />
               </div>
               <h3 className="text-lg font-semibold text-gray-900 mb-2">{action.title}</h3>

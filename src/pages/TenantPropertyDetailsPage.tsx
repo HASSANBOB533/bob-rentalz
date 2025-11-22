@@ -1,32 +1,60 @@
+import {
+  Heart,
+  MapPin,
+  Bed,
+  Bath,
+  Maximize,
+  Phone,
+  Mail,
+  Share2,
+  Calendar,
+  ChevronLeft,
+  ChevronRight,
+  Wifi,
+  Car,
+  Shield,
+  Dumbbell,
+  Waves,
+  Trees,
+  Wind,
+  Building2,
+  Sofa,
+  Check,
+  ArrowLeft,
+  Home,
+  ChevronUp,
+  ChevronDown,
+  MessageCircle,
+  Zap,
+} from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
-import { Heart, MapPin, Bed, Bath, Maximize, Phone, Mail, Share2, Calendar, ChevronLeft, ChevronRight, Wifi, Car, Shield, Dumbbell, Waves, Trees, Wind, Building2, Sofa, Check, ArrowLeft, Home, ChevronUp, ChevronDown, MessageCircle, Zap } from 'lucide-react';
-import { Button } from '../components/ui/button';
 import { toast } from 'sonner@2.0.3';
 import { ImageWithFallback } from '../components/figma/ImageWithFallback';
-import { SecurityCardIcon } from '../components/icons/SecurityCardIcon';
-import { TrendUpIcon } from '../components/icons/TrendUpIcon';
 import { CalendarIcon } from '../components/icons/CalendarIcon';
 import { ChairIcon } from '../components/icons/ChairIcon';
-import { PropertyCodeDisplay } from '../components/PropertyCodeDisplay';
+import { SecurityCardIcon } from '../components/icons/SecurityCardIcon';
+import { TrendUpIcon } from '../components/icons/TrendUpIcon';
 import { PropertyCard } from '../components/PropertyCard';
-import { VideoTour } from '../components/VideoTour';
+import { PropertyCodeDisplay } from '../components/PropertyCodeDisplay';
 import { PropertyLocationMap } from '../components/PropertyLocationMap';
-import { addPropertyMetadata } from '../utils/propertyUtils';
+import { Button } from '../components/ui/button';
+import { VideoTour } from '../components/VideoTour';
 import { properties, agents, Property } from '../data/mockData';
 import { isFavorite, toggleFavorite } from '../utils/favorites';
+import { addPropertyMetadata } from '../utils/propertyUtils';
 
 export default function TenantPropertyDetailsPage() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const location = useLocation();
-  const rawProperty = properties.find(p => p.id === id);
+  const rawProperty = properties.find((p) => p.id === id);
   const property = rawProperty ? addPropertyMetadata(rawProperty) : null;
-  const agent = property ? agents.find(a => a.id === property.agentId) : null;
+  const agent = property ? agents.find((a) => a.id === property.agentId) : null;
   const [favorited, setFavorited] = useState(false);
   const [selectedImage, setSelectedImage] = useState(0);
   const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(false);
-  
+
   // Get navigation state
   const fromDashboard = location.state?.fromDashboard;
   const dashboardType = location.state?.dashboardType;
@@ -43,7 +71,7 @@ export default function TenantPropertyDetailsPage() {
         <div className="flex items-center justify-center min-h-[60vh]">
           <div className="text-center">
             <h2 className="text-xl mb-4 text-gray-700">Property Not Found</h2>
-            <Button 
+            <Button
               onClick={() => {
                 // Navigate back to the appropriate page based on where user came from
                 if (fromDashboard) {
@@ -65,15 +93,15 @@ export default function TenantPropertyDetailsPage() {
               }}
               className="bg-[#0E56A4] hover:bg-[#0E56A4]/90 text-white"
             >
-              {fromDashboard && dashboardType === 'tenant-saved' 
-                ? 'Back to Saved Properties' 
+              {fromDashboard && dashboardType === 'tenant-saved'
+                ? 'Back to Saved Properties'
                 : fromDashboard && dashboardType === 'tenant-conversation'
-                ? 'Back to Conversation'
-                : fromDashboard && dashboardType === 'agent'
-                ? 'Back to Agent Dashboard'
-                : fromDashboard && dashboardType === 'agent-conversation'
-                ? 'Back to Conversation'
-                : 'Back to Dashboard'}
+                  ? 'Back to Conversation'
+                  : fromDashboard && dashboardType === 'agent'
+                    ? 'Back to Agent Dashboard'
+                    : fromDashboard && dashboardType === 'agent-conversation'
+                      ? 'Back to Conversation'
+                      : 'Back to Dashboard'}
             </Button>
           </div>
         </div>
@@ -84,29 +112,25 @@ export default function TenantPropertyDetailsPage() {
   // Smart similar properties algorithm
   const getSimilarProperties = (): Property[] => {
     const availableProperties = properties.filter(
-      p => p.id !== property.id && p.status === 'available'
+      (p) => p.id !== property.id && p.status === 'available',
     );
 
-    const sameLocation = availableProperties.filter(
-      p => p.location === property.location
-    );
+    const sameLocation = availableProperties.filter((p) => p.location === property.location);
 
-    const sameType = availableProperties.filter(
-      p => p.bedrooms === property.bedrooms
-    );
+    const sameType = availableProperties.filter((p) => p.bedrooms === property.bedrooms);
 
     const priceMin = property.price * 0.7;
     const priceMax = property.price * 1.3;
     const similarPrice = availableProperties.filter(
-      p => p.price >= priceMin && p.price <= priceMax
+      (p) => p.price >= priceMin && p.price <= priceMax,
     );
 
     const combined = [...new Set([...sameLocation, ...sameType, ...similarPrice])];
-    
+
     if (combined.length < 3) {
       const remaining = availableProperties
-        .filter(p => !combined.includes(p))
-        .sort((a, b) => b.verified ? 1 : -1);
+        .filter((p) => !combined.includes(p))
+        .sort((a, b) => (b.verified ? 1 : -1));
       combined.push(...remaining);
     }
 
@@ -154,7 +178,12 @@ export default function TenantPropertyDetailsPage() {
     if (amenityLower.includes('gym') || amenityLower.includes('fitness')) return Dumbbell;
     if (amenityLower.includes('pool') || amenityLower.includes('swimming')) return Waves;
     if (amenityLower.includes('garden') || amenityLower.includes('yard')) return Trees;
-    if (amenityLower.includes('ac') || amenityLower.includes('air') || amenityLower.includes('central')) return Wind;
+    if (
+      amenityLower.includes('ac') ||
+      amenityLower.includes('air') ||
+      amenityLower.includes('central')
+    )
+      return Wind;
     if (amenityLower.includes('balcony') || amenityLower.includes('terrace')) return Building2;
     if (amenityLower.includes('furnish') || amenityLower.includes('furniture')) return Sofa;
     if (amenityLower.includes('elevator') || amenityLower.includes('lift')) return Building2;
@@ -193,15 +222,15 @@ export default function TenantPropertyDetailsPage() {
         >
           <ArrowLeft className="w-4 h-4" />
           <span className="text-sm font-medium">
-            {fromDashboard && dashboardType === 'tenant-saved' 
-              ? 'Back to Saved Properties' 
+            {fromDashboard && dashboardType === 'tenant-saved'
+              ? 'Back to Saved Properties'
               : fromDashboard && dashboardType === 'tenant-conversation'
-              ? 'Back to Conversation'
-              : fromDashboard && dashboardType === 'agent'
-              ? 'Back to Agent Dashboard'
-              : fromDashboard && dashboardType === 'agent-conversation'
-              ? 'Back to Conversation'
-              : 'Back to Dashboard'}
+                ? 'Back to Conversation'
+                : fromDashboard && dashboardType === 'agent'
+                  ? 'Back to Agent Dashboard'
+                  : fromDashboard && dashboardType === 'agent-conversation'
+                    ? 'Back to Conversation'
+                    : 'Back to Dashboard'}
           </span>
         </button>
       </div>
@@ -217,12 +246,16 @@ export default function TenantPropertyDetailsPage() {
               alt={property.title}
               className="w-full h-full object-cover"
             />
-            
+
             {/* Navigation Arrows */}
             {property.images.length > 1 && (
               <>
                 <button
-                  onClick={() => setSelectedImage((selectedImage - 1 + property.images.length) % property.images.length)}
+                  onClick={() =>
+                    setSelectedImage(
+                      (selectedImage - 1 + property.images.length) % property.images.length,
+                    )
+                  }
                   className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white p-2 rounded-full shadow-lg transition-all"
                 >
                   <ChevronLeft className="w-5 h-5 text-gray-900" />
@@ -235,13 +268,13 @@ export default function TenantPropertyDetailsPage() {
                 </button>
               </>
             )}
-            
+
             {/* Image Counter */}
             <div className="absolute bottom-4 right-4 bg-black/60 text-white px-3 py-1 rounded-full text-sm">
               {selectedImage + 1} / {property.images.length}
             </div>
           </div>
-          
+
           {/* Action Buttons Below Carousel */}
           <div className="flex justify-end gap-3 mt-3">
             <Button
@@ -250,7 +283,9 @@ export default function TenantPropertyDetailsPage() {
               onClick={handleFavoriteClick}
               className="bg-white hover:bg-gray-50 shadow-sm"
             >
-              <Heart className={`w-5 h-5 ${favorited ? 'fill-red-500 text-red-500' : 'text-gray-700'}`} />
+              <Heart
+                className={`w-5 h-5 ${favorited ? 'fill-red-500 text-red-500' : 'text-gray-700'}`}
+              />
             </Button>
             <Button
               size="icon"
@@ -294,16 +329,16 @@ export default function TenantPropertyDetailsPage() {
                 />
               </div>
               <div className="flex flex-col items-start md:items-end">
-                <p className="text-[#0E56A4] mb-1">
-                  EGP {property.price.toLocaleString()}/month
-                </p>
-                <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs ${
-                  property.status === 'available' 
-                    ? 'bg-green-100 text-green-700'
-                    : property.status === 'rented'
-                    ? 'bg-red-100 text-red-700'
-                    : 'bg-yellow-100 text-yellow-700'
-                }`}>
+                <p className="text-[#0E56A4] mb-1">EGP {property.price.toLocaleString()}/month</p>
+                <span
+                  className={`inline-flex items-center px-3 py-1 rounded-full text-xs ${
+                    property.status === 'available'
+                      ? 'bg-green-100 text-green-700'
+                      : property.status === 'rented'
+                        ? 'bg-red-100 text-red-700'
+                        : 'bg-yellow-100 text-yellow-700'
+                  }`}
+                >
                   {property.status.charAt(0).toUpperCase() + property.status.slice(1)}
                 </span>
               </div>
@@ -336,7 +371,9 @@ export default function TenantPropertyDetailsPage() {
               <div className="flex flex-col sm:flex-row items-center gap-4">
                 <div className="flex-1 text-center sm:text-left">
                   <h3 className="text-white text-lg mb-1">Have Questions About This Property?</h3>
-                  <p className="text-white/90 text-sm">Connect with our agent to get instant answers and schedule viewings</p>
+                  <p className="text-white/90 text-sm">
+                    Connect with our agent to get instant answers and schedule viewings
+                  </p>
                 </div>
                 <Button
                   onClick={() => navigate(`/tenant/conversation/${id}`)}
@@ -353,7 +390,9 @@ export default function TenantPropertyDetailsPage() {
           {/* 3. DESCRIPTION */}
           <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6 mb-6 md:mb-7 lg:mb-8">
             <h2 className="text-xl text-gray-900 mb-4">About This Property</h2>
-            <div className={`text-gray-600 leading-relaxed ${!isDescriptionExpanded ? 'line-clamp-4' : ''}`}>
+            <div
+              className={`text-gray-600 leading-relaxed ${!isDescriptionExpanded ? 'line-clamp-4' : ''}`}
+            >
               <p>{property.description}</p>
             </div>
             {property.description && property.description.length > 200 && (
@@ -412,7 +451,7 @@ export default function TenantPropertyDetailsPage() {
           {agent && (
             <div className="bg-white rounded-2xl p-5 md:p-6 lg:p-7 shadow-[0_4px_12px_rgba(0,0,0,0.06)] border border-[#E5E7EB] mb-6 md:mb-7 lg:mb-8">
               <h2 className="text-xl text-gray-900 mb-4 md:mb-5">Contact Your Agent</h2>
-              
+
               {/* Agent Info */}
               <div className="flex items-center gap-4 mb-4 md:mb-5 lg:mb-6 pb-4 md:pb-5 lg:pb-6 border-b border-[#E5E7EB]">
                 <ImageWithFallback
@@ -422,7 +461,9 @@ export default function TenantPropertyDetailsPage() {
                 />
                 <div>
                   <div className="font-bold text-lg">{agent.name}</div>
-                  <div className="text-sm text-gray-600">{agent.specialization || 'Property Agent'}</div>
+                  <div className="text-sm text-gray-600">
+                    {agent.specialization || 'Property Agent'}
+                  </div>
                   <div className="text-xs text-gray-500">{agent.listingsCount} Active Listings</div>
                 </div>
               </div>
@@ -450,7 +491,7 @@ export default function TenantPropertyDetailsPage() {
                   <MessageCircle className="w-5 h-5 mr-2" />
                   Message Agent
                 </Button>
-                
+
                 {/* Secondary Actions */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
                   <Button
@@ -496,11 +537,13 @@ export default function TenantPropertyDetailsPage() {
               <h2 className="text-xl text-gray-900 mb-4">Similar Properties</h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                 {similarProperties.map((prop) => (
-                  <div 
+                  <div
                     key={prop.id}
-                    onClick={() => navigate(`/tenant/property-details/${prop.id}`, {
-                      state: { fromDashboard, dashboardType }
-                    })}
+                    onClick={() =>
+                      navigate(`/tenant/property-details/${prop.id}`, {
+                        state: { fromDashboard, dashboardType },
+                      })
+                    }
                     className="cursor-pointer"
                   >
                     <PropertyCard property={prop} />

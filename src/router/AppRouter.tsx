@@ -1,42 +1,42 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route } from 'react-router-dom';
 
 // Layout
-import { MainLayout } from "../components/MainLayout";
+import AuthRedirect from '../components/auth/AuthRedirect';
+import ProtectedRoute from '../components/auth/ProtectedRoute';
+import { MainLayout } from '../components/MainLayout';
 
 // Public pages
-import { HomePage } from "../pages/HomePage";
-import { LoginPage } from "../pages/LoginPage";
-import { SignupPage } from "../pages/SignupPage";
-import { PropertiesPage } from "../pages/PropertiesPage";
-import { PropertyDetailPage } from "../pages/PropertyDetailPage";
-import { FAQPage } from "../pages/FAQPage";
-import { BlogPage } from "../pages/BlogPage";
-import { BlogPostPage } from "../pages/BlogPostPage";
-import { ContactPage } from "../pages/ContactPage";
-import { AboutPage } from "../pages/AboutPage";
-import { AgentsPage } from "../pages/AgentsPage";
-import { AgentDetailPage } from "../pages/AgentDetailPage";
-import { FavoritesPage } from "../pages/FavoritesPage";
-import { ListPropertyPage } from "../pages/ListPropertyPage";
-import { PrivacyPage } from "../pages/PrivacyPage";
-import { TermsPage } from "../pages/TermsPage";
-import { CookiePolicyPage } from "../pages/CookiePolicyPage";
-import { VerifiedBadgePage } from "../pages/VerifiedBadgePage";
-import { RoleSelectionPage } from "../components/RoleSelectionPage";
+import { RoleSelectionPage } from '../components/RoleSelectionPage';
+import { AboutPage } from '../pages/AboutPage';
+import { AdminDeletedDocumentsPage } from '../pages/AdminDeletedDocumentsPage';
+import { AgentDetailPage } from '../pages/AgentDetailPage';
+import { AgentsPage } from '../pages/AgentsPage';
+import { BlogPage } from '../pages/BlogPage';
+import { BlogPostPage } from '../pages/BlogPostPage';
+import { FAQPage } from '../pages/FAQPage';
+import { HomePage } from '../pages/HomePage';
+import { LoginPage } from '../pages/LoginPage';
+import { SignupPage } from '../pages/SignupPage';
+import { PropertiesPage } from '../pages/PropertiesPage';
+import { PropertyDetailPage } from '../pages/PropertyDetailPage';
+import { ContactPage } from '../pages/ContactPage';
+import { FavoritesPage } from '../pages/FavoritesPage';
+import { ListPropertyPage } from '../pages/ListPropertyPage';
+import { PrivacyPage } from '../pages/PrivacyPage';
+import { TenantPaymentsPage } from '../pages/TenantPaymentsPage';
+import { TermsPage } from '../pages/TermsPage';
+import { CookiePolicyPage } from '../pages/CookiePolicyPage';
+import UnauthorizedPage from '../pages/UnauthorizedPage';
+import { VerifiedBadgePage } from '../pages/VerifiedBadgePage';
 
 // Dashboards (role-based)
-import AdminDashboard from "../pages/dashboard/AdminDashboard";
-import OwnerDashboard from "../pages/dashboard/OwnerDashboard";
-import AgentDashboard from "../pages/dashboard/AgentDashboard";
-import TenantDashboard from "../pages/dashboard/TenantDashboard";
+import AdminDashboard from '../pages/dashboard/AdminDashboard';
+import OwnerDashboard from '../pages/dashboard/OwnerDashboard';
+import AgentDashboard from '../pages/dashboard/AgentDashboard';
+import TenantDashboard from '../pages/dashboard/TenantDashboard';
 
 // Protected routes
-import ProtectedRoute from "../components/auth/ProtectedRoute";
-import AuthRedirect from "../components/auth/AuthRedirect";
-import UnauthorizedPage from "../pages/UnauthorizedPage";
-import { AdminDeletedDocumentsPage } from "../pages/AdminDeletedDocumentsPage";
-import { OwnerPaymentsPage } from "../pages/OwnerPaymentsPage";
-import { TenantPaymentsPage } from "../pages/TenantPaymentsPage";
+import { OwnerPaymentsPage } from '../pages/OwnerPaymentsPage';
 
 // 404 fallback
 const NotFound = () => (
@@ -56,24 +56,150 @@ export default function AppRouter() {
       {/* =============================
           PUBLIC ROUTES (with MainLayout)
       ============================= */}
-      <Route path="/" element={<MainLayout><HomePage /></MainLayout>} />
-      <Route path="/properties" element={<MainLayout><PropertiesPage /></MainLayout>} />
-      <Route path="/property/:id" element={<MainLayout><PropertyDetailPage /></MainLayout>} />
-      <Route path="/agents" element={<MainLayout><AgentsPage /></MainLayout>} />
-      <Route path="/agent/:id" element={<MainLayout><AgentDetailPage /></MainLayout>} />
-      <Route path="/faq" element={<MainLayout><FAQPage /></MainLayout>} />
-      <Route path="/blog" element={<MainLayout><BlogPage /></MainLayout>} />
-      <Route path="/blog/:slug" element={<MainLayout><BlogPostPage /></MainLayout>} />
-      <Route path="/contact" element={<MainLayout><ContactPage /></MainLayout>} />
-      <Route path="/about" element={<MainLayout><AboutPage /></MainLayout>} />
-      <Route path="/favorites" element={<MainLayout><FavoritesPage /></MainLayout>} />
-      <Route path="/list-property" element={<MainLayout><ListPropertyPage /></MainLayout>} />
-      <Route path="/privacy" element={<MainLayout><PrivacyPage /></MainLayout>} />
-      <Route path="/terms" element={<MainLayout><TermsPage /></MainLayout>} />
-      <Route path="/cookie-policy" element={<MainLayout><CookiePolicyPage /></MainLayout>} />
-      <Route path="/verified-badge" element={<MainLayout><VerifiedBadgePage /></MainLayout>} />
-      <Route path="/role-selection" element={<MainLayout><RoleSelectionPage /></MainLayout>} />
-      <Route path="/unauthorized" element={<MainLayout><UnauthorizedPage /></MainLayout>} />
+      <Route
+        path="/"
+        element={
+          <MainLayout>
+            <HomePage />
+          </MainLayout>
+        }
+      />
+      <Route
+        path="/properties"
+        element={
+          <MainLayout>
+            <PropertiesPage />
+          </MainLayout>
+        }
+      />
+      <Route
+        path="/property/:id"
+        element={
+          <MainLayout>
+            <PropertyDetailPage />
+          </MainLayout>
+        }
+      />
+      <Route
+        path="/agents"
+        element={
+          <MainLayout>
+            <AgentsPage />
+          </MainLayout>
+        }
+      />
+      <Route
+        path="/agent/:id"
+        element={
+          <MainLayout>
+            <AgentDetailPage />
+          </MainLayout>
+        }
+      />
+      <Route
+        path="/faq"
+        element={
+          <MainLayout>
+            <FAQPage />
+          </MainLayout>
+        }
+      />
+      <Route
+        path="/blog"
+        element={
+          <MainLayout>
+            <BlogPage />
+          </MainLayout>
+        }
+      />
+      <Route
+        path="/blog/:slug"
+        element={
+          <MainLayout>
+            <BlogPostPage />
+          </MainLayout>
+        }
+      />
+      <Route
+        path="/contact"
+        element={
+          <MainLayout>
+            <ContactPage />
+          </MainLayout>
+        }
+      />
+      <Route
+        path="/about"
+        element={
+          <MainLayout>
+            <AboutPage />
+          </MainLayout>
+        }
+      />
+      <Route
+        path="/favorites"
+        element={
+          <MainLayout>
+            <FavoritesPage />
+          </MainLayout>
+        }
+      />
+      <Route
+        path="/list-property"
+        element={
+          <MainLayout>
+            <ListPropertyPage />
+          </MainLayout>
+        }
+      />
+      <Route
+        path="/privacy"
+        element={
+          <MainLayout>
+            <PrivacyPage />
+          </MainLayout>
+        }
+      />
+      <Route
+        path="/terms"
+        element={
+          <MainLayout>
+            <TermsPage />
+          </MainLayout>
+        }
+      />
+      <Route
+        path="/cookie-policy"
+        element={
+          <MainLayout>
+            <CookiePolicyPage />
+          </MainLayout>
+        }
+      />
+      <Route
+        path="/verified-badge"
+        element={
+          <MainLayout>
+            <VerifiedBadgePage />
+          </MainLayout>
+        }
+      />
+      <Route
+        path="/role-selection"
+        element={
+          <MainLayout>
+            <RoleSelectionPage />
+          </MainLayout>
+        }
+      />
+      <Route
+        path="/unauthorized"
+        element={
+          <MainLayout>
+            <UnauthorizedPage />
+          </MainLayout>
+        }
+      />
 
       {/* =============================
           AUTH ROUTES (with MainLayout and redirect)
@@ -101,7 +227,7 @@ export default function AppRouter() {
       <Route
         path="/dashboard/admin"
         element={
-          <ProtectedRoute roles={["admin"]}>
+          <ProtectedRoute roles={['admin']}>
             <AdminDashboard />
           </ProtectedRoute>
         }
@@ -110,7 +236,7 @@ export default function AppRouter() {
       <Route
         path="/admin/deleted-documents"
         element={
-          <ProtectedRoute roles={["admin"]}>
+          <ProtectedRoute roles={['admin']}>
             <AdminDeletedDocumentsPage />
           </ProtectedRoute>
         }
@@ -119,7 +245,7 @@ export default function AppRouter() {
       <Route
         path="/dashboard/owner"
         element={
-          <ProtectedRoute roles={["owner"]}>
+          <ProtectedRoute roles={['owner']}>
             <OwnerDashboard />
           </ProtectedRoute>
         }
@@ -128,7 +254,7 @@ export default function AppRouter() {
       <Route
         path="/owner/payments"
         element={
-          <ProtectedRoute roles={["owner", "admin"]}>
+          <ProtectedRoute roles={['owner', 'admin']}>
             <OwnerPaymentsPage />
           </ProtectedRoute>
         }
@@ -137,7 +263,7 @@ export default function AppRouter() {
       <Route
         path="/dashboard/agent"
         element={
-          <ProtectedRoute roles={["agent"]}>
+          <ProtectedRoute roles={['agent']}>
             <AgentDashboard />
           </ProtectedRoute>
         }
@@ -146,7 +272,7 @@ export default function AppRouter() {
       <Route
         path="/dashboard/tenant"
         element={
-          <ProtectedRoute roles={["tenant"]}>
+          <ProtectedRoute roles={['tenant']}>
             <TenantDashboard />
           </ProtectedRoute>
         }
@@ -155,7 +281,7 @@ export default function AppRouter() {
       <Route
         path="/tenant/payments"
         element={
-          <ProtectedRoute roles={["tenant", "admin"]}>
+          <ProtectedRoute roles={['tenant', 'admin']}>
             <TenantPaymentsPage />
           </ProtectedRoute>
         }

@@ -1,12 +1,12 @@
+import { ArrowLeft, Lock, Bell, Eye, EyeOff } from 'lucide-react';
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { toast } from 'sonner@2.0.3';
 import { DashboardLayout } from '../components/DashboardLayout';
 import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
 import { Label } from '../components/ui/label';
 import { Switch } from '../components/ui/switch';
-import { ArrowLeft, Lock, Bell, Eye, EyeOff } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { toast } from 'sonner@2.0.3';
-import { useState } from 'react';
 
 export default function OwnerSettingsPage() {
   const [showCurrentPassword, setShowCurrentPassword] = useState(false);
@@ -31,9 +31,9 @@ export default function OwnerSettingsPage() {
   };
 
   const toggleSetting = (key: keyof typeof settings) => {
-    setSettings(prev => ({
+    setSettings((prev) => ({
       ...prev,
-      [key]: !prev[key]
+      [key]: !prev[key],
     }));
   };
 
@@ -72,7 +72,7 @@ export default function OwnerSettingsPage() {
                 <div className="relative mt-1.5">
                   <Input
                     id="current-password"
-                    type={showCurrentPassword ? "text" : "password"}
+                    type={showCurrentPassword ? 'text' : 'password'}
                     placeholder="Enter current password"
                   />
                   <button
@@ -95,7 +95,7 @@ export default function OwnerSettingsPage() {
                 <div className="relative mt-1.5">
                   <Input
                     id="new-password"
-                    type={showNewPassword ? "text" : "password"}
+                    type={showNewPassword ? 'text' : 'password'}
                     placeholder="Enter new password"
                   />
                   <button
@@ -103,11 +103,7 @@ export default function OwnerSettingsPage() {
                     onClick={() => setShowNewPassword(!showNewPassword)}
                     className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
                   >
-                    {showNewPassword ? (
-                      <EyeOff className="w-4 h-4" />
-                    ) : (
-                      <Eye className="w-4 h-4" />
-                    )}
+                    {showNewPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                   </button>
                 </div>
                 <p className="text-sm text-gray-500 mt-2">
@@ -121,7 +117,7 @@ export default function OwnerSettingsPage() {
                 <div className="relative mt-1.5">
                   <Input
                     id="confirm-password"
-                    type={showConfirmPassword ? "text" : "password"}
+                    type={showConfirmPassword ? 'text' : 'password'}
                     placeholder="Confirm new password"
                   />
                   <button
@@ -175,9 +171,7 @@ export default function OwnerSettingsPage() {
               <div className="flex items-center justify-between py-3 border-b border-gray-100">
                 <div className="flex-1">
                   <h3 className="font-medium text-gray-900">SMS Notifications</h3>
-                  <p className="text-sm text-gray-500 mt-1">
-                    Get text messages for urgent updates
-                  </p>
+                  <p className="text-sm text-gray-500 mt-1">Get text messages for urgent updates</p>
                 </div>
                 <Switch
                   checked={settings.smsNotifications}
@@ -246,7 +240,7 @@ export default function OwnerSettingsPage() {
           {/* C) Account Actions */}
           <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
             <h2 className="text-[#0E56A4] mb-6">Account Actions</h2>
-            
+
             <div className="space-y-4">
               {/* Two-Factor Authentication */}
               <div className="p-4 bg-gray-50 rounded-lg">

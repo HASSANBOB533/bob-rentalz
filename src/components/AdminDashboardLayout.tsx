@@ -1,7 +1,6 @@
-import { useState } from 'react';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { 
-  LayoutDashboard, 
+import bobLogo from 'figma:asset/c3cbe0198340d6bed05c69174ee79f3b6a4d8624.png';
+import {
+  LayoutDashboard,
   Building,
   Users,
   UserCog,
@@ -15,10 +14,10 @@ import {
   Menu,
   X,
   ChevronDown,
-  Shield
+  Shield,
 } from 'lucide-react';
-import bobLogo from 'figma:asset/c3cbe0198340d6bed05c69174ee79f3b6a4d8624.png';
-
+import { useState } from 'react';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { NotificationDropdown } from './NotificationDropdown';
 
 interface MenuItem {
@@ -39,19 +38,54 @@ export function AdminDashboardLayout({ children }: AdminDashboardLayoutProps) {
   const location = useLocation();
 
   const menuItems: MenuItem[] = [
-    { id: 'dashboard', label: 'Dashboard', icon: <LayoutDashboard className="w-5 h-5" />, path: '/admin/dashboard' },
-    { id: 'properties', label: 'Properties', icon: <Building className="w-5 h-5" />, path: '/admin/properties' },
+    {
+      id: 'dashboard',
+      label: 'Dashboard',
+      icon: <LayoutDashboard className="w-5 h-5" />,
+      path: '/admin/dashboard',
+    },
+    {
+      id: 'properties',
+      label: 'Properties',
+      icon: <Building className="w-5 h-5" />,
+      path: '/admin/properties',
+    },
     { id: 'owners', label: 'Owners', icon: <UserCog className="w-5 h-5" />, path: '/admin/owners' },
     { id: 'agents', label: 'Agents', icon: <Users className="w-5 h-5" />, path: '/admin/agents' },
-    { id: 'tenants', label: 'Tenants', icon: <UserCircle className="w-5 h-5" />, path: '/admin/tenants' },
-    { id: 'assignments', label: 'Assignments', icon: <GitBranch className="w-5 h-5" />, path: '/admin/assignments' },
-    { id: 'service-requests', label: 'Service Requests', icon: <Wrench className="w-5 h-5" />, path: '/admin/service-requests' },
-    { id: 'reports', label: 'Reports', icon: <BarChart3 className="w-5 h-5" />, path: '/admin/reports' },
+    {
+      id: 'tenants',
+      label: 'Tenants',
+      icon: <UserCircle className="w-5 h-5" />,
+      path: '/admin/tenants',
+    },
+    {
+      id: 'assignments',
+      label: 'Assignments',
+      icon: <GitBranch className="w-5 h-5" />,
+      path: '/admin/assignments',
+    },
+    {
+      id: 'service-requests',
+      label: 'Service Requests',
+      icon: <Wrench className="w-5 h-5" />,
+      path: '/admin/service-requests',
+    },
+    {
+      id: 'reports',
+      label: 'Reports',
+      icon: <BarChart3 className="w-5 h-5" />,
+      path: '/admin/reports',
+    },
   ];
 
   const accountItems: MenuItem[] = [
     { id: 'profile', label: 'Profile', icon: <User className="w-5 h-5" />, path: '/admin/profile' },
-    { id: 'settings', label: 'Settings', icon: <Settings className="w-5 h-5" />, path: '/admin/settings' },
+    {
+      id: 'settings',
+      label: 'Settings',
+      icon: <Settings className="w-5 h-5" />,
+      path: '/admin/settings',
+    },
   ];
 
   const isActive = (path: string) => location.pathname === path;
@@ -74,7 +108,7 @@ export function AdminDashboardLayout({ children }: AdminDashboardLayoutProps) {
               >
                 {isSidebarOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
               </button>
-              
+
               <Link to="/admin/dashboard" className="flex items-center gap-3">
                 <img src={bobLogo} alt="BOB Rentalz" className="h-10" />
                 <div className="hidden sm:block">
@@ -202,7 +236,7 @@ export function AdminDashboardLayout({ children }: AdminDashboardLayoutProps) {
                   <span className="font-medium">{item.label}</span>
                 </Link>
               ))}
-              
+
               <button
                 onClick={handleLogout}
                 className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-red-600 hover:bg-red-50 w-full transition-colors"
@@ -225,9 +259,7 @@ export function AdminDashboardLayout({ children }: AdminDashboardLayoutProps) {
 
       {/* Main Content */}
       <main className="pt-16 lg:pl-64">
-        <div className="min-h-[calc(100vh-4rem)]">
-          {children}
-        </div>
+        <div className="min-h-[calc(100vh-4rem)]">{children}</div>
       </main>
     </div>
   );

@@ -1,6 +1,6 @@
-import { DashboardLayout } from '../components/DashboardLayout';
 import { ArrowLeft, CheckCircle, Clock, User, Calendar, MapPin, Wrench } from 'lucide-react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { DashboardLayout } from '../components/DashboardLayout';
 import { Button } from '../components/ui/button';
 
 export default function TenantRentedTrackRequestPage() {
@@ -14,7 +14,8 @@ export default function TenantRentedTrackRequestPage() {
     propertyAddress: '123 Palm Street, New Cairo',
     referenceCode: 'SR-2024-001',
     issue: 'Air conditioning not cooling properly',
-    description: 'The AC unit in the master bedroom is not cooling effectively. It runs but doesn\'t reach the set temperature. The issue started about 3 days ago.',
+    description:
+      "The AC unit in the master bedroom is not cooling effectively. It runs but doesn't reach the set temperature. The issue started about 3 days ago.",
     dateSubmitted: '2024-01-15',
     status: 'In Progress',
     priority: 'High',
@@ -32,7 +33,7 @@ export default function TenantRentedTrackRequestPage() {
         date: '2024-01-15',
         time: '10:30 AM',
         completed: true,
-        icon: <CheckCircle className="w-5 h-5" />
+        icon: <CheckCircle className="w-5 h-5" />,
       },
       {
         id: 2,
@@ -41,7 +42,7 @@ export default function TenantRentedTrackRequestPage() {
         date: '2024-01-15',
         time: '2:15 PM',
         completed: true,
-        icon: <User className="w-5 h-5" />
+        icon: <User className="w-5 h-5" />,
       },
       {
         id: 3,
@@ -50,7 +51,7 @@ export default function TenantRentedTrackRequestPage() {
         date: '2024-01-15',
         time: '3:30 PM',
         completed: true,
-        icon: <Calendar className="w-5 h-5" />
+        icon: <Calendar className="w-5 h-5" />,
       },
       {
         id: 4,
@@ -59,7 +60,7 @@ export default function TenantRentedTrackRequestPage() {
         date: '2024-01-16',
         time: '9:15 AM',
         completed: true,
-        icon: <Wrench className="w-5 h-5" />
+        icon: <Wrench className="w-5 h-5" />,
       },
       {
         id: 5,
@@ -68,9 +69,9 @@ export default function TenantRentedTrackRequestPage() {
         date: '',
         time: '',
         completed: false,
-        icon: <CheckCircle className="w-5 h-5" />
-      }
-    ]
+        icon: <CheckCircle className="w-5 h-5" />,
+      },
+    ],
   };
 
   const getStatusColor = (status: string) => {
@@ -131,23 +132,33 @@ export default function TenantRentedTrackRequestPage() {
           <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4 mb-4">
             <div className="flex-1">
               <div className="flex flex-wrap items-center gap-2 mb-3">
-                <span className={`px-3 py-1 rounded-lg text-sm font-medium border ${getTypeColor(request.type)}`}>
+                <span
+                  className={`px-3 py-1 rounded-lg text-sm font-medium border ${getTypeColor(request.type)}`}
+                >
                   {request.type}
                 </span>
-                <span className={`px-3 py-1 rounded-lg text-sm font-medium border ${getStatusColor(request.status)}`}>
+                <span
+                  className={`px-3 py-1 rounded-lg text-sm font-medium border ${getStatusColor(request.status)}`}
+                >
                   {request.status}
                 </span>
-                <span className={`px-3 py-1 rounded-lg text-sm font-medium border ${getPriorityColor(request.priority)}`}>
+                <span
+                  className={`px-3 py-1 rounded-lg text-sm font-medium border ${getPriorityColor(request.priority)}`}
+                >
                   {request.priority} Priority
                 </span>
               </div>
-              <h1 className="text-2xl md:text-3xl font-bold text-[#0E56A4] mb-2">{request.issue}</h1>
+              <h1 className="text-2xl md:text-3xl font-bold text-[#0E56A4] mb-2">
+                {request.issue}
+              </h1>
               <div className="space-y-1 text-sm text-gray-600">
                 <p className="flex items-center gap-2">
                   <MapPin className="w-4 h-4" />
                   {request.property} - {request.propertyAddress}
                 </p>
-                <p className="font-mono font-medium text-gray-900">Reference: {request.referenceCode}</p>
+                <p className="font-mono font-medium text-gray-900">
+                  Reference: {request.referenceCode}
+                </p>
               </div>
             </div>
           </div>
@@ -159,42 +170,46 @@ export default function TenantRentedTrackRequestPage() {
             {/* Request Timeline */}
             <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
               <h2 className="text-xl font-semibold text-[#0E56A4] mb-6">Request Timeline</h2>
-              
+
               <div className="space-y-0">
                 {request.timeline.map((item, index) => (
                   <div key={item.id} className="relative">
                     {/* Connecting Line */}
                     {index < request.timeline.length - 1 && (
-                      <div 
+                      <div
                         className={`absolute left-[19px] top-10 w-0.5 h-[calc(100%+8px)] ${
                           item.completed ? 'bg-[#0E56A4]' : 'bg-gray-300'
                         }`}
                       />
                     )}
-                    
+
                     {/* Timeline Item */}
                     <div className="flex gap-4 pb-8">
                       {/* Icon */}
-                      <div 
+                      <div
                         className={`flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center ${
-                          item.completed 
-                            ? 'bg-[#0E56A4] text-white' 
-                            : 'bg-gray-200 text-gray-400'
+                          item.completed ? 'bg-[#0E56A4] text-white' : 'bg-gray-200 text-gray-400'
                         }`}
                       >
                         {item.icon}
                       </div>
-                      
+
                       {/* Content */}
                       <div className="flex-1 pt-1">
-                        <h3 className={`font-semibold mb-1 ${item.completed ? 'text-gray-900' : 'text-gray-400'}`}>
+                        <h3
+                          className={`font-semibold mb-1 ${item.completed ? 'text-gray-900' : 'text-gray-400'}`}
+                        >
                           {item.status}
                         </h3>
-                        <p className={`text-sm mb-2 ${item.completed ? 'text-gray-600' : 'text-gray-400'}`}>
+                        <p
+                          className={`text-sm mb-2 ${item.completed ? 'text-gray-600' : 'text-gray-400'}`}
+                        >
                           {item.description}
                         </p>
                         {item.date && (
-                          <p className={`text-xs ${item.completed ? 'text-gray-500' : 'text-gray-400'}`}>
+                          <p
+                            className={`text-xs ${item.completed ? 'text-gray-500' : 'text-gray-400'}`}
+                          >
                             {item.date} at {item.time}
                           </p>
                         )}
@@ -267,7 +282,7 @@ export default function TenantRentedTrackRequestPage() {
                 </div>
                 <div className="p-3 bg-blue-50 border border-blue-100 rounded-lg">
                   <p className="text-xs text-blue-700">
-                    {request.allowEntry === 'Yes' 
+                    {request.allowEntry === 'Yes'
                       ? 'Technician is authorized to enter if you are not home.'
                       : 'You will need to be present for this service.'}
                   </p>

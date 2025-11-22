@@ -1,12 +1,12 @@
+import { Building, Eye, Search, UserCheck, MapPin, Tag, Hash } from 'lucide-react';
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { toast } from 'sonner';
 import { AdminDashboardLayout } from '../components/AdminDashboardLayout';
 import { StatusBadge } from '../components/StatusBadge';
 import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
-import { Building, Eye, Search, UserCheck, MapPin, Tag, Hash } from 'lucide-react';
-import { Link } from 'react-router-dom';
 import { adminApi } from '../lib/supabase/adminApi';
-import { toast } from 'sonner';
 
 type FilterType = 'all' | 'pending' | 'approved' | 'assigned' | 'rented' | 'rejected';
 
@@ -27,7 +27,7 @@ export default function AdminPropertiesPage() {
       views: 0,
       leads: 0,
       assignedAgent: null,
-      price: 'EGP 45,000/mo'
+      price: 'EGP 45,000/mo',
     },
     {
       id: '102',
@@ -40,7 +40,7 @@ export default function AdminPropertiesPage() {
       views: 0,
       leads: 0,
       assignedAgent: null,
-      price: 'EGP 18,000/mo'
+      price: 'EGP 18,000/mo',
     },
     {
       id: '103',
@@ -53,7 +53,7 @@ export default function AdminPropertiesPage() {
       views: 45,
       leads: 8,
       assignedAgent: null,
-      price: 'EGP 35,000/mo'
+      price: 'EGP 35,000/mo',
     },
     {
       id: '104',
@@ -66,7 +66,7 @@ export default function AdminPropertiesPage() {
       views: 120,
       leads: 15,
       assignedAgent: 'Sarah Anderson',
-      price: 'EGP 22,000/mo'
+      price: 'EGP 22,000/mo',
     },
     {
       id: '105',
@@ -79,7 +79,7 @@ export default function AdminPropertiesPage() {
       views: 89,
       leads: 12,
       assignedAgent: 'Michael Brown',
-      price: 'EGP 12,000/mo'
+      price: 'EGP 12,000/mo',
     },
     {
       id: '106',
@@ -92,7 +92,7 @@ export default function AdminPropertiesPage() {
       views: 234,
       leads: 28,
       assignedAgent: 'Sarah Anderson',
-      price: 'EGP 38,000/mo'
+      price: 'EGP 38,000/mo',
     },
     {
       id: '107',
@@ -105,18 +105,19 @@ export default function AdminPropertiesPage() {
       views: 156,
       leads: 19,
       assignedAgent: 'Michael Brown',
-      price: 'EGP 32,000/mo'
+      price: 'EGP 32,000/mo',
     },
   ];
 
   // Filter properties
-  const filteredProperties = mockProperties.filter(property => {
+  const filteredProperties = mockProperties.filter((property) => {
     const statusMatch = activeFilter === 'all' || property.status.toLowerCase() === activeFilter;
-    const searchMatch = searchQuery === '' || 
+    const searchMatch =
+      searchQuery === '' ||
       property.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       property.owner.toLowerCase().includes(searchQuery.toLowerCase()) ||
       property.city.toLowerCase().includes(searchQuery.toLowerCase());
-    
+
     return statusMatch && searchMatch;
   });
 
@@ -233,7 +234,9 @@ export default function AdminPropertiesPage() {
                         <h3 className="font-semibold text-gray-900">{property.name}</h3>
                         {/* Reference Information */}
                         <div className="mb-3 mt-2">
-                          <p className="text-xs font-bold text-[#0E56A4] mb-1">Reference Information</p>
+                          <p className="text-xs font-bold text-[#0E56A4] mb-1">
+                            Reference Information
+                          </p>
                           <div className="flex flex-wrap items-center gap-4">
                             <span className="flex items-center gap-1 text-xs text-gray-600">
                               <Tag className="w-3 h-3 text-gray-400" />
@@ -285,12 +288,12 @@ export default function AdminPropertiesPage() {
                           View Details
                         </Button>
                       </Link>
-                      
+
                       {property.status === 'Pending' && (
                         <>
-                          <Button 
-                            size="sm" 
-                            variant="outline" 
+                          <Button
+                            size="sm"
+                            variant="outline"
                             className="border-green-500 text-green-600 hover:bg-green-50"
                             onClick={async () => {
                               const { success, error } = await adminApi.verifyProperty(property.id);
@@ -304,7 +307,11 @@ export default function AdminPropertiesPage() {
                           >
                             Approve
                           </Button>
-                          <Button size="sm" variant="outline" className="border-red-500 text-red-600 hover:bg-red-50">
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            className="border-red-500 text-red-600 hover:bg-red-50"
+                          >
                             Reject
                           </Button>
                         </>
@@ -312,7 +319,11 @@ export default function AdminPropertiesPage() {
 
                       {(property.status === 'Approved' || property.status === 'Assigned') && (
                         <Link to="/admin/assignments">
-                          <Button size="sm" variant="outline" className="border-[#0E56A4] text-[#0E56A4]">
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            className="border-[#0E56A4] text-[#0E56A4]"
+                          >
                             {property.assignedAgent ? 'Change Agent' : 'Assign Agent'}
                           </Button>
                         </Link>
@@ -346,13 +357,13 @@ export default function AdminPropertiesPage() {
               <div>
                 <p className="text-sm text-gray-600 mb-1">Pending Approval</p>
                 <p className="text-2xl font-bold text-yellow-600">
-                  {mockProperties.filter(p => p.status === 'Pending').length}
+                  {mockProperties.filter((p) => p.status === 'Pending').length}
                 </p>
               </div>
               <div>
                 <p className="text-sm text-gray-600 mb-1">Currently Rented</p>
                 <p className="text-2xl font-bold text-green-600">
-                  {mockProperties.filter(p => p.status === 'Rented').length}
+                  {mockProperties.filter((p) => p.status === 'Rented').length}
                 </p>
               </div>
             </div>

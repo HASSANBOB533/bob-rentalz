@@ -1,10 +1,10 @@
+import { Building, Eye, Search, UserCheck, MapPin, ArrowLeft, Tag, Hash } from 'lucide-react';
 import { useState } from 'react';
 import { useParams, useNavigate, Link, useLocation } from 'react-router-dom';
 import { AdminDashboardLayout } from '../components/AdminDashboardLayout';
 import { Badge } from '../components/ui/badge';
 import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
-import { Building, Eye, Search, UserCheck, MapPin, ArrowLeft, Tag, Hash } from 'lucide-react';
 
 type FilterType = 'all' | 'assigned' | 'rented' | 'pending';
 
@@ -20,7 +20,7 @@ export default function AdminAgentPropertiesPage() {
     '1': 'Sarah Anderson',
     '2': 'Michael Brown',
     '3': 'Emma Wilson',
-    '4': 'David Martinez'
+    '4': 'David Martinez',
   };
 
   const agentName = agentId ? agentMap[agentId] : 'Unknown Agent';
@@ -38,7 +38,7 @@ export default function AdminAgentPropertiesPage() {
       views: 0,
       leads: 0,
       assignedAgent: null,
-      price: 'EGP 45,000/mo'
+      price: 'EGP 45,000/mo',
     },
     {
       id: '104',
@@ -51,7 +51,7 @@ export default function AdminAgentPropertiesPage() {
       views: 120,
       leads: 15,
       assignedAgent: 'Sarah Anderson',
-      price: 'EGP 22,000/mo'
+      price: 'EGP 22,000/mo',
     },
     {
       id: '105',
@@ -64,7 +64,7 @@ export default function AdminAgentPropertiesPage() {
       views: 89,
       leads: 12,
       assignedAgent: 'Michael Brown',
-      price: 'EGP 12,000/mo'
+      price: 'EGP 12,000/mo',
     },
     {
       id: '106',
@@ -77,7 +77,7 @@ export default function AdminAgentPropertiesPage() {
       views: 234,
       leads: 28,
       assignedAgent: 'Sarah Anderson',
-      price: 'EGP 38,000/mo'
+      price: 'EGP 38,000/mo',
     },
     {
       id: '107',
@@ -90,31 +90,32 @@ export default function AdminAgentPropertiesPage() {
       views: 156,
       leads: 19,
       assignedAgent: 'Michael Brown',
-      price: 'EGP 32,000/mo'
+      price: 'EGP 32,000/mo',
     },
   ];
 
   // Filter properties for this agent
-  const agentProperties = mockProperties.filter(p => p.assignedAgent === agentName);
+  const agentProperties = mockProperties.filter((p) => p.assignedAgent === agentName);
 
   // Apply UI filters
-  const filteredProperties = agentProperties.filter(property => {
+  const filteredProperties = agentProperties.filter((property) => {
     const statusMatch = activeFilter === 'all' || property.status.toLowerCase() === activeFilter;
-    const searchMatch = searchQuery === '' || 
+    const searchMatch =
+      searchQuery === '' ||
       property.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       property.owner.toLowerCase().includes(searchQuery.toLowerCase()) ||
       property.city.toLowerCase().includes(searchQuery.toLowerCase());
-    
+
     return statusMatch && searchMatch;
   });
 
   const getStatusBadge = (status: string) => {
     const statusConfig: Record<string, { bg: string; text: string }> = {
-      'Pending': { bg: 'bg-yellow-100', text: 'text-yellow-700' },
-      'Approved': { bg: 'bg-blue-100', text: 'text-blue-700' },
-      'Assigned': { bg: 'bg-purple-100', text: 'text-purple-700' },
-      'Rented': { bg: 'bg-green-100', text: 'text-green-700' },
-      'Rejected': { bg: 'bg-red-100', text: 'text-red-700' },
+      Pending: { bg: 'bg-yellow-100', text: 'text-yellow-700' },
+      Approved: { bg: 'bg-blue-100', text: 'text-blue-700' },
+      Assigned: { bg: 'bg-purple-100', text: 'text-purple-700' },
+      Rented: { bg: 'bg-green-100', text: 'text-green-700' },
+      Rejected: { bg: 'bg-red-100', text: 'text-red-700' },
     };
 
     const config = statusConfig[status] || { bg: 'bg-gray-100', text: 'text-gray-700' };
@@ -228,16 +229,24 @@ export default function AdminAgentPropertiesPage() {
 
                     {/* Actions */}
                     <div className="flex flex-wrap gap-2">
-                      <Button 
-                        size="sm" 
+                      <Button
+                        size="sm"
                         className="bg-[#0E56A4] text-white hover:bg-[#0A3F79]"
-                        onClick={() => navigate(`/admin/properties/${property.id}`, { state: { from: location.pathname } })}
+                        onClick={() =>
+                          navigate(`/admin/properties/${property.id}`, {
+                            state: { from: location.pathname },
+                          })
+                        }
                       >
                         View Details
                       </Button>
-                      
+
                       <Link to="/admin/assignments">
-                        <Button size="sm" variant="outline" className="border-[#0E56A4] text-[#0E56A4]">
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          className="border-[#0E56A4] text-[#0E56A4]"
+                        >
                           Reassign
                         </Button>
                       </Link>
@@ -251,9 +260,9 @@ export default function AdminAgentPropertiesPage() {
               <Building className="w-16 h-16 text-gray-400 mx-auto mb-4" />
               <h3 className="text-lg font-semibold text-gray-700 mb-2">No properties found</h3>
               <p className="text-gray-600">
-                {agentProperties.length === 0 
-                  ? `${agentName} has no assigned properties.` 
-                  : "Try adjusting your filters or search terms."}
+                {agentProperties.length === 0
+                  ? `${agentName} has no assigned properties.`
+                  : 'Try adjusting your filters or search terms.'}
               </p>
             </div>
           )}

@@ -6,11 +6,7 @@ interface ImageUploaderProps {
   onChange: (images: string[], primaryIndex: number) => void;
 }
 
-export const ImageUploader: React.FC<ImageUploaderProps> = ({
-  images,
-  primaryIndex,
-  onChange,
-}) => {
+export const ImageUploader: React.FC<ImageUploaderProps> = ({ images, primaryIndex, onChange }) => {
   const [uploading, setUploading] = useState(false);
 
   const handleAddImage = () => {
@@ -42,7 +38,7 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
     if (index === 0) return;
     const newImages = [...images];
     [newImages[index - 1], newImages[index]] = [newImages[index], newImages[index - 1]];
-    
+
     let newPrimaryIndex = primaryIndex;
     if (primaryIndex === index) {
       newPrimaryIndex = index - 1;
@@ -71,9 +67,7 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
-        <label className="block text-sm font-medium text-gray-700">
-          Property Images
-        </label>
+        <label className="block text-sm font-medium text-gray-700">Property Images</label>
         <button
           type="button"
           onClick={handleAddImage}
@@ -103,12 +97,8 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
                 index === primaryIndex ? 'border-blue-500' : 'border-gray-300'
               }`}
             >
-              <img
-                src={image}
-                alt={`Property ${index + 1}`}
-                className="w-full h-48 object-cover"
-              />
-              
+              <img src={image} alt={`Property ${index + 1}`} className="w-full h-48 object-cover" />
+
               {index === primaryIndex && (
                 <div className="absolute top-2 left-2 bg-blue-600 text-white px-2 py-1 rounded text-xs font-semibold">
                   Primary

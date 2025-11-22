@@ -15,17 +15,17 @@ export function getComparisonList(): string[] {
 
 export function addToComparison(propertyId: string): boolean {
   const current = getComparisonList();
-  
+
   // Check if already in comparison
   if (current.includes(propertyId)) {
     return true;
   }
-  
+
   // Check if limit reached
   if (current.length >= 3) {
     return false;
   }
-  
+
   const updated = [...current, propertyId];
   localStorage.setItem(COMPARISON_KEY, JSON.stringify(updated));
   return true;
@@ -33,7 +33,7 @@ export function addToComparison(propertyId: string): boolean {
 
 export function removeFromComparison(propertyId: string): void {
   const current = getComparisonList();
-  const updated = current.filter(id => id !== propertyId);
+  const updated = current.filter((id) => id !== propertyId);
   localStorage.setItem(COMPARISON_KEY, JSON.stringify(updated));
 }
 

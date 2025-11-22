@@ -1,8 +1,8 @@
-import { Link } from 'react-router-dom';
 import { Calendar, Clock, ArrowRight } from 'lucide-react';
+import { motion } from 'motion/react';
+import { Link } from 'react-router-dom';
 import { BlogPost } from '../data/mockData';
 import { ImageWithFallback } from './figma/ImageWithFallback';
-import { motion } from 'motion/react';
 
 interface BlogCardProps {
   post: BlogPost;
@@ -11,10 +11,10 @@ interface BlogCardProps {
 export function BlogCard({ post }: BlogCardProps) {
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
-    return date.toLocaleDateString('en-US', { 
-      year: 'numeric', 
-      month: 'long', 
-      day: 'numeric' 
+    return date.toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
     });
   };
 
@@ -34,7 +34,7 @@ export function BlogCard({ post }: BlogCardProps) {
             alt={post.title}
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
           />
-          
+
           {/* Category Chip */}
           <div className="absolute top-4 left-4 bg-[#D4AF37] text-white px-4 py-1.5 rounded-full text-sm font-medium">
             {post.category}
@@ -61,9 +61,7 @@ export function BlogCard({ post }: BlogCardProps) {
           </h3>
 
           {/* Excerpt */}
-          <p className="text-gray-600 mb-4 line-clamp-3">
-            {post.excerpt}
-          </p>
+          <p className="text-gray-600 mb-4 line-clamp-3">{post.excerpt}</p>
 
           {/* Read More Link */}
           <div className="flex items-center gap-2 text-[#D4AF37] font-medium group-hover:gap-3 transition-all">

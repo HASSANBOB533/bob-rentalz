@@ -1,22 +1,23 @@
-import { useState } from 'react';
 import { Search, Tag } from 'lucide-react';
-import { Button } from '../components/ui/button';
-import { BlogCard } from '../components/BlogCard';
-import { blogPosts } from '../data/mockData';
 import { motion } from 'motion/react';
+import { useState } from 'react';
+import { BlogCard } from '../components/BlogCard';
+import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
+import { blogPosts } from '../data/mockData';
 
 export function BlogPage() {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
   // Get unique categories
-  const categories = Array.from(new Set(blogPosts.map(post => post.category)));
+  const categories = Array.from(new Set(blogPosts.map((post) => post.category)));
 
   // Filter posts
-  const filteredPosts = blogPosts.filter(post => {
-    const matchesSearch = post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         post.excerpt.toLowerCase().includes(searchQuery.toLowerCase());
+  const filteredPosts = blogPosts.filter((post) => {
+    const matchesSearch =
+      post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      post.excerpt.toLowerCase().includes(searchQuery.toLowerCase());
     const matchesCategory = !selectedCategory || post.category === selectedCategory;
     return matchesSearch && matchesCategory;
   });
@@ -71,9 +72,7 @@ export function BlogPage() {
                   <button
                     onClick={() => setSelectedCategory(null)}
                     className={`w-full text-left px-3 py-2 text-sm lg:text-[15px] rounded-lg transition-colors ${
-                      !selectedCategory
-                        ? 'bg-[#D4AF37] text-white'
-                        : 'hover:bg-gray-100'
+                      !selectedCategory ? 'bg-[#D4AF37] text-white' : 'hover:bg-gray-100'
                     }`}
                   >
                     All Posts
@@ -120,7 +119,7 @@ export function BlogPage() {
               <div className="bg-white rounded-xl p-4 lg:p-5 shadow-sm border border-gray-100">
                 <h3 className="text-[16px] lg:text-[17px] font-semibold mb-3">Popular Tags</h3>
                 <div className="flex flex-wrap gap-2">
-                  {Array.from(new Set(blogPosts.flatMap(post => post.tags))).map((tag) => (
+                  {Array.from(new Set(blogPosts.flatMap((post) => post.tags))).map((tag) => (
                     <span
                       key={tag}
                       className="px-3 py-1 bg-[#F8F7F5] text-xs lg:text-sm rounded-full hover:bg-[#D4AF37] hover:text-white transition-colors cursor-pointer"
@@ -161,7 +160,8 @@ export function BlogPage() {
           >
             <h3 className="mb-3 text-[22px] md:text-[24px] lg:text-[26px]">Stay Updated</h3>
             <p className="text-[14px] md:text-[15px] lg:text-[16px] text-gray-600 mb-6 lg:mb-8">
-              Subscribe to our newsletter for the latest rental tips, market insights, and property updates
+              Subscribe to our newsletter for the latest rental tips, market insights, and property
+              updates
             </p>
             <div className="flex gap-3 max-w-md mx-auto">
               <input

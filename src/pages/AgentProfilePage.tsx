@@ -1,19 +1,19 @@
-import { useState } from 'react';
 import { Camera, Mail, Phone, MapPin, X, ArrowLeft } from 'lucide-react';
-import { toast } from 'sonner';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'sonner';
 
 export default function AgentProfilePage() {
   const [profile, setProfile] = useState({
-    name: "Sarah Anderson",
-    email: "sarah.anderson@bob-rentalz.com",
-    phone: "+20 100 123 4567",
-    bio: "Specializing in New Cairo and Sheikh Zayed areas. Verified BOB® agent with 5+ years experience in luxury rentals and property management.",
-    specialization: ["New Cairo", "Sheikh Zayed", "Madinaty"],
-    avatar: "https://i.pravatar.cc/150?img=47",
-    yearsExperience: "5+",
+    name: 'Sarah Anderson',
+    email: 'sarah.anderson@bob-rentalz.com',
+    phone: '+20 100 123 4567',
+    bio: 'Specializing in New Cairo and Sheikh Zayed areas. Verified BOB® agent with 5+ years experience in luxury rentals and property management.',
+    specialization: ['New Cairo', 'Sheikh Zayed', 'Madinaty'],
+    avatar: 'https://i.pravatar.cc/150?img=47',
+    yearsExperience: '5+',
     propertiesManaged: 12,
-    language: ["English", "Arabic"]
+    language: ['English', 'Arabic'],
   });
 
   const [newArea, setNewArea] = useState('');
@@ -32,7 +32,7 @@ export default function AgentProfilePage() {
     if (newArea.trim() && !profile.specialization.includes(newArea.trim())) {
       setProfile({
         ...profile,
-        specialization: [...profile.specialization, newArea.trim()]
+        specialization: [...profile.specialization, newArea.trim()],
       });
       setNewArea('');
       toast.success(`Added "${newArea}" to specialization areas`);
@@ -42,7 +42,7 @@ export default function AgentProfilePage() {
   const handleRemoveSpecialization = (areaToRemove: string) => {
     setProfile({
       ...profile,
-      specialization: profile.specialization.filter(area => area !== areaToRemove)
+      specialization: profile.specialization.filter((area) => area !== areaToRemove),
     });
     toast.success(`Removed "${areaToRemove}" from specialization areas`);
   };
@@ -58,7 +58,6 @@ export default function AgentProfilePage() {
 
   return (
     <div className="px-4 sm:px-6 lg:px-8 py-6 space-y-8">
-      
       {/* BACK TO DASHBOARD BUTTON */}
       <button
         onClick={() => navigate('/agent/dashboard')}
@@ -76,11 +75,9 @@ export default function AgentProfilePage() {
 
       {/* 2️⃣ MAIN LAYOUT - TWO COLUMNS */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        
         {/* LEFT COLUMN - PROFILE CARD */}
         <div className="lg:col-span-1">
           <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6 flex flex-col items-center space-y-4">
-            
             {/* Profile Photo */}
             <div className="relative">
               <img
@@ -133,18 +130,14 @@ export default function AgentProfilePage() {
         {/* RIGHT COLUMN - EDITABLE FORM */}
         <div className="lg:col-span-2">
           <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6 space-y-8">
-            
             {/* Personal Information Section */}
             <div>
               <h3 className="text-lg font-semibold text-[#0E56A4] mb-4">Personal Information</h3>
-              
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                
                 {/* Full Name */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-600 mb-1">
-                    Full Name
-                  </label>
+                  <label className="block text-sm font-medium text-gray-600 mb-1">Full Name</label>
                   <input
                     value={profile.name}
                     onChange={(e) => setProfile({ ...profile, name: e.target.value })}
@@ -207,9 +200,7 @@ export default function AgentProfilePage() {
             {/* Bio Section */}
             <div>
               <h3 className="text-lg font-semibold text-[#0E56A4] mb-4">Professional Bio</h3>
-              <label className="block text-sm font-medium text-gray-600 mb-1">
-                About You
-              </label>
+              <label className="block text-sm font-medium text-gray-600 mb-1">About You</label>
               <textarea
                 value={profile.bio}
                 onChange={(e) => setProfile({ ...profile, bio: e.target.value })}
@@ -217,9 +208,7 @@ export default function AgentProfilePage() {
                 rows={5}
                 placeholder="Tell clients about your experience, specialization, and expertise..."
               />
-              <p className="text-xs text-gray-400 mt-1">
-                {profile.bio.length} / 500 characters
-              </p>
+              <p className="text-xs text-gray-400 mt-1">{profile.bio.length} / 500 characters</p>
             </div>
 
             {/* Areas of Specialization */}
@@ -286,9 +275,7 @@ export default function AgentProfilePage() {
                   </span>
                 ))}
               </div>
-              <p className="text-xs text-gray-400 mt-2">
-                Contact support to update your languages
-              </p>
+              <p className="text-xs text-gray-400 mt-2">Contact support to update your languages</p>
             </div>
 
             {/* Save Button */}

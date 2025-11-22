@@ -1,11 +1,11 @@
 import { X, Bed, Bath, Maximize, MapPin, CheckCircle, XCircle, Heart } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Button } from './ui/button';
-import { properties as allProperties, agents } from '../data/mockData';
-import { ImageWithFallback } from './figma/ImageWithFallback';
 import { useState, useEffect } from 'react';
-import { isFavorite, toggleFavorite } from '../utils/favorites';
 import { Link } from 'react-router-dom';
+import { properties as allProperties, agents } from '../data/mockData';
+import { isFavorite, toggleFavorite } from '../utils/favorites';
+import { ImageWithFallback } from './figma/ImageWithFallback';
+import { Button } from './ui/button';
 
 interface ComparisonModalProps {
   open: boolean;
@@ -20,7 +20,7 @@ interface ComparisonModalProps {
 export function ComparisonModal({ open, onClose, properties: propertyIds }: ComparisonModalProps) {
   const [favorites, setFavorites] = useState<Record<string, boolean>>({});
 
-  const properties = allProperties.filter(p => propertyIds.includes(p.id));
+  const properties = allProperties.filter((p) => propertyIds.includes(p.id));
 
   useEffect(() => {
     const favs: Record<string, boolean> = {};
@@ -98,11 +98,15 @@ export function ComparisonModal({ open, onClose, properties: propertyIds }: Comp
                   </div>
                 </div>
               ) : (
-                <div className={`grid gap-6 ${
-                  properties.length === 3 ? 'lg:grid-cols-3 md:grid-cols-2' : 
-                  properties.length === 2 ? 'lg:grid-cols-2' : 
-                  'grid-cols-1'
-                }`}>
+                <div
+                  className={`grid gap-6 ${
+                    properties.length === 3
+                      ? 'lg:grid-cols-3 md:grid-cols-2'
+                      : properties.length === 2
+                        ? 'lg:grid-cols-2'
+                        : 'grid-cols-1'
+                  }`}
+                >
                   {properties.map((property) => {
                     const agent = agents.find((a) => a.id === property.agentId);
 
@@ -130,7 +134,7 @@ export function ComparisonModal({ open, onClose, properties: propertyIds }: Comp
                         <div className="p-5 space-y-4">
                           {/* Title & Price */}
                           <div className="mb-5">
-                            <Link 
+                            <Link
                               to={`/property/${property.id}`}
                               className="font-semibold text-gray-900 hover:text-[#D4AF37] transition-colors line-clamp-2 text-[14px] md:text-[16px] lg:text-[18px] block mb-2"
                             >
@@ -141,7 +145,8 @@ export function ComparisonModal({ open, onClose, properties: propertyIds }: Comp
                           {/* Price */}
                           <div className="flex items-baseline gap-2">
                             <span className="text-[#D4AF37] font-semibold text-[20px] md:text-[24px] whitespace-nowrap">
-                              {property.price.toLocaleString()} EGP<span className="text-[18px] md:text-[22px]">/month</span>
+                              {property.price.toLocaleString()} EGP
+                              <span className="text-[18px] md:text-[22px]">/month</span>
                             </span>
                           </div>
 
@@ -195,10 +200,7 @@ export function ComparisonModal({ open, onClose, properties: propertyIds }: Comp
                             </p>
                             <div className="space-y-1.5">
                               {commonAmenities.map((amenity) => (
-                                <div
-                                  key={amenity}
-                                  className="flex items-center gap-2 text-sm"
-                                >
+                                <div key={amenity} className="flex items-center gap-2 text-sm">
                                   {property.amenities.includes(amenity) ? (
                                     <>
                                       <CheckCircle className="w-4 h-4 text-green-500 flex-shrink-0" />
@@ -228,9 +230,7 @@ export function ComparisonModal({ open, onClose, properties: propertyIds }: Comp
                                   className="w-10 h-10 rounded-full object-cover ring-2 ring-gray-100"
                                 />
                                 <div>
-                                  <p className="text-sm font-medium text-gray-900">
-                                    {agent.name}
-                                  </p>
+                                  <p className="text-sm font-medium text-gray-900">{agent.name}</p>
                                   <p className="text-xs text-gray-500">{agent.phone}</p>
                                 </div>
                               </div>
@@ -246,9 +246,7 @@ export function ComparisonModal({ open, onClose, properties: propertyIds }: Comp
                             >
                               <Heart
                                 className={`w-4 h-4 mr-2 ${
-                                  favorites[property.id]
-                                    ? 'fill-red-500 text-red-500'
-                                    : ''
+                                  favorites[property.id] ? 'fill-red-500 text-red-500' : ''
                                 }`}
                               />
                               {favorites[property.id] ? 'Saved' : 'Save'}

@@ -1,11 +1,19 @@
-import { agents } from '../data/mockData';
+import heroImage from 'figma:asset/c45e989369cf29fd2f3dd72bd5c5386a199522bd.png';
+import {
+  ArrowRight,
+  UserPlus,
+  CheckCircle,
+  TrendingUp,
+  Users,
+  Award,
+  ChevronRight,
+} from 'lucide-react';
+import { motion } from 'motion/react';
+import { useState, useRef, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { AgentCard } from '../components/AgentCard';
 import { Button } from '../components/ui/button';
-import { Link } from 'react-router-dom';
-import { ArrowRight, UserPlus, CheckCircle, TrendingUp, Users, Award, ChevronRight } from 'lucide-react';
-import { motion } from 'motion/react';
-import heroImage from 'figma:asset/c45e989369cf29fd2f3dd72bd5c5386a199522bd.png';
-import { useState, useRef, useEffect } from 'react';
+import { agents } from '../data/mockData';
 
 export function AgentsPage() {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -15,7 +23,7 @@ export function AgentsPage() {
     initial: { opacity: 0, y: 20 },
     whileInView: { opacity: 1, y: 0 },
     viewport: { once: true },
-    transition: { duration: 0.6 }
+    transition: { duration: 0.6 },
   };
 
   // Track scroll position to update page dots
@@ -171,9 +179,7 @@ export function AgentsPage() {
                   }
                 }}
                 className={`h-2 rounded-full transition-all ${
-                  activeIndex === index
-                    ? 'w-6 bg-[#D4AF37]'
-                    : 'w-2 bg-gray-300'
+                  activeIndex === index ? 'w-6 bg-[#D4AF37]' : 'w-2 bg-gray-300'
                 }`}
                 aria-label={`Go to agent ${index + 1}`}
               />
@@ -217,7 +223,8 @@ export function AgentsPage() {
                 Become a BOB Rentalz Agent
               </h2>
               <p className="text-[15px] md:text-[18px] text-gray-600 leading-relaxed max-w-2xl mx-auto">
-                Join Egypt's leading property management platform and grow your real estate career with premium tools, exclusive listings, and professional support.
+                Join Egypt's leading property management platform and grow your real estate career
+                with premium tools, exclusive listings, and professional support.
               </p>
             </div>
 
@@ -247,9 +254,7 @@ export function AgentsPage() {
                 <div className="w-12 h-12 bg-[#D4AF37]/10 rounded-lg flex items-center justify-center mb-4">
                   <Award className="w-6 h-6 text-[#D4AF37]" />
                 </div>
-                <h3 className="text-[18px] font-semibold text-[#2B2B2B] mb-2">
-                  Premium Listings
-                </h3>
+                <h3 className="text-[18px] font-semibold text-[#2B2B2B] mb-2">Premium Listings</h3>
                 <p className="text-[14px] text-gray-600 leading-relaxed">
                   Access to exclusive, verified properties across Egypt
                 </p>
@@ -280,7 +285,7 @@ export function AgentsPage() {
                 'Flexible work schedule',
                 'Ongoing training and development',
                 'Exclusive territory opportunities',
-                'Performance-based incentives'
+                'Performance-based incentives',
               ].map((feature, index) => (
                 <motion.div
                   key={index}

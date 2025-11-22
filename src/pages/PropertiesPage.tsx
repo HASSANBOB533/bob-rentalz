@@ -1,14 +1,20 @@
+import { Filter, Grid3x3, List, X, ChevronLeft, ChevronRight } from 'lucide-react';
+import { motion, AnimatePresence } from 'motion/react';
 import { useState, useEffect } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
-import { PropertyCard } from '../components/PropertyCard';
 import { CompareBar } from '../components/CompareBar';
 import { ComparisonModal } from '../components/ComparisonModal';
+import { PropertyCard } from '../components/PropertyCard';
 import { PropertyFilters } from '../components/PropertyFilters';
-import { properties, locations, Property } from '../data/mockData';
-import { Filter, Grid3x3, List, X, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '../components/ui/button';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../components/ui/select';
-import { motion, AnimatePresence } from 'motion/react';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '../components/ui/select';
+import { properties, locations, Property } from '../data/mockData';
 import { getComparisonList, removeFromComparison, clearComparison } from '../utils/comparison';
 
 export function PropertiesPage() {
@@ -18,7 +24,7 @@ export function PropertiesPage() {
   const [filteredProperties, setFilteredProperties] = useState(properties);
   const [showFilters, setShowFilters] = useState(false);
   const [sortBy, setSortBy] = useState('newest');
-  
+
   // Pagination state
   const [currentPage, setCurrentPage] = useState(1);
   const propertiesPerPage = 10;
@@ -33,46 +39,56 @@ export function PropertiesPage() {
   const [selectedStatus, setSelectedStatus] = useState<string[]>(['available']);
   const [selectedAmenities, setSelectedAmenities] = useState<string[]>([]);
 
-  const allAmenities = Array.from(new Set(properties.flatMap(p => p.amenities))).slice(0, 10);
+  const allAmenities = Array.from(new Set(properties.flatMap((p) => p.amenities))).slice(0, 10);
 
   useEffect(() => {
     applyFilters();
-  }, [selectedLocation, selectedBedrooms, selectedBathrooms, selectedType, selectedFurnishing, maxPrice, selectedStatus, selectedAmenities, sortBy]);
+  }, [
+    selectedLocation,
+    selectedBedrooms,
+    selectedBathrooms,
+    selectedType,
+    selectedFurnishing,
+    maxPrice,
+    selectedStatus,
+    selectedAmenities,
+    sortBy,
+  ]);
 
   const applyFilters = () => {
     let filtered = properties;
 
     if (selectedLocation !== 'all') {
-      filtered = filtered.filter(p => p.location === selectedLocation);
+      filtered = filtered.filter((p) => p.location === selectedLocation);
     }
 
     if (selectedBedrooms !== 'any') {
-      filtered = filtered.filter(p => p.bedrooms >= parseInt(selectedBedrooms));
+      filtered = filtered.filter((p) => p.bedrooms >= parseInt(selectedBedrooms));
     }
 
     if (selectedBathrooms !== 'any') {
-      filtered = filtered.filter(p => p.bathrooms >= parseInt(selectedBathrooms));
+      filtered = filtered.filter((p) => p.bathrooms >= parseInt(selectedBathrooms));
     }
 
     if (selectedType !== 'all') {
-      filtered = filtered.filter(p => p.type === selectedType);
+      filtered = filtered.filter((p) => p.type === selectedType);
     }
 
     if (selectedFurnishing !== 'all') {
-      filtered = filtered.filter(p => p.furnishing === selectedFurnishing);
+      filtered = filtered.filter((p) => p.furnishing === selectedFurnishing);
     }
 
     if (maxPrice) {
-      filtered = filtered.filter(p => p.price <= parseInt(maxPrice));
+      filtered = filtered.filter((p) => p.price <= parseInt(maxPrice));
     }
 
     if (selectedStatus.length > 0) {
-      filtered = filtered.filter(p => selectedStatus.includes(p.status));
+      filtered = filtered.filter((p) => selectedStatus.includes(p.status));
     }
 
     if (selectedAmenities.length > 0) {
-      filtered = filtered.filter(p =>
-        selectedAmenities.every(amenity => p.amenities.includes(amenity))
+      filtered = filtered.filter((p) =>
+        selectedAmenities.every((amenity) => p.amenities.includes(amenity)),
       );
     }
 
@@ -93,18 +109,14 @@ export function PropertiesPage() {
   };
 
   const handleStatusToggle = (status: string) => {
-    setSelectedStatus(prev =>
-      prev.includes(status)
-        ? prev.filter(s => s !== status)
-        : [...prev, status]
+    setSelectedStatus((prev) =>
+      prev.includes(status) ? prev.filter((s) => s !== status) : [...prev, status],
     );
   };
 
   const handleAmenityToggle = (amenity: string) => {
-    setSelectedAmenities(prev =>
-      prev.includes(amenity)
-        ? prev.filter(a => a !== amenity)
-        : [...prev, amenity]
+    setSelectedAmenities((prev) =>
+      prev.includes(amenity) ? prev.filter((a) => a !== amenity) : [...prev, amenity],
     );
   };
 
@@ -131,7 +143,7 @@ export function PropertiesPage() {
     selectedType !== 'all',
     selectedFurnishing !== 'all',
     maxPrice !== '',
-    selectedAmenities.length > 0
+    selectedAmenities.length > 0,
   ].filter(Boolean).length;
 
   // Comparison state
@@ -146,40 +158,40 @@ export function PropertiesPage() {
   useEffect(() => {
     refreshComparison();
   }, []);
-  
+
   // Reset to page 1 when filters change
   useEffect(() => {
     setCurrentPage(1);
   }, [filteredProperties]);
-  
+
   // Pagination calculations
   const totalPages = Math.ceil(filteredProperties.length / propertiesPerPage);
   const startIndex = (currentPage - 1) * propertiesPerPage;
   const endIndex = startIndex + propertiesPerPage;
   const paginatedProperties = filteredProperties.slice(startIndex, endIndex);
-  
+
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
-  
+
   const handlePrevPage = () => {
     if (currentPage > 1) {
       handlePageChange(currentPage - 1);
     }
   };
-  
+
   const handleNextPage = () => {
     if (currentPage < totalPages) {
       handlePageChange(currentPage + 1);
     }
   };
-  
+
   // Generate page numbers to display
   const getPageNumbers = () => {
     const pages: number[] = [];
     const maxPagesToShow = 5;
-    
+
     if (totalPages <= maxPagesToShow) {
       for (let i = 1; i <= totalPages; i++) {
         pages.push(i);
@@ -199,7 +211,7 @@ export function PropertiesPage() {
         }
       }
     }
-    
+
     return pages;
   };
 
@@ -218,7 +230,8 @@ export function PropertiesPage() {
           <div className="space-y-4">
             {/* Property Count */}
             <p className="text-gray-600 text-sm md:text-base">
-              {filteredProperties.length} {filteredProperties.length === 1 ? 'property' : 'properties'} found
+              {filteredProperties.length}{' '}
+              {filteredProperties.length === 1 ? 'property' : 'properties'} found
             </p>
 
             {/* Sort Dropdown - Full width on mobile */}
@@ -240,8 +253,8 @@ export function PropertiesPage() {
               <button
                 onClick={() => setViewMode('grid')}
                 className={`flex-1 px-3 py-2.5 rounded-lg transition-all flex items-center justify-center gap-2 ${
-                  viewMode === 'grid' 
-                    ? 'bg-[#D4AF37] text-white shadow-sm' 
+                  viewMode === 'grid'
+                    ? 'bg-[#D4AF37] text-white shadow-sm'
                     : 'text-gray-600 hover:bg-gray-100'
                 }`}
                 title="Grid View"
@@ -252,8 +265,8 @@ export function PropertiesPage() {
               <button
                 onClick={() => setViewMode('list')}
                 className={`flex-1 px-3 py-2.5 rounded-lg transition-all flex items-center justify-center gap-2 ${
-                  viewMode === 'list' 
-                    ? 'bg-[#D4AF37] text-white shadow-sm' 
+                  viewMode === 'list'
+                    ? 'bg-[#D4AF37] text-white shadow-sm'
                     : 'text-gray-600 hover:bg-gray-100'
                 }`}
                 title="List View"
@@ -329,12 +342,12 @@ export function PropertiesPage() {
           <AnimatePresence>
             {showFilters && (
               <>
-                <motion.div 
+                <motion.div
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
-                  className="fixed inset-0 bg-black/50 z-40 lg:hidden" 
-                  onClick={() => setShowFilters(false)} 
+                  className="fixed inset-0 bg-black/50 z-40 lg:hidden"
+                  onClick={() => setShowFilters(false)}
                 />
                 <motion.aside
                   initial={{ y: '100%' }}
@@ -355,7 +368,12 @@ export function PropertiesPage() {
                         )}
                       </div>
                       <div className="flex items-center gap-2">
-                        <Button variant="ghost" size="sm" onClick={clearFilters} className="text-[#D4AF37]">
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={clearFilters}
+                          className="text-[#D4AF37]"
+                        >
                           Clear
                         </Button>
                         <button onClick={() => setShowFilters(false)} className="p-2">
@@ -412,10 +430,11 @@ export function PropertiesPage() {
                 className="bg-white rounded-2xl p-12 text-center shadow-soft border border-gray-100"
               >
                 <h3 className="mb-2">No Properties Found</h3>
-                <p className="text-gray-600 mb-6">
-                  Try adjusting your filters to see more results
-                </p>
-                <Button onClick={clearFilters} className="bg-[#D4AF37] hover:bg-[#B8941F] text-white">
+                <p className="text-gray-600 mb-6">Try adjusting your filters to see more results</p>
+                <Button
+                  onClick={clearFilters}
+                  className="bg-[#D4AF37] hover:bg-[#B8941F] text-white"
+                >
                   Clear Filters
                 </Button>
               </motion.div>
@@ -428,8 +447,8 @@ export function PropertiesPage() {
                 }
               >
                 {paginatedProperties.map((property, index) => (
-                  <PropertyCard 
-                    key={property.id} 
+                  <PropertyCard
+                    key={property.id}
                     property={property}
                     onCompareToggle={refreshComparison}
                     viewMode={viewMode}
@@ -437,7 +456,7 @@ export function PropertiesPage() {
                 ))}
               </div>
             )}
-            
+
             {/* Pagination */}
             {totalPages > 1 && filteredProperties.length > 0 && (
               <div className="flex items-center justify-center gap-3 md:gap-4 lg:gap-6 mt-10 md:mt-12 lg:mt-14">

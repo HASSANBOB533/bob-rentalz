@@ -1,21 +1,27 @@
-import { Button } from '../components/ui/button';
-import { Input } from '../components/ui/input';
-import { Label } from '../components/ui/label';
-import { Textarea } from '../components/ui/textarea';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../components/ui/select';
-import { Switch } from '../components/ui/switch';
-import { Badge } from '../components/ui/badge';
 import { ArrowLeft, Upload, MapPin, Shield, User } from 'lucide-react';
-import { useParams, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import { toast } from 'sonner@2.0.3';
 import { DashboardLayout } from '../components/DashboardLayout';
 import { LifecycleTimeline } from '../components/LifecycleTimeline';
+import { Badge } from '../components/ui/badge';
+import { Button } from '../components/ui/button';
+import { Input } from '../components/ui/input';
+import { Label } from '../components/ui/label';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '../components/ui/select';
+import { Switch } from '../components/ui/switch';
+import { Textarea } from '../components/ui/textarea';
 
 export default function OwnerEditPropertyPage() {
   const { propertyId } = useParams();
   const navigate = useNavigate();
-  
+
   // Mock property database
   const MOCK_PROPERTIES: Record<string, any> = {
     '1': {
@@ -23,7 +29,8 @@ export default function OwnerEditPropertyPage() {
       refCode: 'BOB-NC-APT-0001-R1',
       title: 'Modern 2BR Apartment in New Cairo',
       tagline: 'Spacious modern living in the heart of New Cairo',
-      description: 'Spacious and modern 2-bedroom apartment located in the heart of New Cairo. Features include modern kitchen, balcony, and parking.',
+      description:
+        'Spacious and modern 2-bedroom apartment located in the heart of New Cairo. Features include modern kitchen, balcony, and parking.',
       propertyType: 'apartment',
       bedrooms: '2',
       bathrooms: '2',
@@ -53,14 +60,15 @@ export default function OwnerEditPropertyPage() {
         balcony: true,
         petsAllowed: false,
         seaView: false,
-      }
+      },
     },
     '2': {
       id: '2',
       refCode: 'BOB-GZ-VIL-0002-R1',
       title: 'Luxury Villa with Private Pool',
       tagline: 'Experience luxury living at its finest',
-      description: 'Stunning luxury villa with private pool, large garden, and modern amenities. Perfect for families looking for space and comfort.',
+      description:
+        'Stunning luxury villa with private pool, large garden, and modern amenities. Perfect for families looking for space and comfort.',
       propertyType: 'villa',
       bedrooms: '5',
       bathrooms: '4',
@@ -90,14 +98,15 @@ export default function OwnerEditPropertyPage() {
         balcony: true,
         petsAllowed: true,
         seaView: false,
-      }
+      },
     },
     '3': {
       id: '3',
       refCode: 'BOB-CA-PEN-0003-R1',
       title: 'Spacious 3BR Penthouse',
       tagline: 'Breathtaking views from your private penthouse',
-      description: 'Beautiful penthouse with breathtaking views. Features include large terrace, modern kitchen, and premium finishes throughout.',
+      description:
+        'Beautiful penthouse with breathtaking views. Features include large terrace, modern kitchen, and premium finishes throughout.',
       propertyType: 'penthouse',
       bedrooms: '3',
       bathrooms: '3',
@@ -127,14 +136,15 @@ export default function OwnerEditPropertyPage() {
         balcony: true,
         petsAllowed: false,
         seaView: true,
-      }
+      },
     },
     '4': {
       id: '4',
       refCode: 'BOB-CA-APT-0004-R1',
       title: 'Family Apartment with Garden View',
       tagline: 'Perfect home for your family',
-      description: 'Comfortable family apartment with garden views and excellent location near schools and shopping centers.',
+      description:
+        'Comfortable family apartment with garden views and excellent location near schools and shopping centers.',
       propertyType: 'apartment',
       bedrooms: '3',
       bathrooms: '2',
@@ -164,8 +174,8 @@ export default function OwnerEditPropertyPage() {
         balcony: false,
         petsAllowed: true,
         seaView: false,
-      }
-    }
+      },
+    },
   };
 
   // Form state - initialized with empty values
@@ -191,7 +201,7 @@ export default function OwnerEditPropertyPage() {
     coordinates: '',
     videoUrl: '',
   });
-  
+
   const [amenities, setAmenities] = useState({
     parking: false,
     garden: false,
@@ -218,7 +228,7 @@ export default function OwnerEditPropertyPage() {
   useEffect(() => {
     if (propertyId && MOCK_PROPERTIES[propertyId]) {
       const property = MOCK_PROPERTIES[propertyId];
-      
+
       // Pre-fill form with existing property data
       setFormData({
         title: property.title || '',
@@ -264,23 +274,29 @@ export default function OwnerEditPropertyPage() {
   }, [propertyId]);
 
   const handleInputChange = (field: string, value: string) => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [field]: value
+      [field]: value,
     }));
   };
 
   const handleAmenityToggle = (amenity: string, checked: boolean) => {
-    setAmenities(prev => ({
+    setAmenities((prev) => ({
       ...prev,
-      [amenity]: checked
+      [amenity]: checked,
     }));
   };
 
   const handleSaveChanges = () => {
     // Validate required fields
-    if (!formData.title || !formData.description || !formData.propertyType || 
-        !formData.bedrooms || !formData.price || !formData.city) {
+    if (
+      !formData.title ||
+      !formData.description ||
+      !formData.propertyType ||
+      !formData.bedrooms ||
+      !formData.price ||
+      !formData.city
+    ) {
       toast.error('Please fill in all required fields');
       return;
     }
@@ -289,7 +305,7 @@ export default function OwnerEditPropertyPage() {
     console.log('Saving property with data:', {
       ...formData,
       amenities,
-      ...systemFields
+      ...systemFields,
     });
 
     toast.success('Property changes saved successfully!');
@@ -302,7 +318,7 @@ export default function OwnerEditPropertyPage() {
     console.log('Saving draft with data:', {
       ...formData,
       amenities,
-      ...systemFields
+      ...systemFields,
     });
     toast.success('Property saved as draft!');
   };
@@ -313,11 +329,11 @@ export default function OwnerEditPropertyPage() {
 
   const getStatusBadge = (status: string) => {
     const statusConfig: Record<string, { bg: string; text: string }> = {
-      'Pending': { bg: 'bg-yellow-100', text: 'text-yellow-700' },
-      'Approved': { bg: 'bg-blue-100', text: 'text-blue-700' },
-      'Active': { bg: 'bg-green-100', text: 'text-green-700' },
-      'Rented': { bg: 'bg-purple-100', text: 'text-purple-700' },
-      'Rejected': { bg: 'bg-red-100', text: 'text-red-700' },
+      Pending: { bg: 'bg-yellow-100', text: 'text-yellow-700' },
+      Approved: { bg: 'bg-blue-100', text: 'text-blue-700' },
+      Active: { bg: 'bg-green-100', text: 'text-green-700' },
+      Rented: { bg: 'bg-purple-100', text: 'text-purple-700' },
+      Rejected: { bg: 'bg-red-100', text: 'text-red-700' },
     };
     const config = statusConfig[status] || { bg: 'bg-gray-100', text: 'text-gray-700' };
     return <Badge className={`${config.bg} ${config.text}`}>{status}</Badge>;
@@ -329,9 +345,7 @@ export default function OwnerEditPropertyPage() {
       <DashboardLayout userRole="owner">
         <div className="px-4 sm:px-6 lg:px-8 py-8 max-w-5xl mx-auto">
           <div className="text-center py-12">
-            <h2 className="text-2xl font-semibold text-gray-700 mb-4">
-              Property Not Found
-            </h2>
+            <h2 className="text-2xl font-semibold text-gray-700 mb-4">Property Not Found</h2>
             <p className="text-gray-600 mb-6">
               The property you're trying to edit doesn't exist or has been removed.
             </p>
@@ -375,7 +389,7 @@ export default function OwnerEditPropertyPage() {
           <div>
             <h1 className="text-3xl font-bold text-[#0E56A4] mb-2">Edit Property</h1>
             <p className="text-gray-600 mb-4">Update your existing listing details</p>
-            
+
             {/* Lifecycle Timeline */}
             <div className="bg-white rounded-xl shadow-sm border border-gray-200 px-6 py-2 max-w-2xl">
               <LifecycleTimeline type="property" currentStage={systemFields.status} />
@@ -468,8 +482,8 @@ export default function OwnerEditPropertyPage() {
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
                 <div>
                   <Label htmlFor="property-type">Property Type *</Label>
-                  <Select 
-                    value={formData.propertyType} 
+                  <Select
+                    value={formData.propertyType}
                     onValueChange={(value) => handleInputChange('propertyType', value)}
                   >
                     <SelectTrigger id="property-type" className="mt-1.5">
@@ -488,8 +502,8 @@ export default function OwnerEditPropertyPage() {
 
                 <div>
                   <Label htmlFor="bedrooms">Bedrooms *</Label>
-                  <Select 
-                    value={formData.bedrooms} 
+                  <Select
+                    value={formData.bedrooms}
                     onValueChange={(value) => handleInputChange('bedrooms', value)}
                   >
                     <SelectTrigger id="bedrooms" className="mt-1.5">
@@ -508,8 +522,8 @@ export default function OwnerEditPropertyPage() {
 
                 <div>
                   <Label htmlFor="bathrooms">Bathrooms *</Label>
-                  <Select 
-                    value={formData.bathrooms} 
+                  <Select
+                    value={formData.bathrooms}
                     onValueChange={(value) => handleInputChange('bathrooms', value)}
                   >
                     <SelectTrigger id="bathrooms" className="mt-1.5">
@@ -553,8 +567,8 @@ export default function OwnerEditPropertyPage() {
 
                 <div>
                   <Label htmlFor="parking-spaces">Parking Spaces</Label>
-                  <Select 
-                    value={formData.parkingSpaces} 
+                  <Select
+                    value={formData.parkingSpaces}
                     onValueChange={(value) => handleInputChange('parkingSpaces', value)}
                   >
                     <SelectTrigger id="parking-spaces" className="mt-1.5">
@@ -573,8 +587,8 @@ export default function OwnerEditPropertyPage() {
               {/* Furnishing */}
               <div>
                 <Label htmlFor="furnishing">Furnishing *</Label>
-                <Select 
-                  value={formData.furnishing} 
+                <Select
+                  value={formData.furnishing}
                   onValueChange={(value) => handleInputChange('furnishing', value)}
                 >
                   <SelectTrigger id="furnishing" className="mt-1.5">
@@ -624,8 +638,8 @@ export default function OwnerEditPropertyPage() {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <div>
                   <Label htmlFor="min-lease-term">Minimum Lease Term (months)</Label>
-                  <Select 
-                    value={formData.minLeaseTerm} 
+                  <Select
+                    value={formData.minLeaseTerm}
                     onValueChange={(value) => handleInputChange('minLeaseTerm', value)}
                   >
                     <SelectTrigger id="min-lease-term" className="mt-1.5">
@@ -663,8 +677,8 @@ export default function OwnerEditPropertyPage() {
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
                 <div>
                   <Label htmlFor="city">City *</Label>
-                  <Select 
-                    value={formData.city} 
+                  <Select
+                    value={formData.city}
                     onValueChange={(value) => handleInputChange('city', value)}
                   >
                     <SelectTrigger id="city" className="mt-1.5">
@@ -681,8 +695,8 @@ export default function OwnerEditPropertyPage() {
 
                 <div>
                   <Label htmlFor="area">Area *</Label>
-                  <Select 
-                    value={formData.area} 
+                  <Select
+                    value={formData.area}
                     onValueChange={(value) => handleInputChange('area', value)}
                   >
                     <SelectTrigger id="area" className="mt-1.5">
@@ -790,9 +804,7 @@ export default function OwnerEditPropertyPage() {
                   value={formData.videoUrl}
                   onChange={(e) => handleInputChange('videoUrl', e.target.value)}
                 />
-                <p className="text-sm text-gray-500 mt-2">
-                  YouTube or Vimeo link for video tour
-                </p>
+                <p className="text-sm text-gray-500 mt-2">YouTube or Vimeo link for video tour</p>
               </div>
             </div>
           </div>
@@ -802,7 +814,9 @@ export default function OwnerEditPropertyPage() {
             <h2 className="text-[#0E56A4] mb-6">Amenities</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
-                <Label htmlFor="parking" className="cursor-pointer">Parking</Label>
+                <Label htmlFor="parking" className="cursor-pointer">
+                  Parking
+                </Label>
                 <Switch
                   id="parking"
                   checked={amenities.parking}
@@ -811,7 +825,9 @@ export default function OwnerEditPropertyPage() {
               </div>
 
               <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
-                <Label htmlFor="garden" className="cursor-pointer">Garden</Label>
+                <Label htmlFor="garden" className="cursor-pointer">
+                  Garden
+                </Label>
                 <Switch
                   id="garden"
                   checked={amenities.garden}
@@ -820,7 +836,9 @@ export default function OwnerEditPropertyPage() {
               </div>
 
               <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
-                <Label htmlFor="pool" className="cursor-pointer">Pool</Label>
+                <Label htmlFor="pool" className="cursor-pointer">
+                  Pool
+                </Label>
                 <Switch
                   id="pool"
                   checked={amenities.pool}
@@ -829,7 +847,9 @@ export default function OwnerEditPropertyPage() {
               </div>
 
               <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
-                <Label htmlFor="security" className="cursor-pointer">Security</Label>
+                <Label htmlFor="security" className="cursor-pointer">
+                  Security
+                </Label>
                 <Switch
                   id="security"
                   checked={amenities.security}
@@ -838,7 +858,9 @@ export default function OwnerEditPropertyPage() {
               </div>
 
               <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
-                <Label htmlFor="elevator" className="cursor-pointer">Elevator</Label>
+                <Label htmlFor="elevator" className="cursor-pointer">
+                  Elevator
+                </Label>
                 <Switch
                   id="elevator"
                   checked={amenities.elevator}
@@ -847,7 +869,9 @@ export default function OwnerEditPropertyPage() {
               </div>
 
               <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
-                <Label htmlFor="gym" className="cursor-pointer">Gym</Label>
+                <Label htmlFor="gym" className="cursor-pointer">
+                  Gym
+                </Label>
                 <Switch
                   id="gym"
                   checked={amenities.gym}
@@ -856,7 +880,9 @@ export default function OwnerEditPropertyPage() {
               </div>
 
               <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
-                <Label htmlFor="balcony" className="cursor-pointer">Balcony</Label>
+                <Label htmlFor="balcony" className="cursor-pointer">
+                  Balcony
+                </Label>
                 <Switch
                   id="balcony"
                   checked={amenities.balcony}
@@ -865,7 +891,9 @@ export default function OwnerEditPropertyPage() {
               </div>
 
               <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
-                <Label htmlFor="petsAllowed" className="cursor-pointer">Pets Allowed</Label>
+                <Label htmlFor="petsAllowed" className="cursor-pointer">
+                  Pets Allowed
+                </Label>
                 <Switch
                   id="petsAllowed"
                   checked={amenities.petsAllowed}
@@ -874,7 +902,9 @@ export default function OwnerEditPropertyPage() {
               </div>
 
               <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
-                <Label htmlFor="seaView" className="cursor-pointer">Sea View</Label>
+                <Label htmlFor="seaView" className="cursor-pointer">
+                  Sea View
+                </Label>
                 <Switch
                   id="seaView"
                   checked={amenities.seaView}

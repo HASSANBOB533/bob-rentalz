@@ -1,13 +1,21 @@
-import { DashboardLayout } from '../components/DashboardLayout';
-import { ArrowLeft, Wrench, Sparkles, FileText, MessageCircle, Calendar, Clock } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
-import { Button } from '../components/ui/button';
+import {
+  ArrowLeft,
+  Wrench,
+  Sparkles,
+  FileText,
+  MessageCircle,
+  Calendar,
+  Clock,
+} from 'lucide-react';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner@2.0.3';
+import { DashboardLayout } from '../components/DashboardLayout';
+import { Button } from '../components/ui/button';
 
 export default function TenantRentedNewRequestPage() {
   const navigate = useNavigate();
-  
+
   const [formData, setFormData] = useState({
     property: 'Modern 2BR Apartment',
     type: '',
@@ -16,7 +24,7 @@ export default function TenantRentedNewRequestPage() {
     description: '',
     preferredDate: '',
     preferredTime: '',
-    allowEntry: 'yes'
+    allowEntry: 'yes',
   });
 
   const requestTypes = [
@@ -25,29 +33,29 @@ export default function TenantRentedNewRequestPage() {
       label: 'Maintenance',
       icon: <Wrench className="w-6 h-6" />,
       description: 'Repairs, plumbing, electrical issues',
-      color: 'blue'
+      color: 'blue',
     },
     {
       id: 'housekeeping',
       label: 'Housekeeping',
       icon: <Sparkles className="w-6 h-6" />,
       description: 'Cleaning services, deep cleaning',
-      color: 'purple'
+      color: 'purple',
     },
     {
       id: 'document',
       label: 'Document Request',
       icon: <FileText className="w-6 h-6" />,
       description: 'Lease copies, receipts, certificates',
-      color: 'green'
+      color: 'green',
     },
     {
       id: 'inquiry',
       label: 'General Inquiry',
       icon: <MessageCircle className="w-6 h-6" />,
       description: 'Questions, general assistance',
-      color: 'gray'
-    }
+      color: 'gray',
+    },
   ];
 
   const getTypeColor = (color: string) => {
@@ -55,7 +63,7 @@ export default function TenantRentedNewRequestPage() {
       blue: 'border-blue-300 bg-blue-50 hover:border-blue-500',
       purple: 'border-purple-300 bg-purple-50 hover:border-purple-500',
       green: 'border-green-300 bg-green-50 hover:border-green-500',
-      gray: 'border-gray-300 bg-gray-50 hover:border-gray-500'
+      gray: 'border-gray-300 bg-gray-50 hover:border-gray-500',
     };
     return colors[color as keyof typeof colors] || colors.gray;
   };
@@ -65,14 +73,14 @@ export default function TenantRentedNewRequestPage() {
       blue: 'border-blue-500 bg-blue-100 ring-2 ring-blue-500',
       purple: 'border-purple-500 bg-purple-100 ring-2 ring-purple-500',
       green: 'border-green-500 bg-green-100 ring-2 ring-green-500',
-      gray: 'border-gray-500 bg-gray-100 ring-2 ring-gray-500'
+      gray: 'border-gray-500 bg-gray-100 ring-2 ring-gray-500',
     };
     return colors[color as keyof typeof colors] || colors.gray;
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     // Validation
     if (!formData.type) {
       toast.error('Please select a request type');
@@ -115,9 +123,7 @@ export default function TenantRentedNewRequestPage() {
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Property Selection */}
           <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Property
-            </label>
+            <label className="block text-sm font-medium text-gray-700 mb-2">Property</label>
             <select
               value={formData.property}
               onChange={(e) => setFormData({ ...formData, property: e.target.value })}
@@ -140,13 +146,15 @@ export default function TenantRentedNewRequestPage() {
                   type="button"
                   onClick={() => setFormData({ ...formData, type: type.id })}
                   className={`p-4 border-2 rounded-xl transition-all text-left ${
-                    formData.type === type.id 
+                    formData.type === type.id
                       ? getSelectedTypeColor(type.color)
                       : getTypeColor(type.color)
                   }`}
                 >
                   <div className="flex flex-col items-center text-center">
-                    <div className={`mb-2 ${formData.type === type.id ? 'text-' + type.color + '-700' : 'text-gray-600'}`}>
+                    <div
+                      className={`mb-2 ${formData.type === type.id ? 'text-' + type.color + '-700' : 'text-gray-600'}`}
+                    >
                       {type.icon}
                     </div>
                     <p className="font-semibold text-sm mb-1">{type.label}</p>
@@ -159,9 +167,7 @@ export default function TenantRentedNewRequestPage() {
 
           {/* Priority */}
           <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Priority
-            </label>
+            <label className="block text-sm font-medium text-gray-700 mb-2">Priority</label>
             <div className="flex gap-3">
               {['Low', 'Medium', 'High'].map((priority) => (
                 <button
@@ -173,8 +179,8 @@ export default function TenantRentedNewRequestPage() {
                       ? priority === 'High'
                         ? 'border-red-500 bg-red-50 text-red-700'
                         : priority === 'Medium'
-                        ? 'border-yellow-500 bg-yellow-50 text-yellow-700'
-                        : 'border-green-500 bg-green-50 text-green-700'
+                          ? 'border-yellow-500 bg-yellow-50 text-yellow-700'
+                          : 'border-green-500 bg-green-50 text-green-700'
                       : 'border-gray-300 bg-white text-gray-700 hover:border-gray-400'
                   }`}
                 >
@@ -290,10 +296,7 @@ export default function TenantRentedNewRequestPage() {
             >
               Cancel
             </Button>
-            <Button
-              type="submit"
-              className="flex-1 bg-[#0E56A4] hover:bg-[#0A3F79] text-white"
-            >
+            <Button type="submit" className="flex-1 bg-[#0E56A4] hover:bg-[#0A3F79] text-white">
               Submit Request
             </Button>
           </div>

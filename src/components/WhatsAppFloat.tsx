@@ -3,7 +3,10 @@ import { motion } from 'motion/react';
 
 export function WhatsAppFloat() {
   const handleWhatsAppClick = () => {
-    window.open('https://wa.me/201234567890?text=Hi, I would like to inquire about BOB Rentalz', '_blank');
+    window.open(
+      'https://wa.me/201234567890?text=Hi, I would like to inquire about BOB Rentalz',
+      '_blank',
+    );
   };
 
   return (

@@ -1,6 +1,6 @@
-import { DashboardLayout } from '../components/DashboardLayout';
-import { useNavigate } from 'react-router-dom';
 import { ChevronLeft, FileText, Download, Image, File } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { DashboardLayout } from '../components/DashboardLayout';
 
 export default function TenantDocumentsPage() {
   const navigate = useNavigate();
@@ -14,7 +14,7 @@ export default function TenantDocumentsPage() {
       fileSize: '2.4 MB',
       uploadedDate: 'Jan 1, 2024',
       category: 'Contract',
-      icon: FileText
+      icon: FileText,
     },
     {
       id: 2,
@@ -23,7 +23,7 @@ export default function TenantDocumentsPage() {
       fileSize: '1.8 MB',
       uploadedDate: 'Jan 1, 2024',
       category: 'Identification',
-      icon: FileText
+      icon: FileText,
     },
     {
       id: 3,
@@ -32,7 +32,7 @@ export default function TenantDocumentsPage() {
       fileSize: '3.2 MB',
       uploadedDate: 'Jan 1, 2024',
       category: 'Identification',
-      icon: Image
+      icon: Image,
     },
     {
       id: 4,
@@ -41,7 +41,7 @@ export default function TenantDocumentsPage() {
       fileSize: '856 KB',
       uploadedDate: 'Feb 1, 2024',
       category: 'Utility Bills',
-      icon: FileText
+      icon: FileText,
     },
     {
       id: 5,
@@ -50,7 +50,7 @@ export default function TenantDocumentsPage() {
       fileSize: '720 KB',
       uploadedDate: 'Feb 1, 2024',
       category: 'Utility Bills',
-      icon: FileText
+      icon: FileText,
     },
     {
       id: 6,
@@ -59,7 +59,7 @@ export default function TenantDocumentsPage() {
       fileSize: '1.5 MB',
       uploadedDate: 'Jan 15, 2024',
       category: 'Insurance',
-      icon: FileText
+      icon: FileText,
     },
     {
       id: 7,
@@ -68,7 +68,7 @@ export default function TenantDocumentsPage() {
       fileSize: '4.2 MB',
       uploadedDate: 'Jan 1, 2024',
       category: 'Contract',
-      icon: FileText
+      icon: FileText,
     },
     {
       id: 8,
@@ -77,7 +77,7 @@ export default function TenantDocumentsPage() {
       fileSize: '512 KB',
       uploadedDate: 'Jan 5, 2024',
       category: 'Payments',
-      icon: FileText
+      icon: FileText,
     },
     {
       id: 9,
@@ -86,8 +86,8 @@ export default function TenantDocumentsPage() {
       fileSize: '6.8 MB',
       uploadedDate: 'Jan 1, 2024',
       category: 'Contract',
-      icon: Image
-    }
+      icon: Image,
+    },
   ];
 
   const getIconColor = (type: string) => {
@@ -103,7 +103,7 @@ export default function TenantDocumentsPage() {
   };
 
   // Group documents by category
-  const categories = [...new Set(documents.map(doc => doc.category))];
+  const categories = [...new Set(documents.map((doc) => doc.category))];
 
   return (
     <DashboardLayout pageTitle="Document Center" userName="John Doe" userRole="Tenant">
@@ -119,36 +119,36 @@ export default function TenantDocumentsPage() {
 
         {/* Header */}
         <div className="mb-6">
-          <h2 className="text-2xl font-bold text-[#0E56A4] mb-2">
-            Document Center
-          </h2>
+          <h2 className="text-2xl font-bold text-[#0E56A4] mb-2">Document Center</h2>
           <p className="text-sm text-gray-600">Access your rental documents</p>
         </div>
 
         {/* Documents by Category */}
         <div className="space-y-8">
           {categories.map((category) => {
-            const categoryDocs = documents.filter(doc => doc.category === category);
-            
+            const categoryDocs = documents.filter((doc) => doc.category === category);
+
             return (
               <div key={category}>
                 <h3 className="text-lg font-semibold text-gray-900 mb-4">{category}</h3>
-                
+
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                   {categoryDocs.map((document) => {
                     const IconComponent = document.icon;
-                    
+
                     return (
-                      <div 
+                      <div
                         key={document.id}
                         className="bg-white rounded-xl shadow hover:shadow-xl transition-all duration-300 border border-gray-100 p-5"
                       >
                         {/* Document Icon */}
                         <div className="flex items-start gap-4 mb-4">
-                          <div className={`w-12 h-12 rounded-lg flex items-center justify-center flex-shrink-0 ${getIconColor(document.type)}`}>
+                          <div
+                            className={`w-12 h-12 rounded-lg flex items-center justify-center flex-shrink-0 ${getIconColor(document.type)}`}
+                          >
                             <IconComponent className="w-6 h-6" />
                           </div>
-                          
+
                           <div className="flex-1 min-w-0">
                             <h4 className="font-semibold text-gray-900 mb-1 line-clamp-2">
                               {document.name}
@@ -166,7 +166,9 @@ export default function TenantDocumentsPage() {
                         <div className="bg-gray-50 rounded-lg p-3 mb-4">
                           <div className="flex items-center justify-between text-xs">
                             <span className="text-gray-500">Uploaded</span>
-                            <span className="text-gray-700 font-medium">{document.uploadedDate}</span>
+                            <span className="text-gray-700 font-medium">
+                              {document.uploadedDate}
+                            </span>
                           </div>
                         </div>
 
