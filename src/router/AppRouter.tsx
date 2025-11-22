@@ -35,6 +35,8 @@ import ProtectedRoute from "../components/auth/ProtectedRoute";
 import AuthRedirect from "../components/auth/AuthRedirect";
 import UnauthorizedPage from "../pages/UnauthorizedPage";
 import { AdminDeletedDocumentsPage } from "../pages/AdminDeletedDocumentsPage";
+import { OwnerPaymentsPage } from "../pages/OwnerPaymentsPage";
+import { TenantPaymentsPage } from "../pages/TenantPaymentsPage";
 
 // 404 fallback
 const NotFound = () => (
@@ -124,6 +126,15 @@ export default function AppRouter() {
       />
 
       <Route
+        path="/owner/payments"
+        element={
+          <ProtectedRoute roles={["owner", "admin"]}>
+            <OwnerPaymentsPage />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
         path="/dashboard/agent"
         element={
           <ProtectedRoute roles={["agent"]}>
@@ -137,6 +148,15 @@ export default function AppRouter() {
         element={
           <ProtectedRoute roles={["tenant"]}>
             <TenantDashboard />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/tenant/payments"
+        element={
+          <ProtectedRoute roles={["tenant", "admin"]}>
+            <TenantPaymentsPage />
           </ProtectedRoute>
         }
       />

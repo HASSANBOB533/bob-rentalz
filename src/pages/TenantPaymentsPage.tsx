@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { getTenantPayments, getPendingPayments, Payment } from '../lib/supabase/paymentsApi';
-import { MainLayout } from '../components/layout/MainLayout';
+import { MainLayout } from '../components/MainLayout';
 
 export const TenantPaymentsPage: React.FC = () => {
   const { user } = useAuth();

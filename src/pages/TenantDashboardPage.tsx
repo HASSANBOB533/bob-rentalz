@@ -10,7 +10,8 @@ import {
   MessageCircle,
   Bell,
   Tag,
-  Star
+  Star,
+  DollarSign
 } from 'lucide-react';
 import { ImageWithFallback } from '../components/figma/ImageWithFallback';
 import { useNavigate } from 'react-router-dom';
@@ -536,6 +537,22 @@ export default function TenantDashboardPage() {
                 <div>
                   <h4 className="font-semibold text-gray-900">View Inquiries</h4>
                   <p className="text-xs text-gray-500 mt-0.5">Check all your messages</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Manage Payments */}
+            <div 
+              onClick={() => navigate('/tenant/payments')}
+              className="p-6 bg-white rounded-xl shadow-sm hover:shadow-md transition-all cursor-pointer border border-gray-100 hover:border-[#0E56A4]/30 group"
+            >
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 rounded-xl bg-green-50 flex items-center justify-center flex-shrink-0 group-hover:bg-green-100 transition-colors">
+                  <DollarSign className="w-6 h-6 text-green-600" />
+                </div>
+                <div>
+                  <h4 className="font-semibold text-gray-900">Manage Payments</h4>
+                  <p className="text-xs text-gray-500 mt-0.5">View and pay rent</p>
                 </div>
               </div>
             </div>

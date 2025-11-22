@@ -15,7 +15,8 @@ import {
   Mail,
   Phone,
   Calendar,
-  Home
+  Home,
+  DollarSign
 } from 'lucide-react';
 import { ImageWithFallback } from '../components/figma/ImageWithFallback';
 import { PropertyCodeDisplay } from '../components/PropertyCodeDisplay';
@@ -188,6 +189,14 @@ export default function OwnerDashboardPage() {
     },
     {
       id: 4,
+      label: 'Manage Payments',
+      icon: DollarSign,
+      bgColor: 'bg-green-50',
+      iconColor: 'text-green-600',
+      link: '/owner/payments'
+    },
+    {
+      id: 5,
       label: 'Financial Reports',
       icon: LineChart,
       bgColor: 'bg-[#E9C500]/10',
