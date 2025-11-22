@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { MainLayout } from '../components/MainLayout';
 import { useAuth } from '../contexts/AuthContext';
 import { getTenantPayments, getPendingPayments, Payment } from '../lib/supabase/paymentsApi';
@@ -8,22 +8,21 @@ export const TenantPaymentsPage: React.FC = () => {
   const [payments, setPayments] = useState<Payment[]>([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    if (user) {
-      loadPayments();
-    }
-  }, [user]);
-
-  const loadPayments = async () => {
+  const loadPayments = useCallback(async () => {
+    if (!user) return;
     try {
-      const data = await getTenantPayments(user!.id);
+      const data = await getTenantPayments(user.id);
       setPayments(data);
     } catch (error) {
       console.error('Failed to load payments:', error);
     } finally {
       setLoading(false);
     }
-  };
+  }, [user]);
+
+  useEffect(() => {
+    loadPayments();
+  }, [loadPayments]);
 
   const getStatusBadge = (status: Payment['status']) => {
     const colors = {

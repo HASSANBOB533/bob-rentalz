@@ -1,5 +1,5 @@
 import { ArrowLeft, Send, MapPin, Home, Calendar, Shield } from 'lucide-react';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 import { DashboardLayout } from '../components/DashboardLayout';
@@ -12,7 +12,7 @@ export default function OwnerTenantChatPage() {
   const [messageText, setMessageText] = useState('');
 
   // Mock data for properties with ownership info
-  const MOCK_PROPERTIES = [
+  const MOCK_PROPERTIES = useMemo(() => [
     { id: '1', status: 'Rented', ownerId: 'owner-1', hasActiveTenant: true },
     { id: '2', status: 'Active', ownerId: 'owner-1', hasActiveTenant: false },
     { id: '3', status: 'Rented', ownerId: 'owner-1', hasActiveTenant: true },
@@ -20,7 +20,7 @@ export default function OwnerTenantChatPage() {
     { id: '5', status: 'Draft', ownerId: 'owner-1', hasActiveTenant: false },
     { id: '6', status: 'Rented', ownerId: 'owner-1', hasActiveTenant: true },
     { id: '7', status: 'Rented', ownerId: 'owner-1', hasActiveTenant: true },
-  ];
+  ], []);
 
   // Mock logged-in owner ID (in a real app, this would come from auth context)
   const currentOwnerId = 'owner-1';
@@ -51,7 +51,7 @@ export default function OwnerTenantChatPage() {
       navigate('/owner/messages');
       return;
     }
-  }, [propertyId, navigate]);
+  }, [propertyId, navigate, MOCK_PROPERTIES]);
 
   // Mock data for property and tenant
   const propertyChats: Record<string, any> = {

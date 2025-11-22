@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { MainLayout } from '../components/MainLayout';
 import { useAuth } from '../contexts/AuthContext';
 import {
@@ -14,22 +14,21 @@ export const OwnerPaymentsPage: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [showCreateForm, setShowCreateForm] = useState(false);
 
-  useEffect(() => {
-    if (user) {
-      loadPayments();
-    }
-  }, [user]);
-
-  const loadPayments = async () => {
+  const loadPayments = useCallback(async () => {
+    if (!user) return;
     try {
-      const data = await getOwnerPayments(user!.id);
+      const data = await getOwnerPayments(user.id);
       setPayments(data);
     } catch (error) {
       console.error('Failed to load payments:', error);
     } finally {
       setLoading(false);
     }
-  };
+  }, [user]);
+
+  useEffect(() => {
+    loadPayments();
+  }, [loadPayments]);
 
   const handleMarkAsPaid = async (paymentId: string) => {
     if (!confirm('Confirm that you have received this payment?')) return;

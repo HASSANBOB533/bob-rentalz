@@ -1,6 +1,6 @@
 import { Filter, Grid3x3, List, X, ChevronLeft, ChevronRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { CompareBar } from '../components/CompareBar';
 import { ComparisonModal } from '../components/ComparisonModal';
@@ -47,20 +47,9 @@ export function PropertiesPage() {
     if (properties.length > 0) {
       applyFilters();
     }
-  }, [
-    properties,
-    selectedLocation,
-    selectedBedrooms,
-    selectedBathrooms,
-    selectedType,
-    selectedFurnishing,
-    maxPrice,
-    selectedStatus,
-    selectedAmenities,
-    sortBy,
-  ]);
+  }, [properties, applyFilters]);
 
-  const applyFilters = () => {
+  const applyFilters = useCallback(() => {
     let filtered = properties;
 
     if (selectedLocation !== 'all') {
@@ -111,7 +100,7 @@ export function PropertiesPage() {
     }
 
     setFilteredProperties(filtered);
-  };
+  }, [properties, selectedLocation, selectedBedrooms, selectedBathrooms, selectedType, selectedFurnishing, maxPrice, selectedStatus, selectedAmenities, sortBy]);
 
   const handleStatusToggle = (status: string) => {
     setSelectedStatus((prev) =>
