@@ -1,6 +1,6 @@
 import { ChevronLeft, ChevronRight, X, ZoomIn } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { ImageWithFallback } from './figma/ImageWithFallback';
 
 interface PropertyDetailImageCarouselProps {
@@ -37,17 +37,17 @@ export function PropertyDetailImageCarousel({
     }, autoPlayInterval);
 
     return () => clearInterval(interval);
-  }, [currentIndex, autoPlay, autoPlayInterval, isPaused, images.length]);
+  }, [currentIndex, autoPlay, autoPlayInterval, isPaused, images.length, handleNext]);
 
-  const handlePrevious = () => {
+  const handlePrevious = useCallback(() => {
     setDirection(-1);
     setCurrentIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
-  };
+  }, [images.length]);
 
-  const handleNext = () => {
+  const handleNext = useCallback(() => {
     setDirection(1);
     setCurrentIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
-  };
+  }, [images.length]);
 
   const handleDotClick = (index: number) => {
     setDirection(index > currentIndex ? 1 : -1);

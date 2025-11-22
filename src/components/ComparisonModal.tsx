@@ -1,6 +1,6 @@
 import { X, Bed, Bath, Maximize, MapPin, CheckCircle, XCircle, Heart } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { properties as allProperties, agents } from '../data/mockData';
 import { isFavorite, toggleFavorite } from '../utils/favorites';
@@ -22,13 +22,16 @@ export function ComparisonModal({ open, onClose, properties: propertyIds }: Comp
 
   const properties = allProperties.filter((p) => propertyIds.includes(p.id));
 
+  // Memoize propertyIds string to avoid reference changes
+  const propertyIdsKey = useMemo(() => propertyIds.join(','), [propertyIds]);
+
   useEffect(() => {
     const favs: Record<string, boolean> = {};
     propertyIds.forEach((id) => {
       favs[id] = isFavorite(id);
     });
     setFavorites(favs);
-  }, [propertyIds.join(',')]); // Use joined string to avoid array reference issues
+  }, [propertyIdsKey, propertyIds]); // Use memoized string and propertyIds array
 
   const handleFavoriteToggle = (propertyId: string) => {
     const newState = toggleFavorite(propertyId);

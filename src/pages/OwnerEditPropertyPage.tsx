@@ -1,5 +1,5 @@
 import { ArrowLeft, Upload, MapPin, Shield, User } from 'lucide-react';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 import { DashboardLayout } from '../components/DashboardLayout';
@@ -23,7 +23,7 @@ export default function OwnerEditPropertyPage() {
   const navigate = useNavigate();
 
   // Mock property database
-  const MOCK_PROPERTIES: Record<string, any> = {
+  const MOCK_PROPERTIES: Record<string, any> = useMemo(() => ({
     '1': {
       id: '1',
       refCode: 'BOB-NC-APT-0001-R1',
@@ -176,7 +176,7 @@ export default function OwnerEditPropertyPage() {
         seaView: false,
       },
     },
-  };
+  }), []);
 
   // Form state - initialized with empty values
   const [formData, setFormData] = useState({
@@ -271,7 +271,7 @@ export default function OwnerEditPropertyPage() {
       setLoading(false);
       setPropertyNotFound(true);
     }
-  }, [propertyId]);
+  }, [propertyId, MOCK_PROPERTIES]);
 
   const handleInputChange = (field: string, value: string) => {
     setFormData((prev) => ({

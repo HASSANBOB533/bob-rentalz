@@ -1,6 +1,6 @@
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { ImageWithFallback } from './figma/ImageWithFallback';
 
 interface PropertyImageCarouselProps {
@@ -41,19 +41,19 @@ export function PropertyImageCarousel({
     }, autoPlayInterval);
 
     return () => clearInterval(interval);
-  }, [currentIndex, autoPlay, isPaused, images.length]);
+  }, [currentIndex, autoPlay, autoPlayInterval, handleNext, isPaused, images.length]);
 
-  const handlePrevious = (e?: React.MouseEvent) => {
+  const handlePrevious = useCallback((e?: React.MouseEvent) => {
     e?.stopPropagation();
     setDirection(-1);
     setCurrentIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
-  };
+  }, [images.length]);
 
-  const handleNext = (e?: React.MouseEvent) => {
+  const handleNext = useCallback((e?: React.MouseEvent) => {
     e?.stopPropagation();
     setDirection(1);
     setCurrentIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
-  };
+  }, [images.length]);
 
   const goToSlide = (index: number, e?: React.MouseEvent) => {
     e?.stopPropagation();

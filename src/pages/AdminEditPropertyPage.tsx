@@ -1,5 +1,5 @@
 import { ArrowLeft, Upload, MapPin, Shield, User, FileText, Save, X } from 'lucide-react';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 import { AdminDashboardLayout } from '../components/AdminDashboardLayout';
@@ -22,7 +22,7 @@ export default function AdminEditPropertyPage() {
   const navigate = useNavigate();
 
   // Mock property database - Merged with OwnerEditPropertyPage and AdminPropertyDetailPage data
-  const MOCK_PROPERTIES: Record<string, any> = {
+  const MOCK_PROPERTIES: Record<string, any> = useMemo(() => ({
     '1': {
       id: '1',
       refCode: 'BOB-NC-APT-0001-R1',
@@ -137,7 +137,7 @@ export default function AdminEditPropertyPage() {
         seaView: true,
       },
     },
-  };
+  }), []);
 
   // Form state
   const [formData, setFormData] = useState({
@@ -163,7 +163,7 @@ export default function AdminEditPropertyPage() {
     videoUrl: '',
   });
 
-  const [amenities, setAmenities] = useState({
+  const initialAmenities = useMemo(() => ({
     parking: false,
     garden: false,
     pool: false,
@@ -173,7 +173,9 @@ export default function AdminEditPropertyPage() {
     balcony: false,
     petsAllowed: false,
     seaView: false,
-  });
+  }), []);
+
+  const [amenities, setAmenities] = useState(initialAmenities);
 
   const [adminNotes, setAdminNotes] = useState('');
 
@@ -220,7 +222,7 @@ export default function AdminEditPropertyPage() {
       if (property.amenities) {
         // Check if amenities is array (from AdminPropDetail style) or object (from OwnerEdit style)
         if (Array.isArray(property.amenities)) {
-          const amenityObj: any = { ...amenities };
+          const amenityObj: any = { ...initialAmenities };
           property.amenities.forEach((a: string) => {
             const key = a.toLowerCase().replace(' ', '');
             // map some common ones if names differ slightly
@@ -249,7 +251,7 @@ export default function AdminEditPropertyPage() {
       setLoading(false);
       setPropertyNotFound(true);
     }
-  }, [propertyId]);
+  }, [propertyId, MOCK_PROPERTIES, initialAmenities]);
 
   const handleInputChange = (field: string, value: string) => {
     setFormData((prev) => ({
