@@ -59,15 +59,15 @@ export function LoginPage() {
         className="bg-white rounded-2xl shadow-2xl w-full max-w-md overflow-hidden"
       >
         {/* Header */}
-        <div className="bg-gradient-to-r from-[#2B5273] to-[#3A6B8F] p-8 text-center">
-          <img src={bobLogo} alt="BOB Rentalz" className="h-16 mx-auto mb-4" />
-          <h1 className="text-2xl font-bold text-white">Welcome Back</h1>
-          <p className="text-[#F5F1E8]/80 mt-2">Sign in to your account</p>
+        <div className="bg-gradient-to-r from-[#2B5273] to-[#3A6B8F] p-4 text-center">
+          <img src={bobLogo} alt="BOB Rentalz" className="h-12 mx-auto mb-2" />
+          <h1 className="text-xl font-bold text-white">Welcome Back</h1>
+          <p className="text-[#F5F1E8]/80 mt-1 text-sm">Sign in to your account</p>
         </div>
 
         {/* Form */}
-        <form onSubmit={handleSubmit} className="p-6 space-y-4">
-          <div className="space-y-2">
+        <form onSubmit={handleSubmit} className="p-4 space-y-3">
+          <div className="space-y-1">
             <label className="text-sm font-medium text-[#2B5273]">Email</label>
             <div className="relative">
               <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
@@ -83,7 +83,7 @@ export function LoginPage() {
             </div>
           </div>
 
-          <div className="space-y-2">
+          <div className="space-y-1">
             <label className="text-sm font-medium text-[#2B5273]">Password</label>
             <div className="relative">
               <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
@@ -126,7 +126,7 @@ export function LoginPage() {
         </form>
 
         {/* Demo Info */}
-        <div className="bg-[#F5F1E8] p-4 border-t">
+        <div className="bg-[#F5F1E8] p-2 border-t">
           <p className="text-xs text-center text-gray-600">
             <strong>Demo:</strong> Create an account or use test credentials
           </p>
