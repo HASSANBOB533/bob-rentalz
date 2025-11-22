@@ -3,16 +3,10 @@ import {
   Users,
   Calendar,
   MessageSquare,
-  Eye,
   MapPin,
-  Mail,
-  Phone,
-  TrendingUp,
   Settings,
   ArrowRight,
   Clock,
-  CheckCircle,
-  XCircle,
 } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { ImageWithFallback } from '../components/figma/ImageWithFallback';
@@ -21,7 +15,6 @@ export default function AgentDashboardPage() {
   const navigate = useNavigate();
 
   // Agent data - matches DashboardLayout userInfo for agent role
-  const _agentName = 'Sarah Anderson';
 
   // Updated KPIs (removed "Properties Listed", added "Assigned Properties")
   const kpiCards = [
@@ -60,48 +53,7 @@ export default function AgentDashboardPage() {
   ];
 
   // Updated Quick Actions (removed "Add New Property")
-  const _quickActions = [
-    {
-      id: 1,
-      label: 'View Assigned Properties',
-      icon: Home,
-      bgColor: 'bg-[#0E56A4]/10',
-      iconColor: 'text-[#0E56A4]',
-      link: '/agent/properties',
-    },
-    {
-      id: 2,
-      label: 'View Leads',
-      icon: Users,
-      bgColor: 'bg-[#E9C500]/10',
-      iconColor: 'text-[#E9C500]',
-      link: '/agent/leads',
-    },
-    {
-      id: 3,
-      label: 'View Conversations',
-      icon: MessageSquare,
-      bgColor: 'bg-[#0E56A4]/10',
-      iconColor: 'text-[#0E56A4]',
-      link: '/agent/leads',
-    },
-    {
-      id: 4,
-      label: 'View Viewings',
-      icon: Calendar,
-      bgColor: 'bg-[#E9C500]/10',
-      iconColor: 'text-[#E9C500]',
-      link: '/agent/viewings',
-    },
-    {
-      id: 5,
-      label: 'Settings',
-      icon: Settings,
-      bgColor: 'bg-blue-50',
-      iconColor: 'text-blue-600',
-      link: '/agent/settings',
-    },
-  ];
+  // Quick actions removed - not used in current implementation
 
   // Recent Leads (Agent-specific data)
   const recentLeads = [
@@ -245,11 +197,7 @@ export default function AgentDashboardPage() {
     },
   ];
 
-  // Performance Metrics
-  const _performanceMetrics = [
-    { label: 'Leads Converted', value: '12 this month' },
-    { label: 'Viewings Completed', value: '8 this month' },
-  ];
+  // Performance Metrics removed - not used in current implementation
 
   const getStatusColor = (status: string) => {
     switch (status) {

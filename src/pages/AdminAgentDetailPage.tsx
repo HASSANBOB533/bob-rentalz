@@ -1,22 +1,4 @@
-import {
-  ArrowLeft,
-  Mail,
-  Phone,
-  Building,
-  MessageSquare,
-  Star,
-  Calendar,
-  UserCheck,
-  TrendingUp,
-  MapPin,
-  MoreHorizontal,
-  Clock,
-  CheckCircle,
-  XCircle,
-  Trash2,
-  Eye,
-} from 'lucide-react';
-import { useState } from 'react';
+import { ArrowLeft, Mail, Phone, Calendar, UserCheck, MapPin, Clock, Trash2 } from 'lucide-react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { toast } from 'sonner';
 import { AdminDashboardLayout } from '../components/AdminDashboardLayout';
@@ -186,7 +168,7 @@ export default function AdminAgentDetailPage() {
     return <Badge className={styles[status] || 'bg-gray-100 text-gray-700'}>{status}</Badge>;
   };
 
-  const handleRemoveFromProperty = (propertyId: string) => {
+  const handleRemoveFromProperty = (_propertyId: string) => {
     toast.success('Agent removed from property');
   };
 

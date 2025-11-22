@@ -1,6 +1,6 @@
 import newAlameinImage from 'figma:asset/e620e41fa31e2b3697673ee49e7a7dcd6e65cb3e.png';
 import newCairoImage from 'figma:asset/f93381c4c8e0792be4c66a1bf1b34a9e33977584.png';
-import { ArrowRight, Shield, Clock, CheckCircle, MapPin } from 'lucide-react';
+import { ArrowRight, Shield, Clock, CheckCircle } from 'lucide-react';
 import { motion } from 'motion/react';
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
@@ -9,7 +9,6 @@ import { Carousel } from '../components/Carousel';
 import { CompareBar } from '../components/CompareBar';
 import { ComparisonModal } from '../components/ComparisonModal';
 import { FeatureCard } from '../components/FeatureCard';
-import { ImageWithFallback } from '../components/figma/ImageWithFallback';
 import { HeroSlider } from '../components/HeroSlider';
 import { LocationCard } from '../components/LocationCard';
 import { PropertyCard } from '../components/PropertyCard';
@@ -21,7 +20,7 @@ import { getComparisonList, removeFromComparison, clearComparison } from '../uti
 
 export function HomePage() {
   const navigate = useNavigate();
-  const { properties: featuredProperties, loading: loadingProperties } = useFeaturedProperties();
+  const { properties: featuredProperties } = useFeaturedProperties();
 
   const handleSearch = (filters: SearchFilters) => {
     const params = new URLSearchParams();
@@ -59,15 +58,7 @@ export function HomePage() {
     refreshComparison();
   }, []);
 
-  const handleRemoveFromComparison = (propertyId: string) => {
-    removeFromComparison(propertyId);
-    refreshComparison();
-  };
-
-  const handleClearComparison = () => {
-    clearComparison();
-    refreshComparison();
-  };
+  // Comparison handlers removed - handled directly in CompareBar component
 
   return (
     <div className="min-h-screen">

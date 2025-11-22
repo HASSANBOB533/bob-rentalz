@@ -1,20 +1,10 @@
 import {
   ArrowLeft,
-  Building,
   MapPin,
-  DollarSign,
-  Home,
-  Bed,
-  Bath,
   CheckCircle,
   XCircle,
-  AlertCircle,
   User,
-  Phone,
-  Mail,
   Eye,
-  MessageSquare,
-  Edit,
   UserPlus,
   AlertTriangle,
 } from 'lucide-react';
@@ -57,8 +47,6 @@ export default function AdminPropertyDetailPage() {
 
   // Determine previous page for back button context
   const fromAgents = location.state?.from?.includes('/admin/agents');
-  const _fromAssignments = location.state?.from?.includes('/admin/assignments');
-  const _agentId = fromAgents ? location.state.from.split('/')[3] : null;
 
   // Mock property data
   const mockProperties: Record<string, any> = {

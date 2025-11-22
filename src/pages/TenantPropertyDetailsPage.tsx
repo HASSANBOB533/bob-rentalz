@@ -19,7 +19,6 @@ import {
   Wind,
   Building2,
   Sofa,
-  Check,
   ArrowLeft,
   Home,
   ChevronUp,
@@ -31,10 +30,6 @@ import { useState, useEffect } from 'react';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { toast } from 'sonner';
 import { ImageWithFallback } from '../components/figma/ImageWithFallback';
-import { CalendarIcon } from '../components/icons/CalendarIcon';
-import { ChairIcon } from '../components/icons/ChairIcon';
-import { SecurityCardIcon } from '../components/icons/SecurityCardIcon';
-import { TrendUpIcon } from '../components/icons/TrendUpIcon';
 import { PropertyCard } from '../components/PropertyCard';
 import { PropertyCodeDisplay } from '../components/PropertyCodeDisplay';
 import { PropertyLocationMap } from '../components/PropertyLocationMap';
@@ -130,7 +125,7 @@ export default function TenantPropertyDetailsPage() {
     if (combined.length < 3) {
       const remaining = availableProperties
         .filter((p) => !combined.includes(p))
-        .sort((a, b) => (b.verified ? 1 : -1));
+        .sort((_a, b) => (b.verified ? 1 : -1));
       combined.push(...remaining);
     }
 
@@ -152,9 +147,7 @@ export default function TenantPropertyDetailsPage() {
     window.open(whatsappUrl, '_blank');
   };
 
-  const _handleDownloadBrochure = () => {
-    toast.success('Brochure download started');
-  };
+  // Download brochure handler removed - not used in current implementation
 
   const handleRequestViewing = () => {
     if (agent) {
