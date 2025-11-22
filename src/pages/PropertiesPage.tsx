@@ -43,12 +43,6 @@ export function PropertiesPage() {
 
   const allAmenities = Array.from(new Set(properties.flatMap((p) => p.amenities))).slice(0, 10);
 
-  useEffect(() => {
-    if (properties.length > 0) {
-      applyFilters();
-    }
-  }, [properties, applyFilters]);
-
   const applyFilters = useCallback(() => {
     let filtered = properties;
 
@@ -112,6 +106,12 @@ export function PropertiesPage() {
     selectedAmenities,
     sortBy,
   ]);
+
+  useEffect(() => {
+    if (properties.length > 0) {
+      applyFilters();
+    }
+  }, [properties, applyFilters]);
 
   const handleStatusToggle = (status: string) => {
     setSelectedStatus((prev) =>

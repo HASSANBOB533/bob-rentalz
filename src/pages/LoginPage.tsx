@@ -10,7 +10,7 @@ import { useAuth } from '../contexts/AuthContext';
 
 export function LoginPage() {
   const navigate = useNavigate();
-  const { signIn } = useAuth();
+  const { signIn, user, profile } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
@@ -28,8 +28,7 @@ export function LoginPage() {
         return;
       }
 
-      // Get user profile to determine role
-      const { user, profile } = useAuth();
+      // Get user profile to determine role - already available from useAuth() at component level
 
       toast.success('Login successful!');
 

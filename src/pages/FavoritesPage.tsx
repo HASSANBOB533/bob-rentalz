@@ -10,16 +10,16 @@ export function FavoritesPage() {
   const [favoriteIds, setFavoriteIds] = useState<string[]>([]);
   const [favoriteProperties, setFavoriteProperties] = useState<typeof properties>([]);
 
-  useEffect(() => {
-    loadFavorites();
-  }, []);
-
   const loadFavorites = () => {
     const ids = getFavorites();
     setFavoriteIds(ids);
     const props = properties.filter((p) => ids.includes(p.id));
     setFavoriteProperties(props);
   };
+
+  useEffect(() => {
+    loadFavorites();
+  }, []);
 
   const handleShare = () => {
     const propertyLinks = favoriteProperties

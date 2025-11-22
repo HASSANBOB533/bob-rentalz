@@ -28,6 +28,17 @@ export function PropertyDetailImageCarousel({
   const touchStartX = useRef<number | null>(null);
   const touchEndX = useRef<number | null>(null);
 
+  // Navigation handlers - defined before useEffect
+  const handleNext = useCallback(() => {
+    setDirection(1);
+    setCurrentIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
+  }, [images.length]);
+
+  const handlePrevious = useCallback(() => {
+    setDirection(-1);
+    setCurrentIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
+  }, [images.length]);
+
   // Auto-play functionality
   useEffect(() => {
     if (!autoPlay || isPaused || images.length <= 1) return;
@@ -38,16 +49,6 @@ export function PropertyDetailImageCarousel({
 
     return () => clearInterval(interval);
   }, [currentIndex, autoPlay, autoPlayInterval, isPaused, images.length, handleNext]);
-
-  const handlePrevious = useCallback(() => {
-    setDirection(-1);
-    setCurrentIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
-  }, [images.length]);
-
-  const handleNext = useCallback(() => {
-    setDirection(1);
-    setCurrentIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
-  }, [images.length]);
 
   const handleDotClick = (index: number) => {
     setDirection(index > currentIndex ? 1 : -1);

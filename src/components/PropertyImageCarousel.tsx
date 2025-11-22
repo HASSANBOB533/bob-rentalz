@@ -32,16 +32,15 @@ export function PropertyImageCarousel({
   const [isPaused, setIsPaused] = useState(false);
   const [direction, setDirection] = useState(0);
 
-  // Auto-play functionality
-  useEffect(() => {
-    if (!autoPlay || isPaused || images.length <= 1) return;
-
-    const interval = setInterval(() => {
-      handleNext();
-    }, autoPlayInterval);
-
-    return () => clearInterval(interval);
-  }, [currentIndex, autoPlay, autoPlayInterval, handleNext, isPaused, images.length]);
+  // Navigation handlers - defined before useEffect
+  const handleNext = useCallback(
+    (e?: React.MouseEvent) => {
+      e?.stopPropagation();
+      setDirection(1);
+      setCurrentIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
+    },
+    [images.length],
+  );
 
   const handlePrevious = useCallback(
     (e?: React.MouseEvent) => {
@@ -52,14 +51,16 @@ export function PropertyImageCarousel({
     [images.length],
   );
 
-  const handleNext = useCallback(
-    (e?: React.MouseEvent) => {
-      e?.stopPropagation();
-      setDirection(1);
-      setCurrentIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
-    },
-    [images.length],
-  );
+  // Auto-play functionality
+  useEffect(() => {
+    if (!autoPlay || isPaused || images.length <= 1) return;
+
+    const interval = setInterval(() => {
+      handleNext();
+    }, autoPlayInterval);
+
+    return () => clearInterval(interval);
+  }, [currentIndex, autoPlay, autoPlayInterval, handleNext, isPaused, images.length]);
 
   const goToSlide = (index: number, e?: React.MouseEvent) => {
     e?.stopPropagation();
