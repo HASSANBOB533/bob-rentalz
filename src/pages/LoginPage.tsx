@@ -66,7 +66,7 @@ export function LoginPage() {
         </div>
 
         {/* Form */}
-        <form onSubmit={handleSubmit} className="p-8 space-y-6">
+        <form onSubmit={handleSubmit} className="p-6 space-y-4">
           <div className="space-y-2">
             <label className="text-sm font-medium text-[#2B5273]">Email</label>
             <div className="relative">
