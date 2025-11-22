@@ -2,6 +2,7 @@
       "name": "Design BOB Rentalz Website",
       "version": "0.1.0",
       "private": true,
+      "type": "module",
       "dependencies": {
             "@radix-ui/react-accordion": "^1.2.3",
             "@radix-ui/react-alert-dialog": "^1.1.6",
@@ -53,12 +54,26 @@
             "vaul": "^1.1.2"
       },
       "devDependencies": {
+            "@eslint/js": "^9.39.1",
             "@types/node": "^20.10.0",
+            "@types/react": "^19.2.6",
+            "@types/react-dom": "^19.2.3",
+            "@typescript-eslint/eslint-plugin": "^8.47.0",
+            "@typescript-eslint/parser": "^8.47.0",
             "@vitejs/plugin-react-swc": "^3.10.2",
+            "eslint": "^9.39.1",
+            "eslint-plugin-react": "^7.37.5",
+            "eslint-plugin-react-hooks": "^7.0.1",
+            "eslint-plugin-react-refresh": "^0.4.24",
+            "globals": "^16.5.0",
+            "typescript": "^5.9.3",
             "vite": "6.3.5"
       },
       "scripts": {
             "dev": "vite",
-            "build": "vite build"
+            "build": "vite build",
+            "preview": "vite preview",
+            "lint": "eslint \"src/**/*.{ts,tsx}\"",
+            "typecheck": "tsc --noEmit"
       }
 }
