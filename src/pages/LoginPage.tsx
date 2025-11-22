@@ -109,13 +109,13 @@ export function LoginPage() {
             </a>
           </div>
 
-          <Button
+          <button
             type="submit"
-            className="w-full bg-[#2B5273] hover:bg-[#1F3D54] text-white"
+            className="w-full bg-[#2B5273] hover:bg-[#1F3D54] text-white rounded-md px-4 py-2 font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             disabled={loading}
           >
             {loading ? 'Signing in...' : 'Sign In'}
-          </Button>
+          </button>
 
           <div className="text-center text-sm text-gray-600">
             Don't have an account?{' '}
