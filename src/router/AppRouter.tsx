@@ -1,7 +1,6 @@
 import { Routes, Route } from 'react-router-dom';
 
 // Layout
-import AuthRedirect from '../components/auth/AuthRedirect';
 import ProtectedRoute from '../components/auth/ProtectedRoute';
 import { MainLayout } from '../components/MainLayout';
 
@@ -24,10 +23,11 @@ import { FavoritesPage } from '../pages/FavoritesPage';
 import { HomePage } from '../pages/HomePage';
 import { ListPropertyPage } from '../pages/ListPropertyPage';
 import { LoginPage } from '../pages/LoginPage';
+import { OwnerPaymentsPage } from '../pages/OwnerPaymentsPage';
 import { PrivacyPage } from '../pages/PrivacyPage';
 import { PropertiesPage } from '../pages/PropertiesPage';
-import { SignupPage } from '../pages/SignupPage';
 import { PropertyDetailPage } from '../pages/PropertyDetailPage';
+import { SignupPage } from '../pages/SignupPage';
 import { TenantPaymentsPage } from '../pages/TenantPaymentsPage';
 import { TermsPage } from '../pages/TermsPage';
 import UnauthorizedPage from '../pages/UnauthorizedPage';
@@ -36,7 +36,6 @@ import { VerifiedBadgePage } from '../pages/VerifiedBadgePage';
 // Dashboards (role-based)
 
 // Protected routes
-import { OwnerPaymentsPage } from '../pages/OwnerPaymentsPage';
 
 // 404 fallback
 const NotFound = () => (
@@ -227,7 +226,7 @@ export default function AppRouter() {
       <Route
         path="/dashboard/admin"
         element={
-          <ProtectedRoute roles={['admin']}>
+          <ProtectedRoute allowedRoles={['admin']}>
             <AdminDashboard />
           </ProtectedRoute>
         }
@@ -236,7 +235,7 @@ export default function AppRouter() {
       <Route
         path="/admin/deleted-documents"
         element={
-          <ProtectedRoute roles={['admin']}>
+          <ProtectedRoute allowedRoles={['admin']}>
             <AdminDeletedDocumentsPage />
           </ProtectedRoute>
         }
@@ -245,7 +244,7 @@ export default function AppRouter() {
       <Route
         path="/dashboard/owner"
         element={
-          <ProtectedRoute roles={['owner']}>
+          <ProtectedRoute allowedRoles={['owner']}>
             <OwnerDashboard />
           </ProtectedRoute>
         }
@@ -254,7 +253,7 @@ export default function AppRouter() {
       <Route
         path="/owner/payments"
         element={
-          <ProtectedRoute roles={['owner', 'admin']}>
+          <ProtectedRoute allowedRoles={['owner', 'admin']}>
             <OwnerPaymentsPage />
           </ProtectedRoute>
         }
@@ -263,7 +262,7 @@ export default function AppRouter() {
       <Route
         path="/dashboard/agent"
         element={
-          <ProtectedRoute roles={['agent']}>
+          <ProtectedRoute allowedRoles={['agent']}>
             <AgentDashboard />
           </ProtectedRoute>
         }
@@ -272,7 +271,7 @@ export default function AppRouter() {
       <Route
         path="/dashboard/tenant"
         element={
-          <ProtectedRoute roles={['tenant']}>
+          <ProtectedRoute allowedRoles={['tenant']}>
             <TenantDashboard />
           </ProtectedRoute>
         }
@@ -281,7 +280,7 @@ export default function AppRouter() {
       <Route
         path="/tenant/payments"
         element={
-          <ProtectedRoute roles={['tenant', 'admin']}>
+          <ProtectedRoute allowedRoles={['tenant', 'admin']}>
             <TenantPaymentsPage />
           </ProtectedRoute>
         }

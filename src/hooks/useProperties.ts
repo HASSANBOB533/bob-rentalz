@@ -22,6 +22,9 @@ export interface Property {
   featured: boolean;
   created_at: string;
   videoUrl?: string;
+  region?: string;
+  agentId?: string;
+  leaseTerm?: string;
 }
 
 /**

@@ -1,6 +1,6 @@
 import { MapPin, Navigation, X, ChevronLeft, ChevronRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Property, agents } from '../data/mockData';
 import { ImageWithFallback } from './figma/ImageWithFallback';
@@ -30,7 +30,7 @@ export function MapView({ properties, onPropertySelect }: MapViewProps) {
   const [mapZoom, setMapZoom] = useState(1);
 
   // Generate coordinates for properties that don't have them
-  const propertiesWithCoordinates = properties.map((property, index) => {
+  const propertiesWithCoordinates = properties.map((property, _index) => {
     if (property.coordinates) {
       return property;
     }
@@ -228,7 +228,7 @@ export function MapView({ properties, onPropertySelect }: MapViewProps) {
 
       {/* Property Pins */}
       <div className="absolute inset-0">
-        {propertiesWithCoordinates.map((property, index) => {
+        {propertiesWithCoordinates.map((property, _index) => {
           // Convert lat/lng to screen position (simplified)
           const coords = property.coordinates!;
 
@@ -369,7 +369,7 @@ interface MobilePropertyCardProps {
 }
 
 function MobilePropertyCard({ property, onPropertySelect }: MobilePropertyCardProps) {
-  const agent = agents.find((a) => a.id === property.agentId);
+  const _agent = agents.find((a) => a.id === property.agentId);
 
   return (
     <div className="bg-white rounded-2xl overflow-hidden shadow-soft border border-gray-100">

@@ -1,4 +1,4 @@
-import { User, Search, Filter } from 'lucide-react';
+import { User, Filter } from 'lucide-react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { DashboardLayout } from '../components/DashboardLayout';

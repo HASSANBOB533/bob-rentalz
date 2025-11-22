@@ -1,4 +1,4 @@
-import { ArrowLeft, Search, Edit, Eye, AlertTriangle, Archive } from 'lucide-react';
+import { ArrowLeft, Search, Edit, AlertTriangle, Archive } from 'lucide-react';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { toast } from 'sonner';

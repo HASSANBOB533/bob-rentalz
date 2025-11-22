@@ -30,12 +30,17 @@ declare module 'sonner' {
     function dismiss(toastId?: string | number): void;
   }
 
-  export const Toaster: React.ComponentType<{
+  export interface ToasterProps {
     position?: 'top-left' | 'top-center' | 'top-right' | 'bottom-left' | 'bottom-center' | 'bottom-right';
     expand?: boolean;
     richColors?: boolean;
     closeButton?: boolean;
-  }>;
+    theme?: 'light' | 'dark' | 'system';
+    className?: string;
+    style?: React.CSSProperties;
+  }
+
+  export const Toaster: React.ComponentType<ToasterProps>;
 }
 
 declare module 'sonner' {

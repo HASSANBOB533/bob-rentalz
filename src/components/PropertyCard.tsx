@@ -1,4 +1,4 @@
-import { Bed, Bath, Maximize, MapPin, Heart, CheckCircle, Crown, Plus, Check } from 'lucide-react';
+import { Bed, Bath, Maximize, MapPin, Heart, Crown, Plus, Check } from 'lucide-react';
 import { motion } from 'motion/react';
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
@@ -7,7 +7,6 @@ import { Property, agents } from '../data/mockData';
 import { toggleComparison } from '../utils/comparison';
 import { isFavorite, toggleFavorite } from '../utils/favorites';
 import { addPropertyMetadata } from '../utils/propertyUtils';
-import { CompareCheckbox } from './CompareCheckbox';
 import { ImageWithFallback } from './figma/ImageWithFallback';
 import { PropertyCodeDisplay } from './PropertyCodeDisplay';
 import { PropertyImageCarousel } from './PropertyImageCarousel';
@@ -47,13 +46,13 @@ export function PropertyCard({
     onFavoriteChange?.();
   };
 
-  const statusColors = {
+  const _statusColors = {
     available: 'bg-green-500',
     rented: 'bg-red-500',
     pending: 'bg-yellow-500',
   };
 
-  const statusLabels = {
+  const _statusLabels = {
     available: 'Available',
     rented: 'Rented',
     pending: 'Pending',

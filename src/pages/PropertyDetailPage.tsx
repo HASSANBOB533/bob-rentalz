@@ -58,10 +58,10 @@ export function PropertyDetailPage() {
   // Fallback to mock data if Supabase returns nothing
   const mockProperty = properties.find((p) => p.id === id);
   const property = supabaseProperty || (mockProperty ? addPropertyMetadata(mockProperty) : null);
-  const agent = property ? agents.find((a) => (property as any).agentId) : null;
+  const agent = property ? agents.find((_a) => (property as any).agentId) : null;
 
   const [favorited, setFavorited] = useState(false);
-  const [selectedImage, setSelectedImage] = useState(0);
+  const [_selectedImage, _setSelectedImage] = useState(0);
   const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(false);
 
   // Check if user came from a dashboard
@@ -122,7 +122,7 @@ export function PropertyDetailPage() {
     if (combined.length < 3) {
       const remaining = availableProperties
         .filter((p) => !combined.includes(p))
-        .sort((a, b) => (b.verified ? 1 : -1));
+        .sort((_a, _b) => (_b.verified ? 1 : -1));
       combined.push(...remaining);
     }
 
@@ -484,7 +484,7 @@ export function PropertyDetailPage() {
 
               {/* Airbnb-style responsive grid: 2 cols mobile, 3 cols tablet, 4 cols desktop */}
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
-                {property.amenities.slice(0, 10).map((amenity) => {
+                {property.amenities.slice(0, 10).map((amenity: string) => {
                   const IconComponent = getAmenityIcon(amenity);
                   return (
                     <div

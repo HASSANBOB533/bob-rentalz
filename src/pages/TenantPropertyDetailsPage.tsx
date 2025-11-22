@@ -152,7 +152,7 @@ export default function TenantPropertyDetailsPage() {
     window.open(whatsappUrl, '_blank');
   };
 
-  const handleDownloadBrochure = () => {
+  const _handleDownloadBrochure = () => {
     toast.success('Brochure download started');
   };
 
@@ -418,7 +418,7 @@ export default function TenantPropertyDetailsPage() {
             <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6 mb-6 md:mb-7 lg:mb-8">
               <h2 className="text-xl text-gray-900 mb-4">Amenities</h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-                {property.amenities.map((amenity, index) => {
+                {property.amenities.map((amenity: string, index: number) => {
                   const Icon = getAmenityIcon(amenity);
                   return (
                     <div key={index} className="flex items-center gap-2.5 text-gray-700">

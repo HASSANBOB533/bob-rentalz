@@ -73,11 +73,11 @@ export function VerifiedBadgePage() {
                 What Does &quot;Verified by BOB&quot; Mean?
               </h2>
               <p className="text-gray-700 leading-relaxed mb-6">
-                The <strong>&quot;Verified by BOB&quot;</strong> badge is a mark of excellence that ensures a
-                property meets our strict safety, quality, and identity verification criteria before
-                being listed on the BOB Rentalz platform. This badge represents our commitment to
-                transparency, trust, and providing only the highest-quality rental properties to our
-                users.
+                The <strong>&quot;Verified by BOB&quot;</strong> badge is a mark of excellence that
+                ensures a property meets our strict safety, quality, and identity verification
+                criteria before being listed on the BOB Rentalz platform. This badge represents our
+                commitment to transparency, trust, and providing only the highest-quality rental
+                properties to our users.
               </p>
               <p className="text-gray-700 leading-relaxed mb-6">
                 When you see the{' '}
@@ -186,8 +186,8 @@ export function VerifiedBadgePage() {
                 <div>
                   <h4 className="font-semibold text-[#2B2B2B] mb-1">Peace of Mind</h4>
                   <p className="text-gray-600 leading-relaxed">
-                    Know that you&apos;re viewing legitimate, safe, and high-quality properties backed by
-                    BOB Rentalz.
+                    Know that you&apos;re viewing legitimate, safe, and high-quality properties
+                    backed by BOB Rentalz.
                   </p>
                 </div>
               </div>

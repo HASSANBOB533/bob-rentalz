@@ -1,11 +1,11 @@
-import { ArrowLeft, CheckCircle, Clock, User, Calendar, MapPin, Wrench } from 'lucide-react';
+import { ArrowLeft, CheckCircle, User, Calendar, MapPin, Wrench } from 'lucide-react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { DashboardLayout } from '../components/DashboardLayout';
 import { Button } from '../components/ui/button';
 
 export default function TenantRentedTrackRequestPage() {
   const navigate = useNavigate();
-  const { id } = useParams();
+  const { id: _id } = useParams();
 
   const request = {
     id: 1,

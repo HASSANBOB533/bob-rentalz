@@ -1,4 +1,4 @@
-import { ArrowLeft, Clock, Plus, Filter, CheckCircle2, Circle, User } from 'lucide-react';
+import { ArrowLeft, Clock, Plus, Filter, User } from 'lucide-react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { DashboardLayout } from '../components/DashboardLayout';
@@ -135,7 +135,7 @@ export default function TenantRentedServiceRequestsPage() {
           {steps.map((step, index) => {
             const isCompleted = index <= currentStepIndex;
             const isCurrent = index === currentStepIndex;
-            const isFuture = index > currentStepIndex;
+            const _isFuture = index > currentStepIndex;
 
             return (
               <div key={step} className="flex flex-col items-center gap-2">

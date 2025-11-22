@@ -1,4 +1,4 @@
-import { supabase } from './index';
+import { supabase } from './api';
 
 export interface PropertyImage {
   id: string;

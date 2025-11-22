@@ -1,4 +1,3 @@
-import { addPropertyMetadata } from '../utils/propertyUtils';
 
 export interface Property {
   id: string;

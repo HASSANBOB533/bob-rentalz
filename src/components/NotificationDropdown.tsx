@@ -10,7 +10,7 @@ import {
   Tag,
   X,
 } from 'lucide-react';
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 type UserRole = 'admin' | 'owner' | 'agent' | 'tenant';
 
@@ -24,7 +24,8 @@ interface Notification {
     | 'calendar'
     | 'finance'
     | 'success'
-    | 'info';
+    | 'info'
+    | 'tag';
   title: string;
   description: string;
   time: string;
@@ -43,7 +44,7 @@ export function NotificationDropdown({ userRole }: NotificationDropdownProps) {
   // Generate mock notifications based on role
   useEffect(() => {
     const getNotifications = (role: UserRole): Notification[] => {
-      const baseTime = new Date();
+      const _baseTime = new Date();
 
       switch (role) {
         case 'admin':

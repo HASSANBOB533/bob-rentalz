@@ -57,8 +57,8 @@ export default function AdminPropertyDetailPage() {
 
   // Determine previous page for back button context
   const fromAgents = location.state?.from?.includes('/admin/agents');
-  const fromAssignments = location.state?.from?.includes('/admin/assignments');
-  const agentId = fromAgents ? location.state.from.split('/')[3] : null;
+  const _fromAssignments = location.state?.from?.includes('/admin/assignments');
+  const _agentId = fromAgents ? location.state.from.split('/')[3] : null;
 
   // Mock property data
   const mockProperties: Record<string, any> = {
@@ -166,7 +166,7 @@ export default function AdminPropertyDetailPage() {
 
   const handleApprove = async () => {
     // Call the secure admin API to verify the property
-    const { success, error } = await adminApi.verifyProperty(id!);
+    const { success, error } = await adminApi.verifyProperty(propertyId!);
 
     if (success) {
       setProperty({ ...property, status: 'Approved' });

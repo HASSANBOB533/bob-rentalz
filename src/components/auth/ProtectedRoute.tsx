@@ -1,12 +1,12 @@
 // FILE 9 — ROLE-BASED ROUTE PROTECTION
 // -------------------------------------
 
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import { supabase, getCurrentRole } from '../../lib/supabase/api';
 
 interface ProtectedRouteProps {
-  children: JSX.Element;
+  children: React.ReactElement;
   allowedRoles: Array<'admin' | 'owner' | 'agent' | 'tenant'>;
 }
 

@@ -1,5 +1,5 @@
 import { Search, X, ArrowRight, Building, User, Users, FileText, UserCheck } from 'lucide-react';
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { properties, agents } from '../data/mockData';
 

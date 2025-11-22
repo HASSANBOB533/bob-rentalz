@@ -1,18 +1,26 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 interface ImageUploaderProps {
   images: string[];
-  primaryIndex: number;
-  onChange: (images: string[], primaryIndex: number) => void;
+  primaryIndex?: number;
+  onChange?: (images: string[], primaryIndex: number) => void;
+  onImagesChange?: React.Dispatch<React.SetStateAction<string[]>>;
+  onUpload?: (files: File[]) => Promise<string[]>;
+  maxImages?: number;
 }
 
-export const ImageUploader: React.FC<ImageUploaderProps> = ({ images, primaryIndex, onChange }) => {
-  const [uploading, setUploading] = useState(false);
-
+export const ImageUploader: React.FC<ImageUploaderProps> = ({
+  images,
+  primaryIndex = 0,
+  onChange,
+  onImagesChange,
+}) => {
   const handleAddImage = () => {
     const url = prompt('Enter image URL:');
     if (url && url.trim()) {
-      onChange([...images, url.trim()], primaryIndex);
+      const newImages = [...images, url.trim()];
+      onChange?.(newImages, primaryIndex);
+      onImagesChange?.(newImages);
     }
   };
 
@@ -20,18 +28,18 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({ images, primaryInd
     const newImages = images.filter((_, i) => i !== index);
     let newPrimaryIndex = primaryIndex;
 
-    // Adjust primary index if needed
     if (index === primaryIndex) {
-      newPrimaryIndex = 0; // Set first image as primary
+      newPrimaryIndex = 0;
     } else if (index < primaryIndex) {
       newPrimaryIndex = primaryIndex - 1;
     }
 
-    onChange(newImages, newPrimaryIndex);
+    onChange?.(newImages, newPrimaryIndex);
+    onImagesChange?.(newImages);
   };
 
   const handleSetPrimary = (index: number) => {
-    onChange(images, index);
+    onChange?.(images, index);
   };
 
   const handleMoveUp = (index: number) => {
@@ -46,7 +54,8 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({ images, primaryInd
       newPrimaryIndex = index;
     }
 
-    onChange(newImages, newPrimaryIndex);
+    onChange?.(newImages, newPrimaryIndex);
+    onImagesChange?.(newImages);
   };
 
   const handleMoveDown = (index: number) => {
@@ -61,7 +70,8 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({ images, primaryInd
       newPrimaryIndex = index;
     }
 
-    onChange(newImages, newPrimaryIndex);
+    onChange?.(newImages, newPrimaryIndex);
+    onImagesChange?.(newImages);
   };
 
   return (

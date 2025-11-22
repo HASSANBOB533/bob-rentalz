@@ -1,6 +1,6 @@
 import { User } from '@supabase/supabase-js';
 import { createContext, useContext, useEffect, useState, ReactNode } from 'react';
-import { supabase, Profile } from '@/lib/supabase';
+import { supabase, Profile } from '../lib/supabase';
 
 type AuthContextType = {
   user: User | null;
@@ -40,7 +40,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     // Check active session
-    supabase.auth.getSession().then(({ data: { session } }) => {
+    supabase.auth.getSession().then(({ data: { session } }: { data: { session: any } }) => {
       setUser(session?.user ?? null);
       if (session?.user) {
         fetchProfile(session.user.id);
@@ -52,7 +52,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     // Listen for auth changes
     const {
       data: { subscription },
-    } = supabase.auth.onAuthStateChange(async (event, session) => {
+    } = supabase.auth.onAuthStateChange(async (_event: string, session: any) => {
       setUser(session?.user ?? null);
       if (session?.user) {
         fetchProfile(session.user.id);

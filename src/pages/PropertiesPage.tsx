@@ -132,7 +132,7 @@ export function PropertiesPage() {
     setSearchParams({});
   };
 
-  const handlePropertySelect = (propertyId: string) => {
+  const _handlePropertySelect = (propertyId: string) => {
     navigate(`/property/${propertyId}`);
   };
 
@@ -446,7 +446,7 @@ export function PropertiesPage() {
                     : 'flex flex-col gap-4 md:gap-6'
                 }
               >
-                {paginatedProperties.map((property, index) => (
+                {paginatedProperties.map((property, _index) => (
                   <PropertyCard
                     key={property.id}
                     property={property}

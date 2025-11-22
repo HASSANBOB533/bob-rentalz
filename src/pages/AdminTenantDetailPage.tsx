@@ -20,7 +20,6 @@ import { useParams, useNavigate, Link } from 'react-router-dom';
 import { toast } from 'sonner';
 import { AdminDashboardLayout } from '../components/AdminDashboardLayout';
 import { ArchivedChat, ChatMessage } from '../components/ArchivedChat';
-import { ArchivedRentalSummary } from '../components/ArchivedRentalSummary';
 import { AuditLog, AuditLogEntry } from '../components/AuditLog';
 import { LifecycleTimeline } from '../components/LifecycleTimeline';
 import { Badge } from '../components/ui/badge';
@@ -685,7 +684,9 @@ export default function AdminTenantDetailPage() {
                             size="sm"
                             className="text-red-500"
                             onClick={async () => {
-                              const { success, error } = await adminApi.softDeleteDocument(doc.id);
+                              const { success, error } = await adminApi.softDeleteDocument(
+                                String(doc.id),
+                              );
                               if (success) {
                                 toast.success('Document deleted successfully');
                                 // Remove from local state

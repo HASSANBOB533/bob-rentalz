@@ -1,5 +1,5 @@
 import { Search } from 'lucide-react';
-import { useState } from 'react';
+import React from 'react';
 import { topLevelRegions } from '../data/locationData';
 import { Button } from './ui/button';
 import { Input } from './ui/input';

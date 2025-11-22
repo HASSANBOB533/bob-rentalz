@@ -128,9 +128,9 @@ export function TermsPage() {
                 7. Limitation of Liability
               </h2>
               <p className="text-gray-700 leading-relaxed mb-6">
-                BOB Rentalz provides services &quot;as is&quot; without warranties of any kind. We are not
-                liable for any direct, indirect, incidental, or consequential damages arising from
-                the use of our platform or services.
+                BOB Rentalz provides services &quot;as is&quot; without warranties of any kind. We
+                are not liable for any direct, indirect, incidental, or consequential damages
+                arising from the use of our platform or services.
               </p>
 
               <h2 className="text-2xl font-semibold text-[#2B2B2B] mb-4">

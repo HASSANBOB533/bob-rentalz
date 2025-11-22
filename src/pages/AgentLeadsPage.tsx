@@ -1,4 +1,4 @@
-import { MessageSquare, Calendar, MapPin, Clock, ArrowLeft } from 'lucide-react';
+import { MessageSquare, Clock, ArrowLeft } from 'lucide-react';
 import { useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { ImageWithFallback } from '../components/figma/ImageWithFallback';

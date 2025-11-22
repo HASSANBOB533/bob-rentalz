@@ -21,7 +21,7 @@ export default function AgentDashboardPage() {
   const navigate = useNavigate();
 
   // Agent data - matches DashboardLayout userInfo for agent role
-  const agentName = 'Sarah Anderson';
+  const _agentName = 'Sarah Anderson';
 
   // Updated KPIs (removed "Properties Listed", added "Assigned Properties")
   const kpiCards = [
@@ -60,7 +60,7 @@ export default function AgentDashboardPage() {
   ];
 
   // Updated Quick Actions (removed "Add New Property")
-  const quickActions = [
+  const _quickActions = [
     {
       id: 1,
       label: 'View Assigned Properties',
@@ -246,7 +246,7 @@ export default function AgentDashboardPage() {
   ];
 
   // Performance Metrics
-  const performanceMetrics = [
+  const _performanceMetrics = [
     { label: 'Leads Converted', value: '12 this month' },
     { label: 'Viewings Completed', value: '8 this month' },
   ];

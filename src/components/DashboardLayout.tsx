@@ -33,6 +33,7 @@ interface DashboardLayoutProps {
   pageTitle?: string;
   userName?: string;
   userRole?: string;
+  onLogout?: () => void | Promise<void>;
 }
 
 export function DashboardLayout({

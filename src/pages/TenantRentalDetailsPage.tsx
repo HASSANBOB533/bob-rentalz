@@ -243,7 +243,7 @@ export default function TenantRentalDetailsPage() {
                 </button>
               </div>
               <div className="space-y-3">
-                {rental.paymentHistory.map((payment, index) => (
+                {rental.paymentHistory.map((payment: any, index: number) => (
                   <div
                     key={index}
                     className="flex items-center justify-between p-4 bg-gray-50 rounded-lg"
@@ -273,7 +273,7 @@ export default function TenantRentalDetailsPage() {
                 <h2 className="font-semibold text-gray-900">Rental Documents</h2>
               </div>
               <div className="space-y-3">
-                {rental.documents.map((doc, index) => (
+                {rental.documents.map((doc: any, index: number) => (
                   <div
                     key={index}
                     className="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"

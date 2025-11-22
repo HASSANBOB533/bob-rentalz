@@ -1,7 +1,6 @@
 import { Play, X, Youtube } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
 import { Property } from '../data/mockData';
 
 interface VideoTourProps {

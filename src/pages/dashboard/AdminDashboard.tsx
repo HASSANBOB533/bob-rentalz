@@ -1,4 +1,4 @@
-import { Trash2, Users, Home, FileText, Settings } from 'lucide-react';
+import { Trash2, Users, Home, FileText } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 export default function AdminDashboard() {

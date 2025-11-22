@@ -1,4 +1,4 @@
-import { ArrowLeft, Send, Paperclip, Phone, Video, MoreVertical, MapPin, Home } from 'lucide-react';
+import { ArrowLeft, Send, Paperclip, Phone, Video, MoreVertical, MapPin } from 'lucide-react';
 import { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { DashboardLayout } from '../components/DashboardLayout';

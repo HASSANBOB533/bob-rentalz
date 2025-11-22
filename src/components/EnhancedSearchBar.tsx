@@ -1,4 +1,4 @@
-import { Search, MapPin, DollarSign, Home, Sofa, SlidersHorizontal } from 'lucide-react';
+import { Search, MapPin, DollarSign, Home, SlidersHorizontal } from 'lucide-react';
 import { useState } from 'react';
 import { topLevelRegions } from '../data/locationData';
 import { Button } from './ui/button';

@@ -1,4 +1,4 @@
-import { ArrowLeft, Send, MapPin, Home, Calendar, Shield, AlertCircle } from 'lucide-react';
+import { ArrowLeft, Send, MapPin, Home, Calendar, Shield } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';

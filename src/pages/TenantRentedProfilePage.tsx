@@ -1,4 +1,4 @@
-import { ArrowLeft, Camera, Mail, Phone, MapPin, Calendar, User, Building } from 'lucide-react';
+import { ArrowLeft, Camera, Calendar, User, Building } from 'lucide-react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { DashboardLayout } from '../components/DashboardLayout';

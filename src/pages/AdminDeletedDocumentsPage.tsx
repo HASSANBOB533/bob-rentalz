@@ -1,4 +1,4 @@
-import { FileText, RotateCcw, Trash2, Calendar, User, Home } from 'lucide-react';
+import { FileText, RotateCcw, Calendar, User, Home } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';

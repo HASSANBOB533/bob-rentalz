@@ -163,7 +163,7 @@ export default function TenantDashboardPage() {
     },
   ];
 
-  const getStatusColor = (status: string) => {
+  const _getStatusColor = (status: string) => {
     switch (status) {
       case 'Pending':
         return 'bg-yellow-100 text-yellow-700';
