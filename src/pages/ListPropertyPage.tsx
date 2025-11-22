@@ -3,40 +3,117 @@ import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
 import { Textarea } from '../components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../components/ui/select';
-import { Checkbox } from '../components/ui/checkbox';
-import { agents } from '../data/mockData';
-import { topLevelRegions } from '../data/locationData';
-import { Check, Upload } from 'lucide-react';
+import { Check, Loader2 } from 'lucide-react';
 import { toast } from 'sonner@2.0.3';
+import { AmenitiesSelector } from '../components/property/AmenitiesSelector';
+import { ImageUploader } from '../components/property/ImageUploader';
+import { createProperty, uploadPropertyImage } from '../lib/supabase/propertiesApi';
+import { useNavigate } from 'react-router-dom';
 
 export function ListPropertyPage() {
+  const navigate = useNavigate();
   const [step, setStep] = useState(1);
   const [submitted, setSubmitted] = useState(false);
-  const [selectedAmenities, setSelectedAmenities] = useState<string[]>([]);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isUploadingImages, setIsUploadingImages] = useState(false);
 
-  const allAmenities = ['Garden', 'Parking', 'Security', 'Pool', 'Gym', 'Balcony', 'Elevator', 'Central AC', 'Beach Access', 'Terrace'];
+  // Form state
+  const [formData, setFormData] = useState({
+    title: '',
+    description: '',
+    propertyType: '',
+    bedrooms: '',
+    bathrooms: '',
+    area: '',
+    furnishing: '',
+    price: '',
+    location: '',
+    address: '',
+  });
 
-  const handleAmenityToggle = (amenity: string) => {
-    setSelectedAmenities(prev =>
-      prev.includes(amenity)
-        ? prev.filter(a => a !== amenity)
-        : [...prev, amenity]
-    );
+  const [selectedAmenityIds, setSelectedAmenityIds] = useState<string[]>([]);
+  const [imageUrls, setImageUrls] = useState<string[]>([]);
+
+  const handleInputChange = (field: string, value: string) => {
+    setFormData(prev => ({
+      ...prev,
+      [field]: value
+    }));
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    // In a real application, this would submit to a backend
-    setSubmitted(true);
-    toast.success('Property submitted successfully!');
+  const handleImageUpload = async (files: File[]): Promise<string[]> => {
+    setIsUploadingImages(true);
+    try {
+      const uploadPromises = files.map(file => uploadPropertyImage(file));
+      const urls = await Promise.all(uploadPromises);
+      return urls;
+    } catch (error) {
+      console.error('Error uploading images:', error);
+      toast.error('Failed to upload some images');
+      return [];
+    } finally {
+      setIsUploadingImages(false);
+    }
   };
 
   const handleNext = () => {
+    // Validate current step
+    if (step === 1) {
+      if (!formData.title || !formData.location || !formData.propertyType) {
+        toast.error('Please fill in all required fields');
+        return;
+      }
+    } else if (step === 2) {
+      if (!formData.bedrooms || !formData.bathrooms || !formData.price) {
+        toast.error('Please fill in all required fields');
+        return;
+      }
+    }
+    
     if (step < 4) setStep(step + 1);
   };
 
   const handlePrevious = () => {
     if (step > 1) setStep(step - 1);
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    // Final validation
+    if (!formData.title || !formData.description || !formData.propertyType || 
+        !formData.bedrooms || !formData.price || !formData.location) {
+      toast.error('Please fill in all required fields');
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    try {
+      const propertyData = {
+        title: formData.title,
+        description: formData.description,
+        property_type: formData.propertyType,
+        location: formData.location,
+        address: formData.address || undefined,
+        price: parseFloat(formData.price),
+        bedrooms: formData.bedrooms === 'studio' ? 0 : parseInt(formData.bedrooms),
+        bathrooms: parseInt(formData.bathrooms),
+        area: formData.area ? parseFloat(formData.area) : undefined,
+        furnishing: formData.furnishing || undefined,
+        status: 'draft' as const, // Public form submissions start as draft
+      };
+
+      await createProperty(propertyData, selectedAmenityIds, imageUrls);
+
+      setSubmitted(true);
+      toast.success('Property submitted successfully!');
+    } catch (error: any) {
+      console.error('Error creating property:', error);
+      toast.error(error.message || 'Failed to submit property');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   if (submitted) {
@@ -46,7 +123,7 @@ export function ListPropertyPage() {
           <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
             <Check className="w-10 h-10 text-green-600" />
           </div>
-          <h2 className="mb-4">Property Submitted Successfully!</h2>
+          <h2 className="text-2xl font-bold mb-4">Property Submitted Successfully!</h2>
           <p className="text-gray-600 mb-8">
             Thank you for listing your property with BOB Rentalz. Our team will review your submission and contact you within 24-48 hours.
           </p>
@@ -55,13 +132,27 @@ export function ListPropertyPage() {
               onClick={() => {
                 setSubmitted(false);
                 setStep(1);
+                setFormData({
+                  title: '',
+                  description: '',
+                  propertyType: '',
+                  bedrooms: '',
+                  bathrooms: '',
+                  area: '',
+                  furnishing: '',
+                  price: '',
+                  location: '',
+                  address: '',
+                });
+                setSelectedAmenityIds([]);
+                setImageUrls([]);
               }}
               variant="outline"
             >
               List Another Property
             </Button>
             <Button
-              onClick={() => window.location.href = '/'}
+              onClick={() => navigate('/')}
               className="bg-[#D4AF37] hover:bg-[#B8941F] text-white"
             >
               Go to Homepage
@@ -78,7 +169,7 @@ export function ListPropertyPage() {
         <div className="max-w-3xl mx-auto">
           {/* Header */}
           <div className="text-center mb-12">
-            <h1 className="mb-4">List Your Property</h1>
+            <h1 className="text-3xl font-bold mb-4">List Your Property</h1>
             <p className="text-gray-600">
               Fill out the form below to list your property with BOB Rentalz
             </p>
@@ -122,48 +213,68 @@ export function ListPropertyPage() {
               {/* Step 1: Basic Info */}
               {step === 1 && (
                 <div className="space-y-6">
-                  <h3 className="mb-6">Basic Information</h3>
+                  <h3 className="text-xl font-semibold mb-6">Basic Information</h3>
                   
                   <div>
                     <label className="block font-medium mb-2">Property Title *</label>
                     <Input
                       required
                       placeholder="e.g., Modern Villa in New Cairo"
+                      value={formData.title}
+                      onChange={(e) => handleInputChange('title', e.target.value)}
                     />
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                       <label className="block font-medium mb-2">Location *</label>
-                      <Select required>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select location" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          {topLevelRegions.map((region) => (
-                            <SelectItem key={region.id} value={region.name}>
-                              {region.name}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
+                      <Input
+                        required
+                        placeholder="e.g., New Cairo, Cairo"
+                        value={formData.location}
+                        onChange={(e) => handleInputChange('location', e.target.value)}
+                      />
                     </div>
 
                     <div>
-                      <label className="block font-medium mb-2">Monthly Rent (EGP) *</label>
-                      <Input
-                        type="number"
+                      <label className="block font-medium mb-2">Property Type *</label>
+                      <Select 
                         required
-                        placeholder="e.g., 35000"
-                      />
+                        value={formData.propertyType}
+                        onValueChange={(value) => handleInputChange('propertyType', value)}
+                      >
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select type" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="apartment">Apartment</SelectItem>
+                          <SelectItem value="villa">Villa</SelectItem>
+                          <SelectItem value="penthouse">Penthouse</SelectItem>
+                          <SelectItem value="studio">Studio</SelectItem>
+                          <SelectItem value="duplex">Duplex</SelectItem>
+                          <SelectItem value="townhouse">Townhouse</SelectItem>
+                        </SelectContent>
+                      </Select>
                     </div>
                   </div>
 
                   <div>
-                    <label className="block font-medium mb-2">Region/District *</label>
+                    <label className="block font-medium mb-2">Full Address</label>
                     <Input
+                      placeholder="e.g., 123 Main Street, Building 5"
+                      value={formData.address}
+                      onChange={(e) => handleInputChange('address', e.target.value)}
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block font-medium mb-2">Description *</label>
+                    <Textarea
                       required
-                      placeholder="e.g., Fifth Settlement"
+                      placeholder="Describe your property in detail..."
+                      rows={5}
+                      value={formData.description}
+                      onChange={(e) => handleInputChange('description', e.target.value)}
                     />
                   </div>
                 </div>
@@ -172,188 +283,150 @@ export function ListPropertyPage() {
               {/* Step 2: Details */}
               {step === 2 && (
                 <div className="space-y-6">
-                  <h3 className="mb-6">Property Details</h3>
+                  <h3 className="text-xl font-semibold mb-6">Property Details</h3>
 
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                     <div>
                       <label className="block font-medium mb-2">Bedrooms *</label>
-                      <Input
-                        type="number"
+                      <Select 
                         required
-                        min="1"
-                        placeholder="e.g., 3"
-                      />
+                        value={formData.bedrooms}
+                        onValueChange={(value) => handleInputChange('bedrooms', value)}
+                      >
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="studio">Studio</SelectItem>
+                          <SelectItem value="1">1 Bedroom</SelectItem>
+                          <SelectItem value="2">2 Bedrooms</SelectItem>
+                          <SelectItem value="3">3 Bedrooms</SelectItem>
+                          <SelectItem value="4">4 Bedrooms</SelectItem>
+                          <SelectItem value="5">5+ Bedrooms</SelectItem>
+                        </SelectContent>
+                      </Select>
                     </div>
 
                     <div>
                       <label className="block font-medium mb-2">Bathrooms *</label>
-                      <Input
-                        type="number"
+                      <Select 
                         required
-                        min="1"
-                        placeholder="e.g., 2"
-                      />
+                        value={formData.bathrooms}
+                        onValueChange={(value) => handleInputChange('bathrooms', value)}
+                      >
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="1">1 Bathroom</SelectItem>
+                          <SelectItem value="2">2 Bathrooms</SelectItem>
+                          <SelectItem value="3">3 Bathrooms</SelectItem>
+                          <SelectItem value="4">4+ Bathrooms</SelectItem>
+                        </SelectContent>
+                      </Select>
                     </div>
 
                     <div>
-                      <label className="block font-medium mb-2">Area (m²) *</label>
+                      <label className="block font-medium mb-2">Area (sqm)</label>
                       <Input
                         type="number"
-                        required
-                        placeholder="e.g., 200"
+                        placeholder="e.g., 120"
+                        value={formData.area}
+                        onChange={(e) => handleInputChange('area', e.target.value)}
                       />
                     </div>
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                      <label className="block font-medium mb-2">Furnishing *</label>
-                      <Select required>
+                      <label className="block font-medium mb-2">Furnishing</label>
+                      <Select 
+                        value={formData.furnishing}
+                        onValueChange={(value) => handleInputChange('furnishing', value)}
+                      >
                         <SelectTrigger>
                           <SelectValue placeholder="Select furnishing" />
                         </SelectTrigger>
                         <SelectContent>
-                          <SelectItem value="furnished">Furnished</SelectItem>
-                          <SelectItem value="semi-furnished">Semi-Furnished</SelectItem>
+                          <SelectItem value="furnished">Fully Furnished</SelectItem>
+                          <SelectItem value="semi-furnished">Semi Furnished</SelectItem>
                           <SelectItem value="unfurnished">Unfurnished</SelectItem>
                         </SelectContent>
                       </Select>
                     </div>
 
                     <div>
-                      <label className="block font-medium mb-2">Status *</label>
-                      <Select required>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select status" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="available">Available</SelectItem>
-                          <SelectItem value="pending">Pending</SelectItem>
-                          <SelectItem value="rented">Rented</SelectItem>
-                        </SelectContent>
-                      </Select>
+                      <label className="block font-medium mb-2">Monthly Rent (EGP) *</label>
+                      <Input
+                        required
+                        type="number"
+                        placeholder="e.g., 15000"
+                        value={formData.price}
+                        onChange={(e) => handleInputChange('price', e.target.value)}
+                      />
                     </div>
-                  </div>
-
-                  <div>
-                    <label className="block font-medium mb-2">Lease Term *</label>
-                    <Input
-                      required
-                      placeholder="e.g., 12 months minimum"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block font-medium mb-2">Description *</label>
-                    <Textarea
-                      required
-                      rows={6}
-                      placeholder="Describe your property in detail..."
-                    />
                   </div>
                 </div>
               )}
 
-              {/* Step 3: Features */}
+              {/* Step 3: Features (Amenities) */}
               {step === 3 && (
                 <div className="space-y-6">
-                  <h3 className="mb-6">Features & Amenities</h3>
-
-                  <div>
-                    <label className="block font-medium mb-3">Select Amenities</label>
-                    <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                      {allAmenities.map((amenity) => (
-                        <div key={amenity} className="flex items-center gap-2">
-                          <Checkbox
-                            id={`amenity-${amenity}`}
-                            checked={selectedAmenities.includes(amenity)}
-                            onCheckedChange={() => handleAmenityToggle(amenity)}
-                          />
-                          <label htmlFor={`amenity-${amenity}`} className="text-sm cursor-pointer">
-                            {amenity}
-                          </label>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div>
-                    <label className="block font-medium mb-2">Assigned Agent *</label>
-                    <Select required>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select agent" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {agents.map((agent) => (
-                          <SelectItem key={agent.id} value={agent.id}>
-                            {agent.name}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </div>
+                  <h3 className="text-xl font-semibold mb-6">Property Features</h3>
+                  <AmenitiesSelector
+                    selectedAmenityIds={selectedAmenityIds}
+                    onChange={setSelectedAmenityIds}
+                  />
                 </div>
               )}
 
-              {/* Step 4: Media */}
+              {/* Step 4: Media (Images) */}
               {step === 4 && (
                 <div className="space-y-6">
-                  <h3 className="mb-6">Property Media</h3>
-
-                  <div>
-                    <label className="block font-medium mb-2">Property Images *</label>
-                    <div className="border-2 border-dashed border-gray-300 rounded-xl p-12 text-center hover:border-[#D4AF37] transition-colors cursor-pointer">
-                      <Upload className="w-12 h-12 mx-auto mb-4 text-gray-400" />
-                      <p className="text-gray-600 mb-2">Click to upload property images</p>
-                      <p className="text-sm text-gray-500">PNG, JPG up to 10MB each (max 10 images)</p>
-                      <Input
-                        type="file"
-                        accept="image/*"
-                        multiple
-                        className="hidden"
-                      />
-                    </div>
-                  </div>
-
-                  <div>
-                    <label className="block font-medium mb-2">Property Brochure (Optional)</label>
-                    <div className="border-2 border-dashed border-gray-300 rounded-xl p-8 text-center hover:border-[#D4AF37] transition-colors cursor-pointer">
-                      <Upload className="w-8 h-8 mx-auto mb-2 text-gray-400" />
-                      <p className="text-sm text-gray-600">Click to upload PDF brochure</p>
-                      <Input
-                        type="file"
-                        accept=".pdf"
-                        className="hidden"
-                      />
-                    </div>
-                  </div>
+                  <h3 className="text-xl font-semibold mb-6">Property Images</h3>
+                  <ImageUploader
+                    images={imageUrls}
+                    onImagesChange={setImageUrls}
+                    onUpload={handleImageUpload}
+                    maxImages={10}
+                  />
                 </div>
               )}
 
               {/* Navigation Buttons */}
-              <div className="flex justify-between mt-8 pt-6 border-t border-[#E5E7EB]">
-                <Button
-                  type="button"
-                  variant="outline"
-                  onClick={handlePrevious}
-                  disabled={step === 1}
-                >
-                  Previous
-                </Button>
+              <div className="flex justify-between mt-8 pt-6 border-t">
+                {step > 1 && (
+                  <Button
+                    type="button"
+                    variant="outline"
+                    onClick={handlePrevious}
+                  >
+                    Previous
+                  </Button>
+                )}
+                
                 {step < 4 ? (
                   <Button
                     type="button"
                     onClick={handleNext}
-                    className="bg-[#D4AF37] hover:bg-[#B8941F] text-white"
+                    className="ml-auto bg-[#D4AF37] hover:bg-[#B8941F] text-white"
                   >
                     Next
                   </Button>
                 ) : (
                   <Button
                     type="submit"
-                    className="bg-[#D4AF37] hover:bg-[#B8941F] text-white"
+                    disabled={isSubmitting || isUploadingImages}
+                    className="ml-auto bg-[#D4AF37] hover:bg-[#B8941F] text-white"
                   >
-                    Submit Property
+                    {isSubmitting ? (
+                      <>
+                        <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                        Submitting...
+                      </>
+                    ) : (
+                      'Submit Property'
+                    )}
                   </Button>
                 )}
               </div>

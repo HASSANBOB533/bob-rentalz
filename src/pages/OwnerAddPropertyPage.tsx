@@ -3,11 +3,13 @@ import { Input } from '../components/ui/input';
 import { Label } from '../components/ui/label';
 import { Textarea } from '../components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../components/ui/select';
-import { Switch } from '../components/ui/switch';
-import { ArrowLeft, Upload, MapPin } from 'lucide-react';
+import { ArrowLeft, Loader2 } from 'lucide-react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { toast } from 'sonner@2.0.3';
+import { AmenitiesSelector } from '../components/property/AmenitiesSelector';
+import { ImageUploader } from '../components/property/ImageUploader';
+import { createProperty, uploadPropertyImage } from '../lib/supabase/propertiesApi';
 
 export default function OwnerAddPropertyPage() {
   const location = useLocation();
@@ -15,41 +17,26 @@ export default function OwnerAddPropertyPage() {
   const isAgentPath = location.pathname.startsWith('/agent');
   const dashboardPath = isAgentPath ? '/agent/dashboard' : '/owner/dashboard';
   
-  // Form state - all fields initialized as empty
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isUploadingImages, setIsUploadingImages] = useState(false);
+  
+  // Form state
   const [formData, setFormData] = useState({
     title: '',
-    tagline: '',
     description: '',
     propertyType: '',
     bedrooms: '',
     bathrooms: '',
-    size: '',
-    furnishing: '',
-    floorLevel: '',
-    parkingSpaces: '',
-    price: '',
-    securityDeposit: '',
-    minLeaseTerm: '',
-    availabilityDate: '',
-    city: '',
     area: '',
-    compound: '',
-    street: '',
-    coordinates: '',
-    videoUrl: '',
+    furnishing: '',
+    price: '',
+    city: '',
+    address: '',
+    status: 'draft' as 'draft' | 'active',
   });
 
-  const [amenities, setAmenities] = useState({
-    parking: false,
-    garden: false,
-    pool: false,
-    security: false,
-    elevator: false,
-    gym: false,
-    balcony: false,
-    petsAllowed: false,
-    seaView: false,
-  });
+  const [selectedAmenityIds, setSelectedAmenityIds] = useState<string[]>([]);
+  const [imageUrls, setImageUrls] = useState<string[]>([]);
 
   const handleInputChange = (field: string, value: string) => {
     setFormData(prev => ({
@@ -58,22 +45,30 @@ export default function OwnerAddPropertyPage() {
     }));
   };
 
-  const handleAmenityToggle = (amenity: string, checked: boolean) => {
-    setAmenities(prev => ({
-      ...prev,
-      [amenity]: checked
-    }));
+  const handleImageUpload = async (files: File[]): Promise<string[]> => {
+    setIsUploadingImages(true);
+    try {
+      const uploadPromises = files.map(file => uploadPropertyImage(file));
+      const urls = await Promise.all(uploadPromises);
+      return urls;
+    } catch (error) {
+      console.error('Error uploading images:', error);
+      toast.error('Failed to upload some images');
+      return [];
+    } finally {
+      setIsUploadingImages(false);
+    }
   };
 
-  const handleSaveDraft = () => {
-    console.log('Saving draft with data:', {
-      ...formData,
-      amenities
-    });
-    toast.success('Property saved as draft!');
+  const handleSaveDraft = async () => {
+    await handleSubmit('draft');
   };
 
-  const handleSubmit = () => {
+  const handlePublish = async () => {
+    await handleSubmit('active');
+  };
+
+  const handleSubmit = async (status: 'draft' | 'active') => {
     // Validate required fields
     if (!formData.title || !formData.description || !formData.propertyType || 
         !formData.bedrooms || !formData.price || !formData.city) {
@@ -81,15 +76,40 @@ export default function OwnerAddPropertyPage() {
       return;
     }
 
-    console.log('Submitting property with data:', {
-      ...formData,
-      amenities
-    });
+    setIsSubmitting(true);
 
-    toast.success('Property submitted for approval!');
-    setTimeout(() => {
-      navigate('/owner/properties');
-    }, 1500);
+    try {
+      const propertyData = {
+        title: formData.title,
+        description: formData.description,
+        property_type: formData.propertyType,
+        location: formData.city,
+        address: formData.address || undefined,
+        price: parseFloat(formData.price),
+        bedrooms: formData.bedrooms === 'studio' ? 0 : parseInt(formData.bedrooms),
+        bathrooms: parseInt(formData.bathrooms),
+        area: formData.area ? parseFloat(formData.area) : undefined,
+        furnishing: formData.furnishing || undefined,
+        status: status,
+      };
+
+      const { id } = await createProperty(propertyData, selectedAmenityIds, imageUrls);
+
+      toast.success(
+        status === 'draft' 
+          ? 'Property saved as draft!' 
+          : 'Property submitted for approval!'
+      );
+
+      setTimeout(() => {
+        navigate(dashboardPath);
+      }, 1500);
+    } catch (error: any) {
+      console.error('Error creating property:', error);
+      toast.error(error.message || 'Failed to create property');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -110,9 +130,9 @@ export default function OwnerAddPropertyPage() {
       </div>
 
       <div className="space-y-8">
-        {/* Basic Listing Info Section */}
+        {/* Basic Information */}
         <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-          <h2 className="text-[#0E56A4] mb-6">Basic Listing Information</h2>
+          <h2 className="text-xl font-semibold text-[#0E56A4] mb-6">Basic Information</h2>
           <div className="space-y-6">
             {/* Title */}
             <div>
@@ -127,23 +147,9 @@ export default function OwnerAddPropertyPage() {
               />
             </div>
 
-            {/* Tagline */}
-            <div>
-              <Label htmlFor="tagline">Short Tagline</Label>
-              <Input
-                id="tagline"
-                type="text"
-                placeholder="e.g., Modern living in the heart of the city"
-                className="mt-1.5"
-                value={formData.tagline}
-                onChange={(e) => handleInputChange('tagline', e.target.value)}
-              />
-              <p className="text-sm text-gray-500 mt-1">A catchy one-liner for your property</p>
-            </div>
-
             {/* Description */}
             <div>
-              <Label htmlFor="description">Full Description *</Label>
+              <Label htmlFor="description">Description *</Label>
               <Textarea
                 id="description"
                 placeholder="Describe your property in detail..."
@@ -156,9 +162,9 @@ export default function OwnerAddPropertyPage() {
           </div>
         </div>
 
-        {/* Property Details Section */}
+        {/* Property Details */}
         <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-          <h2 className="text-[#0E56A4] mb-6">Property Details</h2>
+          <h2 className="text-xl font-semibold text-[#0E56A4] mb-6">Property Details</h2>
           <div className="space-y-6">
             {/* Property Type & Bedrooms & Bathrooms */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
@@ -221,379 +227,133 @@ export default function OwnerAddPropertyPage() {
               </div>
             </div>
 
-            {/* Size, Floor Level, Parking */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+            {/* Area & Furnishing */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               <div>
-                <Label htmlFor="size">Size (sqm)</Label>
+                <Label htmlFor="area">Area (sqm)</Label>
                 <Input
-                  id="size"
+                  id="area"
                   type="number"
                   placeholder="e.g., 120"
                   className="mt-1.5"
-                  value={formData.size}
-                  onChange={(e) => handleInputChange('size', e.target.value)}
+                  value={formData.area}
+                  onChange={(e) => handleInputChange('area', e.target.value)}
                 />
               </div>
 
               <div>
-                <Label htmlFor="floor-level">Floor Level</Label>
-                <Input
-                  id="floor-level"
-                  type="text"
-                  placeholder="e.g., 5 or Ground"
-                  className="mt-1.5"
-                  value={formData.floorLevel}
-                  onChange={(e) => handleInputChange('floorLevel', e.target.value)}
-                />
-              </div>
-
-              <div>
-                <Label htmlFor="parking-spaces">Parking Spaces</Label>
+                <Label htmlFor="furnishing">Furnishing</Label>
                 <Select 
-                  value={formData.parkingSpaces} 
-                  onValueChange={(value) => handleInputChange('parkingSpaces', value)}
+                  value={formData.furnishing} 
+                  onValueChange={(value) => handleInputChange('furnishing', value)}
                 >
-                  <SelectTrigger id="parking-spaces" className="mt-1.5">
-                    <SelectValue placeholder="Select" />
+                  <SelectTrigger id="furnishing" className="mt-1.5">
+                    <SelectValue placeholder="Select furnishing" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="0">None</SelectItem>
-                    <SelectItem value="1">1 Space</SelectItem>
-                    <SelectItem value="2">2 Spaces</SelectItem>
-                    <SelectItem value="3">3+ Spaces</SelectItem>
+                    <SelectItem value="furnished">Fully Furnished</SelectItem>
+                    <SelectItem value="semi-furnished">Semi Furnished</SelectItem>
+                    <SelectItem value="unfurnished">Unfurnished</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
             </div>
-
-            {/* Furnishing */}
-            <div>
-              <Label htmlFor="furnishing">Furnishing *</Label>
-              <Select 
-                value={formData.furnishing} 
-                onValueChange={(value) => handleInputChange('furnishing', value)}
-              >
-                <SelectTrigger id="furnishing" className="mt-1.5">
-                  <SelectValue placeholder="Select furnishing" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="furnished">Fully Furnished</SelectItem>
-                  <SelectItem value="semi-furnished">Semi-Furnished</SelectItem>
-                  <SelectItem value="unfurnished">Unfurnished</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
           </div>
         </div>
 
-        {/* Pricing & Terms Section */}
+        {/* Location & Pricing */}
         <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-          <h2 className="text-[#0E56A4] mb-6">Pricing & Terms</h2>
+          <h2 className="text-xl font-semibold text-[#0E56A4] mb-6">Location & Pricing</h2>
           <div className="space-y-6">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              <div>
+                <Label htmlFor="city">City/Location *</Label>
+                <Input
+                  id="city"
+                  type="text"
+                  placeholder="e.g., New Cairo, Cairo"
+                  className="mt-1.5"
+                  value={formData.city}
+                  onChange={(e) => handleInputChange('city', e.target.value)}
+                />
+              </div>
+
               <div>
                 <Label htmlFor="price">Monthly Rent (EGP) *</Label>
                 <Input
                   id="price"
                   type="number"
-                  placeholder="e.g., 25000"
+                  placeholder="e.g., 15000"
                   className="mt-1.5"
                   value={formData.price}
                   onChange={(e) => handleInputChange('price', e.target.value)}
                 />
               </div>
-
-              <div>
-                <Label htmlFor="security-deposit">Security Deposit (EGP)</Label>
-                <Input
-                  id="security-deposit"
-                  type="number"
-                  placeholder="e.g., 50000"
-                  className="mt-1.5"
-                  value={formData.securityDeposit}
-                  onChange={(e) => handleInputChange('securityDeposit', e.target.value)}
-                />
-                <p className="text-sm text-gray-500 mt-1">Typically 1-2 months rent</p>
-              </div>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-              <div>
-                <Label htmlFor="min-lease-term">Minimum Lease Term (months)</Label>
-                <Select 
-                  value={formData.minLeaseTerm} 
-                  onValueChange={(value) => handleInputChange('minLeaseTerm', value)}
-                >
-                  <SelectTrigger id="min-lease-term" className="mt-1.5">
-                    <SelectValue placeholder="Select" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="3">3 months</SelectItem>
-                    <SelectItem value="6">6 months</SelectItem>
-                    <SelectItem value="12">12 months (1 year)</SelectItem>
-                    <SelectItem value="24">24 months (2 years)</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-
-              <div>
-                <Label htmlFor="availability-date">Availability Date</Label>
-                <Input
-                  id="availability-date"
-                  type="date"
-                  className="mt-1.5"
-                  value={formData.availabilityDate}
-                  onChange={(e) => handleInputChange('availabilityDate', e.target.value)}
-                />
-                <p className="text-sm text-gray-500 mt-1">When can tenants move in?</p>
-              </div>
+            <div>
+              <Label htmlFor="address">Full Address</Label>
+              <Input
+                id="address"
+                type="text"
+                placeholder="e.g., 123 Main Street, Building 5, Apt 12"
+                className="mt-1.5"
+                value={formData.address}
+                onChange={(e) => handleInputChange('address', e.target.value)}
+              />
             </div>
           </div>
         </div>
 
-        {/* Location Information Section */}
+        {/* Amenities */}
         <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-          <h2 className="text-[#0E56A4] mb-6">Location Information</h2>
-          <div className="space-y-6">
-            {/* City, Area, Compound */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-              <div>
-                <Label htmlFor="city">City *</Label>
-                <Select 
-                  value={formData.city} 
-                  onValueChange={(value) => handleInputChange('city', value)}
-                >
-                  <SelectTrigger id="city" className="mt-1.5">
-                    <SelectValue placeholder="Select city" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="cairo">Cairo</SelectItem>
-                    <SelectItem value="alexandria">Alexandria</SelectItem>
-                    <SelectItem value="giza">Giza</SelectItem>
-                    <SelectItem value="new-cairo">New Cairo</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-
-              <div>
-                <Label htmlFor="area">Area *</Label>
-                <Select 
-                  value={formData.area} 
-                  onValueChange={(value) => handleInputChange('area', value)}
-                >
-                  <SelectTrigger id="area" className="mt-1.5">
-                    <SelectValue placeholder="Select area" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="5th-settlement">5th Settlement</SelectItem>
-                    <SelectItem value="nasr-city">Nasr City</SelectItem>
-                    <SelectItem value="zamalek">Zamalek</SelectItem>
-                    <SelectItem value="maadi">Maadi</SelectItem>
-                    <SelectItem value="sheikh-zayed">Sheikh Zayed</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-
-              <div>
-                <Label htmlFor="compound">Compound / Neighborhood</Label>
-                <Input
-                  id="compound"
-                  type="text"
-                  placeholder="e.g., Palm Hills"
-                  className="mt-1.5"
-                  value={formData.compound}
-                  onChange={(e) => handleInputChange('compound', e.target.value)}
-                />
-              </div>
-            </div>
-
-            {/* Street / Building */}
-            <div>
-              <Label htmlFor="street">Street / Building Name</Label>
-              <Input
-                id="street"
-                type="text"
-                placeholder="e.g., 123 Palm Street, Building A"
-                className="mt-1.5"
-                value={formData.street}
-                onChange={(e) => handleInputChange('street', e.target.value)}
-              />
-            </div>
-
-            {/* Google Maps Coordinates */}
-            <div>
-              <Label htmlFor="coordinates">
-                <MapPin className="inline w-4 h-4 mr-1" />
-                Google Maps Coordinates
-              </Label>
-              <Input
-                id="coordinates"
-                type="text"
-                placeholder="Latitude, Longitude (e.g., 30.0444, 31.2357)"
-                className="mt-1.5"
-                value={formData.coordinates}
-                onChange={(e) => handleInputChange('coordinates', e.target.value)}
-              />
-              <p className="text-sm text-gray-500 mt-2">
-                Right-click on Google Maps and select coordinates to copy
-              </p>
-            </div>
-          </div>
+          <h2 className="text-xl font-semibold text-[#0E56A4] mb-6">Amenities</h2>
+          <AmenitiesSelector
+            selectedAmenityIds={selectedAmenityIds}
+            onChange={setSelectedAmenityIds}
+          />
         </div>
 
-        {/* Media Uploads Section */}
+        {/* Images */}
         <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-          <h2 className="text-[#0E56A4] mb-6">Media Uploads</h2>
-          <div className="space-y-6">
-            {/* Main Image */}
-            <div>
-              <Label>Main Image *</Label>
-              <div className="mt-1.5 border-2 border-dashed border-gray-300 rounded-xl p-8 text-center cursor-pointer hover:border-[#0E56A4] transition-colors">
-                <Upload className="w-8 h-8 text-gray-400 mx-auto mb-2" />
-                <p className="text-gray-600">Click to upload or drag and drop</p>
-                <p className="text-sm text-gray-500 mt-1">PNG, JPG up to 5MB</p>
-              </div>
-            </div>
-
-            {/* Gallery Images */}
-            <div>
-              <Label>Gallery Images</Label>
-              <div className="mt-1.5 border-2 border-dashed border-gray-300 rounded-xl p-8 text-center cursor-pointer hover:border-[#0E56A4] transition-colors">
-                <Upload className="w-8 h-8 text-gray-400 mx-auto mb-2" />
-                <p className="text-gray-600">Upload multiple property photos</p>
-                <p className="text-sm text-gray-500 mt-1">Up to 10 images</p>
-              </div>
-            </div>
-
-            {/* Floor Plan */}
-            <div>
-              <Label>Floor Plan</Label>
-              <div className="mt-1.5 border-2 border-dashed border-gray-300 rounded-xl p-8 text-center cursor-pointer hover:border-[#0E56A4] transition-colors">
-                <Upload className="w-8 h-8 text-gray-400 mx-auto mb-2" />
-                <p className="text-gray-600">Upload floor plan image</p>
-                <p className="text-sm text-gray-500 mt-1">PNG, JPG, PDF</p>
-              </div>
-            </div>
-
-            {/* Video URL */}
-            <div>
-              <Label htmlFor="video-url">Video Tour URL</Label>
-              <Input
-                id="video-url"
-                type="text"
-                placeholder="https://youtube.com/watch?v=..."
-                className="mt-1.5"
-                value={formData.videoUrl}
-                onChange={(e) => handleInputChange('videoUrl', e.target.value)}
-              />
-              <p className="text-sm text-gray-500 mt-2">
-                YouTube or Vimeo link for video tour
-              </p>
-            </div>
-          </div>
-        </div>
-
-        {/* Amenities Section */}
-        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-          <h2 className="text-[#0E56A4] mb-6">Amenities</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
-              <Label htmlFor="parking" className="cursor-pointer">Parking</Label>
-              <Switch
-                id="parking"
-                checked={amenities.parking}
-                onCheckedChange={(checked) => handleAmenityToggle('parking', checked)}
-              />
-            </div>
-
-            <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
-              <Label htmlFor="garden" className="cursor-pointer">Garden</Label>
-              <Switch
-                id="garden"
-                checked={amenities.garden}
-                onCheckedChange={(checked) => handleAmenityToggle('garden', checked)}
-              />
-            </div>
-
-            <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
-              <Label htmlFor="pool" className="cursor-pointer">Pool</Label>
-              <Switch
-                id="pool"
-                checked={amenities.pool}
-                onCheckedChange={(checked) => handleAmenityToggle('pool', checked)}
-              />
-            </div>
-
-            <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
-              <Label htmlFor="security" className="cursor-pointer">Security</Label>
-              <Switch
-                id="security"
-                checked={amenities.security}
-                onCheckedChange={(checked) => handleAmenityToggle('security', checked)}
-              />
-            </div>
-
-            <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
-              <Label htmlFor="elevator" className="cursor-pointer">Elevator</Label>
-              <Switch
-                id="elevator"
-                checked={amenities.elevator}
-                onCheckedChange={(checked) => handleAmenityToggle('elevator', checked)}
-              />
-            </div>
-
-            <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
-              <Label htmlFor="gym" className="cursor-pointer">Gym</Label>
-              <Switch
-                id="gym"
-                checked={amenities.gym}
-                onCheckedChange={(checked) => handleAmenityToggle('gym', checked)}
-              />
-            </div>
-
-            <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
-              <Label htmlFor="balcony" className="cursor-pointer">Balcony</Label>
-              <Switch
-                id="balcony"
-                checked={amenities.balcony}
-                onCheckedChange={(checked) => handleAmenityToggle('balcony', checked)}
-              />
-            </div>
-
-            <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
-              <Label htmlFor="petsAllowed" className="cursor-pointer">Pets Allowed</Label>
-              <Switch
-                id="petsAllowed"
-                checked={amenities.petsAllowed}
-                onCheckedChange={(checked) => handleAmenityToggle('petsAllowed', checked)}
-              />
-            </div>
-
-            <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
-              <Label htmlFor="seaView" className="cursor-pointer">Sea View</Label>
-              <Switch
-                id="seaView"
-                checked={amenities.seaView}
-                onCheckedChange={(checked) => handleAmenityToggle('seaView', checked)}
-              />
-            </div>
-          </div>
+          <h2 className="text-xl font-semibold text-[#0E56A4] mb-6">Property Images</h2>
+          <ImageUploader
+            images={imageUrls}
+            onImagesChange={setImageUrls}
+            onUpload={handleImageUpload}
+            maxImages={10}
+          />
         </div>
 
         {/* Action Buttons */}
-        <div className="flex flex-col sm:flex-row gap-4 pt-4">
+        <div className="flex gap-4 justify-end">
           <Button
-            onClick={handleSaveDraft}
             variant="outline"
-            className="flex-1 sm:flex-initial border-gray-300 text-gray-700 hover:bg-gray-50"
+            onClick={handleSaveDraft}
+            disabled={isSubmitting || isUploadingImages}
           >
-            Save as Draft
+            {isSubmitting ? (
+              <>
+                <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                Saving...
+              </>
+            ) : (
+              'Save as Draft'
+            )}
           </Button>
           <Button
-            onClick={handleSubmit}
-            className="flex-1 sm:flex-initial bg-[#0E56A4] text-white hover:bg-[#0A3F79]"
+            onClick={handlePublish}
+            disabled={isSubmitting || isUploadingImages}
+            className="bg-[#0E56A4] hover:bg-[#0A3F79]"
           >
-            Submit for Approval
+            {isSubmitting ? (
+              <>
+                <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                Publishing...
+              </>
+            ) : (
+              'Publish Property'
+            )}
           </Button>
         </div>
       </div>
