@@ -2,7 +2,7 @@ import newAlameinImage from 'figma:asset/e620e41fa31e2b3697673ee49e7a7dcd6e65cb3
 import newCairoImage from 'figma:asset/f93381c4c8e0792be4c66a1bf1b34a9e33977584.png';
 import { ArrowRight, Shield, Clock, CheckCircle } from 'lucide-react';
 import { motion } from 'motion/react';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { AdvancedSearchBar, SearchFilters } from '../components/AdvancedSearchBar';
 import { Carousel } from '../components/Carousel';
@@ -50,13 +50,13 @@ export function HomePage() {
   const [showComparisonModal, setShowComparisonModal] = useState(false);
 
   // Update comparison list when changes occur
-  const refreshComparison = () => {
+  const refreshComparison = useCallback(() => {
     setComparisonList(getComparisonList());
-  };
+  }, []);
 
   useEffect(() => {
     refreshComparison();
-  }, []);
+  }, [refreshComparison]);
 
   // Comparison handlers removed - handled directly in CompareBar component
 

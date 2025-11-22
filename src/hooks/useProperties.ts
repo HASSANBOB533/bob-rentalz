@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { supabase } from '../lib/supabase';
 
 export interface Property {
@@ -48,14 +48,16 @@ function transformPropertyData(data: any[]): Property[] {
     featured: property.featured,
     created_at: property.created_at,
     videoUrl: property.video_url,
-    // Extract images from property_images relation
+    // property_images relation
     images:
       property.property_images
         ?.sort((a: any, b: any) => a.sort_order - b.sort_order)
-        .map((img: any) => img.image_url) || [],
-    // Extract amenity names from property_amenities relation
+        .map((img: any) => img.image_url) ?? [],
+    // property_amenities relation
     amenities:
-      property.property_amenities?.map((pa: any) => pa.amenities?.name).filter(Boolean) || [],
+      property.property_amenities
+        ?.map((pa: any) => pa.amenities?.name)
+        .filter(Boolean) ?? [],
   }));
 }
 
@@ -69,15 +71,11 @@ export function useProperties() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    fetchProperties();
-  }, []);
-
-  async function fetchProperties() {
+  const fetchProperties = useCallback(async () => {
     try {
       setLoading(true);
       setError(null);
-      
+
       const { data, error: fetchError } = await supabase
         .from('properties')
         .select(
@@ -96,25 +94,30 @@ export function useProperties() {
           )
         `,
         )
-        .eq('verified', true)
-        .eq('status', 'available')
+        .in('status', ['available', 'active'])
         .order('created_at', { ascending: false });
 
-      if (fetchError) {
-        throw fetchError;
-      }
+      if (fetchError) throw fetchError;
 
-      // Use Supabase data as single source of truth
-      const transformedData = data ? transformPropertyData(data) : [];
-      setProperties(transformedData);
+      if (data && data.length > 0) {
+        setProperties(transformPropertyData(data));
+      } else {
+        // Supabase is the only source of truth → just expose empty list
+        console.warn('No properties found in Supabase');
+        setProperties([]);
+      }
     } catch (err: any) {
-      console.error('Error fetching properties:', err);
-      setError(err.message || 'Failed to load properties');
-      setProperties([]); // Set empty array on error, no fallback
+      console.error('Error fetching properties from Supabase:', err);
+      setError(err.message ?? 'Failed to load properties');
+      setProperties([]);
     } finally {
       setLoading(false);
     }
-  }
+  }, []);
+
+  useEffect(() => {
+    fetchProperties();
+  }, [fetchProperties]);
 
   return { properties, loading, error, refetch: fetchProperties };
 }
@@ -129,15 +132,11 @@ export function useFeaturedProperties() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    fetchFeaturedProperties();
-  }, []);
-
-  async function fetchFeaturedProperties() {
+  const fetchFeaturedProperties = useCallback(async () => {
     try {
       setLoading(true);
       setError(null);
-      
+
       const { data, error: fetchError } = await supabase
         .from('properties')
         .select(
@@ -156,27 +155,31 @@ export function useFeaturedProperties() {
           )
         `,
         )
-        .eq('verified', true)
-        .eq('status', 'available')
+        .in('status', ['available', 'active'])
         .eq('featured', true)
         .order('created_at', { ascending: false })
         .limit(6);
 
-      if (fetchError) {
-        throw fetchError;
-      }
+      if (fetchError) throw fetchError;
 
-      // Use Supabase data as single source of truth
-      const transformedData = data ? transformPropertyData(data) : [];
-      setProperties(transformedData);
+      if (data && data.length > 0) {
+        setProperties(transformPropertyData(data));
+      } else {
+        console.warn('No featured properties found in Supabase');
+        setProperties([]);
+      }
     } catch (err: any) {
-      console.error('Error fetching featured properties:', err);
-      setError(err.message || 'Failed to load featured properties');
-      setProperties([]); // Set empty array on error, no fallback
+      console.error('Error fetching featured properties from Supabase:', err);
+      setError(err.message ?? 'Failed to load featured properties');
+      setProperties([]);
     } finally {
       setLoading(false);
     }
-  }
+  }, []);
+
+  useEffect(() => {
+    fetchFeaturedProperties();
+  }, [fetchFeaturedProperties]);
 
   return { properties, loading, error, refetch: fetchFeaturedProperties };
 }
@@ -191,19 +194,17 @@ export function useProperty(propertyId: string | undefined) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
+  const fetchProperty = useCallback(async () => {
     if (!propertyId) {
       setLoading(false);
+      setProperty(null);
       return;
     }
-    fetchProperty();
-  }, [propertyId]);
 
-  async function fetchProperty() {
     try {
       setLoading(true);
       setError(null);
-      
+
       const { data, error: fetchError } = await supabase
         .from('properties')
         .select(
@@ -225,25 +226,26 @@ export function useProperty(propertyId: string | undefined) {
         .eq('id', propertyId)
         .single();
 
-      if (fetchError) {
-        throw fetchError;
-      }
+      if (fetchError) throw fetchError;
 
-      // Use Supabase data as single source of truth
       if (data) {
-        const transformedData = transformPropertyData([data]);
-        setProperty(transformedData[0]);
+        const [transformed] = transformPropertyData([data]);
+        setProperty(transformed);
       } else {
         setProperty(null);
       }
     } catch (err: any) {
-      console.error('Error fetching property:', err);
-      setError(err.message || 'Failed to load property');
-      setProperty(null); // Set null on error, no fallback
+      console.error('Error fetching property from Supabase:', err);
+      setError(err.message ?? 'Failed to load property');
+      setProperty(null);
     } finally {
       setLoading(false);
     }
-  }
+  }, [propertyId]);
+
+  useEffect(() => {
+    fetchProperty();
+  }, [fetchProperty]);
 
   return { property, loading, error, refetch: fetchProperty };
 }
