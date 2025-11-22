@@ -21,6 +21,7 @@ export interface Property {
   verified: boolean;
   featured: boolean;
   created_at: string;
+  videoUrl?: string;
 }
 
 /**
@@ -44,6 +45,7 @@ function transformPropertyData(data: any[]): Property[] {
     verified: property.verified,
     featured: property.featured,
     created_at: property.created_at,
+    videoUrl: property.video_url,
     // Extract images from property_images relation
     images: property.property_images
       ?.sort((a: any, b: any) => a.sort_order - b.sort_order)
