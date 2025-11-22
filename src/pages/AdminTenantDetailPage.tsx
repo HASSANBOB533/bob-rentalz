@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { adminApi } from '../lib/supabase/adminApi';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { AdminDashboardLayout } from '../components/AdminDashboardLayout';
 import { Badge } from '../components/ui/badge';
@@ -576,7 +577,23 @@ export default function AdminTenantDetailPage() {
                                    </div>
                                 </div>
                                 {tenant.status !== 'Past Tenant' && (
-                                   <Button variant="ghost" size="sm" className="text-red-500"><Trash2 className="w-4 h-4"/></Button>
+                                   <Button 
+                                     variant="ghost" 
+                                     size="sm" 
+                                     className="text-red-500"
+                                     onClick={async () => {
+                                       const { success, error } = await adminApi.softDeleteDocument(doc.id);
+                                       if (success) {
+                                         toast.success('Document deleted successfully');
+                                         // Remove from local state
+                                         setDocuments(documents.filter(d => d.id !== doc.id));
+                                       } else {
+                                         toast.error(error || 'Failed to delete document. You may not have admin permissions.');
+                                       }
+                                     }}
+                                   >
+                                     <Trash2 className="w-4 h-4"/>
+                                   </Button>
                                 )}
                              </div>
                           ))}

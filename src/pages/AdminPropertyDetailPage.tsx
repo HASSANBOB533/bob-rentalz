@@ -35,6 +35,7 @@ import {
   AlertTriangle
 } from 'lucide-react';
 import { toast } from 'sonner@2.0.3';
+import { adminApi } from '../lib/supabase/adminApi';
 
 import { LifecycleTimeline } from '../components/LifecycleTimeline';
 import { AuditLog, AuditLogEntry } from '../components/AuditLog';
@@ -115,9 +116,16 @@ export default function AdminPropertyDetailPage() {
     );
   }
 
-  const handleApprove = () => {
-    setProperty({...property, status: 'Approved'});
-    toast.success('Property approved successfully!');
+  const handleApprove = async () => {
+    // Call the secure admin API to verify the property
+    const { success, error } = await adminApi.verifyProperty(id!);
+    
+    if (success) {
+      setProperty({...property, status: 'Approved'});
+      toast.success('Property verified and approved successfully!');
+    } else {
+      toast.error(error || 'Failed to approve property. You may not have admin permissions.');
+    }
   };
 
   const handleReject = () => {

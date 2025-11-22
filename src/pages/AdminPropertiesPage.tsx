@@ -5,6 +5,8 @@ import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
 import { Building, Eye, Search, UserCheck, MapPin, Tag, Hash } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { adminApi } from '../lib/supabase/adminApi';
+import { toast } from 'sonner';
 
 type FilterType = 'all' | 'pending' | 'approved' | 'assigned' | 'rented' | 'rejected';
 
@@ -286,7 +288,20 @@ export default function AdminPropertiesPage() {
                       
                       {property.status === 'Pending' && (
                         <>
-                          <Button size="sm" variant="outline" className="border-green-500 text-green-600 hover:bg-green-50">
+                          <Button 
+                            size="sm" 
+                            variant="outline" 
+                            className="border-green-500 text-green-600 hover:bg-green-50"
+                            onClick={async () => {
+                              const { success, error } = await adminApi.verifyProperty(property.id);
+                              if (success) {
+                                toast.success('Property verified and approved!');
+                                // Update local state - in real app, refetch data
+                              } else {
+                                toast.error(error || 'Failed to approve property');
+                              }
+                            }}
+                          >
                             Approve
                           </Button>
                           <Button size="sm" variant="outline" className="border-red-500 text-red-600 hover:bg-red-50">
