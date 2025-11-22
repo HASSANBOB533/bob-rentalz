@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { properties as mockProperties } from '../data/mockData';
 import { supabase } from '../lib/supabase';
 
 export interface Property {
@@ -60,6 +59,11 @@ function transformPropertyData(data: any[]): Property[] {
   }));
 }
 
+/**
+ * Hook to fetch all available properties
+ * For public users: Returns only verified=true and status='available' properties (enforced by RLS)
+ * For authenticated users: Returns properties based on their role permissions
+ */
 export function useProperties() {
   const [properties, setProperties] = useState<Property[]>([]);
   const [loading, setLoading] = useState(true);
@@ -72,7 +76,9 @@ export function useProperties() {
   async function fetchProperties() {
     try {
       setLoading(true);
-      const { data, error } = await supabase
+      setError(null);
+      
+      const { data, error: fetchError } = await supabase
         .from('properties')
         .select(
           `
@@ -90,26 +96,21 @@ export function useProperties() {
           )
         `,
         )
-        .in('status', ['available', 'active'])
+        .eq('verified', true)
+        .eq('status', 'available')
         .order('created_at', { ascending: false });
 
-      if (error) throw error;
-
-      // Transform and use data if available
-      if (data && data.length > 0) {
-        const transformedData = transformPropertyData(data);
-        setProperties(transformedData);
-      } else {
-        // Use mock data as fallback if Supabase returns empty
-        console.log('No properties found, using mock properties data');
-        setProperties(mockProperties as any);
+      if (fetchError) {
+        throw fetchError;
       }
+
+      // Use Supabase data as single source of truth
+      const transformedData = data ? transformPropertyData(data) : [];
+      setProperties(transformedData);
     } catch (err: any) {
       console.error('Error fetching properties:', err);
-      console.log('Falling back to mock properties data');
-      setError(err.message);
-      // Fallback to mock data on error
-      setProperties(mockProperties as any);
+      setError(err.message || 'Failed to load properties');
+      setProperties([]); // Set empty array on error, no fallback
     } finally {
       setLoading(false);
     }
@@ -118,9 +119,15 @@ export function useProperties() {
   return { properties, loading, error, refetch: fetchProperties };
 }
 
+/**
+ * Hook to fetch featured properties
+ * For public users: Returns only verified=true, status='available', and featured=true properties (enforced by RLS)
+ * For authenticated users: Returns featured properties based on their role permissions
+ */
 export function useFeaturedProperties() {
   const [properties, setProperties] = useState<Property[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     fetchFeaturedProperties();
@@ -129,7 +136,9 @@ export function useFeaturedProperties() {
   async function fetchFeaturedProperties() {
     try {
       setLoading(true);
-      const { data, error } = await supabase
+      setError(null);
+      
+      const { data, error: fetchError } = await supabase
         .from('properties')
         .select(
           `
@@ -147,37 +156,36 @@ export function useFeaturedProperties() {
           )
         `,
         )
-        .in('status', ['available', 'active'])
+        .eq('verified', true)
+        .eq('status', 'available')
         .eq('featured', true)
         .order('created_at', { ascending: false })
         .limit(6);
 
-      if (error) throw error;
-
-      // Transform and use data if available
-      if (data && data.length > 0) {
-        const transformedData = transformPropertyData(data);
-        setProperties(transformedData);
-      } else {
-        // Use mock data as fallback if Supabase returns empty
-        console.log('No featured properties found, using mock featured properties data');
-        const featuredMockProperties = mockProperties.filter((p) => p.featured).slice(0, 6);
-        setProperties(featuredMockProperties as any);
+      if (fetchError) {
+        throw fetchError;
       }
-    } catch (err) {
+
+      // Use Supabase data as single source of truth
+      const transformedData = data ? transformPropertyData(data) : [];
+      setProperties(transformedData);
+    } catch (err: any) {
       console.error('Error fetching featured properties:', err);
-      console.log('Falling back to mock featured properties data');
-      // Fallback to mock data on error
-      const featuredMockProperties = mockProperties.filter((p) => p.featured).slice(0, 6);
-      setProperties(featuredMockProperties as any);
+      setError(err.message || 'Failed to load featured properties');
+      setProperties([]); // Set empty array on error, no fallback
     } finally {
       setLoading(false);
     }
   }
 
-  return { properties, loading };
+  return { properties, loading, error, refetch: fetchFeaturedProperties };
 }
 
+/**
+ * Hook to fetch a single property by ID
+ * For public users: Returns property only if verified=true and status='available' (enforced by RLS)
+ * For authenticated users: Returns property based on their role permissions
+ */
 export function useProperty(propertyId: string | undefined) {
   const [property, setProperty] = useState<Property | null>(null);
   const [loading, setLoading] = useState(true);
@@ -194,7 +202,9 @@ export function useProperty(propertyId: string | undefined) {
   async function fetchProperty() {
     try {
       setLoading(true);
-      const { data, error } = await supabase
+      setError(null);
+      
+      const { data, error: fetchError } = await supabase
         .from('properties')
         .select(
           `
@@ -215,8 +225,11 @@ export function useProperty(propertyId: string | undefined) {
         .eq('id', propertyId)
         .single();
 
-      if (error) throw error;
+      if (fetchError) {
+        throw fetchError;
+      }
 
+      // Use Supabase data as single source of truth
       if (data) {
         const transformedData = transformPropertyData([data]);
         setProperty(transformedData[0]);
@@ -225,8 +238,8 @@ export function useProperty(propertyId: string | undefined) {
       }
     } catch (err: any) {
       console.error('Error fetching property:', err);
-      setError(err.message);
-      setProperty(null);
+      setError(err.message || 'Failed to load property');
+      setProperty(null); // Set null on error, no fallback
     } finally {
       setLoading(false);
     }

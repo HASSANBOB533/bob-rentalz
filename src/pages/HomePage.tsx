@@ -20,7 +20,7 @@ import { getComparisonList, removeFromComparison, clearComparison } from '../uti
 
 export function HomePage() {
   const navigate = useNavigate();
-  const { properties: featuredProperties } = useFeaturedProperties();
+  const { properties: featuredProperties, loading: featuredLoading, error: featuredError } = useFeaturedProperties();
 
   const handleSearch = (filters: SearchFilters) => {
     const params = new URLSearchParams();
@@ -146,15 +146,43 @@ export function HomePage() {
             </Link>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 md:gap-6 lg:gap-8">
-            {featuredProperties.map((property) => (
-              <PropertyCard
-                key={property.id}
-                property={property as Property}
-                onCompareToggle={refreshComparison}
-              />
-            ))}
-          </div>
+          {/* Loading State */}
+          {featuredLoading && (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 md:gap-6 lg:gap-8">
+              {[1, 2, 3].map((i) => (
+                <div key={i} className="bg-gray-100 rounded-lg h-96 animate-pulse" />
+              ))}
+            </div>
+          )}
+
+          {/* Error State */}
+          {featuredError && !featuredLoading && (
+            <div className="text-center py-12">
+              <p className="text-red-600 mb-4">Failed to load featured properties</p>
+              <p className="text-gray-600">{featuredError}</p>
+            </div>
+          )}
+
+          {/* Empty State */}
+          {!featuredLoading && !featuredError && featuredProperties.length === 0 && (
+            <div className="text-center py-12">
+              <p className="text-gray-600 text-lg">No featured properties available at the moment</p>
+              <p className="text-gray-500 mt-2">Check back soon for new listings</p>
+            </div>
+          )}
+
+          {/* Properties Grid */}
+          {!featuredLoading && !featuredError && featuredProperties.length > 0 && (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 md:gap-6 lg:gap-8">
+              {featuredProperties.map((property) => (
+                <PropertyCard
+                  key={property.id}
+                  property={property as Property}
+                  onCompareToggle={refreshComparison}
+                />
+              ))}
+            </div>
+          )}
         </div>
       </section>
 

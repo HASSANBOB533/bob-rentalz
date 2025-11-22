@@ -14,14 +14,16 @@ import {
   SelectTrigger,
   SelectValue,
 } from '../components/ui/select';
-import { properties, locations, Property } from '../data/mockData';
+import { locations, Property } from '../data/mockData';
+import { useProperties } from '../hooks/useProperties';
 import { getComparisonList, removeFromComparison, clearComparison } from '../utils/comparison';
 
 export function PropertiesPage() {
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
+  const { properties, loading, error } = useProperties();
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
-  const [filteredProperties, setFilteredProperties] = useState(properties);
+  const [filteredProperties, setFilteredProperties] = useState<Property[]>([]);
   const [showFilters, setShowFilters] = useState(false);
   const [sortBy, setSortBy] = useState('newest');
 
@@ -42,8 +44,11 @@ export function PropertiesPage() {
   const allAmenities = Array.from(new Set(properties.flatMap((p) => p.amenities))).slice(0, 10);
 
   useEffect(() => {
-    applyFilters();
+    if (properties.length > 0) {
+      applyFilters();
+    }
   }, [
+    properties,
     selectedLocation,
     selectedBedrooms,
     selectedBathrooms,
@@ -438,7 +443,27 @@ export function PropertiesPage() {
                   Clear Filters
                 </Button>
               </motion.div>
+            ) : loading ? (
+              /* Loading State */
+              <div
+                className={
+                  viewMode === 'grid'
+                    ? 'grid grid-cols-2 md:grid-cols-2 xl:grid-cols-3 gap-3 md:gap-6'
+                    : 'flex flex-col gap-4 md:gap-6'
+                }
+              >
+                {[1, 2, 3, 4, 5, 6].map((i) => (
+                  <div key={i} className="bg-gray-100 rounded-lg h-96 animate-pulse" />
+                ))}
+              </div>
+            ) : error ? (
+              /* Error State */
+              <div className="text-center py-12 bg-white rounded-lg">
+                <p className="text-red-600 mb-4 text-lg font-semibold">Failed to load properties</p>
+                <p className="text-gray-600">{error}</p>
+              </div>
             ) : (
+              /* Properties Grid */
               <div
                 className={
                   viewMode === 'grid'
