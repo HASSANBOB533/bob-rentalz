@@ -1,0 +1,36 @@
+# Build outputs
+dist
+build
+out
+.next
+
+# Dependencies
+node_modules
+
+# Testing
+coverage
+.nyc_output
+
+# Cache and temp files
+.cache
+.temp
+*.log
+
+# Config files (already ignored in .eslintrc.cjs)
+*.config.js
+*.config.ts
+*.config.cjs
+*.config.mjs
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# IDE
+.vscode
+.idea
+
+# Misc
+public
+*.min.js

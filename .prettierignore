@@ -1,0 +1,39 @@
+# Build outputs
+dist
+build
+out
+.next
+
+# Dependencies
+node_modules
+
+# Testing
+coverage
+.nyc_output
+
+# Cache and temp files
+.cache
+.temp
+*.log
+
+# Lock files
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# IDE
+.vscode
+.idea
+
+# Misc
+public
+*.min.js
+*.min.css
+
+# Generated files
+*.d.ts
