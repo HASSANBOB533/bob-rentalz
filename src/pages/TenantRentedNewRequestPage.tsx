@@ -258,7 +258,7 @@ export default function TenantRentedNewRequestPage() {
           {/* Access Permission */}
           <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
             <label className="block text-sm font-medium text-gray-700 mb-3">
-              Allow entry if you're not home?
+              Allow entry if you&apos;re not home?
             </label>
             <div className="flex gap-4">
               <label className="flex items-center gap-2 cursor-pointer">
@@ -281,7 +281,7 @@ export default function TenantRentedNewRequestPage() {
                   onChange={(e) => setFormData({ ...formData, allowEntry: e.target.value })}
                   className="w-4 h-4 text-[#0E56A4] focus:ring-[#0E56A4]"
                 />
-                <span>No, I'll be present</span>
+                <span>No, I&apos;ll be present</span>
               </label>
             </div>
           </div>

@@ -225,7 +225,7 @@ export function AdminDeletedDocumentsPage() {
                 <div className="mt-2 text-sm text-blue-700">
                   <p>
                     These documents have been soft-deleted and are invisible to all users via RLS
-                    policies. Click "Restore" to make a document visible again by setting{' '}
+                    policies. Click &quot;Restore&quot; to make a document visible again by setting{' '}
                     <code className="bg-blue-100 px-1 rounded">deleted = false</code>.
                   </p>
                 </div>

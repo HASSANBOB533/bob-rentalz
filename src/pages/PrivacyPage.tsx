@@ -71,7 +71,7 @@ export function PrivacyPage() {
             <div className="prose prose-gray max-w-none">
               <h2 className="text-2xl font-semibold text-[#2B2B2B] mb-4">1. Introduction</h2>
               <p className="text-gray-700 leading-relaxed mb-6">
-                BOB Rentalz ("we," "our," or "us") is committed to protecting your privacy. This
+                BOB Rentalz (&quot;we,&quot; &quot;our,&quot; or &quot;us&quot;) is committed to protecting your privacy. This
                 Privacy Policy explains how we collect, use, disclose, and safeguard your
                 information when you use our website and services. This policy is GDPR-compliant and
                 applies to tenants, property owners, and real estate agents.
@@ -216,7 +216,7 @@ export function PrivacyPage() {
                 experience. For more information, please see our Cookie Policy.
               </p>
 
-              <h2 className="text-2xl font-semibold text-[#2B2B2B] mb-4">10. Children's Privacy</h2>
+              <h2 className="text-2xl font-semibold text-[#2B2B2B] mb-4">10. Children&apos;s Privacy</h2>
               <p className="text-gray-700 leading-relaxed mb-6">
                 Our services are not intended for individuals under the age of 18. We do not
                 knowingly collect personal information from children.
@@ -227,7 +227,7 @@ export function PrivacyPage() {
               </h2>
               <p className="text-gray-700 leading-relaxed mb-6">
                 We may update this Privacy Policy from time to time. Changes will be posted on this
-                page with an updated "Last Updated" date. We encourage you to review this policy
+                page with an updated &quot;Last Updated&quot; date. We encourage you to review this policy
                 periodically.
               </p>
 

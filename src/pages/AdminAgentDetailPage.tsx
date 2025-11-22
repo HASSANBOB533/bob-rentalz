@@ -334,7 +334,7 @@ export default function AdminAgentDetailPage() {
                         <p className="text-sm text-[#0E56A4] font-medium mb-1">
                           {lead.propertyName}
                         </p>
-                        <p className="text-sm text-gray-600 line-clamp-1">"{lead.message}"</p>
+                        <p className="text-sm text-gray-600 line-clamp-1">&quot;{lead.message}&quot;</p>
                       </div>
                       <Button size="sm" className="bg-[#0E56A4] text-white hover:bg-[#0A3F79]">
                         View Conversation
@@ -425,7 +425,7 @@ export default function AdminAgentDetailPage() {
                           </div>
                           <p className="text-sm text-gray-600 mb-2">Tenant: {viewing.tenantName}</p>
                           <div className="bg-white p-2 rounded border border-gray-200 text-sm text-gray-600 italic">
-                            "{viewing.notes}"
+                            &quot;{viewing.notes}&quot;
                           </div>
                         </div>
                         <div className="text-xs text-gray-500 whitespace-nowrap flex items-center gap-1">

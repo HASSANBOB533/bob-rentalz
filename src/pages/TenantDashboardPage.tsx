@@ -458,7 +458,7 @@ export default function TenantDashboardPage() {
 
                       {/* Message Preview */}
                       <p className="text-sm text-gray-500 truncate italic">
-                        "{inquiry.messageSnippet}"
+                        &quot;{inquiry.messageSnippet}&quot;
                       </p>
 
                       {/* Timestamp */}

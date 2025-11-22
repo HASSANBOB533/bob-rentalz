@@ -18,7 +18,7 @@ export function TestimonialCard({ testimonial }: TestimonialCardProps) {
 
       {/* Testimonial Text - Desktop: 17-18px | Tablet: 16px | Mobile: 15px */}
       <p className="text-gray-700 mb-5 md:mb-6 lg:mb-7 italic text-center md:text-left text-[15px] md:text-[16px] lg:text-[17px] leading-[1.6] line-clamp-[8] md:line-clamp-none">
-        "{testimonial.text}"
+        &quot;{testimonial.text}&quot;
       </p>
 
       {/* Author - improved spacing and alignment */}

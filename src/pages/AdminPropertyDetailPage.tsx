@@ -559,7 +559,7 @@ export default function AdminPropertyDetailPage() {
                         <DialogTitle>Confirm End of Tenancy</DialogTitle>
                         <DialogDescription>
                           Are you sure you want to mark this property as vacated? This will change
-                          the property status to available and archive the tenant's lease.
+                          the property status to available and archive the tenant&apos;s lease.
                         </DialogDescription>
                       </DialogHeader>
                       <DialogFooter>

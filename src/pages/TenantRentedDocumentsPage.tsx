@@ -302,7 +302,7 @@ export default function TenantRentedDocumentsPage() {
                     <h3 className="text-xl font-semibold text-gray-900 mb-2">PDF Preview</h3>
                     <p className="text-gray-500 max-w-md mb-6">
                       This is a placeholder for the PDF viewer. In a production environment, this
-                      would render the actual PDF file using a library like 'react-pdf' or an
+                      would render the actual PDF file using a library like &apos;react-pdf&apos; or an
                       iframe.
                     </p>
                     <Button

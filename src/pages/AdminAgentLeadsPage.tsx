@@ -150,7 +150,7 @@ export default function AdminAgentLeadsPage() {
 
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-[#0E56A4] mb-2">{agentName}'s Leads</h1>
+          <h1 className="text-3xl font-bold text-[#0E56A4] mb-2">{agentName}&apos;s Leads</h1>
           <p className="text-gray-600">Track active inquiries and viewing schedules</p>
         </div>
 

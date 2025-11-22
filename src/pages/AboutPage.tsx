@@ -80,7 +80,7 @@ export function AboutPage() {
 
             {/* Heading */}
             <h1 className="text-white font-semibold drop-shadow-2xl text-[28px] md:text-[36px] lg:text-[42px] xl:text-[46px] leading-tight max-w-[800px] mx-auto mb-3 md:mb-4 lg:mb-5">
-              Egypt's Leading Property Management Platform
+              Egypt&apos;s Leading Property Management Platform
             </h1>
 
             {/* Subtitle */}
@@ -153,7 +153,7 @@ export function AboutPage() {
                 Our Vision
               </h3>
               <p className="text-[14px] md:text-base text-[#2B2B2B]/80 md:text-gray-700 leading-[1.6] md:leading-relaxed max-w-[350px] md:max-w-full">
-                To become Egypt's most trusted provider of curated travel and property management
+                To become Egypt&apos;s most trusted provider of curated travel and property management
                 services, known for quality, transparency, and sustainable growth.
               </p>
             </motion.div>
@@ -344,7 +344,7 @@ export function AboutPage() {
               Competitive Advantages
             </h2>
             <p className="text-[14px] md:text-base text-[#2B2B2B]/80 md:text-gray-600 leading-[1.6] max-w-[350px] md:max-w-2xl md:mx-auto">
-              What sets us apart in Egypt's property market
+              What sets us apart in Egypt&apos;s property market
             </p>
           </motion.div>
 
@@ -485,7 +485,7 @@ export function AboutPage() {
                 <div className="flex items-start gap-2 md:gap-3">
                   <CheckCircle className="w-4 h-4 md:w-5 md:h-5 text-[#D4AF37] flex-shrink-0 mt-0.5" />
                   <p className="text-[14px] md:text-sm text-[#2B2B2B]/80 md:text-gray-700 leading-[1.5] md:leading-relaxed">
-                    One month's rent from owner + tenant (placement fee)
+                    One month&apos;s rent from owner + tenant (placement fee)
                   </p>
                 </div>
                 <div className="flex items-start gap-2 md:gap-3">
@@ -539,7 +539,7 @@ export function AboutPage() {
                 <div className="flex items-start gap-2 md:gap-3">
                   <CheckCircle className="w-4 h-4 md:w-5 md:h-5 text-[#D4AF37] flex-shrink-0 mt-0.5" />
                   <p className="text-[14px] md:text-sm text-[#2B2B2B]/80 md:text-gray-700 leading-[1.5] md:leading-relaxed">
-                    One month's rent from owner + tenant (placement fee)
+                    One month&apos;s rent from owner + tenant (placement fee)
                   </p>
                 </div>
                 <div className="flex items-start gap-2 md:gap-3">
@@ -738,7 +738,7 @@ export function AboutPage() {
                 >
                   <AccordionTrigger className="px-5 py-4 md:px-6 md:py-5 lg:px-7 lg:py-6 hover:no-underline [&[data-state=open]>svg]:rotate-180">
                     <span className="text-[#2B2B2B] font-semibold text-left text-[16px] md:text-[18px] lg:text-[20px]">
-                      What's included in the rent?
+                      What&apos;s included in the rent?
                     </span>
                   </AccordionTrigger>
                   <AccordionContent className="px-5 md:px-6 lg:px-7 pb-4 md:pb-5 lg:pb-6">
@@ -821,7 +821,7 @@ export function AboutPage() {
                   </AccordionTrigger>
                   <AccordionContent className="px-5 md:px-6 lg:px-7 pb-4 md:pb-5 lg:pb-6">
                     <p className="text-gray-700 text-[14px] md:text-[15px] lg:text-[16px] leading-[1.5]">
-                      Via the "List Your Property" page or through our agent onboarding form.
+                      Via the &quot;List Your Property&quot; page or through our agent onboarding form.
                     </p>
                   </AccordionContent>
                 </AccordionItem>
@@ -844,7 +844,7 @@ export function AboutPage() {
               Partner With Best of Bedz
             </h2>
             <p className="text-[14px] md:text-lg text-gray-300 leading-[1.6] md:leading-relaxed mb-4 md:mb-6 lg:mb-8 max-w-[320px] md:max-w-md mx-auto text-left md:text-center text-[#2B2B2B]/80 md:text-gray-300">
-              Join Egypt's leading property management platform. Whether you're an owner, investor,
+              Join Egypt&apos;s leading property management platform. Whether you&apos;re an owner, investor,
               or agent, we have the perfect solution for you.
             </p>
 

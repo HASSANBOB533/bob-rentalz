@@ -79,7 +79,7 @@ export function AgentsPage() {
               transition={{ duration: 0.6, delay: 0.2 }}
               className="text-[32px] md:text-[42px] lg:text-[52px] font-bold text-white drop-shadow-xl mb-6 leading-tight"
             >
-              Join Egypt's Premier Property Management Network
+              Join Egypt&apos;s Premier Property Management Network
             </motion.h1>
 
             {/* Subtitle */}
@@ -223,7 +223,7 @@ export function AgentsPage() {
                 Become a BOB Rentalz Agent
               </h2>
               <p className="text-[15px] md:text-[18px] text-gray-600 leading-relaxed max-w-2xl mx-auto">
-                Join Egypt's leading property management platform and grow your real estate career
+                Join Egypt&apos;s leading property management platform and grow your real estate career
                 with premium tools, exclusive listings, and professional support.
               </p>
             </div>

@@ -281,7 +281,7 @@ export default function AgentDashboardPage() {
         <div className="flex items-center justify-between">
           <div>
             <h3 className="text-xl font-semibold text-[#0E56A4]">Assigned Properties</h3>
-            <p className="text-gray-500 text-sm mt-1">Properties you're currently managing</p>
+            <p className="text-gray-500 text-sm mt-1">Properties you&apos;re currently managing</p>
           </div>
           <Link
             to="/agent/properties"

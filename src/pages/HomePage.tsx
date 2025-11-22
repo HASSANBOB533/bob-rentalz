@@ -85,7 +85,7 @@ export function HomePage() {
 
               {/* Body Text - Enhanced for Desktop */}
               <p className="text-[15px] md:text-[18px] lg:text-[20px] xl:text-[22px] leading-[1.7] text-white/95 mb-6 sm:mb-7 md:mb-8 lg:mb-10 max-w-3xl mx-auto px-4 drop-shadow-lg font-[500]">
-                Discover verified long-term rental properties with trusted agents across Egypt's
+                Discover verified long-term rental properties with trusted agents across Egypt&apos;s
                 most desirable neighborhoods
               </p>
             </motion.div>
@@ -207,7 +207,7 @@ export function HomePage() {
             </h2>
             {/* Body Text - Desktop: 18px | Tablet: 17px | Mobile: 15-16px */}
             <p className="text-[15px] md:text-[17px] lg:text-[18px] text-[#6B7280] leading-[1.6] max-w-2xl mx-auto px-4">
-              Discover rental properties in Egypt's most sought-after neighborhoods
+              Discover rental properties in Egypt&apos;s most sought-after neighborhoods
             </p>
           </motion.div>
 
@@ -247,7 +247,7 @@ export function HomePage() {
 
             {/* Body Text - Desktop: 18px | Tablet: 17px | Mobile: 15-16px */}
             <p className="text-[15px] md:text-[17px] lg:text-[18px] text-[#6B7280] leading-[1.6] max-w-2xl mx-auto px-4">
-              We're committed to making your rental journey smooth, secure, and successful
+              We&apos;re committed to making your rental journey smooth, secure, and successful
             </p>
           </motion.div>
 

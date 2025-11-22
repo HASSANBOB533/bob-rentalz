@@ -136,7 +136,7 @@ export default function AdminAgentPropertiesPage() {
 
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-[#0E56A4] mb-2">{agentName}'s Properties</h1>
+          <h1 className="text-3xl font-bold text-[#0E56A4] mb-2">{agentName}&apos;s Properties</h1>
           <p className="text-gray-600">Manage properties assigned to this agent</p>
         </div>
 

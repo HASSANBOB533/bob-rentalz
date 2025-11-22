@@ -493,7 +493,7 @@ export default function AgentViewingsPage() {
                       </div>
                       {viewing.notes && (
                         <div className="mt-2 bg-white p-2 rounded border border-gray-200 text-sm text-gray-600 italic">
-                          "{viewing.notes}"
+                          &quot;{viewing.notes}&quot;
                         </div>
                       )}
                     </div>

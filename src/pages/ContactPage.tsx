@@ -58,7 +58,7 @@ export function ContactPage() {
               Get In Touch
             </h1>
             <p className="text-[14px] sm:text-[15px] md:text-[16px] lg:text-[17px] text-white/90 max-w-[550px] mx-auto mb-4 sm:mb-5 md:mb-6 leading-relaxed">
-              Have questions? We'd love to hear from you. Send us a message and we'll respond as
+              Have questions? We&apos;d love to hear from you. Send us a message and we&apos;ll respond as
               soon as possible.
             </p>
           </motion.div>

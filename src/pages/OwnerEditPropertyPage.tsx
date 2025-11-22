@@ -350,7 +350,7 @@ export default function OwnerEditPropertyPage() {
           <div className="text-center py-12">
             <h2 className="text-2xl font-semibold text-gray-700 mb-4">Property Not Found</h2>
             <p className="text-gray-600 mb-6">
-              The property you're trying to edit doesn't exist or has been removed.
+              The property you&apos;re trying to edit doesn&apos;t exist or has been removed.
             </p>
             <Button type="button" onClick={handleBackClick}>
               Back to My Properties

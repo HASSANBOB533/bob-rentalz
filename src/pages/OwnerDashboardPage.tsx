@@ -332,7 +332,7 @@ export default function OwnerDashboardPage() {
           <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-gray-500">This Month's Income</p>
+                <p className="text-sm text-gray-500">This Month&apos;s Income</p>
                 <p className="text-2xl font-bold mt-1">EGP 126,000</p>
                 <p className="text-sm text-gray-400 mt-1">From active rental contracts</p>
               </div>
