@@ -12,15 +12,18 @@ export default function OwnerTenantChatPage() {
   const [messageText, setMessageText] = useState('');
 
   // Mock data for properties with ownership info
-  const MOCK_PROPERTIES = useMemo(() => [
-    { id: '1', status: 'Rented', ownerId: 'owner-1', hasActiveTenant: true },
-    { id: '2', status: 'Active', ownerId: 'owner-1', hasActiveTenant: false },
-    { id: '3', status: 'Rented', ownerId: 'owner-1', hasActiveTenant: true },
-    { id: '4', status: 'Active', ownerId: 'owner-1', hasActiveTenant: false },
-    { id: '5', status: 'Draft', ownerId: 'owner-1', hasActiveTenant: false },
-    { id: '6', status: 'Rented', ownerId: 'owner-1', hasActiveTenant: true },
-    { id: '7', status: 'Rented', ownerId: 'owner-1', hasActiveTenant: true },
-  ], []);
+  const MOCK_PROPERTIES = useMemo(
+    () => [
+      { id: '1', status: 'Rented', ownerId: 'owner-1', hasActiveTenant: true },
+      { id: '2', status: 'Active', ownerId: 'owner-1', hasActiveTenant: false },
+      { id: '3', status: 'Rented', ownerId: 'owner-1', hasActiveTenant: true },
+      { id: '4', status: 'Active', ownerId: 'owner-1', hasActiveTenant: false },
+      { id: '5', status: 'Draft', ownerId: 'owner-1', hasActiveTenant: false },
+      { id: '6', status: 'Rented', ownerId: 'owner-1', hasActiveTenant: true },
+      { id: '7', status: 'Rented', ownerId: 'owner-1', hasActiveTenant: true },
+    ],
+    [],
+  );
 
   // Mock logged-in owner ID (in a real app, this would come from auth context)
   const currentOwnerId = 'owner-1';

@@ -100,7 +100,18 @@ export function PropertiesPage() {
     }
 
     setFilteredProperties(filtered);
-  }, [properties, selectedLocation, selectedBedrooms, selectedBathrooms, selectedType, selectedFurnishing, maxPrice, selectedStatus, selectedAmenities, sortBy]);
+  }, [
+    properties,
+    selectedLocation,
+    selectedBedrooms,
+    selectedBathrooms,
+    selectedType,
+    selectedFurnishing,
+    maxPrice,
+    selectedStatus,
+    selectedAmenities,
+    sortBy,
+  ]);
 
   const handleStatusToggle = (status: string) => {
     setSelectedStatus((prev) =>

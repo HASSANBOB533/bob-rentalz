@@ -55,9 +55,7 @@ function transformPropertyData(data: any[]): Property[] {
         .map((img: any) => img.image_url) ?? [],
     // property_amenities relation
     amenities:
-      property.property_amenities
-        ?.map((pa: any) => pa.amenities?.name)
-        .filter(Boolean) ?? [],
+      property.property_amenities?.map((pa: any) => pa.amenities?.name).filter(Boolean) ?? [],
   }));
 }
 

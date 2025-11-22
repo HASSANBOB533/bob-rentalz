@@ -43,17 +43,23 @@ export function PropertyImageCarousel({
     return () => clearInterval(interval);
   }, [currentIndex, autoPlay, autoPlayInterval, handleNext, isPaused, images.length]);
 
-  const handlePrevious = useCallback((e?: React.MouseEvent) => {
-    e?.stopPropagation();
-    setDirection(-1);
-    setCurrentIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
-  }, [images.length]);
+  const handlePrevious = useCallback(
+    (e?: React.MouseEvent) => {
+      e?.stopPropagation();
+      setDirection(-1);
+      setCurrentIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
+    },
+    [images.length],
+  );
 
-  const handleNext = useCallback((e?: React.MouseEvent) => {
-    e?.stopPropagation();
-    setDirection(1);
-    setCurrentIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
-  }, [images.length]);
+  const handleNext = useCallback(
+    (e?: React.MouseEvent) => {
+      e?.stopPropagation();
+      setDirection(1);
+      setCurrentIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
+    },
+    [images.length],
+  );
 
   const goToSlide = (index: number, e?: React.MouseEvent) => {
     e?.stopPropagation();

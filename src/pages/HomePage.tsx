@@ -20,7 +20,11 @@ import { getComparisonList, removeFromComparison, clearComparison } from '../uti
 
 export function HomePage() {
   const navigate = useNavigate();
-  const { properties: featuredProperties, loading: featuredLoading, error: featuredError } = useFeaturedProperties();
+  const {
+    properties: featuredProperties,
+    loading: featuredLoading,
+    error: featuredError,
+  } = useFeaturedProperties();
 
   const handleSearch = (filters: SearchFilters) => {
     const params = new URLSearchParams();
@@ -166,7 +170,9 @@ export function HomePage() {
           {/* Empty State */}
           {!featuredLoading && !featuredError && featuredProperties.length === 0 && (
             <div className="text-center py-12">
-              <p className="text-gray-600 text-lg">No featured properties available at the moment</p>
+              <p className="text-gray-600 text-lg">
+                No featured properties available at the moment
+              </p>
               <p className="text-gray-500 mt-2">Check back soon for new listings</p>
             </div>
           )}
