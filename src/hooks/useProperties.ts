@@ -168,3 +168,58 @@ export function useFeaturedProperties() {
 
   return { properties, loading };
 }
+
+export function useProperty(propertyId: string | undefined) {
+  const [property, setProperty] = useState<Property | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!propertyId) {
+      setLoading(false);
+      return;
+    }
+    fetchProperty();
+  }, [propertyId]);
+
+  async function fetchProperty() {
+    try {
+      setLoading(true);
+      const { data, error } = await supabase
+        .from('properties')
+        .select(`
+          *,
+          property_images (
+            image_url,
+            sort_order,
+            is_primary
+          ),
+          property_amenities (
+            amenities (
+              name,
+              icon
+            )
+          )
+        `)
+        .eq('id', propertyId)
+        .single();
+
+      if (error) throw error;
+
+      if (data) {
+        const transformedData = transformPropertyData([data]);
+        setProperty(transformedData[0]);
+      } else {
+        setProperty(null);
+      }
+    } catch (err: any) {
+      console.error('Error fetching property:', err);
+      setError(err.message);
+      setProperty(null);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  return { property, loading, error, refetch: fetchProperty };
+}

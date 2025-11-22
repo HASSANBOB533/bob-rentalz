@@ -1,5 +1,6 @@
 import { useParams, Link, useLocation, useNavigate } from 'react-router-dom';
 import { properties, agents, Property } from '../data/mockData';
+import { useProperty, useProperties } from '../hooks/useProperties';
 import { 
   Bed, Bath, Maximize, MapPin, Heart, Share2, Download, 
   ChevronLeft, ChevronRight, ChevronDown, ChevronUp, ArrowLeft,
@@ -28,9 +29,15 @@ export function PropertyDetailPage() {
   const { id } = useParams<{ id: string }>();
   const location = useLocation();
   const navigate = useNavigate();
-  const rawProperty = properties.find(p => p.id === id);
-  const property = rawProperty ? addPropertyMetadata(rawProperty) : null;
-  const agent = property ? agents.find(a => a.id === property.agentId) : null;
+  
+  // Fetch property from Supabase
+  const { property: supabaseProperty, loading: loadingProperty } = useProperty(id);
+  
+  // Fallback to mock data if Supabase returns nothing
+  const mockProperty = properties.find(p => p.id === id);
+  const property = supabaseProperty || (mockProperty ? addPropertyMetadata(mockProperty) : null);
+  const agent = property ? agents.find(a => (property as any).agentId) : null;
+  
   const [favorited, setFavorited] = useState(false);
   const [selectedImage, setSelectedImage] = useState(0);
   const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(false);
@@ -45,6 +52,17 @@ export function PropertyDetailPage() {
       setFavorited(isFavorite(property.id));
     }
   }, [property]);
+
+  if (loadingProperty) {
+    return (
+      <div className="min-h-screen bg-[#F8F9FA] flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#D4AF37] mx-auto mb-4"></div>
+          <p className="text-gray-600">Loading property...</p>
+        </div>
+      </div>
+    );
+  }
 
   if (!property) {
     return (
