@@ -23,6 +23,38 @@ export interface Property {
   created_at: string;
 }
 
+/**
+ * Transform property data from Supabase with normalized tables to flat structure
+ */
+function transformPropertyData(data: any[]): Property[] {
+  return data.map(property => ({
+    id: property.id,
+    title: property.title,
+    description: property.description,
+    property_type: property.property_type,
+    location: property.location,
+    address: property.address,
+    price: parseFloat(property.price),
+    bedrooms: property.bedrooms,
+    bathrooms: property.bathrooms,
+    area: parseFloat(property.area),
+    furnishing: property.furnishing,
+    status: property.status,
+    reference_code: property.reference_code,
+    verified: property.verified,
+    featured: property.featured,
+    created_at: property.created_at,
+    // Extract images from property_images relation
+    images: property.property_images
+      ?.sort((a: any, b: any) => a.sort_order - b.sort_order)
+      .map((img: any) => img.image_url) || [],
+    // Extract amenity names from property_amenities relation
+    amenities: property.property_amenities
+      ?.map((pa: any) => pa.amenities?.name)
+      .filter(Boolean) || [],
+  }));
+}
+
 export function useProperties() {
   const [properties, setProperties] = useState<Property[]>([]);
   const [loading, setLoading] = useState(true);
@@ -37,18 +69,33 @@ export function useProperties() {
       setLoading(true);
       const { data, error } = await supabase
         .from('properties')
-        .select('*')
-        .eq('status', 'available')
+        .select(`
+          *,
+          property_images (
+            image_url,
+            sort_order,
+            is_primary
+          ),
+          property_amenities (
+            amenities (
+              name,
+              icon
+            )
+          )
+        `)
+        .in('status', ['available', 'active'])
         .order('created_at', { ascending: false });
 
       if (error) throw error;
 
-      // Use mock data as fallback if Supabase returns empty
-      if (!data || data.length === 0) {
-        console.log('Using mock properties data');
-        setProperties(mockProperties as any);
+      // Transform and use data if available
+      if (data && data.length > 0) {
+        const transformedData = transformPropertyData(data);
+        setProperties(transformedData);
       } else {
-        setProperties(data || []);
+        // Use mock data as fallback if Supabase returns empty
+        console.log('No properties found, using mock properties data');
+        setProperties(mockProperties as any);
       }
     } catch (err: any) {
       console.error('Error fetching properties:', err);
@@ -77,21 +124,36 @@ export function useFeaturedProperties() {
       setLoading(true);
       const { data, error } = await supabase
         .from('properties')
-        .select('*')
-        .eq('status', 'available')
+        .select(`
+          *,
+          property_images (
+            image_url,
+            sort_order,
+            is_primary
+          ),
+          property_amenities (
+            amenities (
+              name,
+              icon
+            )
+          )
+        `)
+        .in('status', ['available', 'active'])
         .eq('featured', true)
         .order('created_at', { ascending: false })
         .limit(6);
 
       if (error) throw error;
 
-      // Use mock data as fallback if Supabase returns empty
-      if (!data || data.length === 0) {
-        console.log('Using mock featured properties data');
+      // Transform and use data if available
+      if (data && data.length > 0) {
+        const transformedData = transformPropertyData(data);
+        setProperties(transformedData);
+      } else {
+        // Use mock data as fallback if Supabase returns empty
+        console.log('No featured properties found, using mock featured properties data');
         const featuredMockProperties = mockProperties.filter(p => p.featured).slice(0, 6);
         setProperties(featuredMockProperties as any);
-      } else {
-        setProperties(data || []);
       }
     } catch (err) {
       console.error('Error fetching featured properties:', err);

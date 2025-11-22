@@ -15,7 +15,21 @@ This document outlines all frontend updates made to support the new normalized d
 
 Three new API modules have been created to interact with the normalized tables:
 
-### **1.1. amenitiesApi.ts**
+### **1.1. propertiesApi.ts**
+
+**Location:** `src/lib/supabase/propertiesApi.ts`
+
+**Functions:**
+- `createProperty(...)` - Create a new property with amenities and images
+- `updateProperty(...)` - Update an existing property
+- `getPropertyById(propertyId)` - Get a single property with all relations
+- `getMyProperties()` - Get all properties for the current user
+- `deleteProperty(propertyId)` - Soft delete a property
+- `uploadPropertyImage(file, propertyId)` - Upload an image to Supabase Storage
+
+---
+
+### **1.2. amenitiesApi.ts**
 
 **Location:** `src/lib/supabase/amenitiesApi.ts`
 
@@ -259,43 +273,49 @@ import { TenantPaymentsPage } from '../pages/TenantPaymentsPage';
 
 ### **Step 2: Update Property Forms**
 
-Update your property creation/edit forms to use the new components:
+The `OwnerAddPropertyPage` and `ListPropertyPage` have been completely rewritten to integrate the new components and API functions. They now handle the full property creation workflow, including amenity selection and image uploads.
+
+**Key Changes:**
+- **State Management**: Forms now manage state for `formData`, `selectedAmenityIds`, and `imageUrls`.
+- **API Integration**: `handleSubmit` functions now call the `createProperty` API function.
+- **Image Uploads**: The `ImageUploader` component is connected to the `uploadPropertyImage` API function.
+- **UX Improvements**: Added loading states, validation, and toast notifications.
+
+**Example Usage (from `OwnerAddPropertyPage.tsx`):**
 
 ```tsx
-import { AmenitiesSelector } from '../components/property/AmenitiesSelector';
-import { ImageUploader } from '../components/property/ImageUploader';
-import { updatePropertyAmenities, updatePropertyImages } from '../lib/supabase';
+import { AmenitiesSelector } from ../components/property/AmenitiesSelector
+import { ImageUploader } from ../components/property/ImageUploader
+import { createProperty, uploadPropertyImage } from ../lib/supabase/propertiesApi
 
-// In your form component
-const [selectedAmenityIds, setSelectedAmenityIds] = useState<string[]>([]);
-const [images, setImages] = useState<string[]>([]);
-const [primaryImageIndex, setPrimaryImageIndex] = useState(0);
+// ... state management ...
 
-// On form submit
-const handleSubmit = async () => {
-  // 1. Create/update property
-  const { data: property } = await supabase.from('properties').insert({...});
+const handleSubmit = async (status: draft | active) => {
+  // ... validation ...
+  setIsSubmitting(true);
 
-  // 2. Update amenities
-  await updatePropertyAmenities(property.id, selectedAmenityIds);
-
-  // 3. Update images
-  await updatePropertyImages(property.id, images, primaryImageIndex);
+  try {
+    const propertyData = { ... };
+    const { id } = await createProperty(propertyData, selectedAmenityIds, imageUrls);
+    toast.success(Property created successfully!)
+  } catch (error) {
+    toast.error(Failed to create property)
+  } finally {
+    setIsSubmitting(false);
+  }
 };
 
-// In your JSX
+// In JSX
 <AmenitiesSelector
   selectedAmenityIds={selectedAmenityIds}
   onChange={setSelectedAmenityIds}
 />
 
 <ImageUploader
-  images={images}
-  primaryIndex={primaryImageIndex}
-  onChange={(newImages, newPrimaryIndex) => {
-    setImages(newImages);
-    setPrimaryImageIndex(newPrimaryIndex);
-  }}
+  images={imageUrls}
+  onImagesChange={setImageUrls}
+  onUpload={handleImageUpload}
+  maxImages={10}
 />
 ```
 
