@@ -238,7 +238,7 @@ function renderResultsList(
 
   return (
     <div className="py-2">
-      {Object.entries(groupedResults).map(([category, items]: [string, any[]]) => {
+      {(Object.entries(groupedResults) as [string, any[]]).map(([category, items]) => {
         if (items.length === 0) return null;
 
         return (

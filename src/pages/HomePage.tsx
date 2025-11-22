@@ -15,7 +15,7 @@ import { LocationCard } from '../components/LocationCard';
 import { PropertyCard } from '../components/PropertyCard';
 import { TestimonialCard } from '../components/TestimonialCard';
 import { Button } from '../components/ui/button';
-import { testimonials } from '../data/mockData';
+import { testimonials, Property } from '../data/mockData';
 import { useFeaturedProperties } from '../hooks/useProperties';
 import { getComparisonList, removeFromComparison, clearComparison } from '../utils/comparison';
 
@@ -159,7 +159,7 @@ export function HomePage() {
             {featuredProperties.map((property) => (
               <PropertyCard
                 key={property.id}
-                property={property}
+                property={property as Property}
                 onCompareToggle={refreshComparison}
               />
             ))}

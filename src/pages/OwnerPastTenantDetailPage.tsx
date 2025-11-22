@@ -1,4 +1,4 @@
-import { ArrowLeft, Mail, Phone, Calendar, FileText, MessageSquare } from 'lucide-react';
+import { ArrowLeft, Mail, Phone, Calendar, FileText, MessageSquare, Building } from 'lucide-react';
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import { ArchivedChat, ChatMessage } from '../components/ArchivedChat';
 import { ArchivedRentalSummary } from '../components/ArchivedRentalSummary';

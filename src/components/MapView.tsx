@@ -243,8 +243,8 @@ export function MapView({ properties, onPropertySelect }: MapViewProps) {
 
           // Handle New Alamein (different region)
           if (property.location === 'New Alamein') {
-            top = 20 + (index % 3) * 15;
-            left = 20 + Math.floor(index / 3) * 15;
+            top = 20 + (__index % 3) * 15;
+            left = 20 + Math.floor(__index / 3) * 15;
           }
 
           // Clamp values
@@ -259,7 +259,7 @@ export function MapView({ properties, onPropertySelect }: MapViewProps) {
               key={property.id}
               onClick={() => {
                 setSelectedPinId(selectedPinId === property.id ? null : property.id);
-                setMobileCardIndex(index);
+                setMobileCardIndex(__index);
               }}
               onMouseEnter={() => setHoveredPropertyId(property.id)}
               onMouseLeave={() => setHoveredPropertyId(null)}
