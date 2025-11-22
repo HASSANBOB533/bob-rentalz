@@ -107,6 +107,26 @@ export async function restoreDocument(documentId: string): Promise<{ success: bo
   }
 }
 
+/**
+ * View all deleted documents (Admin only)
+ * @returns Promise with deleted documents or error
+ */
+export async function viewDeletedDocuments(): Promise<{ data?: any[]; error?: string }> {
+  try {
+    const { data, error } = await supabase.rpc('admin_view_deleted_documents');
+
+    if (error) {
+      console.error('Error fetching deleted documents:', error);
+      return { error: error.message };
+    }
+
+    return { data: data || [] };
+  } catch (err) {
+    console.error('Exception fetching deleted documents:', err);
+    return { error: String(err) };
+  }
+}
+
 // =======================================================
 // 3. DASHBOARD STATISTICS
 // =======================================================
@@ -224,3 +244,5 @@ export const adminApi = {
   // User management
   updateUserRole
 };
+
+

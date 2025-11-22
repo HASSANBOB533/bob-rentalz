@@ -34,6 +34,7 @@ import TenantDashboard from "../pages/dashboard/TenantDashboard";
 import ProtectedRoute from "../components/auth/ProtectedRoute";
 import AuthRedirect from "../components/auth/AuthRedirect";
 import UnauthorizedPage from "../pages/UnauthorizedPage";
+import { AdminDeletedDocumentsPage } from "../pages/AdminDeletedDocumentsPage";
 
 // 404 fallback
 const NotFound = () => (
@@ -100,6 +101,15 @@ export default function AppRouter() {
         element={
           <ProtectedRoute roles={["admin"]}>
             <AdminDashboard />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/admin/deleted-documents"
+        element={
+          <ProtectedRoute roles={["admin"]}>
+            <AdminDeletedDocumentsPage />
           </ProtectedRoute>
         }
       />
