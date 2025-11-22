@@ -1,7 +1,7 @@
 import { Calendar, Clock, Share2, Tag, ArrowLeft, Facebook, Twitter } from 'lucide-react';
 import { motion } from 'motion/react';
 import { useParams, Link } from 'react-router-dom';
-import { toast } from 'sonner@2.0.3';
+import { toast } from 'sonner';
 import { BlogCard } from '../components/BlogCard';
 import { ImageWithFallback } from '../components/figma/ImageWithFallback';
 import { Button } from '../components/ui/button';

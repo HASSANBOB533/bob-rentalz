@@ -1,7 +1,7 @@
 import { ArrowLeft, Search, Edit, Eye, AlertTriangle, Archive } from 'lucide-react';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { toast } from 'sonner@2.0.3';
+import { toast } from 'sonner';
 import { DashboardLayout } from '../components/DashboardLayout';
 import { StatusBadge } from '../components/StatusBadge';
 import { Badge } from '../components/ui/badge';

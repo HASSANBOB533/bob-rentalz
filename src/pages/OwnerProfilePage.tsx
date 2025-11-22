@@ -1,6 +1,6 @@
 import { ArrowLeft, Upload, User } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { toast } from 'sonner@2.0.3';
+import { toast } from 'sonner';
 import { DashboardLayout } from '../components/DashboardLayout';
 import { Badge } from '../components/ui/badge';
 import { Button } from '../components/ui/button';

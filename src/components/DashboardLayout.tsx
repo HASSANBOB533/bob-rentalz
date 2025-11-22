@@ -240,7 +240,7 @@ export function DashboardLayout({
   const menuItems =
     userRole?.toLowerCase() === 'owner'
       ? getOwnerMenuItems()
-      : userRole?.toLowerCase() === 'renter'
+      : userRole?.toLowerCase() === 'tenant'
         ? getRenterMenuItems()
         : userRole?.toLowerCase() === 'agent'
           ? getAgentMenuItems()
@@ -414,7 +414,7 @@ export function DashboardLayout({
             {/* Notifications */}
             <NotificationDropdown
               userRole={
-                userRole?.toLowerCase() === 'renter'
+                userRole?.toLowerCase() === 'tenant'
                   ? 'tenant'
                   : userRole?.toLowerCase() === 'admin'
                     ? 'admin'
@@ -458,7 +458,7 @@ export function DashboardLayout({
                           ? '/owner/profile'
                           : normalizedRole === 'agent'
                             ? '/agent/profile'
-                            : normalizedRole === 'renter'
+                            : normalizedRole === 'tenant'
                               ? '/tenant/rented/profile'
                               : '/tenant/profile';
                       navigate(profilePath);

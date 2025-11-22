@@ -1,7 +1,7 @@
 import { ArrowLeft, Upload, MapPin, Shield, User } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { toast } from 'sonner@2.0.3';
+import { toast } from 'sonner';
 import { DashboardLayout } from '../components/DashboardLayout';
 import { LifecycleTimeline } from '../components/LifecycleTimeline';
 import { Badge } from '../components/ui/badge';

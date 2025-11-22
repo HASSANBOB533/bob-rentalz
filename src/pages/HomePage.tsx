@@ -5,18 +5,18 @@ import { motion } from 'motion/react';
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { AdvancedSearchBar, SearchFilters } from '../components/AdvancedSearchBar';
-import { LocationCard } from '../components/LocationCard';
 import { Carousel } from '../components/Carousel';
 import { CompareBar } from '../components/CompareBar';
 import { ComparisonModal } from '../components/ComparisonModal';
 import { FeatureCard } from '../components/FeatureCard';
-import { HeroSlider } from '../components/HeroSlider';
-import { useFeaturedProperties } from '../hooks/useProperties';
 import { ImageWithFallback } from '../components/figma/ImageWithFallback';
+import { HeroSlider } from '../components/HeroSlider';
+import { LocationCard } from '../components/LocationCard';
 import { PropertyCard } from '../components/PropertyCard';
 import { TestimonialCard } from '../components/TestimonialCard';
 import { Button } from '../components/ui/button';
 import { testimonials } from '../data/mockData';
+import { useFeaturedProperties } from '../hooks/useProperties';
 import { getComparisonList, removeFromComparison, clearComparison } from '../utils/comparison';
 
 export function HomePage() {

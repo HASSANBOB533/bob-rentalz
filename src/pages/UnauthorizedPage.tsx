@@ -6,7 +6,7 @@ export default function UnauthorizedPage() {
       <h1 style={{ fontSize: '4rem', color: '#dc2626' }}>403</h1>
       <h2 style={{ marginBottom: '1rem' }}>Access Denied</h2>
       <p style={{ marginBottom: '2rem', color: '#6b7280' }}>
-        You don't have permission to access this page. Please contact an administrator if you
+        You don&apos;t have permission to access this page. Please contact an administrator if you
         believe this is an error.
       </p>
       <Link

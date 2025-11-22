@@ -1,5 +1,4 @@
 import { Building, Calendar, DollarSign, User, FileText, Hash } from 'lucide-react';
-import React from 'react';
 
 interface ArchivedRentalSummaryProps {
   propertyName: string;

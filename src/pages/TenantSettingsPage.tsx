@@ -1,7 +1,7 @@
 import { Lock, Bell, Mail, MessageSquare, Eye, EyeOff, ArrowLeft } from 'lucide-react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { toast } from 'sonner@2.0.3';
+import { toast } from 'sonner';
 
 export default function TenantSettingsPage() {
   const [settings, setSettings] = useState({

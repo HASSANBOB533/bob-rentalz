@@ -1,7 +1,7 @@
 import { ArrowLeft, Upload, MapPin, Shield, User, FileText, Save, X } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { toast } from 'sonner@2.0.3';
+import { toast } from 'sonner';
 import { AdminDashboardLayout } from '../components/AdminDashboardLayout';
 import { Badge } from '../components/ui/badge';
 import { Button } from '../components/ui/button';

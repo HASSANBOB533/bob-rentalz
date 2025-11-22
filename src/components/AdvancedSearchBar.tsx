@@ -1,7 +1,7 @@
 import { Search, SlidersHorizontal, Bookmark, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { useState, useEffect, useRef } from 'react';
-import { toast } from 'sonner@2.0.3';
+import { toast } from 'sonner';
 import { topLevelRegions } from '../data/locationData';
 import { FilterModal } from './FilterModal';
 import { Button } from './ui/button';

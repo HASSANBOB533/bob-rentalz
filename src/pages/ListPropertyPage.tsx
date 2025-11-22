@@ -1,7 +1,7 @@
 import { Check, Loader2 } from 'lucide-react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { toast } from 'sonner@2.0.3';
+import { toast } from 'sonner';
 import { AmenitiesSelector } from '../components/property/AmenitiesSelector';
 import { ImageUploader } from '../components/property/ImageUploader';
 import { Button } from '../components/ui/button';

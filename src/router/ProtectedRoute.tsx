@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, ReactElement } from 'react';
 import { Navigate } from 'react-router-dom';
 import { api } from '../lib/supabase/api';
 
 interface ProtectedRouteProps {
-  children: JSX.Element;
+  children: ReactElement;
   roles?: string[]; // ["admin"], ["owner", "agent"], etc.
 }
 
@@ -12,7 +12,7 @@ export default function ProtectedRoute({ children, roles }: ProtectedRouteProps)
 
   useEffect(() => {
     async function check() {
-      const role = await api.getCurrentRole();
+      const role = await api.auth.getCurrentRole();
       if (!role) return setAllowed(false);
 
       if (roles && !roles.includes(role)) return setAllowed(false);

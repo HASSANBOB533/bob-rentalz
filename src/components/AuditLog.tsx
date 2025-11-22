@@ -1,5 +1,3 @@
-import React from 'react';
-
 export interface AuditLogEntry {
   id: string | number;
   title: string;

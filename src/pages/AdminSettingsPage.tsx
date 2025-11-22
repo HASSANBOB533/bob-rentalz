@@ -1,6 +1,6 @@
 import { Lock, Bell, Shield, Globe, Palette, Database, AlertTriangle } from 'lucide-react';
 import { useState } from 'react';
-import { toast } from 'sonner@2.0.3';
+import { toast } from 'sonner';
 import { AdminDashboardLayout } from '../components/AdminDashboardLayout';
 import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';

@@ -13,27 +13,27 @@ import { AgentDetailPage } from '../pages/AgentDetailPage';
 import { AgentsPage } from '../pages/AgentsPage';
 import { BlogPage } from '../pages/BlogPage';
 import { BlogPostPage } from '../pages/BlogPostPage';
-import { FAQPage } from '../pages/FAQPage';
-import { HomePage } from '../pages/HomePage';
-import { LoginPage } from '../pages/LoginPage';
-import { SignupPage } from '../pages/SignupPage';
-import { PropertiesPage } from '../pages/PropertiesPage';
-import { PropertyDetailPage } from '../pages/PropertyDetailPage';
 import { ContactPage } from '../pages/ContactPage';
+import { CookiePolicyPage } from '../pages/CookiePolicyPage';
+import AdminDashboard from '../pages/dashboard/AdminDashboard';
+import AgentDashboard from '../pages/dashboard/AgentDashboard';
+import OwnerDashboard from '../pages/dashboard/OwnerDashboard';
+import TenantDashboard from '../pages/dashboard/TenantDashboard';
+import { FAQPage } from '../pages/FAQPage';
 import { FavoritesPage } from '../pages/FavoritesPage';
+import { HomePage } from '../pages/HomePage';
 import { ListPropertyPage } from '../pages/ListPropertyPage';
+import { LoginPage } from '../pages/LoginPage';
 import { PrivacyPage } from '../pages/PrivacyPage';
+import { PropertiesPage } from '../pages/PropertiesPage';
+import { SignupPage } from '../pages/SignupPage';
+import { PropertyDetailPage } from '../pages/PropertyDetailPage';
 import { TenantPaymentsPage } from '../pages/TenantPaymentsPage';
 import { TermsPage } from '../pages/TermsPage';
-import { CookiePolicyPage } from '../pages/CookiePolicyPage';
 import UnauthorizedPage from '../pages/UnauthorizedPage';
 import { VerifiedBadgePage } from '../pages/VerifiedBadgePage';
 
 // Dashboards (role-based)
-import AdminDashboard from '../pages/dashboard/AdminDashboard';
-import OwnerDashboard from '../pages/dashboard/OwnerDashboard';
-import AgentDashboard from '../pages/dashboard/AgentDashboard';
-import TenantDashboard from '../pages/dashboard/TenantDashboard';
 
 // Protected routes
 import { OwnerPaymentsPage } from '../pages/OwnerPaymentsPage';

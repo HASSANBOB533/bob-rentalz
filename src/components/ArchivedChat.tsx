@@ -1,5 +1,4 @@
 import { MessageSquare, AlertTriangle } from 'lucide-react';
-import React from 'react';
 
 export interface ChatMessage {
   id: string | number;

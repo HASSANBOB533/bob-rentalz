@@ -1,7 +1,7 @@
 import { ArrowLeft, Home, Wrench, FileText, MessageCircle, Upload, X } from 'lucide-react';
 import { useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { toast } from 'sonner@2.0.3';
+import { toast } from 'sonner';
 
 export default function TenantCreateServiceRequestPage() {
   const navigate = useNavigate();

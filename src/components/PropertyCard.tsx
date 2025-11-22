@@ -2,7 +2,7 @@ import { Bed, Bath, Maximize, MapPin, Heart, CheckCircle, Crown, Plus, Check } f
 import { motion } from 'motion/react';
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { toast } from 'sonner@2.0.3';
+import { toast } from 'sonner';
 import { Property, agents } from '../data/mockData';
 import { toggleComparison } from '../utils/comparison';
 import { isFavorite, toggleFavorite } from '../utils/favorites';

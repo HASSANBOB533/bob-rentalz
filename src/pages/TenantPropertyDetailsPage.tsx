@@ -29,7 +29,7 @@ import {
 } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
-import { toast } from 'sonner@2.0.3';
+import { toast } from 'sonner';
 import { ImageWithFallback } from '../components/figma/ImageWithFallback';
 import { CalendarIcon } from '../components/icons/CalendarIcon';
 import { ChairIcon } from '../components/icons/ChairIcon';

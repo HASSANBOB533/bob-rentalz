@@ -20,7 +20,7 @@ import {
 } from 'lucide-react';
 import { useState } from 'react';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
-import { toast } from 'sonner@2.0.3';
+import { toast } from 'sonner';
 import { AdminDashboardLayout } from '../components/AdminDashboardLayout';
 import { AuditLog, AuditLogEntry } from '../components/AuditLog';
 import { LifecycleTimeline } from '../components/LifecycleTimeline';

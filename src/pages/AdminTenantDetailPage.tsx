@@ -17,7 +17,7 @@ import {
 } from 'lucide-react';
 import { useState } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
-import { toast } from 'sonner@2.0.3';
+import { toast } from 'sonner';
 import { AdminDashboardLayout } from '../components/AdminDashboardLayout';
 import { ArchivedChat, ChatMessage } from '../components/ArchivedChat';
 import { ArchivedRentalSummary } from '../components/ArchivedRentalSummary';
@@ -35,6 +35,7 @@ import {
   DialogTrigger,
 } from '../components/ui/dialog';
 import { Input } from '../components/ui/input';
+import { Label } from '../components/ui/label';
 import {
   Select,
   SelectContent,
@@ -42,7 +43,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from '../components/ui/select';
-import { Label } from '../components/ui/label';
 import { adminApi } from '../lib/supabase/adminApi';
 
 export default function AdminTenantDetailPage() {

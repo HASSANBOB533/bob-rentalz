@@ -29,12 +29,12 @@ import {
 } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { useParams, Link, useLocation, useNavigate } from 'react-router-dom';
-import { toast } from 'sonner@2.0.3';
+import { toast } from 'sonner';
 import { ImageWithFallback } from '../components/figma/ImageWithFallback';
-import { TrendUpIcon } from '../components/icons/TrendUpIcon';
 import { CalendarIcon } from '../components/icons/CalendarIcon';
 import { ChairIcon } from '../components/icons/ChairIcon';
 import { SecurityCardIcon } from '../components/icons/SecurityCardIcon';
+import { TrendUpIcon } from '../components/icons/TrendUpIcon';
 import { PropertyCard } from '../components/PropertyCard';
 import { PropertyCodeDisplay } from '../components/PropertyCodeDisplay';
 import { PropertyDetailImageCarousel } from '../components/PropertyDetailImageCarousel';
