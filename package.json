@@ -79,8 +79,9 @@
             "dev": "vite",
             "build": "vite build",
             "preview": "vite preview",
-            "lint": "eslint src --ext .ts,.tsx --report-unused-disable-directives",
-            "lint:fix": "eslint src --ext .ts,.tsx --fix",
+            "lint": "eslint src --ext .ts,.tsx --report-unused-disable-directives --cache --cache-location .eslintcache",
+            "lint:fix": "eslint src --ext .ts,.tsx --fix --cache --cache-location .eslintcache",
+            "lint:no-cache": "eslint src --ext .ts,.tsx --report-unused-disable-directives",
             "format": "prettier --write \"src/**/*.{ts,tsx,css,md,json}\"",
             "format:check": "prettier --check \"src/**/*.{ts,tsx,css,md,json}\"",
             "typecheck": "tsc --noEmit"

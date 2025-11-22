@@ -21,9 +21,6 @@ module.exports = {
     ecmaFeatures: {
       jsx: true,
     },
-    // OPTIMIZATION: Don't generate full type information unless needed
-    // This significantly speeds up parsing
-    project: null, // Disable type-aware linting (was using './tsconfig.json')
   },
   plugins: ['@typescript-eslint', 'react', 'react-hooks', 'react-refresh', 'import', 'prettier'],
   settings: {
@@ -31,18 +28,13 @@ module.exports = {
       version: 'detect',
     },
     'import/resolver': {
-      // OPTIMIZATION: Simplify import resolution
       typescript: {
-        alwaysTryTypes: false, // Changed from true - don't always try type files
-        // project: './tsconfig.json', // Removed - let it use default resolution
+        alwaysTryTypes: true,
+        project: './tsconfig.json',
       },
       node: {
         extensions: ['.js', '.jsx', '.ts', '.tsx'],
       },
-    },
-    // OPTIMIZATION: Cache import resolution results
-    'import/cache': {
-      lifetime: Infinity,
     },
   },
   rules: {
@@ -77,9 +69,6 @@ module.exports = {
     'import/no-unresolved': ['error', { ignore: ['^figma:'] }],
     'import/default': 'off', // Disabled due to false positives with React imports
     'import/no-named-as-default': 'off',
-    // OPTIMIZATION: Disable expensive import rules
-    'import/namespace': 'off', // Expensive rule, disable if not critical
-    'import/no-named-as-default-member': 'off', // Expensive rule
 
     // General rules
     'no-console': ['warn', { allow: ['warn', 'error'] }],
