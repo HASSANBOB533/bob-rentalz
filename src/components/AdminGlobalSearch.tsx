@@ -1,5 +1,5 @@
 import { Search, X, ArrowRight, Building, User, Users, FileText, UserCheck } from 'lucide-react';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { properties, agents } from '../data/mockData';
 
@@ -33,7 +33,6 @@ interface SearchResult {
 export function AdminGlobalSearch() {
   const [query, setQuery] = useState('');
   const [isOpen, setIsOpen] = useState(false);
-  const [results, setResults] = useState<SearchResult[]>([]);
   const containerRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
 
@@ -48,10 +47,10 @@ export function AdminGlobalSearch() {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  useEffect(() => {
+  // Compute search results using useMemo instead of useEffect
+  const results = useMemo(() => {
     if (query.length < 2) {
-      setResults([]);
-      return;
+      return [];
     }
 
     const lowerQuery = query.toLowerCase();
@@ -129,7 +128,7 @@ export function AdminGlobalSearch() {
       }
     });
 
-    setResults(newResults);
+    return newResults;
   }, [query]);
 
   const handleSelect = (link: string) => {
@@ -171,7 +170,6 @@ export function AdminGlobalSearch() {
             <button
               onClick={() => {
                 setQuery('');
-                setResults([]);
               }}
               className="p-1 rounded-full hover:bg-gray-100 text-gray-400"
             >

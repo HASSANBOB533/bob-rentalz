@@ -1,6 +1,6 @@
 import { Plus, Check } from 'lucide-react';
 import { motion } from 'motion/react';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { toast } from 'sonner';
 import { isInComparison, toggleComparison } from '../utils/comparison';
 
@@ -19,11 +19,11 @@ export function CompareCheckbox({
   isInComparison: externalIsInComparison,
   onCompareToggle,
 }: CompareCheckboxProps) {
-  const [isSelected, setIsSelected] = useState(false);
+  // Use local state only for optimistic updates
+  const [localIsSelected, setLocalIsSelected] = useState<boolean | null>(null);
 
-  useEffect(() => {
-    setIsSelected(externalIsInComparison ?? isInComparison(propertyId));
-  }, [propertyId, externalIsInComparison]);
+  // Derived state: prefer local optimistic state, fallback to external or computed
+  const isSelected = localIsSelected ?? externalIsInComparison ?? isInComparison(propertyId);
 
   const handleToggle = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -38,7 +38,8 @@ export function CompareCheckbox({
       return;
     }
 
-    setIsSelected(!isSelected);
+    // Optimistic update
+    setLocalIsSelected(!isSelected);
     onCompareToggle?.();
   };
 

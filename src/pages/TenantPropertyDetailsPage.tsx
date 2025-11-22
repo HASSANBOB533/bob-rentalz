@@ -46,7 +46,7 @@ export default function TenantPropertyDetailsPage() {
   const rawProperty = properties.find((p) => p.id === id);
   const property = rawProperty ? addPropertyMetadata(rawProperty) : null;
   const agent = property ? agents.find((a) => a.id === property.agentId) : null;
-  const [favorited, setFavorited] = useState(false);
+  const [localFavorited, setLocalFavorited] = useState<boolean | null>(null);
   const [selectedImage, setSelectedImage] = useState(0);
   const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(false);
 
@@ -54,11 +54,10 @@ export default function TenantPropertyDetailsPage() {
   const fromDashboard = location.state?.fromDashboard;
   const dashboardType = location.state?.dashboardType;
 
-  useEffect(() => {
-    if (property) {
-      setFavorited(isFavorite(property.id));
-    }
-  }, [property]);
+  // Derived state for favorited
+  const favorited = property
+    ? localFavorited ?? isFavorite(property.id)
+    : false;
 
   if (!property) {
     return (
@@ -136,7 +135,7 @@ export default function TenantPropertyDetailsPage() {
 
   const handleFavoriteClick = () => {
     const newState = toggleFavorite(property.id);
-    setFavorited(newState);
+    setLocalFavorited(newState);
     toast.success(newState ? 'Added to favorites' : 'Removed from favorites');
   };
 

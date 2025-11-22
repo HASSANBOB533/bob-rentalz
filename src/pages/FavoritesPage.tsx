@@ -1,5 +1,5 @@
 import { Heart, Share2 } from 'lucide-react';
-import { useState, useEffect } from 'react';
+import { useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { PropertyCard } from '../components/PropertyCard';
 import { Button } from '../components/ui/button';
@@ -7,19 +7,19 @@ import { properties } from '../data/mockData';
 import { getFavorites } from '../utils/favorites';
 
 export function FavoritesPage() {
-  const [favoriteIds, setFavoriteIds] = useState<string[]>([]);
-  const [favoriteProperties, setFavoriteProperties] = useState<typeof properties>([]);
+  // Trigger for manual refresh
+  const [refreshKey, setRefreshKey] = useState(0);
+
+  // Compute favorites using useMemo
+  const favoriteIds = useMemo(() => getFavorites(), [refreshKey]);
+  const favoriteProperties = useMemo(
+    () => properties.filter((p) => favoriteIds.includes(p.id)),
+    [favoriteIds]
+  );
 
   const loadFavorites = () => {
-    const ids = getFavorites();
-    setFavoriteIds(ids);
-    const props = properties.filter((p) => ids.includes(p.id));
-    setFavoriteProperties(props);
+    setRefreshKey((prev) => prev + 1);
   };
-
-  useEffect(() => {
-    loadFavorites();
-  }, []);
 
   const handleShare = () => {
     const propertyLinks = favoriteProperties

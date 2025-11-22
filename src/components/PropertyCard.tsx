@@ -27,22 +27,20 @@ export function PropertyCard({
   onCompareToggle,
   viewMode = 'grid',
 }: PropertyCardProps) {
-  const [favorited, setFavorited] = useState(false);
-
   // Add metadata if not present
   const property = propProperty.shortcode ? propProperty : addPropertyMetadata(propProperty);
 
   const agent = agents.find((a) => a.id === property.agentId);
 
-  useEffect(() => {
-    setFavorited(isFavorite(property.id));
-  }, [property.id]);
+  // Derived state: compute favorited status directly from utility function
+  const [localFavorited, setLocalFavorited] = useState<boolean | null>(null);
+  const favorited = localFavorited ?? isFavorite(property.id);
 
   const handleFavoriteClick = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
     const newState = toggleFavorite(property.id);
-    setFavorited(newState);
+    setLocalFavorited(newState);
     onFavoriteChange?.();
   };
 

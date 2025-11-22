@@ -10,7 +10,7 @@ import {
   Tag,
   X,
 } from 'lucide-react';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useMemo } from 'react';
 
 type UserRole = 'admin' | 'owner' | 'agent' | 'tenant';
 
@@ -38,11 +38,10 @@ interface NotificationDropdownProps {
 
 export function NotificationDropdown({ userRole }: NotificationDropdownProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const [notifications, setNotifications] = useState<Notification[]>([]);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  // Generate mock notifications based on role
-  useEffect(() => {
+  // Generate mock notifications based on role using useMemo
+  const notifications = useMemo(() => {
     const getNotifications = (role: UserRole): Notification[] => {
       const _baseTime = new Date();
 
@@ -168,7 +167,7 @@ export function NotificationDropdown({ userRole }: NotificationDropdownProps) {
       }
     };
 
-    setNotifications(getNotifications(userRole));
+    return getNotifications(userRole);
   }, [userRole]);
 
   // Close dropdown when clicking outside

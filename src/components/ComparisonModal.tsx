@@ -18,24 +18,29 @@ interface ComparisonModalProps {
  * Modal displaying side-by-side property comparison
  */
 export function ComparisonModal({ open, onClose, properties: propertyIds }: ComparisonModalProps) {
-  const [favorites, setFavorites] = useState<Record<string, boolean>>({});
+  // Local state for optimistic updates
+  const [localFavorites, setLocalFavorites] = useState<Record<string, boolean>>({});
 
   const properties = allProperties.filter((p) => propertyIds.includes(p.id));
 
   // Memoize propertyIds string to avoid reference changes
   const propertyIdsKey = useMemo(() => propertyIds.join(','), [propertyIds]);
 
-  useEffect(() => {
+  // Compute initial favorites using useMemo
+  const initialFavorites = useMemo(() => {
     const favs: Record<string, boolean> = {};
     propertyIds.forEach((id) => {
       favs[id] = isFavorite(id);
     });
-    setFavorites(favs);
-  }, [propertyIdsKey, propertyIds]); // Use memoized string and propertyIds array
+    return favs;
+  }, [propertyIdsKey, propertyIds]);
+
+  // Merge initial favorites with local updates
+  const favorites = { ...initialFavorites, ...localFavorites };
 
   const handleFavoriteToggle = (propertyId: string) => {
     const newState = toggleFavorite(propertyId);
-    setFavorites((prev) => ({ ...prev, [propertyId]: newState }));
+    setLocalFavorites((prev) => ({ ...prev, [propertyId]: newState }));
   };
 
   const commonAmenities = [

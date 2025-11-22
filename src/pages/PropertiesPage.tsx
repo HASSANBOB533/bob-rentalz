@@ -1,6 +1,6 @@
 import { Filter, Grid3x3, List, X, ChevronLeft, ChevronRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useMemo } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { CompareBar } from '../components/CompareBar';
 import { ComparisonModal } from '../components/ComparisonModal';
@@ -152,22 +152,21 @@ export function PropertiesPage() {
   ].filter(Boolean).length;
 
   // Comparison state
-  const [comparisonList, setComparisonList] = useState<string[]>([]);
+  const [refreshKey, setRefreshKey] = useState(0);
   const [showComparisonModal, setShowComparisonModal] = useState(false);
+
+  // Compute comparison list using useMemo
+  const comparisonList = useMemo(() => getComparisonList(), [refreshKey]);
 
   // Update comparison list when changes occur
   const refreshComparison = () => {
-    setComparisonList(getComparisonList());
+    setRefreshKey((prev) => prev + 1);
   };
 
-  useEffect(() => {
-    refreshComparison();
-  }, []);
-
-  // Reset to page 1 when filters change
+  // Reset to page 1 when filters change - use effect is needed here for side effect
   useEffect(() => {
     setCurrentPage(1);
-  }, [filteredProperties]);
+  }, [filteredProperties.length]); // Use length to avoid reference changes
 
   // Pagination calculations
   const totalPages = Math.ceil(filteredProperties.length / propertiesPerPage);

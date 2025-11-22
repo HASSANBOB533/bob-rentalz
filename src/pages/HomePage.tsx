@@ -2,7 +2,7 @@ import newAlameinImage from 'figma:asset/e620e41fa31e2b3697673ee49e7a7dcd6e65cb3
 import newCairoImage from 'figma:asset/f93381c4c8e0792be4c66a1bf1b34a9e33977584.png';
 import { ArrowRight, Shield, Clock, CheckCircle } from 'lucide-react';
 import { motion } from 'motion/react';
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useCallback, useMemo } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { AdvancedSearchBar, SearchFilters } from '../components/AdvancedSearchBar';
 import { Carousel } from '../components/Carousel';
@@ -50,17 +50,16 @@ export function HomePage() {
     { name: 'New Alamein', slug: 'new-alamein', count: 85, imageUrl: newAlameinImage },
   ];
 
-  const [comparisonList, setComparisonList] = useState<string[]>([]);
+  const [refreshKey, setRefreshKey] = useState(0);
   const [showComparisonModal, setShowComparisonModal] = useState(false);
+
+  // Compute comparison list using useMemo
+  const comparisonList = useMemo(() => getComparisonList(), [refreshKey]);
 
   // Update comparison list when changes occur
   const refreshComparison = useCallback(() => {
-    setComparisonList(getComparisonList());
+    setRefreshKey((prev) => prev + 1);
   }, []);
-
-  useEffect(() => {
-    refreshComparison();
-  }, [refreshComparison]);
 
   // Comparison handlers removed - handled directly in CompareBar component
 
