@@ -69,13 +69,13 @@ export function LoginPage() {
       // Redirect based on role
       console.log('Redirecting based on role:', profile?.role);
       if (profile?.role === 'admin') {
-        navigate('/admin/dashboard');
+        navigate('/dashboard/admin');
       } else if (profile?.role === 'owner') {
-        navigate('/owner/dashboard');
+        navigate('/dashboard/owner');
       } else if (profile?.role === 'agent') {
-        navigate('/agent/dashboard');
+        navigate('/dashboard/agent');
       } else {
-        navigate('/dashboard');
+        navigate('/dashboard/tenant');
       }
     } catch (err) {
       console.error('Unexpected error during login:', err);
