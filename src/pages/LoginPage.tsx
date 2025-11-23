@@ -17,8 +17,11 @@ export function LoginPage() {
   const {
     register,
     handleSubmit,
-    formState: { isSubmitting },
+    formState: { isSubmitting, errors },
   } = useForm<LoginFormValues>();
+
+  // Log validation errors
+  console.log('Form errors:', errors);
   const [error, setError] = useState<string | null>(null);
 
   const onSubmit = async (values: LoginFormValues) => {
@@ -106,9 +109,12 @@ export function LoginPage() {
                 className="pl-10"
                 autoComplete="email"
                 disabled={isSubmitting}
-                {...register('email', { required: true })}
+                {...register('email', { required: 'Email is required' })}
               />
             </div>
+            {errors.email && (
+              <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>
+            )}
           </div>
 
           <div className="space-y-1">
@@ -121,19 +127,20 @@ export function LoginPage() {
                 className="pl-10"
                 autoComplete="current-password"
                 disabled={isSubmitting}
-                {...register('password', { required: true })}
+                {...register('password', { required: 'Password is required' })}
               />
             </div>
           </div>
 
           {error && (
-            <div className="text-sm text-red-600 bg-red-50 border border-red-200 rounded-md p-2">
-              {error}
+            <div className="text-sm text-red-600 bg-red-50 border border-red-200 rounded-md p              />
             </div>
-          )}
+            {errors.password && (
+              <p className="text-red-500 text-sm mt-1">{errors.password.message}</p>
+            )}
+          </div>
 
-          <div className="flex items-center justify-between">
-            <label className="flex items-center space-x-2">
+          <div className="flex items-center justify-between text-sm">           <label className="flex items-center space-x-2">
               <input type="checkbox" className="rounded border-gray-300" />
               <span className="text-sm text-gray-600">Remember me</span>
             </label>
