@@ -7,6 +7,7 @@ This file contains custom instructions for GitHub Copilot to help maintain code 
 ## Project Overview
 
 BOB Rentalz is a comprehensive property rental platform built with:
+
 - **Frontend**: React 18.3 + TypeScript
 - **Build Tool**: Vite 6.3
 - **UI Framework**: Radix UI + Tailwind CSS
@@ -106,6 +107,7 @@ BOB Rentalz is a comprehensive property rental platform built with:
 ### Before Committing
 
 Always run these commands before committing:
+
 ```bash
 npm run lint:fix    # Fix auto-fixable linting issues
 npm run format      # Format all code with Prettier
@@ -125,6 +127,7 @@ npm run typecheck   # Ensure no type errors
 ### Database Tables
 
 Main tables:
+
 - `profiles` - User profiles (linked to `auth.users`)
 - `properties` - Property listings
 - `inquiries` - Tenant inquiries
