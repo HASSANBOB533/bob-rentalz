@@ -4,7 +4,6 @@ import { motion } from 'motion/react';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
 import { supabase } from '../lib/supabase';
 
@@ -121,13 +120,35 @@ export function LoginPage() {
             </a>
           </div>
 
-          <Button
+          <button
             type="submit"
-            className="w-full bg-[#2B5273] hover:bg-[#1F3D54]"
             disabled={isSubmitting}
+            style={{
+              width: '100%',
+              padding: '0.75rem 1rem',
+              backgroundColor: '#2B5273',
+              color: 'white',
+              borderRadius: '0.5rem',
+              fontWeight: '600',
+              fontSize: '1rem',
+              border: 'none',
+              cursor: isSubmitting ? 'not-allowed' : 'pointer',
+              opacity: isSubmitting ? 0.6 : 1,
+              transition: 'all 0.2s',
+              display: 'block',
+              visibility: 'visible',
+            }}
+            onMouseOver={(e) => {
+              if (!isSubmitting) {
+                e.currentTarget.style.backgroundColor = '#1F3D54';
+              }
+            }}
+            onMouseOut={(e) => {
+              e.currentTarget.style.backgroundColor = '#2B5273';
+            }}
           >
             {isSubmitting ? 'Signing in...' : 'Sign in'}
-          </Button>
+          </button>
 
           <div className="text-center text-sm text-gray-600">
             Don&apos;t have an account?{' '}
