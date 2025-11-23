@@ -145,9 +145,8 @@ export function LoginPage() {
           <button
             type="submit"
             disabled={isSubmitting}
-            onClick={(e) => {
+            onClick={() => {
               console.log('Button clicked!');
-              // Let form handle submission naturally
             }}
             style={{
               width: '100%',
