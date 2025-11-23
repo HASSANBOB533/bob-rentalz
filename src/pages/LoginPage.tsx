@@ -130,17 +130,13 @@ export function LoginPage() {
                 {...register('password', { required: 'Password is required' })}
               />
             </div>
-          </div>
-
-          {error && (
-            <div className="text-sm text-red-600 bg-red-50 border border-red-200 rounded-md p              />
-            </div>
             {errors.password && (
               <p className="text-red-500 text-sm mt-1">{errors.password.message}</p>
             )}
           </div>
 
-          <div className="flex items-center justify-between text-sm">           <label className="flex items-center space-x-2">
+          <div className="flex items-center justify-between text-sm">
+            <label className="flex items-center space-x-2">
               <input type="checkbox" className="rounded border-gray-300" />
               <span className="text-sm text-gray-600">Remember me</span>
             </label>
@@ -148,6 +144,12 @@ export function LoginPage() {
               Forgot password?
             </a>
           </div>
+
+          {error && (
+            <div className="text-sm text-red-600 bg-red-50 border border-red-200 rounded-md p-3">
+              {error}
+            </div>
+          )}
 
           <button
             type="submit"
