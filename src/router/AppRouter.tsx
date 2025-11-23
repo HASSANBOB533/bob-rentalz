@@ -201,24 +201,10 @@ export default function AppRouter() {
       />
 
       {/* =============================
-          AUTH ROUTES (with MainLayout and redirect)
+          AUTH ROUTES (no MainLayout - full-page designs)
       ============================= */}
-      <Route
-        path="/login"
-        element={
-          <MainLayout>
-            <LoginPage />
-          </MainLayout>
-        }
-      />
-      <Route
-        path="/signup"
-        element={
-          <MainLayout>
-            <SignupPage />
-          </MainLayout>
-        }
-      />
+      <Route path="/login" element={<LoginPage />} />
+      <Route path="/signup" element={<SignupPage />} />
 
       {/* =============================
           DASHBOARD ROUTES (protected, no MainLayout)
