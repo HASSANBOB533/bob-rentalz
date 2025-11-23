@@ -2,51 +2,60 @@ import bobLogo from 'figma:asset/c3cbe0198340d6bed05c69174ee79f3b6a4d8624.png';
 import { Mail, Lock } from 'lucide-react';
 import { motion } from 'motion/react';
 import { useState } from 'react';
+import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-import { toast } from 'sonner';
 import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
-import { useAuth } from '../contexts/AuthContext';
+import { supabase } from '../lib/supabase';
+
+type LoginFormValues = {
+  email: string;
+  password: string;
+};
 
 export function LoginPage() {
   const navigate = useNavigate();
-  const { signIn, user, profile } = useAuth();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [loading, setLoading] = useState(false);
+  const {
+    register,
+    handleSubmit,
+    formState: { isSubmitting },
+  } = useForm<LoginFormValues>();
+  const [error, setError] = useState<string | null>(null);
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setLoading(true);
+  const onSubmit = async (values: LoginFormValues) => {
+    setError(null);
 
-    try {
-      const { error } = await signIn(email, password);
+    const { error: authError } = await supabase.auth.signInWithPassword({
+      email: values.email.trim().toLowerCase(),
+      password: values.password,
+    });
 
-      if (error) {
-        toast.error(error.message || 'Invalid email or password');
-        setLoading(false);
-        return;
-      }
+    if (authError) {
+      setError(authError.message);
+      return;
+    }
 
-      // Get user profile to determine role - already available from useAuth() at component level
-
-      toast.success('Login successful!');
+    // Get user profile to determine role
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+    if (user) {
+      const { data: profile } = await supabase
+        .from('profiles')
+        .select('role')
+        .eq('id', user.id)
+        .single();
 
       // Redirect based on role
-      setTimeout(() => {
-        if (profile?.role === 'admin') {
-          navigate('/admin/dashboard');
-        } else if (profile?.role === 'owner') {
-          navigate('/owner/dashboard');
-        } else if (profile?.role === 'agent') {
-          navigate('/agent/dashboard');
-        } else {
-          navigate('/dashboard');
-        }
-      }, 500);
-    } catch (error: any) {
-      toast.error('An error occurred during login');
-      setLoading(false);
+      if (profile?.role === 'admin') {
+        navigate('/admin/dashboard');
+      } else if (profile?.role === 'owner') {
+        navigate('/owner/dashboard');
+      } else if (profile?.role === 'agent') {
+        navigate('/agent/dashboard');
+      } else {
+        navigate('/dashboard');
+      }
     }
   };
 
@@ -65,19 +74,18 @@ export function LoginPage() {
         </div>
 
         {/* Form */}
-        <form onSubmit={handleSubmit} className="p-4 space-y-3">
+        <form onSubmit={handleSubmit(onSubmit)} className="p-4 space-y-3">
           <div className="space-y-1">
             <label className="text-sm font-medium text-[#2B5273]">Email</label>
             <div className="relative">
               <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
               <Input
                 type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
                 placeholder="you@example.com"
                 className="pl-10"
-                required
-                disabled={loading}
+                autoComplete="email"
+                disabled={isSubmitting}
+                {...register('email', { required: true })}
               />
             </div>
           </div>
@@ -88,15 +96,20 @@ export function LoginPage() {
               <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
               <Input
                 type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••"
                 className="pl-10"
-                required
-                disabled={loading}
+                autoComplete="current-password"
+                disabled={isSubmitting}
+                {...register('password', { required: true })}
               />
             </div>
           </div>
+
+          {error && (
+            <div className="text-sm text-red-600 bg-red-50 border border-red-200 rounded-md p-2">
+              {error}
+            </div>
+          )}
 
           <div className="flex items-center justify-between">
             <label className="flex items-center space-x-2">
@@ -108,13 +121,13 @@ export function LoginPage() {
             </a>
           </div>
 
-          <button
+          <Button
             type="submit"
-            className="w-full bg-[#2B5273] hover:bg-[#1F3D54] text-white rounded-md px-4 py-2 font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-            disabled={loading}
+            className="w-full bg-[#2B5273] hover:bg-[#1F3D54]"
+            disabled={isSubmitting}
           >
-            {loading ? 'Signing in...' : 'Sign In'}
-          </button>
+            {isSubmitting ? 'Signing in...' : 'Sign in'}
+          </Button>
 
           <div className="text-center text-sm text-gray-600">
             Don&apos;t have an account?{' '}
