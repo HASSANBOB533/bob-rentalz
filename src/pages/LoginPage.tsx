@@ -55,13 +55,13 @@ export function LoginPage() {
 
       // Redirect based on role
       if (profile?.role === 'admin') {
-        navigate('/admin/dashboard');
+        navigate('/dashboard/admin');
       } else if (profile?.role === 'owner') {
-        navigate('/owner/dashboard');
+        navigate('/dashboard/owner');
       } else if (profile?.role === 'agent') {
-        navigate('/agent/dashboard');
+        navigate('/dashboard/agent');
       } else {
-        navigate('/dashboard');
+        navigate('/dashboard/tenant');
       }
     } catch {
       setError('An unexpected error occurred. Please try again.');
@@ -125,7 +125,9 @@ export function LoginPage() {
                 {...register('password', { required: 'Password is required' })}
               />
             </div>
-            {errors.password && <p className="text-red-500 text-sm mt-1">{errors.password.message}</p>}
+            {errors.password && (
+              <p className="text-red-500 text-sm mt-1">{errors.password.message}</p>
+            )}
           </div>
 
           <div className="flex items-center justify-between text-sm">
