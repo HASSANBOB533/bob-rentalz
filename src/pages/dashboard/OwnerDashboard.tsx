@@ -1,23 +1,96 @@
-import { Home, DollarSign, Users, FileText, PlusCircle, BarChart3, Settings, TrendingUp } from 'lucide-react';
+import { Home, DollarSign, Users, FileText, PlusCircle, BarChart3, TrendingUp } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { supabase } from '../../lib/supabase';
 
+interface Property {
+  id: string;
+  title: string;
+  status: string;
+  price: number;
+}
+
+interface Stats {
+  totalProperties: number;
+  availableProperties: number;
+  occupiedProperties: number;
+  totalRevenue: number;
+  pendingInquiries: number;
+}
+
 export default function OwnerDashboard() {
   const navigate = useNavigate();
   const [userEmail, setUserEmail] = useState<string>('');
+  const [userId, setUserId] = useState<string>('');
   const [loading, setLoading] = useState(true);
+  const [stats, setStats] = useState<Stats>({
+    totalProperties: 0,
+    availableProperties: 0,
+    occupiedProperties: 0,
+    totalRevenue: 0,
+    pendingInquiries: 0,
+  });
+  const [recentProperties, setRecentProperties] = useState<Property[]>([]);
 
   useEffect(() => {
-    async function loadUser() {
+    async function loadDashboardData() {
       const { data: { user } } = await supabase.auth.getUser();
-      if (user) {
-        setUserEmail(user.email || '');
+      if (!user) {
+        navigate('/login');
+        return;
       }
+
+      setUserEmail(user.email || '');
+      setUserId(user.id);
+
+      // Fetch properties
+      const { data: properties } = await supabase
+        .from('properties')
+        .select('*')
+        .eq('owner_id', user.id);
+
+      if (properties) {
+        const available = properties.filter(p => p.status === 'available').length;
+        const occupied = properties.filter(p => p.status === 'occupied').length;
+        const totalRev = properties
+          .filter(p => p.status === 'occupied')
+          .reduce((sum, p) => sum + Number(p.price), 0);
+
+        setStats({
+          totalProperties: properties.length,
+          availableProperties: available,
+          occupiedProperties: occupied,
+          totalRevenue: totalRev,
+          pendingInquiries: 0, // Will be updated below
+        });
+
+        setRecentProperties(
+          properties.slice(0, 3).map(p => ({
+            id: p.id,
+            title: p.title,
+            status: p.status,
+            price: Number(p.price),
+          }))
+        );
+      }
+
+      // Fetch inquiries count
+      const propertyIds = properties?.map(p => p.id) || [];
+      if (propertyIds.length > 0) {
+        const { count } = await supabase
+          .from('inquiries')
+          .select('*', { count: 'exact', head: true })
+          .in('property_id', propertyIds)
+          .eq('status', 'pending');
+
+        setStats(prev => ({ ...prev, pendingInquiries: count || 0 }));
+      }
+
       setLoading(false);
     }
-    loadUser();
-  }, []);
+
+    loadDashboardData();
+  }, [navigate]);
 
   const quickActions = [
     {
@@ -64,47 +137,6 @@ export default function OwnerDashboard() {
     },
   ];
 
-  const stats = [
-    {
-      label: 'Total Properties',
-      value: '12',
-      change: '+2 this month',
-      icon: Home,
-      color: 'text-blue-600',
-      bgColor: 'bg-blue-50',
-    },
-    {
-      label: 'Active Tenants',
-      value: '28',
-      change: '95% occupancy',
-      icon: Users,
-      color: 'text-purple-600',
-      bgColor: 'bg-purple-50',
-    },
-    {
-      label: 'Monthly Revenue',
-      value: '$24,500',
-      change: '+12% from last month',
-      icon: DollarSign,
-      color: 'text-green-600',
-      bgColor: 'bg-green-50',
-    },
-    {
-      label: 'Pending Applications',
-      value: '7',
-      change: '3 new today',
-      icon: TrendingUp,
-      color: 'text-orange-600',
-      bgColor: 'bg-orange-50',
-    },
-  ];
-
-  const recentProperties = [
-    { name: 'Luxury Apartment Downtown', status: 'Occupied', rent: '$1,800/mo' },
-    { name: 'Cozy Studio Near Campus', status: 'Available', rent: '$950/mo' },
-    { name: 'Family Home with Garden', status: 'Occupied', rent: '$2,200/mo' },
-  ];
-
   if (loading) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
@@ -115,6 +147,10 @@ export default function OwnerDashboard() {
       </div>
     );
   }
+
+  const occupancyRate = stats.totalProperties > 0
+    ? Math.round((stats.occupiedProperties / stats.totalProperties) * 100)
+    : 0;
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -129,18 +165,51 @@ export default function OwnerDashboard() {
 
         {/* Stats Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-          {stats.map((stat) => (
-            <div key={stat.label} className="bg-white rounded-lg shadow-sm p-6">
-              <div className="flex items-center justify-between mb-4">
-                <div className={`${stat.bgColor} p-3 rounded-lg`}>
-                  <stat.icon className={`h-6 w-6 ${stat.color}`} />
-                </div>
+          <div className="bg-white rounded-lg shadow-sm p-6">
+            <div className="flex items-center justify-between mb-4">
+              <div className="bg-blue-50 p-3 rounded-lg">
+                <Home className="h-6 w-6 text-blue-600" />
               </div>
-              <p className="text-sm font-medium text-gray-600">{stat.label}</p>
-              <p className="text-2xl font-bold text-gray-900 mt-2">{stat.value}</p>
-              <p className="text-xs text-gray-500 mt-1">{stat.change}</p>
             </div>
-          ))}
+            <p className="text-sm font-medium text-gray-600">Total Properties</p>
+            <p className="text-2xl font-bold text-gray-900 mt-2">{stats.totalProperties}</p>
+            <p className="text-xs text-gray-500 mt-1">{stats.availableProperties} available</p>
+          </div>
+
+          <div className="bg-white rounded-lg shadow-sm p-6">
+            <div className="flex items-center justify-between mb-4">
+              <div className="bg-purple-50 p-3 rounded-lg">
+                <Users className="h-6 w-6 text-purple-600" />
+              </div>
+            </div>
+            <p className="text-sm font-medium text-gray-600">Occupied Units</p>
+            <p className="text-2xl font-bold text-gray-900 mt-2">{stats.occupiedProperties}</p>
+            <p className="text-xs text-gray-500 mt-1">{occupancyRate}% occupancy</p>
+          </div>
+
+          <div className="bg-white rounded-lg shadow-sm p-6">
+            <div className="flex items-center justify-between mb-4">
+              <div className="bg-green-50 p-3 rounded-lg">
+                <DollarSign className="h-6 w-6 text-green-600" />
+              </div>
+            </div>
+            <p className="text-sm font-medium text-gray-600">Monthly Revenue</p>
+            <p className="text-2xl font-bold text-gray-900 mt-2">
+              ${stats.totalRevenue.toLocaleString()}
+            </p>
+            <p className="text-xs text-gray-500 mt-1">From occupied units</p>
+          </div>
+
+          <div className="bg-white rounded-lg shadow-sm p-6">
+            <div className="flex items-center justify-between mb-4">
+              <div className="bg-orange-50 p-3 rounded-lg">
+                <TrendingUp className="h-6 w-6 text-orange-600" />
+              </div>
+            </div>
+            <p className="text-sm font-medium text-gray-600">Pending Inquiries</p>
+            <p className="text-2xl font-bold text-gray-900 mt-2">{stats.pendingInquiries}</p>
+            <p className="text-xs text-gray-500 mt-1">Awaiting response</p>
+          </div>
         </div>
 
         {/* Quick Actions */}
@@ -176,33 +245,37 @@ export default function OwnerDashboard() {
               View All
             </button>
           </div>
-          <div className="space-y-4">
-            {recentProperties.map((property, index) => (
-              <div
-                key={index}
-                className="flex items-center justify-between pb-4 border-b border-gray-100 last:border-0"
-              >
-                <div className="flex items-center space-x-4">
-                  <div className="bg-blue-50 p-3 rounded-lg">
-                    <Home className="h-5 w-5 text-blue-600" />
-                  </div>
-                  <div>
-                    <p className="text-sm font-medium text-gray-900">{property.name}</p>
-                    <p className="text-xs text-gray-500 mt-1">{property.rent}</p>
-                  </div>
-                </div>
-                <span
-                  className={`px-3 py-1 rounded-full text-xs font-medium ${
-                    property.status === 'Occupied'
-                      ? 'bg-green-100 text-green-700'
-                      : 'bg-yellow-100 text-yellow-700'
-                  }`}
+          {recentProperties.length > 0 ? (
+            <div className="space-y-4">
+              {recentProperties.map((property) => (
+                <div
+                  key={property.id}
+                  className="flex items-center justify-between pb-4 border-b border-gray-100 last:border-0"
                 >
-                  {property.status}
-                </span>
-              </div>
-            ))}
-          </div>
+                  <div className="flex items-center space-x-4">
+                    <div className="bg-blue-50 p-3 rounded-lg">
+                      <Home className="h-5 w-5 text-blue-600" />
+                    </div>
+                    <div>
+                      <p className="text-sm font-medium text-gray-900">{property.title}</p>
+                      <p className="text-xs text-gray-500 mt-1">${property.price.toLocaleString()}/mo</p>
+                    </div>
+                  </div>
+                  <span
+                    className={`px-3 py-1 rounded-full text-xs font-medium ${
+                      property.status === 'occupied'
+                        ? 'bg-green-100 text-green-700'
+                        : 'bg-yellow-100 text-yellow-700'
+                    }`}
+                  >
+                    {property.status}
+                  </span>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <p className="text-gray-500 text-center py-8">No properties yet. Add your first property!</p>
+          )}
         </div>
       </div>
     </div>

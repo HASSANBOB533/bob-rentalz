@@ -1,23 +1,62 @@
-import { Home, Users, Calendar, DollarSign, FileText, MessageSquare, TrendingUp, Star } from 'lucide-react';
+import { Home, Users, Calendar, DollarSign, FileText, MessageSquare, TrendingUp } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { supabase } from '../../lib/supabase';
+
+interface Stats {
+  totalProperties: number;
+  totalInquiries: number;
+  pendingInquiries: number;
+}
 
 export default function AgentDashboard() {
   const navigate = useNavigate();
   const [userEmail, setUserEmail] = useState<string>('');
   const [loading, setLoading] = useState(true);
+  const [stats, setStats] = useState<Stats>({
+    totalProperties: 0,
+    totalInquiries: 0,
+    pendingInquiries: 0,
+  });
 
   useEffect(() => {
-    async function loadUser() {
+    async function loadDashboardData() {
       const { data: { user } } = await supabase.auth.getUser();
-      if (user) {
-        setUserEmail(user.email || '');
+      if (!user) {
+        navigate('/login');
+        return;
       }
+
+      setUserEmail(user.email || '');
+
+      // Fetch properties count (all available properties for agents to show)
+      const { count: propertiesCount } = await supabase
+        .from('properties')
+        .select('*', { count: 'exact', head: true })
+        .eq('status', 'available');
+
+      // Fetch total inquiries
+      const { count: inquiriesCount } = await supabase
+        .from('inquiries')
+        .select('*', { count: 'exact', head: true });
+
+      // Fetch pending inquiries
+      const { count: pendingCount } = await supabase
+        .from('inquiries')
+        .select('*', { count: 'exact', head: true })
+        .eq('status', 'pending');
+
+      setStats({
+        totalProperties: propertiesCount || 0,
+        totalInquiries: inquiriesCount || 0,
+        pendingInquiries: pendingCount || 0,
+      });
+
       setLoading(false);
     }
-    loadUser();
-  }, []);
+
+    loadDashboardData();
+  }, [navigate]);
 
   const quickActions = [
     {
@@ -64,62 +103,6 @@ export default function AgentDashboard() {
     },
   ];
 
-  const stats = [
-    {
-      label: 'Active Clients',
-      value: '18',
-      change: '+3 this week',
-      icon: Users,
-      color: 'text-purple-600',
-      bgColor: 'bg-purple-50',
-    },
-    {
-      label: 'Properties Shown',
-      value: '42',
-      change: 'This month',
-      icon: Home,
-      color: 'text-blue-600',
-      bgColor: 'bg-blue-50',
-    },
-    {
-      label: 'Deals Closed',
-      value: '8',
-      change: '+2 from last month',
-      icon: TrendingUp,
-      color: 'text-green-600',
-      bgColor: 'bg-green-50',
-    },
-    {
-      label: 'Commission Earned',
-      value: '$12,400',
-      change: 'This quarter',
-      icon: DollarSign,
-      color: 'text-emerald-600',
-      bgColor: 'bg-emerald-50',
-    },
-  ];
-
-  const upcomingAppointments = [
-    {
-      client: 'Sarah Johnson',
-      property: 'Downtown Loft #304',
-      time: 'Today, 2:00 PM',
-      type: 'Property Viewing',
-    },
-    {
-      client: 'Michael Chen',
-      property: 'Suburban Family Home',
-      time: 'Tomorrow, 10:30 AM',
-      type: 'Second Viewing',
-    },
-    {
-      client: 'Emily Davis',
-      property: 'Modern Studio Apartment',
-      time: 'Tomorrow, 3:00 PM',
-      type: 'Contract Signing',
-    },
-  ];
-
   if (loading) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
@@ -143,19 +126,39 @@ export default function AgentDashboard() {
         </div>
 
         {/* Stats Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-          {stats.map((stat) => (
-            <div key={stat.label} className="bg-white rounded-lg shadow-sm p-6">
-              <div className="flex items-center justify-between mb-4">
-                <div className={`${stat.bgColor} p-3 rounded-lg`}>
-                  <stat.icon className={`h-6 w-6 ${stat.color}`} />
-                </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+          <div className="bg-white rounded-lg shadow-sm p-6">
+            <div className="flex items-center justify-between mb-4">
+              <div className="bg-blue-50 p-3 rounded-lg">
+                <Home className="h-6 w-6 text-blue-600" />
               </div>
-              <p className="text-sm font-medium text-gray-600">{stat.label}</p>
-              <p className="text-2xl font-bold text-gray-900 mt-2">{stat.value}</p>
-              <p className="text-xs text-gray-500 mt-1">{stat.change}</p>
             </div>
-          ))}
+            <p className="text-sm font-medium text-gray-600">Available Properties</p>
+            <p className="text-2xl font-bold text-gray-900 mt-2">{stats.totalProperties}</p>
+            <p className="text-xs text-gray-500 mt-1">Ready to show clients</p>
+          </div>
+
+          <div className="bg-white rounded-lg shadow-sm p-6">
+            <div className="flex items-center justify-between mb-4">
+              <div className="bg-purple-50 p-3 rounded-lg">
+                <TrendingUp className="h-6 w-6 text-purple-600" />
+              </div>
+            </div>
+            <p className="text-sm font-medium text-gray-600">Total Inquiries</p>
+            <p className="text-2xl font-bold text-gray-900 mt-2">{stats.totalInquiries}</p>
+            <p className="text-xs text-gray-500 mt-1">All time</p>
+          </div>
+
+          <div className="bg-white rounded-lg shadow-sm p-6">
+            <div className="flex items-center justify-between mb-4">
+              <div className="bg-orange-50 p-3 rounded-lg">
+                <Calendar className="h-6 w-6 text-orange-600" />
+              </div>
+            </div>
+            <p className="text-sm font-medium text-gray-600">Pending Inquiries</p>
+            <p className="text-2xl font-bold text-gray-900 mt-2">{stats.pendingInquiries}</p>
+            <p className="text-xs text-gray-500 mt-1">Awaiting response</p>
+          </div>
         </div>
 
         {/* Quick Actions */}
@@ -180,38 +183,41 @@ export default function AgentDashboard() {
           </div>
         </div>
 
-        {/* Upcoming Appointments */}
+        {/* Activity Overview */}
         <div className="bg-white rounded-lg shadow-sm p-6">
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-xl font-semibold text-gray-900">Upcoming Appointments</h2>
-            <button
-              onClick={() => navigate('/agent/appointments')}
-              className="text-sm text-blue-600 hover:text-blue-700 font-medium"
-            >
-              View All
-            </button>
+            <h2 className="text-xl font-semibold text-gray-900">Activity Overview</h2>
           </div>
           <div className="space-y-4">
-            {upcomingAppointments.map((appointment, index) => (
-              <div
-                key={index}
-                className="flex items-start justify-between pb-4 border-b border-gray-100 last:border-0"
-              >
-                <div className="flex items-start space-x-4">
-                  <div className="bg-blue-50 p-3 rounded-lg">
-                    <Calendar className="h-5 w-5 text-blue-600" />
-                  </div>
-                  <div>
-                    <p className="text-sm font-medium text-gray-900">{appointment.client}</p>
-                    <p className="text-xs text-gray-600 mt-1">{appointment.property}</p>
-                    <p className="text-xs text-gray-500 mt-1">{appointment.time}</p>
-                  </div>
+            {stats.pendingInquiries > 0 ? (
+              <div className="flex items-start space-x-4 pb-4 border-b border-gray-100">
+                <div className="bg-orange-50 p-3 rounded-lg">
+                  <Calendar className="h-5 w-5 text-orange-600" />
                 </div>
-                <span className="px-3 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-700">
-                  {appointment.type}
-                </span>
+                <div>
+                  <p className="text-sm font-medium text-gray-900">
+                    {stats.pendingInquiries} pending {stats.pendingInquiries === 1 ? 'inquiry' : 'inquiries'}
+                  </p>
+                  <p className="text-xs text-gray-600 mt-1">Follow up with potential clients</p>
+                </div>
               </div>
-            ))}
+            ) : null}
+            {stats.totalProperties > 0 ? (
+              <div className="flex items-start space-x-4 pb-4 border-b border-gray-100 last:border-0">
+                <div className="bg-blue-50 p-3 rounded-lg">
+                  <Home className="h-5 w-5 text-blue-600" />
+                </div>
+                <div>
+                  <p className="text-sm font-medium text-gray-900">
+                    {stats.totalProperties} properties available
+                  </p>
+                  <p className="text-xs text-gray-600 mt-1">Browse listings to show your clients</p>
+                </div>
+              </div>
+            ) : null}
+            {stats.totalProperties === 0 && stats.pendingInquiries === 0 ? (
+              <p className="text-gray-500 text-center py-8">No activity yet. Start browsing properties!</p>
+            ) : null}
           </div>
         </div>
       </div>

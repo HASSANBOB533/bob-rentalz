@@ -3,21 +3,62 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { supabase } from '../../lib/supabase';
 
+interface Stats {
+  activeInquiries: number;
+  savedProperties: number;
+  upcomingPayment: number;
+  newMessages: number;
+}
+
 export default function TenantDashboard() {
   const navigate = useNavigate();
   const [userEmail, setUserEmail] = useState<string>('');
   const [loading, setLoading] = useState(true);
+  const [stats, setStats] = useState<Stats>({
+    activeInquiries: 0,
+    savedProperties: 0,
+    upcomingPayment: 0,
+    newMessages: 0,
+  });
 
   useEffect(() => {
-    async function loadUser() {
+    async function loadDashboardData() {
       const { data: { user } } = await supabase.auth.getUser();
-      if (user) {
-        setUserEmail(user.email || '');
+      if (!user) {
+        navigate('/login');
+        return;
       }
+
+      setUserEmail(user.email || '');
+
+      // Fetch inquiries count
+      const { count: inquiriesCount } = await supabase
+        .from('inquiries')
+        .select('*', { count: 'exact', head: true })
+        .eq('tenant_id', user.id)
+        .in('status', ['pending', 'contacted', 'viewing_scheduled']);
+
+      // Fetch upcoming payments
+      const { data: payments } = await supabase
+        .from('payments')
+        .select('amount')
+        .eq('tenant_id', user.id)
+        .eq('status', 'pending')
+        .order('due_date', { ascending: true })
+        .limit(1);
+
+      setStats({
+        activeInquiries: inquiriesCount || 0,
+        savedProperties: 0, // Placeholder - would need a favorites table
+        upcomingPayment: payments && payments.length > 0 ? Number(payments[0].amount) : 0,
+        newMessages: 0, // Placeholder - would need a messages table
+      });
+
       setLoading(false);
     }
-    loadUser();
-  }, []);
+
+    loadDashboardData();
+  }, [navigate]);
 
   const quickActions = [
     {
@@ -64,37 +105,6 @@ export default function TenantDashboard() {
     },
   ];
 
-  const stats = [
-    {
-      label: 'Active Applications',
-      value: '2',
-      icon: Home,
-      color: 'text-blue-600',
-      bgColor: 'bg-blue-50',
-    },
-    {
-      label: 'Saved Properties',
-      value: '8',
-      icon: Heart,
-      color: 'text-red-600',
-      bgColor: 'bg-red-50',
-    },
-    {
-      label: 'Upcoming Payments',
-      value: '$1,200',
-      icon: CreditCard,
-      color: 'text-green-600',
-      bgColor: 'bg-green-50',
-    },
-    {
-      label: 'New Messages',
-      value: '3',
-      icon: Bell,
-      color: 'text-purple-600',
-      bgColor: 'bg-purple-50',
-    },
-  ];
-
   if (loading) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
@@ -119,19 +129,55 @@ export default function TenantDashboard() {
 
         {/* Stats Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-          {stats.map((stat) => (
-            <div key={stat.label} className="bg-white rounded-lg shadow-sm p-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm font-medium text-gray-600">{stat.label}</p>
-                  <p className="text-2xl font-bold text-gray-900 mt-2">{stat.value}</p>
-                </div>
-                <div className={`${stat.bgColor} p-3 rounded-lg`}>
-                  <stat.icon className={`h-6 w-6 ${stat.color}`} />
-                </div>
+          <div className="bg-white rounded-lg shadow-sm p-6">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm font-medium text-gray-600">Active Inquiries</p>
+                <p className="text-2xl font-bold text-gray-900 mt-2">{stats.activeInquiries}</p>
+              </div>
+              <div className="bg-blue-50 p-3 rounded-lg">
+                <Home className="h-6 w-6 text-blue-600" />
               </div>
             </div>
-          ))}
+          </div>
+
+          <div className="bg-white rounded-lg shadow-sm p-6">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm font-medium text-gray-600">Saved Properties</p>
+                <p className="text-2xl font-bold text-gray-900 mt-2">{stats.savedProperties}</p>
+              </div>
+              <div className="bg-red-50 p-3 rounded-lg">
+                <Heart className="h-6 w-6 text-red-600" />
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-white rounded-lg shadow-sm p-6">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm font-medium text-gray-600">Upcoming Payment</p>
+                <p className="text-2xl font-bold text-gray-900 mt-2">
+                  ${stats.upcomingPayment > 0 ? stats.upcomingPayment.toLocaleString() : '0'}
+                </p>
+              </div>
+              <div className="bg-green-50 p-3 rounded-lg">
+                <CreditCard className="h-6 w-6 text-green-600" />
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-white rounded-lg shadow-sm p-6">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm font-medium text-gray-600">New Messages</p>
+                <p className="text-2xl font-bold text-gray-900 mt-2">{stats.newMessages}</p>
+              </div>
+              <div className="bg-purple-50 p-3 rounded-lg">
+                <Bell className="h-6 w-6 text-purple-600" />
+              </div>
+            </div>
+          </div>
         </div>
 
         {/* Quick Actions */}
@@ -160,39 +206,35 @@ export default function TenantDashboard() {
         <div className="bg-white rounded-lg shadow-sm p-6">
           <h2 className="text-xl font-semibold text-gray-900 mb-4">Recent Activity</h2>
           <div className="space-y-4">
-            <div className="flex items-start space-x-4 pb-4 border-b border-gray-100">
-              <div className="bg-blue-50 p-2 rounded-lg">
-                <Home className="h-5 w-5 text-blue-600" />
+            {stats.activeInquiries > 0 ? (
+              <div className="flex items-start space-x-4 pb-4 border-b border-gray-100">
+                <div className="bg-blue-50 p-2 rounded-lg">
+                  <Home className="h-5 w-5 text-blue-600" />
+                </div>
+                <div className="flex-1">
+                  <p className="text-sm font-medium text-gray-900">
+                    You have {stats.activeInquiries} active {stats.activeInquiries === 1 ? 'inquiry' : 'inquiries'}
+                  </p>
+                  <p className="text-xs text-gray-500 mt-1">Check your inquiries for updates</p>
+                </div>
               </div>
-              <div className="flex-1">
-                <p className="text-sm font-medium text-gray-900">
-                  New property match found
-                </p>
-                <p className="text-xs text-gray-500 mt-1">2 hours ago</p>
+            ) : null}
+            {stats.upcomingPayment > 0 ? (
+              <div className="flex items-start space-x-4 pb-4 border-b border-gray-100">
+                <div className="bg-green-50 p-2 rounded-lg">
+                  <CreditCard className="h-5 w-5 text-green-600" />
+                </div>
+                <div className="flex-1">
+                  <p className="text-sm font-medium text-gray-900">
+                    Upcoming rent payment: ${stats.upcomingPayment.toLocaleString()}
+                  </p>
+                  <p className="text-xs text-gray-500 mt-1">Due soon</p>
+                </div>
               </div>
-            </div>
-            <div className="flex items-start space-x-4 pb-4 border-b border-gray-100">
-              <div className="bg-green-50 p-2 rounded-lg">
-                <CreditCard className="h-5 w-5 text-green-600" />
-              </div>
-              <div className="flex-1">
-                <p className="text-sm font-medium text-gray-900">
-                  Rent payment processed successfully
-                </p>
-                <p className="text-xs text-gray-500 mt-1">1 day ago</p>
-              </div>
-            </div>
-            <div className="flex items-start space-x-4">
-              <div className="bg-purple-50 p-2 rounded-lg">
-                <MessageSquare className="h-5 w-5 text-purple-600" />
-              </div>
-              <div className="flex-1">
-                <p className="text-sm font-medium text-gray-900">
-                  New message from property owner
-                </p>
-                <p className="text-xs text-gray-500 mt-1">2 days ago</p>
-              </div>
-            </div>
+            ) : null}
+            {stats.activeInquiries === 0 && stats.upcomingPayment === 0 ? (
+              <p className="text-gray-500 text-center py-8">No recent activity. Start browsing properties!</p>
+            ) : null}
           </div>
         </div>
       </div>
