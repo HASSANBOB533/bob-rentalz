@@ -147,7 +147,25 @@ export function LoginPage() {
           <button
             type="submit"
             disabled={isSubmitting}
-            className="w-full py-3 px-4 bg-[#2B5273] text-white rounded-lg font-semibold text-base border-none cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed transition-all duration-200 hover:bg-[#1e3a4f]"
+            style={{
+              width: '100%',
+              padding: '0.75rem 1rem',
+              backgroundColor: '#2B5273',
+              color: 'white',
+              borderRadius: '0.5rem',
+              fontWeight: '600',
+              fontSize: '1rem',
+              border: 'none',
+              cursor: isSubmitting ? 'not-allowed' : 'pointer',
+              opacity: isSubmitting ? 0.6 : 1,
+              transition: 'all 0.2s',
+            }}
+            onMouseEnter={(e) => {
+              if (!isSubmitting) e.currentTarget.style.backgroundColor = '#1e3a4f';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.backgroundColor = '#2B5273';
+            }}
           >
             {isSubmitting ? 'Signing in...' : 'Sign in'}
           </button>
