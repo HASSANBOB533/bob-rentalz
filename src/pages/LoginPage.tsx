@@ -22,30 +22,49 @@ export function LoginPage() {
   const [error, setError] = useState<string | null>(null);
 
   const onSubmit = async (values: LoginFormValues) => {
+    console.log('Login form submitted', { email: values.email });
     setError(null);
 
-    const { error: authError } = await supabase.auth.signInWithPassword({
-      email: values.email.trim().toLowerCase(),
-      password: values.password,
-    });
+    try {
+      const { data, error: authError } = await supabase.auth.signInWithPassword({
+        email: values.email.trim().toLowerCase(),
+        password: values.password,
+      });
 
-    if (authError) {
-      setError(authError.message);
-      return;
-    }
+      console.log('Supabase auth response:', { data, error: authError });
 
-    // Get user profile to determine role
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
-    if (user) {
-      const { data: profile } = await supabase
+      if (authError) {
+        console.error('Auth error:', authError);
+        setError(authError.message);
+        return;
+      }
+
+      if (!data.user) {
+        console.error('No user returned from auth');
+        setError('Login failed - no user data returned');
+        return;
+      }
+
+      console.log('User authenticated:', data.user.id);
+
+      // Get user profile to determine role
+      const { data: profile, error: profileError } = await supabase
         .from('profiles')
         .select('role')
-        .eq('id', user.id)
+        .eq('id', data.user.id)
         .single();
 
+      console.log('Profile fetch result:', { profile, error: profileError });
+
+      if (profileError) {
+        console.error('Profile fetch error:', profileError);
+        // Still redirect to default dashboard if profile fetch fails
+        navigate('/dashboard');
+        return;
+      }
+
       // Redirect based on role
+      console.log('Redirecting based on role:', profile?.role);
       if (profile?.role === 'admin') {
         navigate('/admin/dashboard');
       } else if (profile?.role === 'owner') {
@@ -55,6 +74,9 @@ export function LoginPage() {
       } else {
         navigate('/dashboard');
       }
+    } catch (err) {
+      console.error('Unexpected error during login:', err);
+      setError('An unexpected error occurred. Please try again.');
     }
   };
 
