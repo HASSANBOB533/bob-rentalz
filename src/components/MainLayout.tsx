@@ -11,7 +11,7 @@ export function MainLayout({ children }: MainLayoutProps) {
   return (
     <>
       <Navbar />
-      <main className="min-h-screen">{children}</main>
+      <main className="min-h-screen pt-20 lg:pt-32">{children}</main>
       <Footer />
       <WhatsAppFloat />
     </>
