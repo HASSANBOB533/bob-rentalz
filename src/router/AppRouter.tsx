@@ -2,6 +2,7 @@ import { Routes, Route } from 'react-router-dom';
 
 // Layout
 import ProtectedRoute from '../components/auth/ProtectedRoute';
+import { AuthLayout } from '../components/AuthLayout';
 import { MainLayout } from '../components/MainLayout';
 
 // Public pages
@@ -32,6 +33,9 @@ import { TenantPaymentsPage } from '../pages/TenantPaymentsPage';
 import { TermsPage } from '../pages/TermsPage';
 import UnauthorizedPage from '../pages/UnauthorizedPage';
 import { VerifiedBadgePage } from '../pages/VerifiedBadgePage';
+import AddProperty from '../pages/owner/AddProperty';
+import MyProperties from '../pages/owner/MyProperties';
+import PropertyApproval from '../pages/admin/PropertyApproval';
 
 // Dashboards (role-based)
 
@@ -201,10 +205,24 @@ export default function AppRouter() {
       />
 
       {/* =============================
-          AUTH ROUTES (no MainLayout - full-page designs)
+          AUTH ROUTES (with AuthLayout for proper header spacing)
       ============================= */}
-      <Route path="/login" element={<LoginPage />} />
-      <Route path="/signup" element={<SignupPage />} />
+      <Route
+        path="/login"
+        element={
+          <AuthLayout>
+            <LoginPage />
+          </AuthLayout>
+        }
+      />
+      <Route
+        path="/signup"
+        element={
+          <AuthLayout>
+            <SignupPage />
+          </AuthLayout>
+        }
+      />
 
       {/* =============================
           DASHBOARD ROUTES (protected, no MainLayout)
@@ -228,10 +246,37 @@ export default function AppRouter() {
       />
 
       <Route
+        path="/admin/property-approval"
+        element={
+          <ProtectedRoute allowedRoles={['admin']}>
+            <PropertyApproval />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
         path="/dashboard/owner"
         element={
           <ProtectedRoute allowedRoles={['owner']}>
             <OwnerDashboard />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/owner/add-property"
+        element={
+          <ProtectedRoute allowedRoles={['owner']}>
+            <AddProperty />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/owner/properties"
+        element={
+          <ProtectedRoute allowedRoles={['owner']}>
+            <MyProperties />
           </ProtectedRoute>
         }
       />

@@ -65,13 +65,13 @@ export function RoleSelectionPage() {
       // Redirect based on role
       setTimeout(() => {
         if (selectedRole === 'admin') {
-          navigate('/admin/dashboard');
+          navigate('/dashboard/admin');
         } else if (selectedRole === 'owner') {
-          navigate('/owner/dashboard');
+          navigate('/dashboard/owner');
         } else if (selectedRole === 'agent') {
-          navigate('/agent/dashboard');
+          navigate('/dashboard/agent');
         } else {
-          navigate('/dashboard');
+          navigate('/dashboard/tenant');
         }
       }, 1000);
     } catch (error: any) {
