@@ -1,15 +1,55 @@
 import bobLogo from 'figma:asset/c3cbe0198340d6bed05c69174ee79f3b6a4d8624.png';
-import { Search, Menu, Heart, X } from 'lucide-react';
-import { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Search, Menu, Heart, X, LogOut, LayoutDashboard } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { LanguageToggle } from './LanguageToggle';
 import { Button } from './ui/button';
+import { useAuth } from '../contexts/AuthContext';
+import { supabase } from '../lib/supabase';
 
 export function Navbar() {
   const location = useLocation();
+  const navigate = useNavigate();
+  const { user } = useAuth();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [userRole, setUserRole] = useState<string | null>(null);
 
   const isActive = (path: string) => location.pathname === path;
+
+  // Fetch user role when user is logged in
+  useEffect(() => {
+    async function fetchUserRole() {
+      if (user) {
+        const { data } = await supabase
+          .from('profiles')
+          .select('role')
+          .eq('id', user.id)
+          .single();
+        
+        if (data) {
+          setUserRole(data.role);
+        }
+      } else {
+        setUserRole(null);
+      }
+    }
+
+    fetchUserRole();
+  }, [user]);
+
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+    navigate('/');
+    setMobileMenuOpen(false);
+  };
+
+  const getDashboardPath = () => {
+    if (!userRole) return '/dashboard/tenant';
+    if (userRole === 'admin') return '/dashboard/admin';
+    if (userRole === 'owner') return '/dashboard/owner';
+    if (userRole === 'agent') return '/dashboard/agent';
+    return '/dashboard/tenant';
+  };
 
   const navLinks = [
     { path: '/', label: 'Home' },
@@ -69,16 +109,41 @@ export function Navbar() {
                 <Heart className="w-5 h-5" />
               </Button>
             </Link>
-            <Link to="/login">
-              <Button className="bg-[#E9C500] text-[#0E56A4] hover:bg-[#E3B600] font-semibold rounded-xl shadow-md hover:shadow-lg transition-all duration-200 px-5">
-                Sign In
-              </Button>
-            </Link>
-            <Link to="/signup">
-              <Button className="bg-[#E9C500] text-[#0E56A4] hover:bg-[#E3B600] font-semibold rounded-xl shadow-md hover:shadow-lg transition-all duration-200 px-5">
-                Sign Up
-              </Button>
-            </Link>
+            
+            {/* Conditional Auth Buttons */}
+            {user ? (
+              // Logged IN - Show Dashboard and Logout
+              <>
+                <Link to={getDashboardPath()}>
+                  <Button className="bg-[#E9C500] text-[#0E56A4] hover:bg-[#E3B600] font-semibold rounded-xl shadow-md hover:shadow-lg transition-all duration-200 px-5 flex items-center gap-2">
+                    <LayoutDashboard className="w-4 h-4" />
+                    Dashboard
+                  </Button>
+                </Link>
+                <Button 
+                  onClick={handleLogout}
+                  className="bg-white text-[#0E56A4] hover:bg-gray-100 font-semibold rounded-xl shadow-md hover:shadow-lg transition-all duration-200 px-5 flex items-center gap-2"
+                >
+                  <LogOut className="w-4 h-4" />
+                  Logout
+                </Button>
+              </>
+            ) : (
+              // Logged OUT - Show Sign In and Sign Up
+              <>
+                <Link to="/login">
+                  <Button className="bg-[#E9C500] text-[#0E56A4] hover:bg-[#E3B600] font-semibold rounded-xl shadow-md hover:shadow-lg transition-all duration-200 px-5">
+                    Sign In
+                  </Button>
+                </Link>
+                <Link to="/signup">
+                  <Button className="bg-[#E9C500] text-[#0E56A4] hover:bg-[#E3B600] font-semibold rounded-xl shadow-md hover:shadow-lg transition-all duration-200 px-5">
+                    Sign Up
+                  </Button>
+                </Link>
+              </>
+            )}
+            
             <Link to="/list-property">
               <Button className="bg-gradient-to-r from-[#E9C500] to-[#DDB400] hover:from-[#E3B600] hover:to-[#D0A700] text-[#0E56A4] font-semibold rounded-xl shadow-md hover:shadow-lg transition-all duration-200">
                 List Property
@@ -117,22 +182,42 @@ export function Navbar() {
                 <LanguageToggle />
               </div>
 
-              {/* Auth Buttons - Mobile & Tablet */}
-              <div className="flex gap-2">
-                <Link to="/login" onClick={() => setMobileMenuOpen(false)} className="flex-1">
-                  <Button className="w-full bg-[#E9C500] text-[#0E56A4] hover:bg-[#E3B600] font-semibold transition-all duration-200">
-                    Sign In
+              {/* Conditional Auth Buttons - Mobile */}
+              {user ? (
+                // Logged IN - Show Dashboard and Logout
+                <div className="flex flex-col gap-2">
+                  <Link to={getDashboardPath()} onClick={() => setMobileMenuOpen(false)}>
+                    <Button className="w-full bg-[#E9C500] text-[#0E56A4] hover:bg-[#E3B600] font-semibold transition-all duration-200 flex items-center justify-center gap-2">
+                      <LayoutDashboard className="w-4 h-4" />
+                      Dashboard
+                    </Button>
+                  </Link>
+                  <Button 
+                    onClick={handleLogout}
+                    className="w-full bg-white text-[#0E56A4] hover:bg-gray-100 font-semibold transition-all duration-200 flex items-center justify-center gap-2"
+                  >
+                    <LogOut className="w-4 h-4" />
+                    Logout
                   </Button>
-                </Link>
-                <Link to="/signup" onClick={() => setMobileMenuOpen(false)} className="flex-1">
-                  <Button className="w-full bg-[#E9C500] text-[#0E56A4] hover:bg-[#E3B600] font-semibold transition-all duration-200">
-                    Sign Up
-                  </Button>
-                </Link>
-              </div>
+                </div>
+              ) : (
+                // Logged OUT - Show Sign In and Sign Up
+                <div className="flex gap-2">
+                  <Link to="/login" onClick={() => setMobileMenuOpen(false)} className="flex-1">
+                    <Button className="w-full bg-[#E9C500] text-[#0E56A4] hover:bg-[#E3B600] font-semibold transition-all duration-200">
+                      Sign In
+                    </Button>
+                  </Link>
+                  <Link to="/signup" onClick={() => setMobileMenuOpen(false)} className="flex-1">
+                    <Button className="w-full bg-[#E9C500] text-[#0E56A4] hover:bg-[#E3B600] font-semibold transition-all duration-200">
+                      Sign Up
+                    </Button>
+                  </Link>
+                </div>
+              )}
 
               <div className="flex gap-2 pt-2">
-                <Link to="/favorites" className="flex-1">
+                <Link to="/favorites" className="flex-1" onClick={() => setMobileMenuOpen(false)}>
                   <Button
                     variant="outline"
                     className="w-full border-[#E9C500] text-[#E9C500] hover:bg-[#E9C500] hover:text-[#0E56A4]"
@@ -141,7 +226,7 @@ export function Navbar() {
                     Favorites
                   </Button>
                 </Link>
-                <Link to="/list-property" className="flex-1">
+                <Link to="/list-property" className="flex-1" onClick={() => setMobileMenuOpen(false)}>
                   <Button className="w-full bg-[#E9C500] hover:bg-[#E3B600] text-[#0E56A4] font-semibold">
                     List Property
                   </Button>
