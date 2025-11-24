@@ -1,7 +1,8 @@
-import { Home, Users, Calendar, DollarSign, FileText, MessageSquare, TrendingUp } from 'lucide-react';
+import { Home, Users, Calendar, DollarSign, FileText, MessageSquare, TrendingUp, Clock } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { supabase } from '../../lib/supabase';
+import { Navbar } from '../../components/Navbar';
 
 interface Stats {
   totalProperties: number;
@@ -115,8 +116,10 @@ export default function AgentDashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <>
+      <Navbar />
+      <div className="min-h-screen bg-gray-50 pt-24">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Header */}
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-gray-900">Agent Dashboard</h1>
@@ -221,6 +224,7 @@ export default function AgentDashboard() {
           </div>
         </div>
       </div>
-    </div>
+      </div>
+    </>
   );
 }
