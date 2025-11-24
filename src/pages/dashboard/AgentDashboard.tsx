@@ -2,6 +2,7 @@ import { Home, Users, Calendar, DollarSign, FileText, MessageSquare, TrendingUp 
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { supabase } from '../../lib/supabase';
+import { DashboardLayout } from '../../components/DashboardLayout';
 
 interface Stats {
   totalProperties: number;
@@ -105,28 +106,21 @@ export default function AgentDashboard() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
-          <p className="mt-4 text-gray-600">Loading dashboard...</p>
+      <DashboardLayout pageTitle="Agent Dashboard" userName={userEmail} userRole="agent">
+        <div className="flex items-center justify-center h-64">
+          <div className="text-center">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
+            <p className="mt-4 text-gray-600">Loading dashboard...</p>
+          </div>
         </div>
-      </div>
+      </DashboardLayout>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900">Agent Dashboard</h1>
-          <p className="mt-2 text-gray-600">
-            Welcome back{userEmail ? `, ${userEmail}` : ''}! Here&apos;s your activity overview.
-          </p>
-        </div>
-
-        {/* Stats Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+    <DashboardLayout pageTitle="Agent Dashboard" userName={userEmail} userRole="agent">
+      {/* Stats Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
           <div className="bg-white rounded-lg shadow-sm p-6">
             <div className="flex items-center justify-between mb-4">
               <div className="bg-blue-50 p-3 rounded-lg">
@@ -220,7 +214,6 @@ export default function AgentDashboard() {
             ) : null}
           </div>
         </div>
-      </div>
-    </div>
-  );
-}
+      </DashboardLayout>
+    );
+  }
