@@ -209,7 +209,7 @@ export function MapPicker({ initialLocation, onLocationChange, addressValue }: M
         
         {/* Search Results Dropdown */}
         {showResults && searchResults.length > 0 && (
-          <div className="absolute z-50 w-full mt-1 bg-white border-2 border-gray-300 rounded-lg shadow-lg max-h-60 overflow-y-auto">
+          <div className="absolute z-[9999] w-full mt-1 bg-white border-2 border-gray-300 rounded-lg shadow-lg max-h-60 overflow-y-auto">
             {searchResults.map((result, index) => (
               <button
                 key={index}
@@ -235,7 +235,7 @@ export function MapPicker({ initialLocation, onLocationChange, addressValue }: M
       )}
 
       {/* Map */}
-      <div className="w-full h-96 rounded-lg overflow-hidden border-2 border-gray-300 relative">
+      <div className="w-full h-96 rounded-lg overflow-hidden border-2 border-gray-300 relative z-0">
         <MapContainer
           center={defaultCenter}
           zoom={13}
