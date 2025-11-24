@@ -133,7 +133,12 @@ export default function AddPropertyEnhanced() {
     handleSubmit,
     formState: { errors },
     setValue,
+    watch,
   } = useForm<PropertyFormData>();
+
+  // Watch address field for changes
+  const addressValue = watch('address');
+  const locationValue = watch('location');
 
   // Get user's current location for map
   useEffect(() => {
@@ -557,7 +562,14 @@ export default function AddPropertyEnhanced() {
                 </p>
                 <MapPicker
                   initialLocation={mapLocation || undefined}
-                  onLocationChange={(location) => setMapLocation(location)}
+                  onLocationChange={(location) => {
+                    setMapLocation(location);
+                    // Update address field if geocoded address is available
+                    if (location.address) {
+                      setValue('address', location.address);
+                    }
+                  }}
+                  addressValue={addressValue || locationValue}
                 />
               </div>
             </div>
