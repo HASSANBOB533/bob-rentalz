@@ -695,7 +695,8 @@ export default function AddPropertyEnhanced() {
               <button
                 type="submit"
                 disabled={loading}
-                className="flex-1 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed font-medium shadow-md hover:shadow-lg transition-all"
+                className="flex-1 px-6 py-3 bg-[#0E56A4] text-white rounded-lg hover:bg-[#0A3F79] disabled:opacity-50 disabled:cursor-not-allowed font-bold text-lg shadow-lg hover:shadow-xl transition-all"
+                style={{ backgroundColor: '#0E56A4', color: '#ffffff' }}
               >
                 {loading ? 'Submitting for Approval...' : 'Submit for Approval'}
               </button>
