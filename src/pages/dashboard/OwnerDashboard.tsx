@@ -156,7 +156,7 @@ export default function OwnerDashboard() {
   return (
     <>
       <Navbar />
-      <div className="min-h-screen bg-gray-50 pt-32 lg:pt-48">
+      <div className="min-h-screen bg-gray-50 pt-36 lg:pt-52">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Header */}
         <div className="mb-8">
