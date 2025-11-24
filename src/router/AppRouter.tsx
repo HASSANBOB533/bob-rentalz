@@ -33,6 +33,7 @@ import { TenantPaymentsPage } from '../pages/TenantPaymentsPage';
 import { TermsPage } from '../pages/TermsPage';
 import UnauthorizedPage from '../pages/UnauthorizedPage';
 import { VerifiedBadgePage } from '../pages/VerifiedBadgePage';
+import AddProperty from '../pages/owner/AddProperty';
 
 // Dashboards (role-based)
 
@@ -247,6 +248,15 @@ export default function AppRouter() {
         element={
           <ProtectedRoute allowedRoles={['owner']}>
             <OwnerDashboard />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/owner/add-property"
+        element={
+          <ProtectedRoute allowedRoles={['owner']}>
+            <AddProperty />
           </ProtectedRoute>
         }
       />
