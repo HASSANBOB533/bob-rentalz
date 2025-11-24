@@ -2,6 +2,7 @@ import { Routes, Route } from 'react-router-dom';
 
 // Layout
 import ProtectedRoute from '../components/auth/ProtectedRoute';
+import { AuthLayout } from '../components/AuthLayout';
 import { MainLayout } from '../components/MainLayout';
 
 // Public pages
@@ -201,10 +202,24 @@ export default function AppRouter() {
       />
 
       {/* =============================
-          AUTH ROUTES (no MainLayout - full-page designs)
+          AUTH ROUTES (with AuthLayout for proper header spacing)
       ============================= */}
-      <Route path="/login" element={<LoginPage />} />
-      <Route path="/signup" element={<SignupPage />} />
+      <Route
+        path="/login"
+        element={
+          <AuthLayout>
+            <LoginPage />
+          </AuthLayout>
+        }
+      />
+      <Route
+        path="/signup"
+        element={
+          <AuthLayout>
+            <SignupPage />
+          </AuthLayout>
+        }
+      />
 
       {/* =============================
           DASHBOARD ROUTES (protected, no MainLayout)
