@@ -34,6 +34,8 @@ import { TermsPage } from '../pages/TermsPage';
 import UnauthorizedPage from '../pages/UnauthorizedPage';
 import { VerifiedBadgePage } from '../pages/VerifiedBadgePage';
 import AddProperty from '../pages/owner/AddProperty';
+import MyProperties from '../pages/owner/MyProperties';
+import PropertyApproval from '../pages/admin/PropertyApproval';
 
 // Dashboards (role-based)
 
@@ -244,6 +246,15 @@ export default function AppRouter() {
       />
 
       <Route
+        path="/admin/property-approval"
+        element={
+          <ProtectedRoute allowedRoles={['admin']}>
+            <PropertyApproval />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
         path="/dashboard/owner"
         element={
           <ProtectedRoute allowedRoles={['owner']}>
@@ -257,6 +268,15 @@ export default function AppRouter() {
         element={
           <ProtectedRoute allowedRoles={['owner']}>
             <AddProperty />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/owner/properties"
+        element={
+          <ProtectedRoute allowedRoles={['owner']}>
+            <MyProperties />
           </ProtectedRoute>
         }
       />
