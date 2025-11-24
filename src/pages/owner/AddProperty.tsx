@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form';
 import { supabase } from '../../lib/supabase';
 import { Navbar } from '../../components/Navbar';
 import { Home, Upload, X, MapPin, Video } from 'lucide-react';
+import { MapPicker } from '../../components/MapPicker';
 
 interface PropertyFormData {
   title: string;
@@ -546,17 +547,18 @@ export default function AddPropertyEnhanced() {
                   <MapPin className="inline w-4 h-4 mr-1" />
                   Pin Location on Map
                 </label>
-                <div className="bg-gray-100 border-2 border-dashed border-gray-300 rounded-lg p-8 text-center">
-                  <MapPin className="mx-auto h-12 w-12 text-gray-400 mb-2" />
-                  <p className="text-sm text-gray-600">
-                    {mapLocation
-                      ? `Location: ${mapLocation.lat.toFixed(6)}, ${mapLocation.lng.toFixed(6)}`
-                      : 'Loading map...'}
-                  </p>
-                  <p className="text-xs text-gray-500 mt-2">
-                    Interactive map integration coming soon
-                  </p>
-                </div>
+                <p className="text-xs text-gray-500 mb-2">
+                  Click on the map to set the exact location of your property
+                  {mapLocation && (
+                    <span className="ml-2 text-blue-600 font-medium">
+                      ({mapLocation.lat.toFixed(6)}, {mapLocation.lng.toFixed(6)})
+                    </span>
+                  )}
+                </p>
+                <MapPicker
+                  initialLocation={mapLocation || undefined}
+                  onLocationChange={(location) => setMapLocation(location)}
+                />
               </div>
             </div>
 
