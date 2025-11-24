@@ -27,17 +27,20 @@ form-action 'self'
 - **default-src 'self'**: Default policy - only allow resources from same origin
 - **script-src**: JavaScript sources
   - `'self'`: Scripts from same origin
-  - `'unsafe-inline'`: Inline scripts (needed for some UI libraries)
-  - `'unsafe-eval'`: eval() usage (needed for some dependencies)
+  - `'unsafe-inline'`: Inline scripts (needed for Vite HMR, Motion library, and some UI components)
+    - ⚠️ Security Note: This weakens CSP. Consider using nonces/hashes in production for stricter security
+  - `'unsafe-eval'`: eval() usage (needed for some dependencies like Vite dev mode)
+    - ⚠️ Security Note: Required for development. Consider removing for production builds
   - `https://cdn.jsdelivr.net`: CDN for external libraries
 - **style-src**: CSS sources
   - `'self'`: Stylesheets from same origin
-  - `'unsafe-inline'`: Inline styles (needed for Tailwind and component libraries)
+  - `'unsafe-inline'`: Inline styles (needed for Tailwind CSS and Radix UI component libraries)
   - `https://fonts.googleapis.com`: Google Fonts CSS
 - **img-src**: Image sources
   - `'self'`: Images from same origin
   - `data:`: Data URIs for inline images
   - `https:`: Any HTTPS image source
+    - ⚠️ Security Note: Allows all HTTPS images. Consider restricting to specific domains if data exfiltration is a concern
   - `blob:`: Blob URLs for dynamically generated images
 - **font-src**: Font sources
   - `'self'`: Fonts from same origin
@@ -180,11 +183,44 @@ After deploying to Vercel:
 ## Security Best Practices
 
 1. **Keep CSP Strict**: Only allow necessary sources
-2. **Avoid 'unsafe-inline' and 'unsafe-eval'**: Currently needed for some libraries, but minimize usage when possible
+2. **Minimize 'unsafe-inline' and 'unsafe-eval'**: 
+   - Currently required for Vite dev mode and some UI libraries
+   - For production, consider:
+     - Using nonces or hashes for inline scripts
+     - Refactoring to avoid eval()
+     - Using build-time optimizations to eliminate inline scripts
 3. **Use Specific Domains**: Replace wildcards with specific domains when possible
+   - Example: Instead of `https:` for img-src, list specific image CDN domains
 4. **Regular Audits**: Review CSP regularly as dependencies change
 5. **Test Thoroughly**: Ensure CSP doesn't break functionality
 6. **Monitor Console**: Watch for CSP violations in production
+7. **Progressive Enhancement**: Start strict and loosen only when necessary
+
+### Improving Production CSP
+
+For a stricter production CSP, consider:
+
+```javascript
+// Example: More restrictive production CSP
+const productionCSP = {
+  "script-src": "'self' 'nonce-{RANDOM}' https://cdn.jsdelivr.net",
+  "style-src": "'self' 'nonce-{RANDOM}' https://fonts.googleapis.com",
+  "img-src": "'self' data: blob: https://your-image-cdn.com https://*.supabase.co",
+  // ... other directives
+};
+```
+
+**Implementation Steps:**
+1. Generate nonce for each request
+2. Add nonce to inline scripts/styles
+3. Remove 'unsafe-inline' and 'unsafe-eval'
+4. Test thoroughly before deploying
+
+**Trade-offs:**
+- More complex implementation
+- Requires server-side rendering or edge functions
+- May conflict with some build tools (Vite HMR)
+- Better security posture
 
 ## Troubleshooting Checklist
 
