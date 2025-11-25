@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
+import { MapPin, Navigation } from 'lucide-react';
 
 // Fix for default marker icon
 delete (L.Icon.Default.prototype as any)._getIconUrl;
@@ -16,10 +17,17 @@ interface MapPickerProps {
   initialLng?: number;
 }
 
+interface SearchResult {
+  display_name: string;
+  lat: string;
+  lon: string;
+}
+
 export function MapPicker({ onLocationSelect, initialLat, initialLng }: MapPickerProps) {
   const mapRef = useRef<L.Map | null>(null);
   const markerRef = useRef<L.Marker | null>(null);
   const mapContainerRef = useRef<HTMLDivElement>(null);
+  const searchTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   
   const [coordinates, setCoordinates] = useState({
     lat: initialLat || 25.2048,
@@ -28,6 +36,12 @@ export function MapPicker({ onLocationSelect, initialLat, initialLng }: MapPicke
 
   const [manualLat, setManualLat] = useState(initialLat?.toString() || '');
   const [manualLng, setManualLng] = useState(initialLng?.toString() || '');
+  
+  const [searchQuery, setSearchQuery] = useState('');
+  const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
+  const [isSearching, setIsSearching] = useState(false);
+  const [showResults, setShowResults] = useState(false);
+  const [isGettingLocation, setIsGettingLocation] = useState(false);
 
   useEffect(() => {
     if (!mapContainerRef.current || mapRef.current) return;
@@ -97,6 +111,91 @@ export function MapPicker({ onLocationSelect, initialLat, initialLng }: MapPicke
     };
   }, []);
 
+  // Search for location
+  useEffect(() => {
+    if (searchQuery.length < 3) {
+      setSearchResults([]);
+      setShowResults(false);
+      return;
+    }
+
+    if (searchTimeoutRef.current) {
+      clearTimeout(searchTimeoutRef.current);
+    }
+
+    searchTimeoutRef.current = setTimeout(async () => {
+      setIsSearching(true);
+      try {
+        const response = await fetch(
+          `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(searchQuery)}&limit=5`
+        );
+        const data = await response.json();
+        setSearchResults(data);
+        setShowResults(true);
+      } catch (error) {
+        console.error('Search error:', error);
+        setSearchResults([]);
+      } finally {
+        setIsSearching(false);
+      }
+    }, 500);
+
+    return () => {
+      if (searchTimeoutRef.current) {
+        clearTimeout(searchTimeoutRef.current);
+      }
+    };
+  }, [searchQuery]);
+
+  const handleSearchSelect = (result: SearchResult) => {
+    const lat = parseFloat(result.lat);
+    const lng = parseFloat(result.lon);
+
+    setCoordinates({ lat, lng });
+    setManualLat(lat.toFixed(6));
+    setManualLng(lng.toFixed(6));
+    
+    if (mapRef.current && markerRef.current) {
+      mapRef.current.setView([lat, lng], 15);
+      markerRef.current.setLatLng([lat, lng]);
+    }
+
+    onLocationSelect(lat, lng);
+    setSearchQuery(result.display_name);
+    setShowResults(false);
+  };
+
+  const handleGetCurrentLocation = () => {
+    if (!navigator.geolocation) {
+      alert('Geolocation is not supported by your browser');
+      return;
+    }
+
+    setIsGettingLocation(true);
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const { latitude, longitude } = position.coords;
+        
+        setCoordinates({ lat: latitude, lng: longitude });
+        setManualLat(latitude.toFixed(6));
+        setManualLng(longitude.toFixed(6));
+        
+        if (mapRef.current && markerRef.current) {
+          mapRef.current.setView([latitude, longitude], 15);
+          markerRef.current.setLatLng([latitude, longitude]);
+        }
+
+        onLocationSelect(latitude, longitude);
+        setIsGettingLocation(false);
+      },
+      (error) => {
+        console.error('Geolocation error:', error);
+        alert('Could not get your current location. Please enable location services.');
+        setIsGettingLocation(false);
+      }
+    );
+  };
+
   const handleManualUpdate = () => {
     const lat = parseFloat(manualLat);
     const lng = parseFloat(manualLng);
@@ -128,6 +227,57 @@ export function MapPicker({ onLocationSelect, initialLat, initialLng }: MapPicke
 
   return (
     <div className="space-y-4">
+      {/* Search Location */}
+      <div className="relative">
+        <label className="block text-sm font-medium text-gray-700 mb-2">
+          <MapPin className="inline-block w-4 h-4 mr-1" />
+          Search Location
+        </label>
+        <div className="flex gap-2">
+          <div className="flex-1 relative">
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              onFocus={() => searchResults.length > 0 && setShowResults(true)}
+              placeholder="Search for a location (e.g., Dubai Marina, Burj Khalifa)"
+              className="w-full px-4 py-2 border border-gray-300 rounded-md text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            />
+            {isSearching && (
+              <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
+                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-600"></div>
+              </div>
+            )}
+            
+            {/* Search Results Dropdown */}
+            {showResults && searchResults.length > 0 && (
+              <div className="absolute z-50 w-full mt-1 bg-white border border-gray-300 rounded-md shadow-lg max-h-60 overflow-y-auto">
+                {searchResults.map((result, index) => (
+                  <button
+                    key={index}
+                    type="button"
+                    onClick={() => handleSearchSelect(result)}
+                    className="w-full text-left px-4 py-2 hover:bg-blue-50 text-sm border-b border-gray-100 last:border-b-0"
+                  >
+                    <div className="font-medium text-gray-900">{result.display_name}</div>
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+          
+          <button
+            type="button"
+            onClick={handleGetCurrentLocation}
+            disabled={isGettingLocation}
+            className="px-4 py-2 bg-green-600 text-white rounded-md text-sm font-medium hover:bg-green-700 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center gap-2"
+          >
+            <Navigation className="w-4 h-4" />
+            {isGettingLocation ? 'Getting...' : 'Current Location'}
+          </button>
+        </div>
+      </div>
+
       {/* Manual Coordinate Input */}
       <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
         <h4 className="text-sm font-semibold text-blue-900 mb-3">Manual Coordinates</h4>
@@ -200,8 +350,7 @@ export function MapPicker({ onLocationSelect, initialLat, initialLng }: MapPicke
       {/* Help Text */}
       <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3">
         <p className="text-xs text-yellow-800">
-          <strong>Tip:</strong> You can click anywhere on the map, drag the marker, or enter coordinates manually above.
-          The map will automatically detect your current location when you first open this page.
+          <strong>Tip:</strong> Search for a location above, click "Current Location" to auto-detect, or click anywhere on the map to set the property location.
         </p>
       </div>
     </div>
