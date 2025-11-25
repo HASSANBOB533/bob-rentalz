@@ -237,6 +237,57 @@ export function DashboardLayout({
     },
   ];
 
+  const getAdminMenuItems = (): MenuItem[] => [
+    {
+      id: 'dashboard',
+      label: 'Dashboard',
+      icon: <LayoutDashboard className="w-5 h-5" />,
+      path: '/admin/dashboard',
+    },
+    {
+      id: 'users',
+      label: 'User Management',
+      icon: <Users className="w-5 h-5" />,
+      path: '/admin/users',
+    },
+    {
+      id: 'property-approval',
+      label: 'Property Approval',
+      icon: <Building className="w-5 h-5" />,
+      path: '/admin/property-approval',
+    },
+    {
+      id: 'properties',
+      label: 'All Properties',
+      icon: <Home className="w-5 h-5" />,
+      path: '/admin/properties',
+    },
+    {
+      id: 'reports',
+      label: 'Reports & Analytics',
+      icon: <FileText className="w-5 h-5" />,
+      path: '/admin/reports',
+    },
+    {
+      id: 'messages',
+      label: 'Messages',
+      icon: <MessageSquare className="w-5 h-5" />,
+      path: '/admin/messages',
+    },
+    {
+      id: 'profile',
+      label: 'Profile',
+      icon: <User className="w-5 h-5" />,
+      path: '/admin/profile',
+    },
+    {
+      id: 'settings',
+      label: 'System Settings',
+      icon: <Settings className="w-5 h-5" />,
+      path: '/admin/settings',
+    },
+  ];
+
   // Get menu items based on role
   const menuItems =
     userRole?.toLowerCase() === 'owner'
@@ -245,7 +296,9 @@ export function DashboardLayout({
         ? getRenterMenuItems()
         : userRole?.toLowerCase() === 'agent'
           ? getAgentMenuItems()
-          : getTenantMenuItems();
+          : userRole?.toLowerCase() === 'admin'
+            ? getAdminMenuItems()
+            : getTenantMenuItems();
 
   const handleNavigation = (path: string) => {
     navigate(path);
