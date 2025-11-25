@@ -1,8 +1,6 @@
-import { useEffect, useState, useRef } from 'react';
-import { MapContainer, TileLayer, Marker, useMap } from 'react-leaflet';
-import 'leaflet/dist/leaflet.css';
+import { useEffect, useRef, useState } from 'react';
 import L from 'leaflet';
-import { Search, MapPin, Loader2 } from 'lucide-react';
+import 'leaflet/dist/leaflet.css';
 
 // Fix for default marker icon
 delete (L.Icon.Default.prototype as any)._getIconUrl;
@@ -13,251 +11,198 @@ L.Icon.Default.mergeOptions({
 });
 
 interface MapPickerProps {
-  initialLocation?: { lat: number; lng: number };
-  onLocationChange: (location: { lat: number; lng: number; address?: string }) => void;
-  addressValue?: string;
+  onLocationSelect: (lat: number, lng: number) => void;
+  initialLat?: number;
+  initialLng?: number;
 }
 
-interface SearchResult {
-  display_name: string;
-  lat: string;
-  lon: string;
-}
-
-// Component to update map view when location changes
-function MapUpdater({ position }: { position: L.LatLng | null }) {
-  const map = useMap();
+export function MapPicker({ onLocationSelect, initialLat, initialLng }: MapPickerProps) {
+  const mapRef = useRef<L.Map | null>(null);
+  const markerRef = useRef<L.Marker | null>(null);
+  const mapContainerRef = useRef<HTMLDivElement>(null);
   
+  const [coordinates, setCoordinates] = useState({
+    lat: initialLat || 25.2048,
+    lng: initialLng || 55.2708,
+  });
+
+  const [manualLat, setManualLat] = useState(initialLat?.toString() || '');
+  const [manualLng, setManualLng] = useState(initialLng?.toString() || '');
+
   useEffect(() => {
-    if (position) {
-      map.flyTo(position, 15);
-    }
-  }, [position, map]);
-  
-  return null;
-}
+    if (!mapContainerRef.current || mapRef.current) return;
 
-// Component to handle map clicks
-function MapClickHandler({ onLocationChange }: { onLocationChange: (location: { lat: number; lng: number }) => void }) {
-  const map = useMap();
-  
-  useEffect(() => {
-    const handleClick = async (e: L.LeafletMouseEvent) => {
-      onLocationChange({ lat: e.latlng.lat, lng: e.latlng.lng });
-      
-      // Reverse geocode to get address
-      try {
-        const response = await fetch(
-          `https://nominatim.openstreetmap.org/reverse?format=json&lat=${e.latlng.lat}&lon=${e.latlng.lng}`
-        );
-        const data = await response.json();
-        if (data.display_name) {
-          onLocationChange({ 
-            lat: e.latlng.lat, 
-            lng: e.latlng.lng,
-            address: data.display_name 
-          });
-        }
-      } catch (error) {
-        console.error('Reverse geocoding failed:', error);
-      }
-    };
-    
-    map.on('click', handleClick);
-    
-    return () => {
-      map.off('click', handleClick);
-    };
-  }, [map, onLocationChange]);
-  
-  return null;
-}
+    // Initialize map
+    const map = L.map(mapContainerRef.current, {
+      center: [coordinates.lat, coordinates.lng],
+      zoom: 13,
+      zoomControl: true,
+    });
 
-export function MapPicker({ initialLocation, onLocationChange, addressValue }: MapPickerProps) {
-  const [position, setPosition] = useState<L.LatLng | null>(
-    initialLocation ? L.latLng(initialLocation.lat, initialLocation.lng) : null
-  );
-  const [searchQuery, setSearchQuery] = useState('');
-  const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
-  const [isSearching, setIsSearching] = useState(false);
-  const [showResults, setShowResults] = useState(false);
-  const searchTimeoutRef = useRef<NodeJS.Timeout>();
-  
-  const defaultCenter: [number, number] = initialLocation
-    ? [initialLocation.lat, initialLocation.lng]
-    : [25.2048, 55.2708]; // Dubai coordinates
+    // Add OpenStreetMap tiles
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+      maxZoom: 19,
+    }).addTo(map);
 
-  // Auto-detect user location on mount
-  useEffect(() => {
-    if (!initialLocation) {
+    // Add initial marker
+    const marker = L.marker([coordinates.lat, coordinates.lng], {
+      draggable: true,
+    }).addTo(map);
+
+    // Handle marker drag
+    marker.on('dragend', () => {
+      const position = marker.getLatLng();
+      setCoordinates({ lat: position.lat, lng: position.lng });
+      setManualLat(position.lat.toFixed(6));
+      setManualLng(position.lng.toFixed(6));
+      onLocationSelect(position.lat, position.lng);
+    });
+
+    // Handle map click
+    map.on('click', (e: L.LeafletMouseEvent) => {
+      const { lat, lng } = e.latlng;
+      marker.setLatLng([lat, lng]);
+      setCoordinates({ lat, lng });
+      setManualLat(lat.toFixed(6));
+      setManualLng(lng.toFixed(6));
+      onLocationSelect(lat, lng);
+    });
+
+    mapRef.current = map;
+    markerRef.current = marker;
+
+    // Try to get user's location
+    if (navigator.geolocation && !initialLat && !initialLng) {
       navigator.geolocation.getCurrentPosition(
-        (pos) => {
-          const newPos = L.latLng(pos.coords.latitude, pos.coords.longitude);
-          setPosition(newPos);
-          onLocationChange({ lat: pos.coords.latitude, lng: pos.coords.longitude });
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          map.setView([latitude, longitude], 13);
+          marker.setLatLng([latitude, longitude]);
+          setCoordinates({ lat: latitude, lng: longitude });
+          setManualLat(latitude.toFixed(6));
+          setManualLng(longitude.toFixed(6));
+          onLocationSelect(latitude, longitude);
         },
-        (error) => {
-          console.log('Geolocation error:', error);
+        () => {
+          console.log('Could not get user location, using default (Dubai)');
         }
       );
     }
-  }, [initialLocation, onLocationChange]);
 
-  // Geocode when addressValue prop changes
-  useEffect(() => {
-    if (addressValue && addressValue.length > 3) {
-      geocodeAddress(addressValue);
-    }
-  }, [addressValue]);
+    return () => {
+      map.remove();
+      mapRef.current = null;
+      markerRef.current = null;
+    };
+  }, []);
 
-  // Search for addresses as user types
-  const handleSearchInput = (value: string) => {
-    setSearchQuery(value);
-    
-    if (searchTimeoutRef.current) {
-      clearTimeout(searchTimeoutRef.current);
-    }
-    
-    if (value.length < 3) {
-      setSearchResults([]);
-      setShowResults(false);
+  const handleManualUpdate = () => {
+    const lat = parseFloat(manualLat);
+    const lng = parseFloat(manualLng);
+
+    if (isNaN(lat) || isNaN(lng)) {
+      alert('Please enter valid coordinates');
       return;
     }
-    
-    setIsSearching(true);
-    
-    searchTimeoutRef.current = setTimeout(async () => {
-      try {
-        const response = await fetch(
-          `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(value)}&limit=5`
-        );
-        const data = await response.json();
-        setSearchResults(data);
-        setShowResults(true);
-      } catch (error) {
-        console.error('Search failed:', error);
-      } finally {
-        setIsSearching(false);
-      }
-    }, 500);
-  };
 
-  // Geocode address to coordinates
-  const geocodeAddress = async (address: string) => {
-    try {
-      setIsSearching(true);
-      const response = await fetch(
-        `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(address)}&limit=1`
-      );
-      const data = await response.json();
-      
-      if (data && data.length > 0) {
-        const result = data[0];
-        const newPos = L.latLng(parseFloat(result.lat), parseFloat(result.lon));
-        setPosition(newPos);
-        onLocationChange({ 
-          lat: parseFloat(result.lat), 
-          lng: parseFloat(result.lon),
-          address: result.display_name
-        });
-      }
-    } catch (error) {
-      console.error('Geocoding failed:', error);
-    } finally {
-      setIsSearching(false);
+    if (lat < -90 || lat > 90) {
+      alert('Latitude must be between -90 and 90');
+      return;
     }
-  };
 
-  // Handle selecting a search result
-  const handleSelectResult = (result: SearchResult) => {
-    const newPos = L.latLng(parseFloat(result.lat), parseFloat(result.lon));
-    setPosition(newPos);
-    setSearchQuery(result.display_name);
-    setShowResults(false);
-    onLocationChange({ 
-      lat: parseFloat(result.lat), 
-      lng: parseFloat(result.lon),
-      address: result.display_name
-    });
-  };
-
-  const handleLocationChange = (location: { lat: number; lng: number; address?: string }) => {
-    setPosition(L.latLng(location.lat, location.lng));
-    onLocationChange(location);
-    if (location.address) {
-      setSearchQuery(location.address);
+    if (lng < -180 || lng > 180) {
+      alert('Longitude must be between -180 and 180');
+      return;
     }
+
+    setCoordinates({ lat, lng });
+    
+    if (mapRef.current && markerRef.current) {
+      mapRef.current.setView([lat, lng], 13);
+      markerRef.current.setLatLng([lat, lng]);
+    }
+
+    onLocationSelect(lat, lng);
   };
 
   return (
-    <div className="w-full space-y-3">
-      {/* Search Box */}
-      <div className="relative">
-        <div className="relative">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
-          <input
-            type="text"
-            value={searchQuery}
-            onChange={(e) => handleSearchInput(e.target.value)}
-            placeholder="Search for a location (e.g., Dubai Marina, Sheikh Zayed Road)"
-            className="w-full pl-10 pr-10 py-3 border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:outline-none"
-          />
-          {isSearching && (
-            <Loader2 className="absolute right-3 top-1/2 transform -translate-y-1/2 text-blue-500 h-5 w-5 animate-spin" />
-          )}
-        </div>
-        
-        {/* Search Results Dropdown */}
-        {showResults && searchResults.length > 0 && (
-          <div className="absolute z-[9999] w-full mt-1 bg-white border-2 border-gray-300 rounded-lg shadow-lg max-h-60 overflow-y-auto">
-            {searchResults.map((result, index) => (
-              <button
-                key={index}
-                onClick={() => handleSelectResult(result)}
-                className="w-full text-left px-4 py-3 hover:bg-blue-50 border-b border-gray-100 last:border-0 flex items-start space-x-2"
-              >
-                <MapPin className="h-5 w-5 text-blue-500 flex-shrink-0 mt-0.5" />
-                <span className="text-sm text-gray-700">{result.display_name}</span>
-              </button>
-            ))}
+    <div className="space-y-4">
+      {/* Manual Coordinate Input */}
+      <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+        <h4 className="text-sm font-semibold text-blue-900 mb-3">Manual Coordinates</h4>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+          <div>
+            <label className="block text-xs font-medium text-gray-700 mb-1">
+              Latitude
+            </label>
+            <input
+              type="text"
+              value={manualLat}
+              onChange={(e) => setManualLat(e.target.value)}
+              placeholder="25.2048"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            />
           </div>
-        )}
+          <div>
+            <label className="block text-xs font-medium text-gray-700 mb-1">
+              Longitude
+            </label>
+            <input
+              type="text"
+              value={manualLng}
+              onChange={(e) => setManualLng(e.target.value)}
+              placeholder="55.2708"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            />
+          </div>
+          <div className="flex items-end">
+            <button
+              type="button"
+              onClick={handleManualUpdate}
+              className="w-full px-4 py-2 bg-blue-600 text-white rounded-md text-sm font-medium hover:bg-blue-700 transition-colors"
+            >
+              Update Map
+            </button>
+          </div>
+        </div>
+        <p className="text-xs text-gray-600 mt-2">
+          Enter coordinates manually or click on the map to set location
+        </p>
       </div>
 
-      {/* Coordinates Display */}
-      {position && (
-        <div className="flex items-center space-x-2 text-sm text-gray-600 bg-blue-50 px-3 py-2 rounded-lg">
-          <MapPin className="h-4 w-4 text-blue-600" />
-          <span>
-            <strong>Location:</strong> {position.lat.toFixed(6)}, {position.lng.toFixed(6)}
+      {/* Current Coordinates Display */}
+      <div className="bg-gray-50 border border-gray-200 rounded-lg p-3">
+        <div className="flex items-center justify-between text-sm">
+          <span className="font-medium text-gray-700">Selected Location:</span>
+          <span className="text-gray-900 font-mono">
+            {coordinates.lat.toFixed(6)}, {coordinates.lng.toFixed(6)}
           </span>
         </div>
-      )}
+      </div>
 
-      {/* Map */}
-      <div className="w-full h-96 rounded-lg overflow-hidden border-2 border-gray-300 relative z-0">
-        <MapContainer
-          center={defaultCenter}
-          zoom={13}
-          scrollWheelZoom={true}
-          style={{ height: '100%', width: '100%' }}
-        >
-          <TileLayer
-            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-          />
-          {position && <Marker position={position} />}
-          <MapUpdater position={position} />
-          <MapClickHandler onLocationChange={handleLocationChange} />
-        </MapContainer>
+      {/* Map Container */}
+      <div className="relative rounded-lg overflow-hidden border-2 border-gray-300 shadow-md">
+        <div
+          ref={mapContainerRef}
+          className="w-full h-96 z-0"
+          style={{ minHeight: '384px' }}
+        />
         
-        {/* Click Instruction */}
-        <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-white px-4 py-2 rounded-lg shadow-md text-sm text-gray-700 z-[1000] pointer-events-none">
-          <span className="flex items-center space-x-2">
-            <MapPin className="h-4 w-4 text-blue-600" />
-            <span>Click on the map to set exact location</span>
-          </span>
+        {/* Instruction Overlay */}
+        <div className="absolute top-4 left-1/2 transform -translate-x-1/2 bg-white/95 backdrop-blur-sm px-4 py-2 rounded-full shadow-lg z-[1000] pointer-events-none">
+          <p className="text-sm font-medium text-gray-700">
+            📍 Click on map or drag marker to set location
+          </p>
         </div>
+      </div>
+
+      {/* Help Text */}
+      <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3">
+        <p className="text-xs text-yellow-800">
+          <strong>Tip:</strong> You can click anywhere on the map, drag the marker, or enter coordinates manually above.
+          The map will automatically detect your current location when you first open this page.
+        </p>
       </div>
     </div>
   );
