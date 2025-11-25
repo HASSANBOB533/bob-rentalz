@@ -561,15 +561,11 @@ export default function AddPropertyEnhanced() {
                   )}
                 </p>
                 <MapPicker
-                  initialLocation={mapLocation || undefined}
-                  onLocationChange={(location) => {
-                    setMapLocation(location);
-                    // Update address field if geocoded address is available
-                    if (location.address) {
-                      setValue('address', location.address);
-                    }
+                  initialLat={mapLocation?.lat}
+                  initialLng={mapLocation?.lng}
+                  onLocationSelect={(lat, lng) => {
+                    setMapLocation({ lat, lng });
                   }}
-                  addressValue={addressValue || locationValue}
                 />
               </div>
             </div>
