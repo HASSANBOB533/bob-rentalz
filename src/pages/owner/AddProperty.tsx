@@ -563,8 +563,15 @@ export default function AddPropertyEnhanced() {
                 <GoogleMapPicker
                   initialLat={mapLocation?.lat}
                   initialLng={mapLocation?.lng}
-                  onLocationSelect={(lat, lng) => {
+                  onLocationSelect={(lat, lng, address, city) => {
                     setMapLocation({ lat, lng });
+                    // Auto-fill City/Area and Full Address fields
+                    if (city) {
+                      setValue('location', city);
+                    }
+                    if (address) {
+                      setValue('address', address);
+                    }
                   }}
                 />
               </div>

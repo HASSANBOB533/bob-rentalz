@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { MapPin, Navigation } from 'lucide-react';
 
 interface GoogleMapPickerProps {
-  onLocationSelect: (lat: number, lng: number) => void;
+  onLocationSelect: (lat: number, lng: number, address?: string, city?: string) => void;
   initialLat?: number;
   initialLng?: number;
 }
@@ -117,7 +117,7 @@ export function GoogleMapPicker({ onLocationSelect, initialLat, initialLng }: Go
         const autocomplete = new window.google.maps.places.Autocomplete(
           searchInputRef.current,
           {
-            fields: ['geometry', 'name', 'formatted_address'],
+            fields: ['geometry', 'name', 'formatted_address', 'address_components'],
           }
         );
 
@@ -127,11 +127,30 @@ export function GoogleMapPicker({ onLocationSelect, initialLat, initialLng }: Go
           if (place.geometry && place.geometry.location) {
             const lat = place.geometry.location.lat();
             const lng = place.geometry.location.lng();
+            const fullAddress = place.formatted_address || '';
+            
+            // Extract city from address components
+            let city = '';
+            if (place.address_components) {
+              for (const component of place.address_components) {
+                if (component.types.includes('locality')) {
+                  city = component.long_name;
+                  break;
+                } else if (component.types.includes('administrative_area_level_1')) {
+                  city = component.long_name;
+                }
+              }
+            }
             
             map.setCenter({ lat, lng });
             map.setZoom(15);
             marker.setPosition({ lat, lng });
-            updateLocation(lat, lng);
+            
+            // Update coordinates and notify parent with address data
+            setCoordinates({ lat, lng });
+            setManualLat(lat.toFixed(6));
+            setManualLng(lng.toFixed(6));
+            onLocationSelect(lat, lng, fullAddress, city);
           }
         });
 
@@ -164,10 +183,41 @@ export function GoogleMapPicker({ onLocationSelect, initialLat, initialLng }: Go
     }
   };
 
-  const updateLocation = (lat: number, lng: number) => {
+  const updateLocation = async (lat: number, lng: number) => {
     setCoordinates({ lat, lng });
     setManualLat(lat.toFixed(6));
     setManualLng(lng.toFixed(6));
+    
+    // Reverse geocode to get address
+    if (window.google && window.google.maps) {
+      try {
+        const geocoder = new window.google.maps.Geocoder();
+        const response = await geocoder.geocode({ location: { lat, lng } });
+        
+        if (response.results && response.results.length > 0) {
+          const result = response.results[0];
+          const fullAddress = result.formatted_address;
+          
+          // Extract city from address components
+          let city = '';
+          for (const component of result.address_components) {
+            if (component.types.includes('locality')) {
+              city = component.long_name;
+              break;
+            } else if (component.types.includes('administrative_area_level_1')) {
+              city = component.long_name;
+            }
+          }
+          
+          onLocationSelect(lat, lng, fullAddress, city);
+          return;
+        }
+      } catch (error) {
+        console.error('Reverse geocoding error:', error);
+      }
+    }
+    
+    // Fallback if geocoding fails
     onLocationSelect(lat, lng);
   };
 
