@@ -30,3 +30,8 @@ Thumbs.db
 
 # ESLint cache
 .eslintcache
+
+# Sensitive documentation files
+GOOGLE_MAPS_*.md
+VERCEL_ENV_*.md
+*_API_KEY*.md
