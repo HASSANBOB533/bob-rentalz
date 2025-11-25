@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import { supabase } from '../../lib/supabase';
 import { Navbar } from '../../components/Navbar';
 import { Home, Upload, X, MapPin, Video } from 'lucide-react';
-import { MapPicker } from '../../components/MapPicker';
+import { GoogleMapPicker } from '../../components/GoogleMapPicker';
 
 interface PropertyFormData {
   title: string;
@@ -560,7 +560,7 @@ export default function AddPropertyEnhanced() {
                     </span>
                   )}
                 </p>
-                <MapPicker
+                <GoogleMapPicker
                   initialLat={mapLocation?.lat}
                   initialLng={mapLocation?.lng}
                   onLocationSelect={(lat, lng) => {
