@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { supabase } from '../../lib/supabase';
 import { DashboardLayout } from '../../components/DashboardLayout';
+import { RecentProperties } from '../../components/admin/RecentProperties';
+import { AdminDashboardProperty } from '../../types/dashboard';
 
 interface Stats {
   totalUsers: number;
@@ -21,6 +23,9 @@ export default function AdminDashboard() {
     totalRevenue: 0,
     totalInquiries: 0,
   });
+  const [properties, setProperties] = useState<AdminDashboardProperty[]>([]);
+  const [propertiesLoading, setPropertiesLoading] = useState(true);
+  const [propertiesError, setPropertiesError] = useState<string | null>(null);
 
   useEffect(() => {
     async function loadDashboardData() {
@@ -66,7 +71,31 @@ export default function AdminDashboard() {
       setLoading(false);
     }
 
+    async function loadProperties() {
+      try {
+        setPropertiesLoading(true);
+        setPropertiesError(null);
+
+        const { data, error } = await supabase
+          .from('properties')
+          .select('id, title, location, price, status, created_at')
+          .order('created_at', { ascending: false })
+          .limit(50);
+
+        if (error) throw error;
+
+        setProperties(data || []);
+      } catch (err: any) {
+        console.error('Error fetching properties:', err);
+        setPropertiesError(err.message || 'Failed to load properties');
+        setProperties([]);
+      } finally {
+        setPropertiesLoading(false);
+      }
+    }
+
     loadDashboardData();
+    loadProperties();
   }, [navigate]);
 
   const quickActions = [
@@ -201,7 +230,7 @@ export default function AdminDashboard() {
         </div>
 
         {/* System Overview */}
-        <div className="bg-white rounded-lg shadow-sm p-6">
+        <div className="bg-white rounded-lg shadow-sm p-6 mb-8">
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-xl font-semibold text-gray-900">System Overview</h2>
           </div>
@@ -220,6 +249,14 @@ export default function AdminDashboard() {
             </div>
           </div>
         </div>
+
+        <RecentProperties
+          properties={properties}
+          loading={propertiesLoading}
+          error={propertiesError}
+          onViewAll={() => navigate('/admin/properties')}
+          onRowClick={(propertyId) => navigate(`/admin/properties/${propertyId}`)}
+        />
       </DashboardLayout>
     );
   }
