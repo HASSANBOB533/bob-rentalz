@@ -7,3 +7,10 @@ export interface AdminDashboardProperty {
   created_at: string;
 }
 
+export interface PaginationInfo {
+  currentPage: number;
+  totalPages: number;
+  totalItems: number;
+  itemsPerPage: number;
+}
+

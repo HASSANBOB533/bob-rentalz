@@ -1,10 +1,10 @@
 import { Trash2, Users, Home, FileText, Shield, Database, Activity, TrendingUp } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { supabase } from '../../lib/supabase';
 import { DashboardLayout } from '../../components/DashboardLayout';
 import { RecentProperties } from '../../components/admin/RecentProperties';
-import { AdminDashboardProperty } from '../../types/dashboard';
+import { AdminDashboardProperty, PaginationInfo } from '../../types/dashboard';
 
 interface Stats {
   totalUsers: number;
@@ -26,6 +26,44 @@ export default function AdminDashboard() {
   const [properties, setProperties] = useState<AdminDashboardProperty[]>([]);
   const [propertiesLoading, setPropertiesLoading] = useState(true);
   const [propertiesError, setPropertiesError] = useState<string | null>(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalProperties, setTotalProperties] = useState(0);
+  const itemsPerPage = 2; // need to back to 50
+
+  const loadProperties = useCallback(
+    async (page: number = 1) => {
+      try {
+        setPropertiesLoading(true);
+        setPropertiesError(null);
+
+        const offset = (page - 1) * itemsPerPage;
+
+        // Get total count
+        const { count } = await supabase
+          .from('properties')
+          .select('*', { count: 'exact', head: true });
+
+        setTotalProperties(count || 0);
+
+        // Fetch paginated data
+        const { data, error } = await supabase
+          .from('properties')
+          .select('id, title, location, price, status, created_at')
+          .order('created_at', { ascending: false })
+          .range(offset, offset + itemsPerPage - 1);
+
+        if (error) throw error;
+
+        setProperties(data || []);
+      } catch (err: any) {
+        setPropertiesError(err.message || 'Failed to load properties');
+        setProperties([]);
+      } finally {
+        setPropertiesLoading(false);
+      }
+    },
+    [itemsPerPage],
+  );
 
   useEffect(() => {
     async function loadDashboardData() {
@@ -71,32 +109,23 @@ export default function AdminDashboard() {
       setLoading(false);
     }
 
-    async function loadProperties() {
-      try {
-        setPropertiesLoading(true);
-        setPropertiesError(null);
-
-        const { data, error } = await supabase
-          .from('properties')
-          .select('id, title, location, price, status, created_at')
-          .order('created_at', { ascending: false })
-          .limit(50);
-
-        if (error) throw error;
-
-        setProperties(data || []);
-      } catch (err: any) {
-        console.error('Error fetching properties:', err);
-        setPropertiesError(err.message || 'Failed to load properties');
-        setProperties([]);
-      } finally {
-        setPropertiesLoading(false);
-      }
-    }
-
     loadDashboardData();
-    loadProperties();
-  }, [navigate]);
+    loadProperties(currentPage);
+  }, [navigate, currentPage, loadProperties]);
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+  };
+
+  const paginationInfo: PaginationInfo | undefined =
+    totalProperties > 0
+      ? {
+          currentPage,
+          totalPages: Math.ceil(totalProperties / itemsPerPage),
+          totalItems: totalProperties,
+          itemsPerPage,
+        }
+      : undefined;
 
   const quickActions = [
     {
@@ -254,8 +283,10 @@ export default function AdminDashboard() {
           properties={properties}
           loading={propertiesLoading}
           error={propertiesError}
+          pagination={paginationInfo}
           onViewAll={() => navigate('/admin/properties')}
           onRowClick={(propertyId) => navigate(`/admin/properties/${propertyId}`)}
+          onPageChange={handlePageChange}
         />
       </DashboardLayout>
     );
