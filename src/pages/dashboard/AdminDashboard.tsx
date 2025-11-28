@@ -1,9 +1,10 @@
 import { Trash2, Users, Home, FileText, Shield, Database, Activity, TrendingUp } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { supabase } from '../../lib/supabase';
 import { DashboardLayout } from '../../components/DashboardLayout';
-
+import { RecentProperties } from '../../components/admin/RecentProperties';
+import { AdminDashboardProperty, PaginationInfo } from '../../types/dashboard';
 interface Stats {
   totalUsers: number;
   totalProperties: number;
@@ -21,6 +22,82 @@ export default function AdminDashboard() {
     totalRevenue: 0,
     totalInquiries: 0,
   });
+  const [properties, setProperties] = useState<AdminDashboardProperty[]>([]);
+  const [propertiesLoading, setPropertiesLoading] = useState(true);
+  const [propertiesError, setPropertiesError] = useState<string | null>(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalProperties, setTotalProperties] = useState(0);
+  const itemsPerPage = 50;
+
+  // Check admin access and redirect non-admins
+  useEffect(() => {
+    async function checkAdminAccess() {
+      try {
+        const { data: { user } } = await supabase.auth.getUser();
+
+        if (!user) {
+          navigate('/login');
+          return;
+        }
+
+        const { data: profile, error } = await supabase
+          .from('profiles')
+          .select('role')
+          .eq('id', user.id)
+          .single();
+
+        if (error || !profile) {
+          navigate('/login');
+          return;
+        }
+
+        if (profile.role !== 'admin') {
+          // Redirect to appropriate dashboard based on role
+          navigate(`/dashboard/${profile.role}`);
+          return;
+        }
+      } catch (error) {
+        navigate('/login');
+      }
+    }
+
+    checkAdminAccess();
+  }, [navigate]);
+
+  const loadProperties = useCallback(
+    async (page: number = 1) => {
+      try {
+        setPropertiesLoading(true);
+        setPropertiesError(null);
+
+        const offset = (page - 1) * itemsPerPage;
+
+        // Get total count
+        const { count } = await supabase
+          .from('properties')
+          .select('*', { count: 'exact', head: true });
+
+        setTotalProperties(count || 0);
+
+        // Fetch paginated data
+        const { data, error } = await supabase
+          .from('properties')
+          .select('id, title, location, price, status, created_at')
+          .order('created_at', { ascending: false })
+          .range(offset, offset + itemsPerPage - 1);
+
+        if (error) throw error;
+
+        setProperties(data || []);
+      } catch (err: any) {
+        setPropertiesError(err.message || 'Failed to load properties');
+        setProperties([]);
+      } finally {
+        setPropertiesLoading(false);
+      }
+    },
+    [itemsPerPage],
+  );
 
   useEffect(() => {
     async function loadDashboardData() {
@@ -67,7 +144,22 @@ export default function AdminDashboard() {
     }
 
     loadDashboardData();
-  }, [navigate]);
+    loadProperties(currentPage);
+  }, [navigate, currentPage, loadProperties]);
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+  };
+
+  const paginationInfo: PaginationInfo | undefined =
+    totalProperties > 0
+      ? {
+          currentPage,
+          totalPages: Math.ceil(totalProperties / itemsPerPage),
+          totalItems: totalProperties,
+          itemsPerPage,
+        }
+      : undefined;
 
   const quickActions = [
     {
@@ -201,7 +293,7 @@ export default function AdminDashboard() {
         </div>
 
         {/* System Overview */}
-        <div className="bg-white rounded-lg shadow-sm p-6">
+        <div className="bg-white rounded-lg shadow-sm p-6 mb-8">
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-xl font-semibold text-gray-900">System Overview</h2>
           </div>
@@ -220,6 +312,16 @@ export default function AdminDashboard() {
             </div>
           </div>
         </div>
+
+        <RecentProperties
+          properties={properties}
+          loading={propertiesLoading}
+          error={propertiesError}
+          pagination={paginationInfo}
+          onViewAll={() => navigate('/admin/properties')}
+          onRowClick={(propertyId) => navigate(`/admin/properties/${propertyId}`)}
+          onPageChange={handlePageChange}
+        />
       </DashboardLayout>
     );
   }
