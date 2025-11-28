@@ -5,7 +5,6 @@ import { supabase } from '../../lib/supabase';
 import { DashboardLayout } from '../../components/DashboardLayout';
 import { RecentProperties } from '../../components/admin/RecentProperties';
 import { AdminDashboardProperty, PaginationInfo } from '../../types/dashboard';
-
 interface Stats {
   totalUsers: number;
   totalProperties: number;
@@ -28,7 +27,42 @@ export default function AdminDashboard() {
   const [propertiesError, setPropertiesError] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalProperties, setTotalProperties] = useState(0);
-  const itemsPerPage = 2; // need to back to 50
+  const itemsPerPage = 50;
+
+  // Check admin access and redirect non-admins
+  useEffect(() => {
+    async function checkAdminAccess() {
+      try {
+        const { data: { user } } = await supabase.auth.getUser();
+
+        if (!user) {
+          navigate('/login');
+          return;
+        }
+
+        const { data: profile, error } = await supabase
+          .from('profiles')
+          .select('role')
+          .eq('id', user.id)
+          .single();
+
+        if (error || !profile) {
+          navigate('/login');
+          return;
+        }
+
+        if (profile.role !== 'admin') {
+          // Redirect to appropriate dashboard based on role
+          navigate(`/dashboard/${profile.role}`);
+          return;
+        }
+      } catch (error) {
+        navigate('/login');
+      }
+    }
+
+    checkAdminAccess();
+  }, [navigate]);
 
   const loadProperties = useCallback(
     async (page: number = 1) => {
